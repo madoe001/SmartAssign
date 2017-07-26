@@ -2,4 +2,8 @@
 ## Title: SmartAssign
 ## Notes: Addon for Raidsupport
 
+localization.deDe.lua
+localization.enUS.lua
+localization.enGB.lua
+
 test.lua
