@@ -1,3 +1,4 @@
 function test()
-	print("hello")
+	print("hello world")
+	print("test2")
 end
