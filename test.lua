@@ -1,1 +1,1 @@
-print(SMARTASSIGN_TEST2);
+--print("test");
