@@ -6,4 +6,5 @@ localization.deDe.lua
 localization.enUS.lua
 localization.enGB.lua
 
+SmartAssign.lua
 test.lua
