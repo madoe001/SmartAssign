@@ -15,7 +15,6 @@ classList = {
       [196718] = "Darkness"
    }
 }
-}
 
 function maikSuckt()
 
