@@ -19,14 +19,4 @@ classList = {
    ["Demon Hunter"] = {
       [196718] = "Darkness"
    }
-<<<<<<< HEAD
 }
-=======
-}
-
-function maikSuckt()
-
-	print("TTTT")
-
-end
->>>>>>> b48ff854285487bf724587f78f5305af61809d31
