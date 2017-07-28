@@ -2,16 +2,18 @@
 
 
 
-function printTable(table)
+function printHashTable(table)
    if(table) then
-      if(#table > 0) then
-         for key, value in pairs(table) do
-            print(key, value)
-         end
+      for key, value in pairs(table) do
+         print(key, value)
       end
+   else
+      print("Undefined reference")
+      
    end
    
 end
+
 
 
 function getAllMembers()
@@ -25,15 +27,15 @@ function getAllMembers()
    
    if(raidSize > 0) then
       
-      local playerList = {};
+      local playerList = {}
       
       if(not IsInRaid() and  IsInGroup) then
          
          raidSize = raidSize -1;
          
-         print(GetUnitName("player"));
-         
-         table.insert(playerList, GetUnitName("player"));   
+         local name = UnitName("player")
+         local class = UnitClass(name)
+         playerList[name..""] =  class
       end
       
       
@@ -41,19 +43,27 @@ function getAllMembers()
          
          if IsInRaid() then
             
-            print(GetUnitName("raid"..i)); 
-            
-            table.insert(playerList, GetUnitName("raid"..i));
+            local name, realm = UnitName("raid"..i)
+            local key 
+            if(realm) then
+               key = name.."-"..realm
+            else
+               key = name
+            end
+            local class = UnitClass(key)
+            playerList[key] =  class
             
          else if IsInGroup() then
-               
-               print(GetUnitName("party"..i));
-               
-               table.insert(playerList, GetUnitName("party"..i));
-               
-            end           
-            
-            
+               local memberName, realm = UnitName("party"..i)
+               local key
+               if(realm) then
+                  key = memberName.."-"..realm
+               else
+                  key = memberName
+               end
+               local class = UnitClass(key)
+               playerList[key] =  class
+            end                       
          end
          
       end
@@ -61,7 +71,28 @@ function getAllMembers()
       return  playerList;
       
    end
-   
    return nil;
    
 end
+
+
+function printNumericTable(table)
+   if(table) then
+      if(#table > 0) then
+         for i = 1, #table do
+            print(table[i])
+         end
+      end
+   end
+end
+
+function printClass(table)
+   if(table)then      
+      for key, class in pairs(table) do
+         print(class)
+      end      
+   end
+end
+
+
+printClass(getAllMembers())
