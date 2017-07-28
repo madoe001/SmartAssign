@@ -20,3 +20,19 @@ classList = {
       [196718] = "Darkness"
    }
 }
+
+function GetClassSpell(class)
+   local spellList = classList[class]
+   print(spellList)
+   if(spellList) then
+      for spellId, spellInformation in pairs(spellList) do
+         print(spellId)
+         for key, value in pairs(spellInformation) do
+            print("   ".. key .. " " .. value)
+         end
+      end
+   end
+   
+end
+
+--GetClassSpell("Warrior") --zum testen
