@@ -154,3 +154,26 @@ classList = {
 	["Mage"] = {
 	}, 
 }
+
+function GetClassSpellNames(class)
+   local spellList = classList[class]
+   local spellNames = {}
+   if(spellList) then
+      for spellId, spellInformation in pairs(spellList) do
+         local spellname = spellInformation["Name"]
+         table.insert(spellNames, spellId, spellname)
+      end
+   end
+   return spellNames
+end
+
+--Zum Testen
+function GetPartySpells()
+   local playerList = getAllMembers()
+   if(playerList) then
+      for name, class in  pairs(playerList) do
+         print(name, class)
+         printHashTable(GetClassSpellNames(class))
+      end
+   end
+end

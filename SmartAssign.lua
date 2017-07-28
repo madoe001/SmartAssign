@@ -16,13 +16,13 @@ end
 
 
 
+
 function getAllMembers()
    
    print (">>getAllMembers()<< called\n");
    
    
    local raidSize = GetNumGroupMembers() or 0;
-   
    
    
    if(raidSize > 0) then
@@ -39,13 +39,13 @@ function getAllMembers()
       end
       
       
-      for i = 1, raidSize  do
+      for i = 1, raidSize do
          
          if IsInRaid() then
             
             local name, realm = UnitName("raid"..i)
             local key 
-            if(realm) then
+            if(realm ~= "" ) then
                key = name.."-"..realm
             else
                key = name
@@ -56,7 +56,7 @@ function getAllMembers()
          else if IsInGroup() then
                local memberName, realm = UnitName("party"..i)
                local key
-               if(realm) then
+               if(realm ~= "" ) then
                   key = memberName.."-"..realm
                else
                   key = memberName
@@ -67,14 +67,12 @@ function getAllMembers()
          end
          
       end
-      
       return  playerList;
       
    end
    return nil;
    
 end
-
 
 function printNumericTable(table)
    if(table) then
@@ -95,4 +93,3 @@ function printClass(table)
 end
 
 
-printClass(getAllMembers())
