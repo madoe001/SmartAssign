@@ -21,18 +21,26 @@ classList = {
    }
 }
 
-function GetClassSpell(class)
+function GetClassSpellNames(class)
    local spellList = classList[class]
-   print(spellList)
+   local spellNames = {}
    if(spellList) then
       for spellId, spellInformation in pairs(spellList) do
          print(spellId)
-         for key, value in pairs(spellInformation) do
-            print("   ".. key .. " " .. value)
-         end
+         table.insert(spellNames, spellInformation["Name"])
       end
    end
-   
+   return spellNames
 end
 
---GetClassSpell("Warrior") --zum testen
+--Zum Testen
+function GetPartySpells()
+   print(getAllMembers())
+   local playerList = getAllMembers()
+   
+   if(playerList) then
+      for name, class in  pairs(playerList) do
+         printHashTable(GetClassSpellNames(class))
+      end
+   end
+end
