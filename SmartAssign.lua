@@ -25,8 +25,6 @@ function getAllMembers()
    local raidSize = GetNumGroupMembers() or 0;
    
    
-   
-   print(raidSize)
    if(raidSize > 0) then
       
       local playerList = {}
@@ -95,4 +93,3 @@ function printClass(table)
 end
 
 
-printClass(getAllMembers())
