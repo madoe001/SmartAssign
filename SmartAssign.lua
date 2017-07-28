@@ -45,11 +45,13 @@ function getAllMembers()
             
             local name, realm = UnitName("raid"..i)
             local key 
-            if(realm ~= "" ) then
+            
+            if(realm) then
                key = name.."-"..realm
             else
                key = name
             end
+            print(key)
             local class = UnitClass(key)
             playerList[key] =  class
             
