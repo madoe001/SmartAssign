@@ -1,4 +1,7 @@
 if GetLocale() ~= "enGB" then return end
 
-SMARTASSIGN_TEST = "hello world gb"
-SMARTASSIGN_TEST2 = "Justin you retard"
+--Warrior Spell Names
+Spell_Warrior_CommandingShout = "Commanding Shout"
+Spell_Warrior_Saveguard = "Safeguard"
+
+--
