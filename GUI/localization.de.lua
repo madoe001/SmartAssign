@@ -6,6 +6,6 @@ if not SA_GUI_Translations then
 end
 local L = SA_GUI_Translations
 
-L.TITLE = "SmartAssign"
+L["SmartAssign"] = "SmartAssign"
 
-L.START_INFO = "SmartAssign geladen weitere Informationen folgen."
+L["SmartAssign loaded more information added later."] = "SmartAssign geladen weitere Informationen folgen."
