@@ -1,0 +1,6 @@
+## Interface: 70100
+## Title: Multi Boss Mod
+## Author: Maik Dömecke, Marvin Justin Veith, Bartlomiej Grabelus
+localization.de.lua
+localization.en.lua
+Multi-Boss-ModGUI.lua

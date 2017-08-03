@@ -1,7 +1,5 @@
 --> Mainfuntionality of the Addon
 
-
-
 function printHashTable(table)
    if(table) then
       for key, value in pairs(table) do
