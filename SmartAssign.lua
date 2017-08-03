@@ -1,3 +1,13 @@
+-- Global vars --
+local _G = _G
+
+local SmartAssign = _G.SmartAssign
+
+do
+	-- load the GUI
+	SmartAssign.SA_GUI:LoadFrame()
+end
+
 --> Mainfuntionality of the Addon
 
 function printHashTable(table)

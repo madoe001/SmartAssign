@@ -1,10 +1,22 @@
--- tables
-SA_GUI = {}
+-- Global vars --
+local _G = _G
+local SmartAssign = _G.SmartAssign
 
 -- for localization
 setmetatable({}, {__index = SA_GUI})
+local SAL = SmartAssign.Locales
 
-local L = SA_GUI_Translations
+-- tables
+local SA_GUI = {}
+-- make GUI global --
+SmartAssign.SA_GUI = SA_GUI
+
+-- Load the whole Frame
+function SA_GUI:LoadFrame()
+	local mainFrame = CreateFrame("Frame","mainFrame",UIParent)
+	mainFrame:SetScript("OnEvent",SA_GUI.Init)
+	mainFrame:RegisterEvent("ADDON_LOADED")
+end
 
 -- function to init when addon has been loaded
 function SA_GUI:Init(event, addon)
@@ -13,15 +25,10 @@ function SA_GUI:Init(event, addon)
 		SA_GUI:CreateGUI(mainFrame)
 		-- color the text |cffHEXCOLOR STRING |r << EndTag
 		print("|cff15c39a<|r|cff436eeeMBM|r|cff15c39a>|r"..
-		"|cffffa500"..L["SmartAssign loaded more information added later."].."|r")
+		"|cffffa500"..SAL["SmartAssign loaded more information added later."].."|r")
 	end
 end
-
--- create main frame
-local mainFrame = CreateFrame("Frame","mainFrame",UIParent)
-mainFrame:SetScript("OnEvent",SA_GUI.Init)
-mainFrame:RegisterEvent("ADDON_LOADED")
-
+	
 -- for making a frame movable
 function SA_GUI:MakeMovable(frame)
     frame:EnableMouse(true)
@@ -42,7 +49,7 @@ function SA_GUI:CreateGUI(frame)
 	SA_GUI:CreateTitleBar(frame)
 	
 	-- Title
-	frame.title = SA_GUI:CreateFont(frame, "titleFont", L["SmartAssign"], nil, 0, 5, 22)
+	frame.title = SA_GUI:CreateFont(frame, "titleFont", SAL["SmartAssign"], nil, 0, 5, 22)
 	
 	-- make main frame movable
 	SA_GUI:MakeMovable(frame)
@@ -66,6 +73,7 @@ function SA_GUI:CreateWindow(frame)
 	return (frame)
 end
 
+-- create a TitleBar
 function SA_GUI:CreateTitleBar(frame)
 	local titleBG = frame:CreateTexture(nil,"ARTWORK");
 	titleBG:SetTexture("Interface/DialogFrame/UI-DialogBox-Header");
