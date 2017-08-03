@@ -1,11 +1,11 @@
 if GetLocale() ~= "deDE" then 
 	return 
 end
-if not MBM_GUI_Translations then 
-	MBM_GUI_Translations = {} 
+if not SA_GUI_Translations then 
+	SA_GUI_Translations = {} 
 end
-local L = MBM_GUI_Translations
+local L = SA_GUI_Translations
 
-L.TITLE = "Multi Boss Mod"
+L.TITLE = "SmartAssign"
 
-L.START_INFO = "Multi Boss Mod geladen weitere Informationen folgen."
+L.START_INFO = "SmartAssign geladen weitere Informationen folgen."

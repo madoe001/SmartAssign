@@ -1,16 +1,16 @@
 -- tables
-MBM_GUI = {}
+SA_GUI = {}
 
 -- for localization
-setmetatable({}, {__index = MBM_GUI})
+setmetatable({}, {__index = SA_GUI})
 
-local L = MBM_GUI_Translations
+local L = SA_GUI_Translations
 
 -- function to init when addon has been loaded
-function MBM_GUI:Init(event, addon)
+function SA_GUI:Init(event, addon)
 --print("addon: "..addon)
-	if (event == "ADDON_LOADED" and addon == "Multi-Boss-ModGUI") then
-		MBM_GUI:CreateGUI(mainFrame)
+	if (event == "ADDON_LOADED" and addon == "SmartAssign") then
+		SA_GUI:CreateGUI(mainFrame)
 		-- color the text |cffHEXCOLOR STRING |r << EndTag
 		print("|cff15c39a<|r|cff436eeeMBM|r|cff15c39a>|r"..
 		"|cffffa500"..L.START_INFO.."|r")
@@ -19,11 +19,11 @@ end
 
 -- create main frame
 local mainFrame = CreateFrame("Frame","mainFrame",UIParent)
-mainFrame:SetScript("OnEvent",MBM_GUI.Init)
+mainFrame:SetScript("OnEvent",SA_GUI.Init)
 mainFrame:RegisterEvent("ADDON_LOADED")
 
 -- for making a frame movable
-function MBM_GUI:MakeMovable(frame)
+function SA_GUI:MakeMovable(frame)
     frame:EnableMouse(true)
 	frame:SetMovable(true)
     frame:RegisterForDrag("LeftButton")
@@ -32,24 +32,24 @@ function MBM_GUI:MakeMovable(frame)
 end
 
 -- create GUI
-function MBM_GUI:CreateGUI(frame)
-	local window = MBM_GUI:CreateWindow(frame)
+function SA_GUI:CreateGUI(frame)
+	local window = SA_GUI:CreateWindow(frame)
 	
 	-- close Button
-	frame.closeButton = MBM_GUI:CreateButton(frame, "closeButton", nil, 0, 0, "TOPRIGHT", 0, 0, "UIPanelCloseButton")
+	frame.closeButton = SA_GUI:CreateButton(frame, "closeButton", nil, 0, 0, "TOPRIGHT", 0, 0, "UIPanelCloseButton")
 	
 	-- create TitleBar
-	MBM_GUI:CreateTitleBar(frame)
+	SA_GUI:CreateTitleBar(frame)
 	
 	-- Title
-	frame.title = MBM_GUI:CreateFont(frame, "titleFont", L.TITLE, nil, 0, 5, 22)
+	frame.title = SA_GUI:CreateFont(frame, "titleFont", L.TITLE, nil, 0, 5, 22)
 	
 	-- make main frame movable
-	MBM_GUI:MakeMovable(frame)
+	SA_GUI:MakeMovable(frame)
 end
 
 -- create Window
-function MBM_GUI:CreateWindow(frame)
+function SA_GUI:CreateWindow(frame)
 	frame:SetWidth(1000) --Breite in px
 	frame:SetHeight(500) -- Hoehe in px
 	local x = 0
@@ -66,7 +66,7 @@ function MBM_GUI:CreateWindow(frame)
 	return (frame)
 end
 
-function MBM_GUI:CreateTitleBar(frame)
+function SA_GUI:CreateTitleBar(frame)
 	local titleBG = frame:CreateTexture(nil,"ARTWORK");
 	titleBG:SetTexture("Interface/DialogFrame/UI-DialogBox-Header");
     titleBG:SetWidth(500);
@@ -76,7 +76,7 @@ function MBM_GUI:CreateTitleBar(frame)
 end
 
 -- create a Button
-function MBM_GUI:CreateButton(frame, name, text, width, height, position, x, y, template)
+function SA_GUI:CreateButton(frame, name, text, width, height, position, x, y, template)
 	if template == nil then
 		template = "OptionsButtonTemplate"
 	end
@@ -103,7 +103,7 @@ function MBM_GUI:CreateButton(frame, name, text, width, height, position, x, y, 
 end
 
 -- create a Font
-function MBM_GUI:CreateFont(frame, name, text, position, x, y, size)
+function SA_GUI:CreateFont(frame, name, text, position, x, y, size)
 	if size == nil then
 		size = 15
 	end
