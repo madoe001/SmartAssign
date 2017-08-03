@@ -13,7 +13,7 @@ function SA_GUI:Init(event, addon)
 		SA_GUI:CreateGUI(mainFrame)
 		-- color the text |cffHEXCOLOR STRING |r << EndTag
 		print("|cff15c39a<|r|cff436eeeMBM|r|cff15c39a>|r"..
-		"|cffffa500"..L.START_INFO.."|r")
+		"|cffffa500"..L["SmartAssign loaded more information added later."].."|r")
 	end
 end
 
@@ -42,7 +42,7 @@ function SA_GUI:CreateGUI(frame)
 	SA_GUI:CreateTitleBar(frame)
 	
 	-- Title
-	frame.title = SA_GUI:CreateFont(frame, "titleFont", L.TITLE, nil, 0, 5, 22)
+	frame.title = SA_GUI:CreateFont(frame, "titleFont", L["SmartAssign"], nil, 0, 5, 22)
 	
 	-- make main frame movable
 	SA_GUI:MakeMovable(frame)
