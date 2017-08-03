@@ -1,6 +1,7 @@
 ## Interface: 70200
 ## Title: SmartAssign
 ## Notes: Addon for Raidsupport
+## Author: Maik Dömecke, Marvin Justin Veith, Bartlomiej Grabelus
 
 localization.deDe.lua
 localization.enUS.lua
@@ -10,3 +11,7 @@ localization.enGB.lua
 SmartAssign.lua
 test.lua
 Cooldown.lua
+
+GUI\localization.de.lua
+GUI\localization.en.lua
+GUI\SmartAssignGUI.lua
