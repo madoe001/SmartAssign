@@ -2,15 +2,11 @@
 local _G = _G
 
 local SmartAssign = _G.SmartAssign
-
-do
-	-- load the GUI
-	SmartAssign.SA_GUI:LoadFrame()
-end
+local ClassList = _G.ClassList
 
 --> Mainfuntionality of the Addon
 
-function printHashTable(table)
+function SmartAssign:printHashTable(table)
    if(table) then
       for key, value in pairs(table) do
          print(key, value)
@@ -25,9 +21,9 @@ end
 
 
 
-function getAllMembers()
+function SmartAssign:getAllMembers()
    
-   print (">>getAllMembers()<< called\n");
+   print (">> getAllMembers() << called\n");
    
    
    local raidSize = GetNumGroupMembers() or 0;
@@ -84,7 +80,7 @@ function getAllMembers()
    
 end
 
-function printNumericTable(table)
+function SmartAssign:printNumericTable(table)
    if(table) then
       if(#table > 0) then
          for i = 1, #table do
@@ -94,7 +90,7 @@ function printNumericTable(table)
    end
 end
 
-function printClass(table)
+function SmartAssign:printClass(table)
    if(table)then      
       for key, class in pairs(table) do
          print(class)
@@ -102,4 +98,8 @@ function printClass(table)
    end
 end
 
-
+do
+	-- load the GUI
+	SmartAssign.SA_GUI:LoadFrame()
+	ClassList:GetPartySpells()
+end

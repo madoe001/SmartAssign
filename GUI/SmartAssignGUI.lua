@@ -1,6 +1,7 @@
 -- Global vars --
 local _G = _G
 local SmartAssign = _G.SmartAssign
+local DropDown = _G.SmartAssign.DropDown
 
 -- for localization
 setmetatable({}, {__index = SA_GUI})
@@ -8,21 +9,22 @@ local SAL = SmartAssign.Locales
 
 -- tables
 local SA_GUI = {}
+local SA_GUI_LOCAL = {}
 -- make GUI global --
 SmartAssign.SA_GUI = SA_GUI
 
 -- Load the whole Frame
 function SA_GUI:LoadFrame()
 	local mainFrame = CreateFrame("Frame","mainFrame",UIParent)
-	mainFrame:SetScript("OnEvent",SA_GUI.Init)
+	mainFrame:SetScript("OnEvent",SA_GUI_LOCAL.Init)
 	mainFrame:RegisterEvent("ADDON_LOADED")
 end
 
 -- function to init when addon has been loaded
-function SA_GUI:Init(event, addon)
+function SA_GUI_LOCAL:Init(event, addon)
 --print("addon: "..addon)
 	if (event == "ADDON_LOADED" and addon == "SmartAssign") then
-		SA_GUI:CreateGUI(mainFrame)
+		SA_GUI_LOCAL:CreateGUI(mainFrame)
 		-- color the text |cffHEXCOLOR STRING |r << EndTag
 		print("|cff15c39a<|r|cff436eeeMBM|r|cff15c39a>|r"..
 		"|cffffa500"..SAL["SmartAssign loaded more information added later."].."|r")
@@ -30,7 +32,7 @@ function SA_GUI:Init(event, addon)
 end
 	
 -- for making a frame movable
-function SA_GUI:MakeMovable(frame)
+function SA_GUI_LOCAL:MakeMovable(frame)
     frame:EnableMouse(true)
 	frame:SetMovable(true)
     frame:RegisterForDrag("LeftButton")
@@ -39,24 +41,26 @@ function SA_GUI:MakeMovable(frame)
 end
 
 -- create GUI
-function SA_GUI:CreateGUI(frame)
-	local window = SA_GUI:CreateWindow(frame)
+function SA_GUI_LOCAL:CreateGUI(frame)
+	local window = SA_GUI_LOCAL:CreateWindow(frame)
 	
 	-- close Button
-	frame.closeButton = SA_GUI:CreateButton(frame, "closeButton", nil, 0, 0, "TOPRIGHT", 0, 0, "UIPanelCloseButton")
+	frame.closeButton = SA_GUI_LOCAL:CreateButton(frame, "closeButton", nil, 0, 0, "TOPRIGHT", 0, 0, "UIPanelCloseButton")
 	
 	-- create TitleBar
-	SA_GUI:CreateTitleBar(frame)
+	SA_GUI_LOCAL:CreateTitleBar(frame)
 	
 	-- Title
-	frame.title = SA_GUI:CreateFont(frame, "titleFont", SAL["SmartAssign"], nil, 0, 5, 22)
+	frame.title = SA_GUI_LOCAL:CreateFont(frame, "titleFont", SAL["SmartAssign"], nil, 0, 5, 22)
+	
+	--SA_GUI_LOCAL:CreateDropDown(frame, "SA_GUI_DropDown")
 	
 	-- make main frame movable
-	SA_GUI:MakeMovable(frame)
+	SA_GUI_LOCAL:MakeMovable(frame)
 end
 
 -- create Window
-function SA_GUI:CreateWindow(frame)
+function SA_GUI_LOCAL:CreateWindow(frame)
 	frame:SetWidth(1000) --Breite in px
 	frame:SetHeight(500) -- Hoehe in px
 	local x = 0
@@ -74,7 +78,7 @@ function SA_GUI:CreateWindow(frame)
 end
 
 -- create a TitleBar
-function SA_GUI:CreateTitleBar(frame)
+function SA_GUI_LOCAL:CreateTitleBar(frame)
 	local titleBG = frame:CreateTexture(nil,"ARTWORK");
 	titleBG:SetTexture("Interface/DialogFrame/UI-DialogBox-Header");
     titleBG:SetWidth(500);
@@ -84,7 +88,7 @@ function SA_GUI:CreateTitleBar(frame)
 end
 
 -- create a Button
-function SA_GUI:CreateButton(frame, name, text, width, height, position, x, y, template)
+function SA_GUI_LOCAL:CreateButton(frame, name, text, width, height, position, x, y, template)
 	if template == nil then
 		template = "OptionsButtonTemplate"
 	end
@@ -111,7 +115,7 @@ function SA_GUI:CreateButton(frame, name, text, width, height, position, x, y, t
 end
 
 -- create a Font
-function SA_GUI:CreateFont(frame, name, text, position, x, y, size)
+function SA_GUI_LOCAL:CreateFont(frame, name, text, position, x, y, size)
 	if size == nil then
 		size = 15
 	end
@@ -125,4 +129,8 @@ function SA_GUI:CreateFont(frame, name, text, position, x, y, size)
 	fontString:SetText(text)
 	
 	return (fontString)
+end
+
+function SA_GUI_LOCAL:CreateDropDown(frame, name) 
+	DropDown:createMenu(frame, name)
 end

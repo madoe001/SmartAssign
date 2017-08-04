@@ -11,10 +11,11 @@ Init.lua
 
 GUI\localization.de.lua
 GUI\localization.en.lua
+GUI\DropDown.lua
 GUI\SmartAssignGUI.lua
-
-SmartAssign.lua
 
 test.lua
 
 Cooldown.lua
+
+SmartAssign.lua
