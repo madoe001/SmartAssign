@@ -30,7 +30,7 @@ function SmartAssign:getAllMembers()
    
    
    if(raidSize > 0) then
-      
+      -- global machen um in der DropDownListe zugreifen zu können!!!
       local playerList = {}
       
       if(not IsInRaid() and  IsInGroup) then

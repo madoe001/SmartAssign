@@ -4,7 +4,9 @@ local _G = _G
 -- create a globals
 -- SmartAssign.lua
 _G.SmartAssign = {}
---Cooldown.lua
+-- GUI
+_G.SmartAssign.SA_GUI = {}
+-- Cooldown.lua
 _G.ClassList = {
    ["Warrior"] = {
 		["97462"] = { -- Shout
@@ -157,3 +159,22 @@ _G.ClassList = {
 	["Mage"] = {
 	}, 
 }
+
+_G.DropDown.data = {
+   ["Healer"] = {		-- category
+			[1] = {		-- entry number
+				["id"]			= "H1",		-- unique id
+				["name"]		= "Henny",
+			},
+			[1] = {		-- entry number
+				["id"]			= "H2",		-- unique id
+				["name"]		= "HealBoy",
+			},
+		},
+	["Tank"] = {		-- category
+			[1] = {		-- entry number
+				["id"]			= "T1",		-- unique id
+				["name"]		= "BadBoy",
+			},
+		}
+ }
