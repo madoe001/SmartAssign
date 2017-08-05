@@ -160,13 +160,17 @@ _G.ClassList = {
 	}, 
 }
 
-_G.DropDown.data = {
+_G.GUI = {}
+
+_G.GUI.DropDown = {}
+
+_G.GUI.DropDown.data = {
    ["Healer"] = {		-- category
 			[1] = {		-- entry number
 				["id"]			= "H1",		-- unique id
 				["name"]		= "Henny",
 			},
-			[1] = {		-- entry number
+			[2] = {		-- entry number
 				["id"]			= "H2",		-- unique id
 				["name"]		= "HealBoy",
 			},
@@ -178,3 +182,5 @@ _G.DropDown.data = {
 			},
 		}
  }
+ 
+ _G.GUI.ScrollFrame = {}

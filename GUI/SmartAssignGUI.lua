@@ -1,7 +1,7 @@
 -- Global vars --
 local _G = _G
 local SmartAssign = _G.SmartAssign
-local DropDown = _G.SmartAssign.SA_GUI.DropDown
+local DropDown = _G.GUI.DropDown
 
 -- for localization
 setmetatable({}, {__index = SA_GUI})
@@ -11,7 +11,7 @@ local SAL = SmartAssign.Locales
 local SA_GUI = {}
 local SA_GUI_LOCAL = {}
 -- make GUI global --
-SmartAssign.SA_GUI = SA_GUI
+_G.SmartAssign.SA_GUI = SA_GUI
 
 -- Load the whole Frame
 function SA_GUI:LoadFrame()
