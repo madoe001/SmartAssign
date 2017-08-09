@@ -1,8 +1,8 @@
 local _G = _G
 
-local DropDownList = _G.GUI.DropDownList
+local DropDownList = _G.GUI.SA_DropDownList
 local SAL = _G.SmartAssign.Locales
-local DropDownListData = _G.GUI.DropDownList.data
+local DropDownListData = _G.GUI.SA_DropDownList.data
 
 -- for failurehandling
 local assert, type = assert, type

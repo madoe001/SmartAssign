@@ -163,9 +163,9 @@ _G.ClassList = {
 
 _G.GUI = {}
 
-_G.GUI.DropDownMenu = {}
+_G.GUI.SA_DropDownMenu = {}
 
-_G.GUI.DropDownMenu.data = {
+_G.GUI.SA_DropDownMenu.data = {
    ["Healer"] = {		-- category
 			[1] = {		-- entry number
 				["id"]			= "H1",		-- unique id
@@ -190,8 +190,8 @@ _G.GUI.DropDownMenu.data = {
 		}
  }
  
- _G.GUI.DropDownList = {}
+ _G.GUI.SA_DropDownList = {}
  
- _G.GUI.DropDownList.data = {"Ability",  "Timer"}
+ _G.GUI.SA_DropDownList.data = {"Ability",  "Timer"}
  
- _G.GUI.ScrollFrame = {}
+ _G.GUI.SA_ScrollFrame = {}

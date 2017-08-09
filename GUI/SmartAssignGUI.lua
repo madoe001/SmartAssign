@@ -1,8 +1,9 @@
 -- Global vars --
 local _G = _G
 local SmartAssign = _G.SmartAssign
-local DropDownMenu = _G.GUI.DropDownMenu
-local DropDownList = _G.GUI.DropDownList
+local DropDownMenu = _G.GUI.SA_DropDownMenu
+local DropDownList = _G.GUI.SA_DropDownList
+local ScrollFrame = _G.GUI.SA_ScrollFrame
 
 -- for localization
 setmetatable({}, {__index = SA_GUI})
@@ -56,9 +57,13 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	-- Title
 	frame.title = SA_GUI_LOCAL:CreateFont(frame, "titleFont", SAL["SmartAssign"], nil, 0, 5, 22)
 	
-	SA_GUI_LOCAL:CreateDropDownMenu(frame, DropDownMenu.data)
+	SA_GUI_LOCAL:CreateLeftSide(frame)
 	
-	SA_GUI_LOCAL:CreateDropDownList(frame, DropDownList.data)
+	--SA_GUI_LOCAL:CreateDropDownMenu(frame, DropDownMenu.data)
+	
+	--SA_GUI_LOCAL:CreateDropDownList(frame, DropDownList.data)
+	
+	SA_GUI_LOCAL:CreateScrollFrame(LeftSide)
 	
 	-- make main frame movable
 	SA_GUI_LOCAL:MakeMovable(frame)
@@ -80,6 +85,23 @@ function SA_GUI_LOCAL:CreateWindow(frame)
 	})
 	
 	return (frame)
+end
+
+function SA_GUI_LOCAL:CreateLeftSide(frame)
+	if not LeftSide then
+		LeftSide = CreateFrame("Frame", "SA_LeftFrame", frame)
+	end
+	LeftSide:SetBackdrop({
+	bgFile = "Interface/DialogFrame/UI-DialogBox-Background",
+	edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+	tile = true, tileSize = 32, edgeSize = 25,
+	insets = {left = 4, right = 4, top = 4, bottom = 4}
+	})
+	LeftSide:SetWidth(frame:GetWidth() * 0.3)
+	LeftSide:SetHeight(frame:GetHeight()-40)
+	LeftSide:SetPoint("TOPLEFT", frame, 20, -20)
+	
+	return LeftSide
 end
 
 -- create a TitleBar
@@ -142,4 +164,8 @@ end
 
 function SA_GUI_LOCAL:CreateDropDownList(frame, data) 
 	DropDownList:LoadDropDownList(frame, data)
+end
+
+function SA_GUI_LOCAL:CreateScrollFrame(frame)
+	ScrollFrame:LoadScrollFrame(frame)
 end

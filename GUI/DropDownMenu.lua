@@ -2,9 +2,9 @@ local _G = _G
 
 -- muss komplett überarbeitet werden
 
-local DropDownMenu = _G.GUI.DropDownMenu
+local DropDownMenu = _G.GUI.SA_DropDownMenu
 local SAL = _G.SmartAssign.Locales
-local DropDownData = _G.GUI.DropDownMenu.data
+local DropDownData = _G.GUI.SA_DropDownMenu.data
 
 -- for failurehandling
 local assert, type = assert, type

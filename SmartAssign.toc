@@ -13,6 +13,7 @@ GUI\localization.de.lua
 GUI\localization.en.lua
 GUI\DropDownList.lua
 GUI\DropDownMenu.lua
+GUI\ScrollFrame.lua
 GUI\SmartAssignGUI.lua
 
 test.lua
