@@ -6,6 +6,7 @@ local _G = _G
 _G.SmartAssign = {}
 -- GUI
 _G.SmartAssign.SA_GUI = {}
+
 -- Cooldown.lua
 _G.ClassList = {
    ["Warrior"] = {
@@ -162,9 +163,9 @@ _G.ClassList = {
 
 _G.GUI = {}
 
-_G.GUI.DropDown = {}
+_G.GUI.DropDownMenu = {}
 
-_G.GUI.DropDown.data = {
+_G.GUI.DropDownMenu.data = {
    ["Healer"] = {		-- category
 			[1] = {		-- entry number
 				["id"]			= "H1",		-- unique id
@@ -180,7 +181,17 @@ _G.GUI.DropDown.data = {
 				["id"]			= "T1",		-- unique id
 				["name"]		= "BadBoy",
 			},
+		},
+	["DD"] = {		-- category
+			[1] = {		-- entry number
+				["id"]			= "D1",		-- unique id
+				["name"]		= "BigDealer",
+			},
 		}
  }
+ 
+ _G.GUI.DropDownList = {}
+ 
+ _G.GUI.DropDownList.data = {"Ability",  "Timer"}
  
  _G.GUI.ScrollFrame = {}

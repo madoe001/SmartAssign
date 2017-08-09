@@ -1,7 +1,8 @@
 -- Global vars --
 local _G = _G
 local SmartAssign = _G.SmartAssign
-local DropDown = _G.GUI.DropDown
+local DropDownMenu = _G.GUI.DropDownMenu
+local DropDownList = _G.GUI.DropDownList
 
 -- for localization
 setmetatable({}, {__index = SA_GUI})
@@ -55,7 +56,9 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	-- Title
 	frame.title = SA_GUI_LOCAL:CreateFont(frame, "titleFont", SAL["SmartAssign"], nil, 0, 5, 22)
 	
-	SA_GUI_LOCAL:CreateDropDown(frame, DropDown.data)
+	SA_GUI_LOCAL:CreateDropDownMenu(frame, DropDownMenu.data)
+	
+	SA_GUI_LOCAL:CreateDropDownList(frame, DropDownList.data)
 	
 	-- make main frame movable
 	SA_GUI_LOCAL:MakeMovable(frame)
@@ -133,6 +136,10 @@ function SA_GUI_LOCAL:CreateFont(frame, name, text, position, x, y, size)
 	return (fontString)
 end
 
-function SA_GUI_LOCAL:CreateDropDown(frame, data) 
-	DropDown:LoadDropDownMenu(frame, data)
+function SA_GUI_LOCAL:CreateDropDownMenu(frame, data) 
+	DropDownMenu:LoadDropDownMenu(frame, data)
+end
+
+function SA_GUI_LOCAL:CreateDropDownList(frame, data) 
+	DropDownList:LoadDropDownList(frame, data)
 end

@@ -11,7 +11,8 @@ Init.lua
 
 GUI\localization.de.lua
 GUI\localization.en.lua
-GUI\DropDown.lua
+GUI\DropDownList.lua
+GUI\DropDownMenu.lua
 GUI\SmartAssignGUI.lua
 
 test.lua
