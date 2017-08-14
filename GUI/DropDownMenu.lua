@@ -86,8 +86,6 @@ local function CreateDropDownButton(frame, data)
     UIDropDownMenu_SetButtonWidth(DropDownMenuButton, DropDownMenuButton.label:GetStringWidth())
     UIDropDownMenu_SetWidth(DropDownMenuButton, DropDownMenuButton.label:GetStringWidth());
     UIDropDownMenu_JustifyText(DropDownMenuButton, "CENTER")
-    
-    return DropDownMenuButton
 end
 
 -- init the dropdownmenu (only 2 levels)
@@ -129,5 +127,5 @@ level = level or 1;
 end
 
 function DropDownMenu:LoadDropDownMenu(frame, data)
-	local dropDownMenu = CreateDropDownButton(frame, data)
+	CreateDropDownButton(frame, data)
 end

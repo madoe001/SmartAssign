@@ -1,11 +1,12 @@
 -- Global vars --
 local _G = _G
 
--- create a globals
--- SmartAssign.lua
-_G.SmartAssign = {}
+-- create globals
+
 -- GUI
 _G.SmartAssign.SA_GUI = {}
+
+local SAL = _G.SmartAssign.Locales
 
 -- Cooldown.lua
 _G.ClassList = {
@@ -166,7 +167,7 @@ _G.GUI = {}
 _G.GUI.SA_DropDownMenu = {}
 
 _G.GUI.SA_DropDownMenu.data = {
-   ["Healer"] = {		-- category
+   [SAL["Healer"]] = {		-- category
 			[1] = {		-- entry number
 				["id"]			= "H1",		-- unique id
 				["name"]		= "Henny",
@@ -176,13 +177,13 @@ _G.GUI.SA_DropDownMenu.data = {
 				["name"]		= "HealBoy",
 			},
 		},
-	["Tank"] = {		-- category
+	[SAL["Tank"]] = {		-- category
 			[1] = {		-- entry number
 				["id"]			= "T1",		-- unique id
 				["name"]		= "BadBoy",
 			},
 		},
-	["DD"] = {		-- category
+	[SAL["Damage Dealer"]] = {		-- category
 			[1] = {		-- entry number
 				["id"]			= "D1",		-- unique id
 				["name"]		= "BigDealer",
@@ -192,6 +193,6 @@ _G.GUI.SA_DropDownMenu.data = {
  
  _G.GUI.SA_DropDownList = {}
  
- _G.GUI.SA_DropDownList.data = {"Ability",  "Timer"}
+ _G.GUI.SA_DropDownList.data = {SAL["Ability"],  SAL["Timer"]}
  
  _G.GUI.SA_ScrollFrame = {}

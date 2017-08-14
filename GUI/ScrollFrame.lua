@@ -56,5 +56,5 @@ function CreateContent(frame)
 end
 
 function SA_ScrollFrame:LoadScrollFrame(frame)
-	local scrollFrame = CreateScrollFrame(frame)
+	return CreateScrollFrame(frame)
 end

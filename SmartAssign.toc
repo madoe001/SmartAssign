@@ -7,10 +7,10 @@ localization.deDe.lua
 localization.enUS.lua
 localization.enGB.lua
 
+GUI\localization.de.lua
+
 Init.lua
 
-GUI\localization.de.lua
-GUI\localization.en.lua
 GUI\DropDownList.lua
 GUI\DropDownMenu.lua
 GUI\ScrollFrame.lua

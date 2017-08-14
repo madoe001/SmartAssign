@@ -63,8 +63,6 @@ local function CreateDropDownList(frame, data)
     UIDropDownMenu_SetButtonWidth(DropDownListButton, (DropDownListButton.label:GetStringWidth()-(DropDownListButton.label:GetStringWidth()*0.5)))
     UIDropDownMenu_SetWidth(DropDownListButton, DropDownListButton.label:GetStringWidth());
     UIDropDownMenu_JustifyText(DropDownListButton, "CENTER")
-    
-    return DropDownListButton
 end
 
 function InitDDL(self, level)
@@ -80,5 +78,5 @@ function InitDDL(self, level)
 end
 
 function DropDownList:LoadDropDownList(frame, data)
-	local dropDownList = CreateDropDownList(frame, data)
+	CreateDropDownList(frame, data)
 end

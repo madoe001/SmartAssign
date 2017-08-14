@@ -57,13 +57,13 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	-- Title
 	frame.title = SA_GUI_LOCAL:CreateFont(frame, "titleFont", SAL["SmartAssign"], nil, 0, 5, 22)
 	
-	SA_GUI_LOCAL:CreateLeftSide(frame)
+	frame.leftSide = SA_GUI_LOCAL:CreateLeftSide(frame)
 	
 	--SA_GUI_LOCAL:CreateDropDownMenu(frame, DropDownMenu.data)
 	
 	--SA_GUI_LOCAL:CreateDropDownList(frame, DropDownList.data)
 	
-	SA_GUI_LOCAL:CreateScrollFrame(LeftSide)
+	frame.scrollFrame = SA_GUI_LOCAL:CreateScrollFrame(LeftSide)
 	
 	-- make main frame movable
 	SA_GUI_LOCAL:MakeMovable(frame)
@@ -167,5 +167,5 @@ function SA_GUI_LOCAL:CreateDropDownList(frame, data)
 end
 
 function SA_GUI_LOCAL:CreateScrollFrame(frame)
-	ScrollFrame:LoadScrollFrame(frame)
+	return (ScrollFrame:LoadScrollFrame(frame))
 end

@@ -1,6 +1,11 @@
+local _G = _G
+
 if GetLocale() ~= "deDE" then 
 	return 
 end
+
+-- SmartAssign.lua
+_G.SmartAssign = {}
 
 local L = {}
 -- make L global --
@@ -17,8 +22,11 @@ L["Healer"] = "Heiler"
 
 L["Tank"] = "Tank"
 
-L["DD"] = "Schaden"
+L["Damage Dealer"] = "Damage Dealer"
 
+L["Ability"] = "Fähigkeit"
+
+L["Timer"] = "Timer"
 
 -- ASSERTS
 L["'func' in 'DropDownMenu SetOnClick' must be a function."] = "'func' in 'DropDownMenu SetOnClick' muss eine Funktion sein"
