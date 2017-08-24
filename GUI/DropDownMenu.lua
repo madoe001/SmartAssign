@@ -21,7 +21,7 @@ function GetArraySize(T)
 end
 
 -- onClick setter
-local function SetOnClick(frame, func)
+function DropDownMenu:SetOnClick(frame, func)
     assert(type(func) == "function", SAL["'func' in 'DropDownMenu SetOnClick' must be a function."])
 	if func then
 		frame.ButtonOnClick = func
@@ -49,7 +49,6 @@ local function SetData(frame, data, startValue)
 		frame.selectedId = nil
 		return
 	end
-	assert(type(data) == "table", SAL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownMenu.data for infos."])
 	frame.data = data
 	frame.selectedId = startValue
 	if startValue then
@@ -127,5 +126,6 @@ level = level or 1;
 end
 
 function DropDownMenu:LoadDropDownMenu(frame, data)
+	assert(type(data) == "table", SAL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownMenu.data for infos."])
 	CreateDropDownButton(frame, data)
 end

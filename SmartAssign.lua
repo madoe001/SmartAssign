@@ -101,5 +101,4 @@ end
 do
 	-- load the GUI
 	SmartAssign.SA_GUI:LoadFrame()
-	ClassList:GetPartySpells()
 end

@@ -4,6 +4,8 @@ local SmartAssign = _G.SmartAssign
 local DropDownMenu = _G.GUI.SA_DropDownMenu
 local DropDownList = _G.GUI.SA_DropDownList
 local ScrollFrame = _G.GUI.SA_ScrollFrame
+local SlashCommands = _G.SmartAssign.SlashCommands
+local MiniMapButton = SmartAssign.MiniMapButton
 
 -- for localization
 setmetatable({}, {__index = SA_GUI})
@@ -19,6 +21,7 @@ _G.SmartAssign.SA_GUI = SA_GUI
 function SA_GUI:LoadFrame()
 	if not mainFrame then
 		CreateFrame("Frame","mainFrame",UIParent)
+		SA_GUI.frame = mainFrame
 	end
 	mainFrame:SetScript("OnEvent",SA_GUI_LOCAL.Init)
 	mainFrame:RegisterEvent("ADDON_LOADED")
@@ -28,10 +31,13 @@ end
 function SA_GUI_LOCAL:Init(event, addon)
 --print("addon: "..addon)
 	if (event == "ADDON_LOADED" and addon == "SmartAssign") then
-		SA_GUI_LOCAL:CreateGUI(mainFrame)
+		SA_GUI_LOCAL:CreateGUI(SA_GUI.frame)
 		-- color the text |cffHEXCOLOR STRING |r << EndTag
-		print("|cff15c39a<|r|cff436eeeMBM|r|cff15c39a>|r"..
+		print("|cff15c39a<|r|cff436eee"..SAL["SmartAssign"].."|r|cff15c39a>|r"..
 		"|cffffa500"..SAL["SmartAssign loaded more information added later."].."|r")
+		SlashCommands:Init()
+		SlashCommands:AddResetFunction(SA_GUI.ResetFrames, "frames")
+		MiniMapButton:Init()
 	end
 end
 	
@@ -71,11 +77,12 @@ end
 
 -- create Window
 function SA_GUI_LOCAL:CreateWindow(frame)
+	frame:ClearAllPoints()
 	frame:SetWidth(1000) --Breite in px
 	frame:SetHeight(500) -- Hoehe in px
-	local x = 0
-	local y = 50
-	frame:SetPoint("CENTER",x,y)
+	frame.x = 0
+	frame.y = 50
+	frame:SetPoint("CENTER",frame.x,frame.y)
 	
 	frame:SetBackdrop({
 	bgFile = "Interface/DialogFrame/UI-DialogBox-Background",
@@ -83,6 +90,10 @@ function SA_GUI_LOCAL:CreateWindow(frame)
 	tile = true, tileSize = 32, edgeSize = 32,
 	insets = {left = 4, right = 4, top = 4, bottom = 4}
 	})
+	
+	frame:SetToplevel(true)
+	
+	frame:Hide()
 	
 	return (frame)
 end
@@ -168,4 +179,19 @@ end
 
 function SA_GUI_LOCAL:CreateScrollFrame(frame)
 	return (ScrollFrame:LoadScrollFrame(frame))
+end
+
+function SA_GUI:Toggle()
+	if mainFrame:IsShown() then
+		mainFrame:Hide()
+	else
+		mainFrame:Show()
+	end
+end
+
+function SA_GUI.ResetFrames()
+	if SA_GUI.frame then
+		SA_GUI.frame:ClearAllPoints()
+		SA_GUI.frame:SetPoint("CENTER", SA_GUI.frame.x, SA_GUI.frame.y)
+	end
 end

@@ -3,13 +3,21 @@
 ## Notes: Addon for Raidsupport
 ## Author: Maik Dömecke, Marvin Justin Veith, Bartlomiej Grabelus
 
+## OptionalDeps: LibDBIcon-1.0
+
+## X-Embeds: LibDataBroker-1.1, LibDBIcon-1.0
+
 localization.deDe.lua
 localization.enUS.lua
 localization.enGB.lua
-
 GUI\localization.de.lua
 
+embeds.xml
+
 Init.lua
+SlashCommands.lua
+
+MiniMapButton.lua
 
 GUI\DropDownList.lua
 GUI\DropDownMenu.lua

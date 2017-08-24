@@ -2,10 +2,8 @@
 local _G = _G
 
 -- create globals
-
 -- GUI
 _G.SmartAssign.SA_GUI = {}
-
 local SAL = _G.SmartAssign.Locales
 
 -- Cooldown.lua
@@ -196,3 +194,11 @@ _G.GUI.SA_DropDownMenu.data = {
  _G.GUI.SA_DropDownList.data = {SAL["Ability"],  SAL["Timer"]}
  
  _G.GUI.SA_ScrollFrame = {}
+ 
+ _G.SmartAssign.SlashCommands = {}
+ 
+ _G.SmartAssign.minimap = {
+		shown = true,
+		locked = false,
+		minimapPos = 218,
+	}

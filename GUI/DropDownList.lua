@@ -10,7 +10,7 @@ local assert, type = assert, type
 local BUTTON_HEIGHT = 25
 
 -- onClick setter
-local function SetOnClick(frame, func)
+function DropDownList:SetOnClick(frame, func)
     assert(type(func) == "function", SAL["'func' in 'DropDownList SetOnClick' must be a function."])
 	if func then
 		frame.ButtonOnClick = func
@@ -32,7 +32,6 @@ local function SetData(frame, data, startValue)
 		frame.selectedId = nil
 		return
 	end
-	assert(type(data) == "table", SAL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownList.data for infos."])
 	frame.data = data
 	frame.selectedId = startValue
 	if startValue then
@@ -78,5 +77,6 @@ function InitDDL(self, level)
 end
 
 function DropDownList:LoadDropDownList(frame, data)
+	assert(type(data) == "table", SAL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownList.data for infos."])
 	CreateDropDownList(frame, data)
 end

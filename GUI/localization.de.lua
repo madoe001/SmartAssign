@@ -6,7 +6,6 @@ end
 
 -- SmartAssign.lua
 _G.SmartAssign = {}
-
 local L = {}
 -- make L global --
 _G.SmartAssign.Locales = L
@@ -28,6 +27,23 @@ L["Ability"] = "Fähigkeit"
 
 L["Timer"] = "Timer"
 
+-- SlashCommands
+L["'func' must be a function"] = "'func' muss eine Funktion sein" 
+
+L["Command %s not found. Use '/sa slash' for a full list of commands"] = "Kommando %s nicht gefunden. Benutze '/sa slash' für eine Übersicht aller Kommandos"
+
+L["Slash commands:"] = "Slash Kommandos:"
+
+L["/sa - Open the SmartAssign window."] = "/sa - SmartAssign Fenster öffnen"
+
+L["/sa slash - Prints a list of all slash commands."] = "/sa slash - Zeige alle möglichen Slash Kommandos"
+
+-- MiniMapButton
+
+L["SmartAssign_Minimap_Clicks"] = "[=[|cffFF0000Klicken: |cffFFFFFFSmartAssign öffnen"
+
+L["/sa mmb - Toggle MiniMapButton"] = "/sa mmb - Aktiviert/Deaktiviert den Minikartenbutton"
+
 -- ASSERTS
 L["'func' in 'DropDownMenu SetOnClick' must be a function."] = "'func' in 'DropDownMenu SetOnClick' muss eine Funktion sein"
 
@@ -36,3 +52,9 @@ L["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownMenu.data for infos.
 L["'func' in 'DropDownList SetOnClick' must be a function."] = "'func' in 'DropDownList SetOnClick' muss eine Funktion sein"
 
 L["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownList.data for infos."] = "'data' muss eine Tabelle sein. Schaue in 'Init.lua' die Tabelle _G.GUI.DropDownList.data an."
+
+L["'exec' must be a string"] = "'exec' muss ein String sein"
+
+L["'helpText' must be a string"] = "'helpText' muss ein String sein"
+
+L["%s already exists"] = "%s existiert bereits"
