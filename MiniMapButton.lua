@@ -19,13 +19,15 @@ if not LibStub:GetLibrary("LibDataBroker-1.1", true) then return end
 local MiniMapLDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("SmartAssign", {
 	type = "launcher",
 	text = SAL["SmartAssign"],
-	icon = "Interface\\Addons\\SmartAssign\\ICONS\\mmb",
+	icon = "Interface\\Icons\\achievment_Boss_spineofdeathwing",
 	OnTooltipShow = function(tooltip)
 		tooltip:AddLine("|cff436eee"..SAL["SmartAssign"].."|r");
 		tooltip:AddLine(SAL["SmartAssign_Minimap_Clicks"]);
 	end,
 	OnClick = function(self, button)
-		if button == "RightButton" then return end
+		if button == "LeftButton" then
+			SlashCommands:Run("")
+		end
 	end,
 })
 
