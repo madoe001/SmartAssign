@@ -22,6 +22,7 @@ MiniMapButton.lua
 GUI\DropDownList.lua
 GUI\DropDownMenu.lua
 GUI\ScrollFrame.lua
+GUI\CheckBox.lua
 GUI\SmartAssignGUI.lua
 
 test.lua

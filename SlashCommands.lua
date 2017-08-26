@@ -54,7 +54,7 @@ function SlashCommands:Run(exec, ...)
 		elseif SlashCommands[exec] then
 			SlashCommands[exec](...)
 		else
-			print(str_format(SAL["Command %s not found. Use '/sa slash' for a full list of commands"], exec))
+			print(str_format(SAL["Command %s not found. Use '/sa slash' for a full list of commands."], exec))
 		end
 	end
 end
@@ -93,7 +93,7 @@ end
 -- Add a ResetFunction of a Frame
 function SlashCommands:AddResetFunction(func, ...)
 print(func)
-	assert(type(func) == "function", SAL["'func' must be a function"])
+	assert(type(func) == "function", SAL["'func' must be a function."])
 	local name
 	for i=1,select("#",...) do
 		name = select(i,...)
@@ -104,10 +104,10 @@ end
 
 -- Adds a new slash command
 function SlashCommands:Add(exec, func, helpText)
-	assert(type(exec) == "string", SAL["'exec' must be a string"])
-	assert(type(func) == "function", SAL["'func' must be a function"])
-	assert(type(helpText) == "string", SAL["'helpText' must be a string"])
-	assert(not CommandList[exec], str_format(SAL["%s already exists"], exec))
+	assert(type(exec) == "string", SAL["'exec' must be a string."])
+	assert(type(func) == "function", SAL["'func' must be a function."])
+	assert(type(helpText) == "string", SAL["'helpText' must be a string."])
+	assert(not CommandList[exec], str_format(SAL["%s already exists."], exec))
 	CommandList[exec] = func
 	HelpList[exec] = helpText
 end

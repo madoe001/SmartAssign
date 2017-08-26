@@ -2,7 +2,7 @@ local _G = _G
 
 -- muss komplett überarbeitet werden
 
-local DropDownMenu = _G.GUI.SA_DropDownMenu
+local SA_DropDownMenu = _G.GUI.SA_DropDownMenu
 local SAL = _G.SmartAssign.Locales
 
 local DropDownData = {}
@@ -22,7 +22,7 @@ function GetArraySize(T)
 end
 
 -- onClick setter
-function DropDownMenu:SetOnClick(frame, func)
+function SA_DropDownMenu:SetOnClick(frame, func)
     assert(type(func) == "function", SAL["'func' in 'DropDownMenu SetOnClick' must be a function."])
 	if func then
 		frame.ButtonOnClick = func
@@ -31,7 +31,7 @@ function DropDownMenu:SetOnClick(frame, func)
 	end
 end
 
-function DropDownMenu:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
+function SA_DropDownMenu:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 	DropDownMenuButton:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
 
@@ -65,8 +65,8 @@ end
 -- first create button than init
 local function CreateDropDownButton(frame, data)
 	if not DropDownMenuButton then
-		DropDownMenuButton = CreateFrame("Button", "DropDownMenuButton", frame,"UIDropDownMenuTemplate")
-		DropDownMenu = CreateFrame('Frame', "DropDownMenu", DropDownMenuButton)
+		DropDownMenuButton = CreateFrame("Button", "SA_DropDownMenuButton", frame,"UIDropDownMenuTemplate")
+		DropDownMenu = CreateFrame('Frame', "SA_DropDownMenu", DropDownMenuButton)
 	end
 	
 	SetData(DropDownMenuButton, data, 1)
@@ -133,7 +133,7 @@ level = level or 1;
    end -- if level 2
 end
 
-function DropDownMenu:LoadDropDownMenu(frame, data)
+function SA_DropDownMenu:LoadDropDownMenu(frame, data)
 	assert(type(data) == "table", SAL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownMenu.data for infos."])
 	return CreateDropDownButton(frame, data)
 end

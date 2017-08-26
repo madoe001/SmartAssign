@@ -4,6 +4,7 @@ local SmartAssign = _G.SmartAssign
 local DropDownMenu = _G.GUI.SA_DropDownMenu
 local DropDownList = _G.GUI.SA_DropDownList
 local ScrollFrame = _G.GUI.SA_ScrollFrame
+local CheckBox = _G.GUI.SA_CheckBox
 local SlashCommands = _G.SmartAssign.SlashCommands
 local MiniMapButton = SmartAssign.MiniMapButton
 
@@ -71,8 +72,19 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	
 	frame.scrollFrame = SA_GUI_LOCAL:CreateScrollFrame(LeftSide)
 	
+	frame.checkbox = SA_GUI_LOCAL:CreateCheckBox(frame, SAL["Ability"])
+	frame.checkbox:SetScript("OnClick", function(self, button, down)
+		if CheckBox:GetChecked() then
+			print(button.."was clicked. now is check.")
+			frame.dropDownList:Hide()
+		else
+			frame.dropDownList:Show()
+		end
+end)
+	
 	DropDownMenu:SetPoint("LEFT", frame.leftSide, "RIGHT", 0, 0)
 	DropDownList:SetPoint("LEFT", frame.dropDownMenu, "RIGHT", 0, 0)
+	CheckBox:SetPoint("LEFT", frame.dropDownList, "RIGHT", 0, 0)
 	
 	-- make main frame movable
 	SA_GUI_LOCAL:MakeMovable(frame)
@@ -103,7 +115,7 @@ end
 
 function SA_GUI_LOCAL:CreateLeftSide(frame)
 	if not LeftSide then
-		LeftSide = CreateFrame("Frame", "SA_LeftFrame", frame)
+		LeftSide = CreateFrame("Frame", "LeftSide", frame)
 	end
 	LeftSide:SetBackdrop({
 	bgFile = "Interface/DialogFrame/UI-DialogBox-Background",
@@ -182,6 +194,10 @@ end
 
 function SA_GUI_LOCAL:CreateScrollFrame(frame)
 	return (ScrollFrame:LoadScrollFrame(frame))
+end
+
+function SA_GUI_LOCAL:CreateCheckBox(frame, checkboxText)
+	return (CheckBox:LoadCheckBox(frame, checkboxText))
 end
 
 function SA_GUI:Toggle()

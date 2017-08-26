@@ -1,6 +1,6 @@
 local _G = _G
 
-local DropDownList = _G.GUI.SA_DropDownList
+local SA_DropDownList = _G.GUI.SA_DropDownList
 local SAL = _G.SmartAssign.Locales
 
 -- for failurehandling
@@ -9,7 +9,7 @@ local assert, type = assert, type
 local BUTTON_HEIGHT = 25
 
 -- onClick setter
-function DropDownList:SetOnClick(frame, func)
+function SA_DropDownList:SetOnClick(frame, func)
     assert(type(func) == "function", SAL["'func' in 'DropDownList SetOnClick' must be a function."])
 	if func then
 		frame.ButtonOnClick = func
@@ -18,7 +18,7 @@ function DropDownList:SetOnClick(frame, func)
 	end
 end
 
-function DropDownList:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
+function SA_DropDownList:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 	DropDownListButton:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
 
@@ -80,7 +80,7 @@ function InitDDL(self, level)
    end
 end
 
-function DropDownList:LoadDropDownList(frame, data)
+function SA_DropDownList:LoadDropDownList(frame, data)
 	assert(type(data) == "table", SAL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownList.data for infos."])
 	return CreateDropDownList(frame, data)
 end

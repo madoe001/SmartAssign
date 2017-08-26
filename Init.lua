@@ -195,6 +195,8 @@ _G.GUI.SA_DropDownMenu.data = {
  
  _G.GUI.SA_ScrollFrame = {}
  
+ _G.GUI.SA_CheckBox = {}
+ 
  _G.SmartAssign.SlashCommands = {}
  
  _G.SmartAssign.minimap = {

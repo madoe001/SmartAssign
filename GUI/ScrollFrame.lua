@@ -4,7 +4,7 @@ local SA_ScrollFrame =  _G.GUI.SA_ScrollFrame
 
 local function CreateScrollFrame(frame)
 	if not ScrollFrame then
-		ScrollFrame = CreateFrame("ScrollFrame", "SA_ScrollFrame", frame)
+		ScrollFrame = CreateFrame("ScrollFrame", "ScrollFrame", frame)
 	end
 	ScrollFrame:SetPoint("TOPLEFT", 10, -10)
 	ScrollFrame:SetPoint("BOTTOMRIGHT", -10, 10)
@@ -53,6 +53,10 @@ function CreateContent(frame)
 	Content.texture:SetTexture("Interface/GLUES/MainMenu/Glues-BlizzardLogo")
 	
 	frame:SetScrollChild(Content)
+end
+
+function SA_ScrollFrame:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
+	ScrollFrame:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
 
 function SA_ScrollFrame:LoadScrollFrame(frame)
