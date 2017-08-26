@@ -165,7 +165,7 @@ _G.GUI = {}
 _G.GUI.SA_DropDownMenu = {}
 
 _G.GUI.SA_DropDownMenu.data = {
-   [SAL["Healer"]] = {		-- category
+   ["Healer"] = {		-- category
 			[1] = {		-- entry number
 				["id"]			= "H1",		-- unique id
 				["name"]		= "Henny",

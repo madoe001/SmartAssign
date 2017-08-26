@@ -4,7 +4,8 @@ local _G = _G
 
 local DropDownMenu = _G.GUI.SA_DropDownMenu
 local SAL = _G.SmartAssign.Locales
-local DropDownData = _G.GUI.SA_DropDownMenu.data
+
+local DropDownData = {}
 
 -- for failurehandling
 local assert, type = assert, type
@@ -30,6 +31,10 @@ function DropDownMenu:SetOnClick(frame, func)
 	end
 end
 
+function DropDownMenu:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
+	DropDownMenuButton:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
+end
+
 -- for getting selected item
 local function GetSelectedItem(self)
 	return DropDownData[UIDROPDOWNMENU_MENU_VALUE["Category"]][self:GetID()]["name"]
@@ -49,6 +54,7 @@ local function SetData(frame, data, startValue)
 		frame.selectedId = nil
 		return
 	end
+	DropDownData = data
 	frame.data = data
 	frame.selectedId = startValue
 	if startValue then
@@ -70,7 +76,7 @@ local function CreateDropDownButton(frame, data)
 	insets = {left = 1, right = 1, top = 5, bottom = 1}
 	})
 	
-	DropDownMenuButton:SetPoint("LEFT", 20, 0) -- 20 = x
+	--DropDownMenuButton:SetPoint("LEFT", 20, 0) -- 20 = x
 	DropDownMenuButton:SetHeight(BUTTON_HEIGHT)
     DropDownMenuButton:RegisterForClicks("LeftButtonDown", "RightButtonDown") -- only right and left click
     
@@ -85,6 +91,8 @@ local function CreateDropDownButton(frame, data)
     UIDropDownMenu_SetButtonWidth(DropDownMenuButton, DropDownMenuButton.label:GetStringWidth())
     UIDropDownMenu_SetWidth(DropDownMenuButton, DropDownMenuButton.label:GetStringWidth());
     UIDropDownMenu_JustifyText(DropDownMenuButton, "CENTER")
+    
+    return DropDownMenuButton
 end
 
 -- init the dropdownmenu (only 2 levels)
@@ -127,5 +135,5 @@ end
 
 function DropDownMenu:LoadDropDownMenu(frame, data)
 	assert(type(data) == "table", SAL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownMenu.data for infos."])
-	CreateDropDownButton(frame, data)
+	return CreateDropDownButton(frame, data)
 end

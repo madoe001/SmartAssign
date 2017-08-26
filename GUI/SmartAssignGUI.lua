@@ -65,11 +65,14 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	
 	frame.leftSide = SA_GUI_LOCAL:CreateLeftSide(frame)
 	
-	--SA_GUI_LOCAL:CreateDropDownMenu(frame, DropDownMenu.data)
+	frame.dropDownMenu = SA_GUI_LOCAL:CreateDropDownMenu(frame, DropDownMenu.data)
 	
-	--SA_GUI_LOCAL:CreateDropDownList(frame, DropDownList.data)
+	frame.dropDownList = SA_GUI_LOCAL:CreateDropDownList(frame, DropDownList.data)
 	
 	frame.scrollFrame = SA_GUI_LOCAL:CreateScrollFrame(LeftSide)
+	
+	DropDownMenu:SetPoint("LEFT", frame.leftSide, "RIGHT", 0, 0)
+	DropDownList:SetPoint("LEFT", frame.dropDownMenu, "RIGHT", 0, 0)
 	
 	-- make main frame movable
 	SA_GUI_LOCAL:MakeMovable(frame)
@@ -170,11 +173,11 @@ function SA_GUI_LOCAL:CreateFont(frame, name, text, position, x, y, size)
 end
 
 function SA_GUI_LOCAL:CreateDropDownMenu(frame, data) 
-	DropDownMenu:LoadDropDownMenu(frame, data)
+	return (DropDownMenu:LoadDropDownMenu(frame, data))
 end
 
 function SA_GUI_LOCAL:CreateDropDownList(frame, data) 
-	DropDownList:LoadDropDownList(frame, data)
+	return (DropDownList:LoadDropDownList(frame, data))
 end
 
 function SA_GUI_LOCAL:CreateScrollFrame(frame)

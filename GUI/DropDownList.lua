@@ -2,7 +2,6 @@ local _G = _G
 
 local DropDownList = _G.GUI.SA_DropDownList
 local SAL = _G.SmartAssign.Locales
-local DropDownListData = _G.GUI.SA_DropDownList.data
 
 -- for failurehandling
 local assert, type = assert, type
@@ -17,6 +16,10 @@ function DropDownList:SetOnClick(frame, func)
 	else
 		frame.ButtonOnClick = nil
 	end
+end
+
+function DropDownList:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
+	DropDownListButton:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
 
 -- onclick event handling
@@ -52,7 +55,6 @@ local function CreateDropDownList(frame, data)
     DropDownListButton:RegisterForClicks("LeftButtonDown", "RightButtonDown") -- only right and left click
     
     DropDownListButton.label = DropDownListButton:CreateFontString("DropDownListButton-label", "ARTWORK", "GameFontNormalSmall")
-	--DropDownListButton.label:SetPoint("LEFT", DropDownMenu, "LEFT")
 	DropDownListButton.label:SetHeight(BUTTON_HEIGHT)
 	DropDownListButton.label:SetText("DropDownListButton-label")
 	
@@ -62,15 +64,17 @@ local function CreateDropDownList(frame, data)
     UIDropDownMenu_SetButtonWidth(DropDownListButton, (DropDownListButton.label:GetStringWidth()-(DropDownListButton.label:GetStringWidth()*0.5)))
     UIDropDownMenu_SetWidth(DropDownListButton, DropDownListButton.label:GetStringWidth());
     UIDropDownMenu_JustifyText(DropDownListButton, "CENTER")
+    
+    return DropDownListButton
 end
 
 function InitDDL(self, level)
    UIDropDownMenu_SetText(DropDownListButton, "");
    local info = UIDropDownMenu_CreateInfo()
-   for key,value in pairs(DropDownListData) do
+   for key,value in pairs(self.data) do
       info = UIDropDownMenu_CreateInfo()
       info.text = value
-      info.value = vvalue
+      info.value = value
       info.func = OnClick
       UIDropDownMenu_AddButton(info, level)
    end
@@ -78,5 +82,5 @@ end
 
 function DropDownList:LoadDropDownList(frame, data)
 	assert(type(data) == "table", SAL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownList.data for infos."])
-	CreateDropDownList(frame, data)
+	return CreateDropDownList(frame, data)
 end
