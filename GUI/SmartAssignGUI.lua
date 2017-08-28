@@ -73,9 +73,9 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	frame.scrollFrame = SA_GUI_LOCAL:CreateScrollFrame(LeftSide)
 	
 	frame.checkbox = SA_GUI_LOCAL:CreateCheckBox(frame, SAL["Ability"])
+	--test
 	frame.checkbox:SetScript("OnClick", function(self, button, down)
 		if CheckBox:GetChecked() then
-			print(button.."was clicked. now is check.")
 			frame.dropDownList:Hide()
 		else
 			frame.dropDownList:Show()
@@ -153,8 +153,10 @@ function SA_GUI_LOCAL:CreateButton(frame, name, text, width, height, position, x
 		local button = CreateFrame("Button", name, frame, template)
 		button:SetPoint(position, frame, position)
 		-- when click on Button Hide frame
-		button:SetScript("OnClick", function ()
-		frame:Hide()
+		button:SetScript("OnClick", function (self, button)
+			if button == "LeftButton" then
+				frame:Hide()
+			end
 		end)
 	else
 		local button = CreateFrame("Button", name, frame, template)

@@ -15,7 +15,7 @@ local BUTTON_HEIGHT = 25
 -- lua function to get table size
 function GetArraySize(T)
 	local lengthNum = 0
-	for _ in pairs(T) do -- for every key in the table with a corresponding non-nil value 
+	for k,v in pairs(T) do -- for every key in the table with a corresponding non-nil value 
 		lengthNum = lengthNum + 1
 	end
 	return lengthNum
@@ -43,7 +43,7 @@ end
 -- geht noch nicht ändert auf Benutzerdefiniert
 function OnClick(self)
 	print(">> DropDownMenu OnClick << called "..DropDownData[UIDROPDOWNMENU_MENU_VALUE["Category"]][self:GetID()]["name"])  
-	UIDropDownMenu_SetSelectedValue(DropDownMenuButton, GetSelectedItem(self)); -- geht immer noch nicht
+	UIDropDownMenu_SetText(DropDownMenuButton, DropDownData[UIDROPDOWNMENU_MENU_VALUE["Category"]][self:GetID()]["name"]); -- geht immer noch nicht
 end
 
 -- clears the dropdownmenu, sets data and a startvalue

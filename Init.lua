@@ -6,6 +6,18 @@ local _G = _G
 _G.SmartAssign.SA_GUI = {}
 local SAL = _G.SmartAssign.Locales
 
+_G.Dungeons = {
+	["Classic"] = {
+		["Ragefire Chasm"] = {"1",
+							  "2"},
+		["Deadmines"] = {"1"},
+		["Wailing Caverns"] = {"1",
+							   "2"},
+		["Shadowfang Keep"] = {"1"},
+		["Test"] =  {"3"}},
+	["WOTLK"] = {}
+}
+
 -- Cooldown.lua
 _G.ClassList = {
    ["Warrior"] = {
