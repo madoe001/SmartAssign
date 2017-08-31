@@ -7,15 +7,14 @@ _G.SmartAssign.SA_GUI = {}
 local SAL = _G.SmartAssign.Locales
 
 _G.Dungeons = {
-	["Classic"] = {
-		["Ragefire Chasm"] = {"1",
+	[SAL["Classic"]] = {
+		[SAL["Ragefire Chasm"]] = {"1",
 							  "2"},
-		["Deadmines"] = {"1"},
-		["Wailing Caverns"] = {"1",
+		[SAL["Deadmines"]] = {"1"},
+		[SAL["Wailing Caverns"]] = {"1",
 							   "2"},
-		["Shadowfang Keep"] = {"1"},
-		["Test"] =  {"3"}},
-	["WOTLK"] = {}
+		[SAL["Shadowfang Keep"]] = {"1"}},
+	[SAL["WOTLK"]] = {},
 }
 
 -- Cooldown.lua

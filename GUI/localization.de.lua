@@ -27,6 +27,18 @@ L["Ability"] = "F\195\164higkeit"
 
 L["Timer"] = "Timer"
 
+L["Classic"] = "Classic"
+
+L["Ragefire Chasm"] = "Der Flammenschlund"
+
+L["Deadmines"] = "Die Todesminen"
+
+L["Wailing Caverns"] = "Die H\195\182hlen des Wehklagens"
+
+L["Shadowfang Keep"] = "Burg Schattenfang"
+
+L["WOTLK"] = "WOTLK"
+
 -- SlashCommands
 L["'func' must be a function"] = "'func' muss eine Funktion sein" 
 
