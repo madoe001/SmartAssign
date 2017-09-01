@@ -12,7 +12,7 @@ end
 
 local function CreateCheckBox(frame, checkboxText)
 	if not CheckBoxFrame then
-		CheckBoxFrame = CreateFrame("CheckButton", "UICheckButtonTemplateTest", frame, "UICheckButtonTemplate")
+		CheckBoxFrame = CreateFrame("CheckButton", "CheckButton", frame, "UICheckButtonTemplate")
 	end
 	CheckBoxFrame:ClearAllPoints()
 	CheckBoxFrame:SetText(checkboxText)

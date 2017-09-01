@@ -1,10 +1,12 @@
 -- Global vars --
 local _G = _G
 local SmartAssign = _G.SmartAssign
-local DropDownMenu = _G.GUI.SA_DropDownMenu
-local DropDownList = _G.GUI.SA_DropDownList
-local ScrollFrame = _G.GUI.SA_ScrollFrame
-local CheckBox = _G.GUI.SA_CheckBox
+local GUI = _G.GUI
+local DropDownMenu = GUI.SA_DropDownMenu
+local DropDownList = GUI.SA_DropDownList
+local ScrollFrame = GUI.SA_ScrollFrame
+local CheckBox = GUI.SA_CheckBox
+local EditBox = GUI.SA_EditBox
 local SlashCommands = _G.SmartAssign.SlashCommands
 local MiniMapButton = SmartAssign.MiniMapButton
 
@@ -73,18 +75,22 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	frame.scrollFrame = SA_GUI_LOCAL:CreateScrollFrame(LeftSide)
 	
 	frame.checkbox = SA_GUI_LOCAL:CreateCheckBox(frame, SAL["Ability"])
+	
+	frame.editbox = SA_GUI_LOCAL:CreateEditBox(frame, "string")
+	EditBox:SetMaxLetters(frame.editbox, 35) -- number size --> 6
 	--test
 	frame.checkbox:SetScript("OnClick", function(self, button, down)
 		if CheckBox:GetChecked() then
-			frame.dropDownList:Hide()
+			frame.editbox:Hide()
 		else
-			frame.dropDownList:Show()
+			frame.editbox:Show()
 		end
 end)
 	
 	DropDownMenu:SetPoint("LEFT", frame.leftSide, "RIGHT", 0, 0)
 	DropDownList:SetPoint("LEFT", frame.dropDownMenu, "RIGHT", 0, 0)
 	CheckBox:SetPoint("LEFT", frame.dropDownList, "RIGHT", 0, 0)
+	EditBox:SetPoint("LEFT", frame.checkbox.label, "RIGHT", 5, 0)
 	
 	-- make main frame movable
 	SA_GUI_LOCAL:MakeMovable(frame)
@@ -200,6 +206,10 @@ end
 
 function SA_GUI_LOCAL:CreateCheckBox(frame, checkboxText)
 	return (CheckBox:LoadCheckBox(frame, checkboxText))
+end
+
+function SA_GUI_LOCAL:CreateEditBox(frame, inputType)
+	return(EditBox:LoadEditBox(frame,  inputType))
 end
 
 function SA_GUI:Toggle()

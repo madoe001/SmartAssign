@@ -208,6 +208,8 @@ _G.GUI.SA_DropDownMenu.data = {
  
  _G.GUI.SA_CheckBox = {}
  
+ _G.GUI.SA_EditBox = {}
+ 
  _G.SmartAssign.SlashCommands = {}
  
  _G.SmartAssign.minimap = {

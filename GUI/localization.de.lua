@@ -56,6 +56,12 @@ L["SmartAssign_Minimap_Clicks"] = "|cffFF0000Klicken: |cffFFFFFFSmartAssign \195
 
 L["/sa mmb - Toggle MiniMapButton."] = "/sa mmb - Aktiviert/Deaktiviert den Minikartenbutton."
 
+-- EditBox
+
+L["Time in sec"] = "Zeit in s"
+
+L["[SpellID] text"] = "[SpellID] Text"
+
 -- ASSERTS
 L["'func' in 'DropDownMenu SetOnClick' must be a function."] = "'func' in 'DropDownMenu SetOnClick' muss eine Funktion sein."
 
@@ -72,3 +78,7 @@ L["'helpText' must be a string."] = "'helpText' muss ein String sein."
 L["%s already exists."] = "%s existiert bereits."
 
 L["'checkboxText' must be a string."] = "'checkboxText' muss ein String sein."
+
+L["'max' must be higher then 0."] = "'max' muss gr\195\182sser als 0 sein."
+
+L["'inputType' must be string or number."] = "'inputType' muss String oder Nummer sein."
