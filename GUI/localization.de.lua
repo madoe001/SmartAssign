@@ -12,7 +12,7 @@ _G.SmartAssign.Locales = L
 
 L["SmartAssign"] = "SmartAssign"
 
-L["SmartAssign loaded more information added later."] = "SmartAssign geladen weitere Informationen folgen."
+L["SmartAssign loaded. For more informartion about Slashcommands type in '/sa slash'."] = "SmartAssign geladen. Für mehr Informationen zu Slashcommands, gebe '/sa slash' ein."
 
 L["Player"] = "Spieler"
 

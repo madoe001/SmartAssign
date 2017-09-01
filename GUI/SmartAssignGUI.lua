@@ -35,7 +35,7 @@ function SA_GUI_LOCAL:Init(event, addon)
 		SA_GUI_LOCAL:CreateGUI(SA_GUI.frame)
 		-- color the text |cffHEXCOLOR STRING |r << EndTag
 		print("|cff15c39a<|r|cff436eee"..SAL["SmartAssign"].."|r|cff15c39a>|r"..
-		"|cffffa500"..SAL["SmartAssign loaded more information added later."].."|r")
+		"|cffffa500"..SAL["SmartAssign loaded. For more informartion about Slashcommands type in '/sa slash'."].."|r")
 		SlashCommands:Init()
 		SlashCommands:AddResetFunction(SA_GUI.ResetFrames, "frames")
 		MiniMapButton:Init()
