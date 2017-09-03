@@ -26,6 +26,10 @@ local MiniMapLDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("SmartA
 	end,
 	OnClick = function(self, button)
 		if button == "LeftButton" then
+			if minimap.clicked == true then
+				SlashCommands:Run("reset","frames")
+			end
+			minimap.clicked = true	
 			SlashCommands:Run("")
 		end
 	end,

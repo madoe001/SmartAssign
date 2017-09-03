@@ -12,7 +12,7 @@ _G.SmartAssign.Locales = L
 
 L["SmartAssign"] = "SmartAssign"
 
-L["SmartAssign loaded. For more informartion about Slashcommands type in '/sa slash'."] = "SmartAssign geladen. Für mehr Informationen zu Slashcommands, gebe '/sa slash' ein."
+L["SmartAssign loaded. For more informartion about Slashcommands type in '/sa slash'."] = "SmartAssign geladen. F\195\188r mehr Informationen zu Slashcommands, gebe '/sa slash' ein."
 
 L["Player"] = "Spieler"
 
@@ -31,18 +31,64 @@ L["Classic"] = "Classic"
 
 L["Ragefire Chasm"] = "Der Flammenschlund"
 
+L["Adarogg"] = "Adarogg"
+
+L["Dark Shaman Koranthal"] = "Dunkelschamane Koranthal"
+
+L["Slagmaw"] = "Nagma"
+
+L["Lava Guard Gordoth"] = "Lavawache Gordoth"
+
 L["Deadmines"] = "Die Todesminen"
+
+L["Glubtok"] = "Glubtok"
+
+L["Helix Gearbreaker"] = "Helix Ritzelbrecher"
+
+L["Foe Reaper 5000"] = "Feindschnitter 5000"
+
+L["Admiral Ripsnarl"] = "Admiral Knurrreisser"
+
+L["Captain Cookie"] = "Kapit\195\164n Kr\195\188mel"
+
+L["Vanessa VanCleef"] = "Vanessa van Cleef"
 
 L["Wailing Caverns"] = "Die H\195\182hlen des Wehklagens"
 
+L["Lady Anacondra"] = "Lady Anakondra"
+
+L["Kresh"] = "Kresh"
+
+L["Lord Pythas"] = "Lord Pythas"
+
+L["Lord Cobrahn"] = "Lord Kobrahn"
+
+L["Skum"] = "Skum"
+
+L["Lord Serpentis"] = "Lord Serpentis"
+
+L["Verdan the Everliving"] = "Verdan der Ewiglebende"
+
+L["Mutanus the Devourer"] = "Mutanus der Verschlinger"
+
 L["Shadowfang Keep"] = "Burg Schattenfang"
+
+L["Baron Ashbury"] = "Baron Ashbury"
+
+L["Baron Silverlaine"] = "Baron Silberlein"
+
+L["Commander Springvale"] = "Kommandant Gr\195\188ntal"
+
+L["Lord Walden"] = "Lord Walden"
+
+L["Lord Godfrey"] = "Lord Godfrey"
 
 L["WOTLK"] = "WOTLK"
 
 -- SlashCommands
-L["'func' must be a function"] = "'func' muss eine Funktion sein" 
+L["'func' must be a function."] = "'func' muss eine Funktion sein." 
 
-L["Command %s not found. Use '/sa slash' for a full list of commands"] = "Kommando %s nicht gefunden. Benutze '/sa slash' f\195\188r eine \195\156bersicht aller Kommandos"
+L["Command %s not found. Use '/sa slash' for a full list of commands."] = "Kommando %s nicht gefunden. Benutze '/sa slash' f\195\188r eine \195\156bersicht aller Kommandos"
 
 L["Slash commands:"] = "Slash Kommandos:"
 
@@ -61,6 +107,10 @@ L["/sa mmb - Toggle MiniMapButton."] = "/sa mmb - Aktiviert/Deaktiviert den Mini
 L["Time in sec"] = "Zeit in s"
 
 L["[SpellID] text"] = "[SpellID] Text"
+
+-- ScrollFrame
+
+L[" has no childs!"] = " hat keine Kinder!"
 
 -- ASSERTS
 L["'func' in 'DropDownMenu SetOnClick' must be a function."] = "'func' in 'DropDownMenu SetOnClick' muss eine Funktion sein."

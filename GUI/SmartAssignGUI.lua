@@ -39,7 +39,7 @@ function SA_GUI_LOCAL:Init(event, addon)
 		print("|cff15c39a<|r|cff436eee"..SAL["SmartAssign"].."|r|cff15c39a>|r"..
 		"|cffffa500"..SAL["SmartAssign loaded. For more informartion about Slashcommands type in '/sa slash'."].."|r")
 		SlashCommands:Init()
-		SlashCommands:AddResetFunction(SA_GUI.ResetFrames, "frames")
+		SlashCommands:AddResetFunction(SA_GUI_LOCAL.ResetFrames, "frames")
 		MiniMapButton:Init()
 	end
 end
@@ -71,12 +71,14 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	frame.dropDownMenu = SA_GUI_LOCAL:CreateDropDownMenu(frame, DropDownMenu.data)
 	
 	frame.dropDownList = SA_GUI_LOCAL:CreateDropDownList(frame, DropDownList.data)
+	frame.dropDownList:Hide()
 	
-	frame.scrollFrame = SA_GUI_LOCAL:CreateScrollFrame(LeftSide)
+	frame.scrollFrame = SA_GUI_LOCAL:CreateScrollFrame(LeftSide, frame.dropDownList)
+	SlashCommands:AddResetFunction(SA_GUI_LOCAL.ScrollFrameReset,"ScrollFrame")
 	
 	frame.checkbox = SA_GUI_LOCAL:CreateCheckBox(frame, SAL["Ability"])
 	
-	frame.editbox = SA_GUI_LOCAL:CreateEditBox(frame, "string")
+	frame.editbox = SA_GUI_LOCAL:CreateEditBox(frame, "number")
 	EditBox:SetMaxLetters(frame.editbox, 35) -- number size --> 6
 	--test
 	frame.checkbox:SetScript("OnClick", function(self, button, down)
@@ -85,12 +87,22 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 		else
 			frame.editbox:Show()
 		end
-end)
+	end)
 	
-	DropDownMenu:SetPoint("LEFT", frame.leftSide, "RIGHT", 0, 0)
-	DropDownList:SetPoint("LEFT", frame.dropDownMenu, "RIGHT", 0, 0)
-	CheckBox:SetPoint("LEFT", frame.dropDownList, "RIGHT", 0, 0)
-	EditBox:SetPoint("LEFT", frame.checkbox.label, "RIGHT", 5, 0)
+	frame:SetScript("OnUpdate", function(self, elapsed)
+		if frame.scrollFrame.instanceButton ~= nil then
+			if frame.scrollFrame.bossButton ~= nil then
+				frame.dropDownList:Show()
+			else
+				frame.dropDownList:Hide()
+			end
+		end
+	end)
+	
+	DropDownList:SetPoint("LEFT", frame.leftSide, "RIGHT", 0, 0)
+	EditBox:SetPoint("LEFT", frame.dropDownList, "RIGHT", 5, 0)
+	DropDownMenu:SetPoint("LEFT", frame.editbox, "RIGHT", 0, 0)
+	CheckBox:SetPoint("LEFT", frame.dropDownMenu, "RIGHT", 0, 0)
 	
 	-- make main frame movable
 	SA_GUI_LOCAL:MakeMovable(frame)
@@ -220,9 +232,14 @@ function SA_GUI:Toggle()
 	end
 end
 
-function SA_GUI.ResetFrames()
+function SA_GUI_LOCAL:ResetFrames()
 	if SA_GUI.frame then
 		SA_GUI.frame:ClearAllPoints()
 		SA_GUI.frame:SetPoint("CENTER", SA_GUI.frame.x, SA_GUI.frame.y)
+		ScrollFrame:Reset(mainFrame)
 	end
+end
+
+function SA_GUI_LOCAL:ScrollFrameReset()
+	ScrollFrame:Reset(mainFrame)
 end
