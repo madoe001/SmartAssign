@@ -7,7 +7,6 @@ end
 -- SmartAssign.lua
 local L = {}
 -- make L global --
-_G.SmartAssign.Locales = {}
 _G.SmartAssign.Locales = L
 
 L["SmartAssign"] = "SmartAssign"

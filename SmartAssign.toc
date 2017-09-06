@@ -7,20 +7,18 @@
 
 ## X-Embeds: LibStub, CallbackHandler-1.0, LibDataBroker-1.1, LibDBIcon-1.0
 
-LIBS\LibStub\LibStub.lua
-LIBS\CallbackHandler-1.0\CallbackHandler-1.0.xml
-
+Init.lua
 
 localization.deDe.lua
 localization.enUS.lua
 localization.enGB.lua
 GUI\localization.de.lua
 
-Init.lua
 embedLIBS.xml
 
-SlashCommands.lua
+DATA\Data.lua
 
+SlashCommands.lua
 MiniMapButton.lua
 
 GUI\DropDownList.lua
@@ -29,10 +27,9 @@ GUI\ScrollFrame.lua
 GUI\CheckBox.lua
 GUI\EditBox.lua
 GUI\SmartAssignGUI.lua
-SmartAssign.lua
-
 
 test.lua
 
 Cooldown.lua
 
+SmartAssign.lua
