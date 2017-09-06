@@ -5,7 +5,6 @@ if GetLocale() ~= "deDE" then
 end
 
 -- SmartAssign.lua
-_G.SmartAssign = {}
 local L = {}
 -- make L global --
 _G.SmartAssign.Locales = {}
