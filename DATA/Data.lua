@@ -2,7 +2,7 @@ local _G = _G
 
 local SAL = _G.GUI.Locales
 
-_G.Dungeons = {
+_G.Dungeons ={
 	[SAL["Classic"]] = {
 		[SAL["Ragefire Chasm"]] = {SAL["Adarogg"],
 								   SAL["Dark Shaman Koranthal"],
@@ -38,7 +38,7 @@ _G.Dungeons = {
 									SAL["Commander Springvale"],
 									SAL["Lord Walden"],
 									SAL["Lord Godfrey"],}},
-	[SAL["WOTLK"]] = {},
+	[SAL["WOTLK"]] = {}
 }
 
 -- Cooldown.lua

@@ -12,7 +12,9 @@ Init.lua
 localization.deDe.lua
 localization.enUS.lua
 localization.enGB.lua
-GUI\localization.de.lua
+GUI\localization.deDE.lua
+GUI\localization.enUS.lua
+GUI\localization.enGB.lua
 
 embedLIBS.xml
 
