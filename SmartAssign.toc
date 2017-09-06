@@ -3,9 +3,9 @@
 ## Notes: Addon for Raidsupport
 ## Author: Maik Dömecke, Marvin Justin Veith, Bartlomiej Grabelus
 
-## OptionalDeps: LibDBIcon-1.0
+## OptionalDeps: LibStub, CallbackHandler-1.0, LibDBIcon-1.0
 
-## X-Embeds: LibDataBroker-1.1, LibDBIcon-1.0
+## X-Embeds: LibStub, CallbackHandler-1.0, LibDataBroker-1.1, LibDBIcon-1.0
 
 localization.deDe.lua
 localization.enUS.lua
