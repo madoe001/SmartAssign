@@ -11,9 +11,8 @@ function SA_CheckBox:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
 
 local function CreateCheckBox(frame, checkboxText)
-	if not CheckBoxFrame then
-		CheckBoxFrame = CreateFrame("CheckButton", "CheckButton", frame, "UICheckButtonTemplate")
-	end
+	local CheckBoxFrame = CreateFrame("CheckButton", "CheckButton", frame, "UICheckButtonTemplate")
+
 	CheckBoxFrame:ClearAllPoints()
 	CheckBoxFrame:SetText(checkboxText)
 	

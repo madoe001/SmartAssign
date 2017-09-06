@@ -221,12 +221,15 @@ function SA_ScrollFrame:Reset(frame)
 	ScrollFrame.instanceButton = nil
 	ScrollFrame.bossButton = nil
 	ScrollFrame:SetAttribute("lvlClicked", 0)
+	ScrollBar:SetAttribute("buttoncount", 0)
 	ScrollBar:SetValue(0)
 	ScrollBar:Hide()
-	ScrollBar:SetAttribute("buttoncount", ScrollFrame.mainButtonCount)
+	DisableBossButtons()
+	ConfigAllButtons()
 	SetAllClicked(false)
 	SetMainButtons()
 	SetAllPlusTex()
+	ScrollBar:SetAttribute("buttoncount", ScrollFrame.mainButtonCount)
 end
 
 -- Create all Buttons for the ScrollFrame
@@ -334,6 +337,14 @@ function ConfigBossButtons(button, key)
 	button.clicked = false
 	button:Hide()
 	
+	local tex = button:CreateTexture(nil, "ARTWORK")
+	tex:SetAllPoints(true)
+	tex:SetTexture(nil)
+	button:SetNormalTexture(tex)
+	button:GetNormalTexture():ClearAllPoints()
+	button:GetNormalTexture():SetPoint("RIGHT", button, "RIGHT", 0, 0)
+	button:GetNormalTexture():SetPoint("LEFT", button, "LEFT", 0, 0)
+	
 	button:SetScript("OnClick", function(self, button)
 		if button == "LeftButton" then
 			if self.clicked == false then
@@ -370,6 +381,18 @@ function ConfigBossButtons(button, key)
 	end)
 end
 
+-- ######################### NEXT ConfigAllButtons für Reset, um alle Buttons wieder die alte Texture zu geben etc
+function ConfigAllButtons()
+	for i=1, #ScrollFrame.buttons, 1 do
+		if ScrollFrame.buttons[i].level == 1 then
+			ConfigMainButtons(ScrollFrame.buttons[i])
+		elseif ScrollFrame.buttons[i].level == 2 then
+			ConfigInstanceButton(ScrollFrame.buttons[i], ScrollFrame.buttons[i]:GetText())
+		elseif ScrollFrame.buttons[i].level == 3 then
+			ConfigBossButtons(ScrollFrame.buttons[i], ScrollFrame.buttons[i]:GetText())
+		end
+	end
+end
 -- Setter for buttons, if all are clicked or not
 function SetAllClicked(clicked)
 	for i=1,GetArraySize(Content.data, GetDepth(Content.data), 0) do

@@ -54,6 +54,7 @@ function SA_GUI_LOCAL:MakeMovable(frame)
 end
 
 -- create GUI
+-- ######################## NEXT Container für Frames und Hide über eine func welche im container sucht und Hide ausführt und ein HideAll
 function SA_GUI_LOCAL:CreateGUI(frame)
 	local window = SA_GUI_LOCAL:CreateWindow(frame)
 	
@@ -69,6 +70,7 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	frame.leftSide = SA_GUI_LOCAL:CreateLeftSide(frame)
 	
 	frame.dropDownMenu = SA_GUI_LOCAL:CreateDropDownMenu(frame, DropDownMenu.data)
+	frame.dropDownMenu:Hide()
 	
 	frame.dropDownList = SA_GUI_LOCAL:CreateDropDownList(frame, DropDownList.data)
 	frame.dropDownList:Hide()
@@ -76,33 +78,23 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	frame.scrollFrame = SA_GUI_LOCAL:CreateScrollFrame(LeftSide, frame.dropDownList)
 	SlashCommands:AddResetFunction(SA_GUI_LOCAL.ScrollFrameReset,"ScrollFrame")
 	
-	frame.checkbox = SA_GUI_LOCAL:CreateCheckBox(frame, SAL["Ability"])
+	frame.timerCheckBox = SA_GUI_LOCAL:CreateCheckBox(frame, SAL["Ability"])
+	frame.timerCheckBox:Hide()
+	
+	frame.extraCheckBox = SA_GUI_LOCAL:CreateCheckBox(frame, SAL["Extra Text"])
+	frame.extraCheckBox:Hide()
 	
 	frame.editbox = SA_GUI_LOCAL:CreateEditBox(frame, "number")
-	EditBox:SetMaxLetters(frame.editbox, 35) -- number size --> 6
-	--test
-	frame.checkbox:SetScript("OnClick", function(self, button, down)
-		if CheckBox:GetChecked() then
-			frame.editbox:Hide()
-		else
-			frame.editbox:Show()
-		end
-	end)
+	EditBox:SetMaxLetters(frame.editbox, 6) -- number size --> 6
+	frame.editbox:Hide()
 	
-	frame:SetScript("OnUpdate", function(self, elapsed)
-		if frame.scrollFrame.instanceButton ~= nil then
-			if frame.scrollFrame.bossButton ~= nil then
-				frame.dropDownList:Show()
-			else
-				frame.dropDownList:Hide()
-			end
-		end
-	end)
+	SA_GUI_LOCAL:SetScripts()
 	
 	DropDownList:SetPoint("LEFT", frame.leftSide, "RIGHT", 0, 0)
 	EditBox:SetPoint("LEFT", frame.dropDownList, "RIGHT", 5, 0)
 	DropDownMenu:SetPoint("LEFT", frame.editbox, "RIGHT", 0, 0)
-	CheckBox:SetPoint("LEFT", frame.dropDownMenu, "RIGHT", 0, 0)
+	frame.timerCheckBox:SetPoint("TOP", frame.dropDownMenu, "BOTTOM", 0, 0)
+	frame.extraCheckBox:SetPoint("TOP", frame.timerCheckBox, "BOTTOM", 0, 0)
 	
 	-- make main frame movable
 	SA_GUI_LOCAL:MakeMovable(frame)
@@ -221,7 +213,56 @@ function SA_GUI_LOCAL:CreateCheckBox(frame, checkboxText)
 end
 
 function SA_GUI_LOCAL:CreateEditBox(frame, inputType)
-	return(EditBox:LoadEditBox(frame,  inputType))
+	return (EditBox:LoadEditBox(frame,  inputType))
+end
+
+function SA_GUI_LOCAL:SetScripts()
+	mainFrame.timerCheckBox:SetScript("OnClick", function(self, button, down)
+		if mainFrame.timerCheckBox:GetChecked() then
+			mainFrame.extraCheckBox:Disable()
+		else
+			mainFrame.extraCheckBox:Enable()
+		end
+	end)
+	
+	mainFrame.extraCheckBox:SetScript("OnClick", function(self, button, down)
+		if mainFrame.extraCheckBox:GetChecked() then
+			mainFrame.timerCheckBox:Disable()
+		else
+			mainFrame.timerCheckBox:Enable()
+		end
+	end)
+	
+	mainFrame:SetScript("OnUpdate", function(self, elapsed)
+		if mainFrame.scrollFrame.instanceButton ~= nil then
+			if mainFrame.scrollFrame.bossButton ~= nil then
+				mainFrame.dropDownList:Show()
+			else
+				mainFrame.dropDownList:Hide()
+			end
+		end
+		if DropDownList:GetSelectedID(mainFrame.dropDownList) ~= nil then
+			--[[if DropDownList:GetSelectedID(frame.dropDownList) == 1 then
+				frame.editbox:Show()
+			else
+				frame.editbox:Hide()
+			end]]
+			if DropDownList:GetSelectedID(mainFrame.dropDownList) == 2 then
+				mainFrame.editbox:Show()
+			else
+				mainFrame.editbox:Hide()
+			end
+		end
+		if mainFrame.editbox:GetText() == "" or mainFrame.editbox:GetText() == "0" then
+			mainFrame.dropDownMenu:Hide()
+			mainFrame.timerCheckBox:Hide()
+			mainFrame.extraCheckBox:Hide()
+		else
+			mainFrame.dropDownMenu:Show()
+			mainFrame.timerCheckBox:Show()
+			mainFrame.extraCheckBox:Show()
+		end
+	end)
 end
 
 function SA_GUI:Toggle()
@@ -236,6 +277,12 @@ function SA_GUI_LOCAL:ResetFrames()
 	if SA_GUI.frame then
 		SA_GUI.frame:ClearAllPoints()
 		SA_GUI.frame:SetPoint("CENTER", SA_GUI.frame.x, SA_GUI.frame.y)
+		SA_GUI.frame.dropDownList:Hide()
+		DropDownList:SetSelectedID(nil) -- wird zu benutzerdefiniert
+		SA_GUI.frame.editbox:Hide()
+		SA_GUI.frame.dropDownMenu:Hide()
+		SA_GUI.frame.timerCheckBox:Hide()
+		SA_GUI.frame.extraCheckBox:Hide()
 		ScrollFrame:Reset(mainFrame)
 	end
 end
