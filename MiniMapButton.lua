@@ -36,7 +36,7 @@ local MiniMapLDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("SmartA
 })
 
 function MiniMapButton:Init()
-	SlashCommands:Add("mmb", MiniMapButton.Toggle, SAL["/sa mmb - Toggle MiniMapButton."])
+	SlashCommands:Add("mmb", MiniMapButton.Toggle, SAL["/smart mmb - Toggle MiniMapButton."])
 	SlashCommands:AddResetFunction(MiniMapButton.ResetFrames, "miniMapButton")
 
 	SAButton:Register("SmartAssign", MiniMapLDB, minimap);

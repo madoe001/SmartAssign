@@ -26,8 +26,8 @@ local CommandList = {
 }
 
 local HelpList = {
-	[""] = SAL["/sa - Open the SmartAssign window."],
-	["slash"] = SAL["/sa slash - Prints a list of all slash commands."],
+	[""] = SAL["/smart - Open the SmartAssign window."],
+	["slash"] = SAL["/smart slash - Prints a list of all slash commands."],
 }
 
 
@@ -36,7 +36,7 @@ local resetFunctions = {} -- container for reset functions
 function SlashCommands:Init()
 print("INIT SlashCommands")
 	SLASH_SMARTASSIGN1 = "/smartassign"
-	SLASH_SMARTASSIGN2 = "/sa"
+	SLASH_SMARTASSIGN2 = "/smart"
 	SlashCmdList["SMARTASSIGN"] = function(msg)
 		msg = str_lower(msg)
 		msg = { str_split(" ", msg) or msg }
@@ -54,7 +54,7 @@ function SlashCommands:Run(exec, ...)
 		elseif SlashCommands[exec] then
 			SlashCommands[exec](...)
 		else
-			print(str_format(SAL["Command %s not found. Use '/sa slash' for a full list of commands."], exec))
+			print(str_format(SAL["Command %s not found. Use '/smart slash' for a full list of commands."], exec))
 		end
 	end
 end

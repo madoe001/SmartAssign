@@ -11,7 +11,7 @@ _G.SmartAssign.Locales = L
 
 L["SmartAssign"] = "SmartAssign"
 
-L["SmartAssign loaded. For more informartion about Slashcommands type in '/sa slash'."] = "SmartAssign geladen. F\195\188r mehr Informationen zu Slashcommands, gebe '/sa slash' ein."
+L["SmartAssign loaded. For more informartion about Slashcommands type in '/smart slash'."] = "SmartAssign geladen. F\195\188r mehr Informationen zu Slashcommands, gebe '/smart slash' ein."
 
 L["Player"] = "Spieler"
 
@@ -89,19 +89,19 @@ L["WOTLK"] = "WOTLK"
 -- SlashCommands
 L["'func' must be a function."] = "'func' muss eine Funktion sein." 
 
-L["Command %s not found. Use '/sa slash' for a full list of commands."] = "Kommando %s nicht gefunden. Benutze '/sa slash' f\195\188r eine \195\156bersicht aller Kommandos"
+L["Command %s not found. Use '/smart slash' for a full list of commands."] = "Kommando %s nicht gefunden. Benutze '/smart slash' f\195\188r eine \195\156bersicht aller Kommandos"
 
 L["Slash commands:"] = "Slash Kommandos:"
 
-L["/sa - Open the SmartAssign window."] = "/sa - SmartAssign Fenster \195\182ffnen"
+L["/smart - Open the SmartAssign window."] = "/smart - SmartAssign Fenster \195\182ffnen"
 
-L["/sa slash - Prints a list of all slash commands."] = "/sa slash - Zeige alle m\195\182glichen Slash Kommandos"
+L["/smart slash - Prints a list of all slash commands."] = "/smart slash - Zeige alle m\195\182glichen Slash Kommandos"
 
 -- MiniMapButton
 
 L["SmartAssign_Minimap_Clicks"] = "|cffFF0000Klicken: |cffFFFFFFSmartAssign \195\182ffnen"
 
-L["/sa mmb - Toggle MiniMapButton."] = "/sa mmb - Aktiviert/Deaktiviert den Minikartenbutton."
+L["/smart mmb - Toggle MiniMapButton."] = "/smart mmb - Aktiviert/Deaktiviert den Minikartenbutton."
 
 -- EditBox
 
