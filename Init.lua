@@ -1,10 +1,11 @@
 -- Global vars --
 local _G = _G
-local SAL = _G.SmartAssign.Locales
 
 -- create globals
 -- GUI
 _G.SmartAssign = {}
+
+local SAL = _G.SmartAssign.Locales
 
 _G.SmartAssign.SA_GUI = {}
 
