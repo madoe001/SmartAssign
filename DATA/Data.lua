@@ -1,54 +1,43 @@
 local _G = _G
 
-local SAL = _G.SmartAssign.Locales
+local SAL = _G.GUI.Locales
 
-_G.Dungeons = {
-	[SAL["Classic"]] = 
-	{
-		[SAL["Ragefire Chasm"]] = 
-		{
-			SAL["Adarogg"],
-			SAL["Dark Shaman Koranthal"],
-			SAL["Slagmaw"]
-		},
-		[SAL["Deadmines"]] = 
-		{
-			SAL["Glubtok"],
-			SAL["Helix Gearbreaker"],
-			SAL["Foe Reaper 5000"],
-			SAL["Admiral Ripsnarl"],
-			SAL["Captain Cookie"],
-			SAL["Vanessa VanCleef"]
-		},
-		[SAL["Wailing Caverns"]] = {
-			SAL["Lady Anacondra"],
-			SAL["Kresh"],
-			SAL["Lord Pythas"],
-			SAL["Lord Cobrahn"],
-			SAL["Skum"],
-			SAL["Lord Serpentis"],
-			SAL["Verdan the Everliving"],
-			SAL["Mutanus the Devourer"],
-			"TEST",
-			"TEST1",
-			"TEST2",
-			"TEST3",
-			"TEST4",
-			"TEST5",
-			"TEST6",
-			"TEST7",
-			"TEST8",
-			"TEST9",
-			"TEST0"
-		},
-		[SAL["Shadowfang Keep"]] = {
-			SAL["Baron Ashbury"],
-			SAL["Baron Silverlaine"],
-			SAL["Commander Springvale"],
-			SAL["Lord Walden"],
-			SAL["Lord Godfrey"]
-		}
-	},
+_G.Dungeons ={
+	[SAL["Classic"]] = {
+		[SAL["Ragefire Chasm"]] = {SAL["Adarogg"],
+								   SAL["Dark Shaman Koranthal"],
+								   SAL["Slagmaw"],
+								   SAL["Lava Guard Gordoth"],},
+		[SAL["Deadmines"]] = {SAL["Glubtok"],
+							  SAL["Helix Gearbreaker"],
+							  SAL["Foe Reaper 5000"],
+							  SAL["Admiral Ripsnarl"],
+							  SAL["Captain Cookie"],
+							  SAL["Vanessa VanCleef"],},
+		[SAL["Wailing Caverns"]] = {SAL["Lady Anacondra"],
+								    SAL["Kresh"],
+								    SAL["Lord Pythas"],
+								    SAL["Lord Cobrahn"],
+								    SAL["Skum"],
+								    SAL["Lord Serpentis"],
+								    SAL["Verdan the Everliving"],
+								    SAL["Mutanus the Devourer"],
+								    "TEST",
+								    "TEST1",
+								    "TEST2",
+								    "TEST3",
+								    "TEST4",
+								    "TEST5",
+								    "TEST6",
+								    "TEST7",
+								    "TEST8",
+								    "TEST9",
+								    "TEST0",},
+		[SAL["Shadowfang Keep"]] = {SAL["Baron Ashbury"],
+									SAL["Baron Silverlaine"],
+									SAL["Commander Springvale"],
+									SAL["Lord Walden"],
+									SAL["Lord Godfrey"],}},
 	[SAL["WOTLK"]] = {}
 }
 

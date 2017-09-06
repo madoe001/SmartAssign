@@ -1,7 +1,7 @@
 local _G = _G
 
 local SA_DropDownList = _G.GUI.SA_DropDownList
-local SAL = _G.SmartAssign.Locales
+local SAL = _G.GUI.Locales
 
 -- for failurehandling
 local assert, type = assert, type

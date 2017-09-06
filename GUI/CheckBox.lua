@@ -1,6 +1,6 @@
 local _G = _G
 
-local SAL = _G.SmartAssign.Locales
+local SAL = _G.GUI.Locales
 local SA_CheckBox = _G.GUI.SA_CheckBox
 
 -- for failurehandling

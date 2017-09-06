@@ -2,7 +2,7 @@ local _G = _G
 
 local SA_ScrollFrame =  _G.GUI.SA_ScrollFrame
 
-local SAL = _G.SmartAssign.Locales
+local SAL = _G.GUI.Locales
 
 -- Create the full ScrollFrame
 local function CreateScrollFrame(frame)

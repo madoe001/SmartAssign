@@ -4,7 +4,7 @@ local SmartAssign = _G.SmartAssign
 local SlashCommands = SmartAssign.SlashCommands
 local MiniMapButton = {}
 SmartAssign.MiniMapButton = MiniMapButton
-local SAL = SmartAssign.Locales
+local SAL = _G.GUI.Locales
 local minimap = SmartAssign.minimap
 local SAButton = LibStub("LibDBIcon-1.0")
 

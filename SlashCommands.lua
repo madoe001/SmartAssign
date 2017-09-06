@@ -2,7 +2,7 @@ local _G = _G
 
 local SlashCommands = _G.SmartAssign.SlashCommands
 
-local SAL = _G.SmartAssign.Locales
+local SAL = _G.GUI.Locales
 
 -- Assertion
 local assert, type = assert, type

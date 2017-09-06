@@ -11,8 +11,8 @@ local SlashCommands = _G.SmartAssign.SlashCommands
 local MiniMapButton = SmartAssign.MiniMapButton
 
 -- for localization
-setmetatable({}, {__index = SA_GUI})
-local SAL = SmartAssign.Locales
+setmetatable({}, {__index = GUI})
+local SAL = _G.GUI.Locales
 
 -- tables
 local SA_GUI = {}
