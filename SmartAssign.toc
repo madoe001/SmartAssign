@@ -12,7 +12,7 @@ localization.enUS.lua
 localization.enGB.lua
 GUI\localization.de.lua
 
-embeds.xml
+embedLIBS.xml
 
 Init.lua
 SlashCommands.lua
