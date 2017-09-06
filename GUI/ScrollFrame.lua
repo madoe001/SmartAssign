@@ -348,6 +348,16 @@ function ConfigBossButtons(button, key)
 	button:SetScript("OnClick", function(self, button)
 		if button == "LeftButton" then
 			if self.clicked == false then
+				if self:GetText() == ScrollFrame.bossButton:GetText() then
+					local tex = ScrollFrame.bossButton:CreateTexture(nil, "ARTWORK")
+					tex:SetAllPoints(true)
+					tex:SetSize(20, 20)
+					tex:SetTexture("Interface\\BUTTONS\\UI-ListBox-Highlight")
+					self:SetNormalTexture(tex)
+					self:GetNormalTexture():ClearAllPoints()
+					self:GetNormalTexture():SetPoint("RIGHT", self, "RIGHT", 0, 0)
+					self:GetNormalTexture():SetPoint("LEFT", self, "LEFT", 0, 0)
+				end
 				ScrollFrame.lvlClicked = 3
 				self.clicked = true
 				ScrollFrame.bossButton = self 
@@ -361,7 +371,6 @@ function ConfigBossButtons(button, key)
 				self:GetNormalTexture():ClearAllPoints()
 				self:GetNormalTexture():SetPoint("RIGHT", self, "RIGHT", 0, 0)
 				self:GetNormalTexture():SetPoint("LEFT", self, "LEFT", 0, 0)
-				DisableBossButtons()
 			else
 				ScrollFrame.lvlClicked = 2
 				self.clicked = false
@@ -375,7 +384,6 @@ function ConfigBossButtons(button, key)
 				self:GetNormalTexture():ClearAllPoints()
 				self:GetNormalTexture():SetPoint("RIGHT", self, "RIGHT", 0, 0)
 				self:GetNormalTexture():SetPoint("LEFT", self, "LEFT", 0, 0)
-				DisableBossButtons()
 			end
 		end
 	end)

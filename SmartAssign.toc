@@ -9,10 +9,7 @@
 
 Init.lua
 
-localization.deDe.lua
-localization.enUS.lua
-localization.enGB.lua
-GUI\localization.deDE.lua
+GUI\localization.deDe.lua
 GUI\localization.enUS.lua
 GUI\localization.enGB.lua
 

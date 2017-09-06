@@ -1,9 +1,11 @@
 if GetLocale() ~= "enGB" then return end
 
+if not _G.GUI.Locales then _G.GUI.Locales = {} end
+
 -- SmartAssign.lua
 local L = {}
 -- make L global --
-_G.SmartAssign.Locales = L
+_G.GUI.Locales = L
 
 L["SmartAssign"] = "SmartAssign"
 
