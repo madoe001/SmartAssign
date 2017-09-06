@@ -1,6 +1,7 @@
 ## Interface: 70200
 ## Title: SmartAssign
 ## Notes: Addon for Raidsupport
+## SavedVariables: TestTable
 
 localization.deDe.lua
 localization.enUS.lua
