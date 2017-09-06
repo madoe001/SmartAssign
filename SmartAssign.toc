@@ -16,7 +16,7 @@ localization.enUS.lua
 localization.enGB.lua
 GUI\localization.de.lua
 
-Init.lua
+Init.lua 
 embedLIBS.xml
 
 SlashCommands.lua
