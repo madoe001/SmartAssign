@@ -1,10 +1,10 @@
 -- Global vars --
 local _G = _G
+local SAL = _G.SmartAssign.Locales
 
 -- create globals
 -- GUI
 _G.SmartAssign.SA_GUI = {}
-local SAL = _G.SmartAssign.Locales
 
 _G.Dungeons = {
 	[SAL["Classic"]] = {

@@ -8,6 +8,7 @@ end
 _G.SmartAssign = {}
 local L = {}
 -- make L global --
+_G.SmartAssign.Locales = {}
 _G.SmartAssign.Locales = L
 
 L["SmartAssign"] = "SmartAssign"
