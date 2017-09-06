@@ -5,11 +5,11 @@ local _G = _G
 -- GUI
 _G.SmartAssign = {}
 
-_G.SmartAssign.Locales = {}
-
 _G.SmartAssign.SA_GUI = {}
 
 _G.GUI = {}
+
+_G.GUI.Locales = {}
 
 _G.GUI.SA_DropDownMenu = {}
  

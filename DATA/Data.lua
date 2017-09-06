@@ -1,19 +1,19 @@
 local _G = _G
 
-local SAL = _G.SmartAssign.Locales
+local SAL = _G.GUI.Locales
 
 _G.Dungeons = {
 	[SAL["Classic"]] = {
 		[SAL["Ragefire Chasm"]] = {SAL["Adarogg"],
 								   SAL["Dark Shaman Koranthal"],
 								   SAL["Slagmaw"],
-								   SAL["Lava Guard Gordoth"]},
+								   SAL["Lava Guard Gordoth"],},
 		[SAL["Deadmines"]] = {SAL["Glubtok"],
 							  SAL["Helix Gearbreaker"],
 							  SAL["Foe Reaper 5000"],
 							  SAL["Admiral Ripsnarl"],
 							  SAL["Captain Cookie"],
-							  SAL["Vanessa VanCleef"]},
+							  SAL["Vanessa VanCleef"],},
 		[SAL["Wailing Caverns"]] = {SAL["Lady Anacondra"],
 								    SAL["Kresh"],
 								    SAL["Lord Pythas"],
@@ -32,12 +32,12 @@ _G.Dungeons = {
 								    "TEST7",
 								    "TEST8",
 								    "TEST9",
-								    "TEST0"},
+								    "TEST0",},
 		[SAL["Shadowfang Keep"]] = {SAL["Baron Ashbury"],
 									SAL["Baron Silverlaine"],
 									SAL["Commander Springvale"],
 									SAL["Lord Walden"],
-									SAL["Lord Godfrey"]}},
+									SAL["Lord Godfrey"],}},
 	[SAL["WOTLK"]] = {},
 }
 

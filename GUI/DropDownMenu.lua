@@ -3,7 +3,7 @@ local _G = _G
 -- muss komplett überarbeitet werden
 
 local SA_DropDownMenu = _G.GUI.SA_DropDownMenu
-local SAL = _G.SmartAssign.Locales
+local SAL = _G.GUI.Locales
 
 local DropDownData = {}
 
