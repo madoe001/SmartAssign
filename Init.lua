@@ -4,6 +4,8 @@ local SAL = _G.SmartAssign.Locales
 
 -- create globals
 -- GUI
+_G.SmartAssign = {}
+
 _G.SmartAssign.SA_GUI = {}
 
 _G.Dungeons = {
