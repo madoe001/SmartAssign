@@ -7,7 +7,7 @@ _G.Dungeons ={
 		[SAL["Ragefire Chasm"]] = {SAL["Adarogg"],
 								   SAL["Dark Shaman Koranthal"],
 								   SAL["Slagmaw"],
-								   SAL["Lava Guard Gordoth"],},
+								   SAL["Lava Guard Gordoth"]},
 		[SAL["Deadmines"]] = {SAL["Glubtok"],
 							  SAL["Helix Gearbreaker"],
 							  SAL["Foe Reaper 5000"],
