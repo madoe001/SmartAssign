@@ -246,13 +246,13 @@ function SA_GUI_LOCAL:SetScripts()
 			else
 				frame.editbox:Hide()
 			end]]
-			if DropDownList:GetSelectedID(mainFrame.dropDownList) == 2 then
+			if DropDownList:GetSelectedID(mainFrame.dropDownList) == 2 and mainFrame.scrollFrame.bossButton then
 				mainFrame.editbox:Show()
 			else
 				mainFrame.editbox:Hide()
 			end
 		end
-		if mainFrame.editbox:GetText() == "" or mainFrame.editbox:GetText() == "0" then
+		if (mainFrame.editbox:GetText() == "" or mainFrame.editbox:GetText() == "0") then
 			mainFrame.dropDownMenu:Hide()
 			mainFrame.timerCheckBox:Hide()
 			mainFrame.extraCheckBox:Hide()
