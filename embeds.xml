@@ -1,13 +1,10 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 
-<!--@no-lib-strip@-->
-<Script file="Libs\LibStub\LibStub.lua"/>
+
 <!--@end-no-lib-strip@-->
 <Script file="LIBS\LibDataBroker-1.1\LibDataBroker-1.1.lua"/>
 <!--@no-lib-strip@-->
 <Script file="LIBS\LibDBIcon-1.0\LibDBIcon-1.0.lua"/>
-<!--@end-no-lib-strip@-->
-<Script file="LIBS\LibStub\\LibStub.lua"/>
 <!--@end-no-lib-strip@-->
 </Ui>
