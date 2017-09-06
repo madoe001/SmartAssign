@@ -1,8 +1,12 @@
+-- Global vars --
+local _G = _G
+
+local SmartAssign = _G.SmartAssign
+local ClassList = _G.ClassList
+
 --> Mainfuntionality of the Addon
 
-
-
-function printHashTable(table)
+function SmartAssign:printHashTable(table)
    if(table) then
       for key, value in pairs(table) do
          print(key, value)
@@ -17,16 +21,16 @@ end
 
 
 
-function getAllMembers()
+function SmartAssign:getAllMembers()
    
-   print (">>getAllMembers()<< called\n");
+   print (">> getAllMembers() << called\n");
    
    
    local raidSize = GetNumGroupMembers() or 0;
    
    
    if(raidSize > 0) then
-      
+      -- global machen um in der DropDownListe zugreifen zu können!!!
       local playerList = {}
       
       if(not IsInRaid() and  IsInGroup) then
@@ -45,11 +49,13 @@ function getAllMembers()
             
             local name, realm = UnitName("raid"..i)
             local key 
-            if(realm ~= "" ) then
+            
+            if(realm) then
                key = name.."-"..realm
             else
                key = name
             end
+            print(key)
             local class = UnitClass(key)
             playerList[key] =  class
             
@@ -74,7 +80,7 @@ function getAllMembers()
    
 end
 
-function printNumericTable(table)
+function SmartAssign:printNumericTable(table)
    if(table) then
       if(#table > 0) then
          for i = 1, #table do
@@ -84,7 +90,7 @@ function printNumericTable(table)
    end
 end
 
-function printClass(table)
+function SmartAssign:printClass(table)
    if(table)then      
       for key, class in pairs(table) do
          print(class)
@@ -92,4 +98,7 @@ function printClass(table)
    end
 end
 
-
+do
+	-- load the GUI
+	SmartAssign.SA_GUI:LoadFrame()
+end

@@ -1,13 +1,35 @@
 ## Interface: 70200
 ## Title: SmartAssign
 ## Notes: Addon for Raidsupport
-## SavedVariables: TestTable
+## Author: Maik Dömecke, Marvin Justin Veith, Bartlomiej Grabelus
+
+## OptionalDeps: LibStub, CallbackHandler-1.0, LibDBIcon-1.0
+
+## X-Embeds: LibStub, CallbackHandler-1.0, LibDataBroker-1.1, LibDBIcon-1.0
+
+Init.lua
 
 localization.deDe.lua
 localization.enUS.lua
 localization.enGB.lua
+GUI\localization.de.lua
 
+embedLIBS.xml
+
+DATA\Data.lua
+
+SlashCommands.lua
+MiniMapButton.lua
+
+GUI\DropDownList.lua
+GUI\DropDownMenu.lua
+GUI\ScrollFrame.lua
+GUI\CheckBox.lua
+GUI\EditBox.lua
+GUI\SmartAssignGUI.lua
+
+test.lua
+
+Cooldown.lua
 
 SmartAssign.lua
-test.lua
-Cooldown.lua
