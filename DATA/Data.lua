@@ -1,3 +1,5 @@
+local SAL = _G.SmartAssign.Locales
+
 _G.Dungeons = {
 	[SAL["Classic"]] = {
 		[SAL["Ragefire Chasm"]] = {SAL["Adarogg"],
@@ -215,6 +217,8 @@ _G.GUI.SA_DropDownMenu.data = {
 			},
 		}
  }
+
+ _G.GUI.SA_DropDownList.data = {SAL["Ability"],  SAL["Timer"]}
 
 _G.SmartAssign.minimap = {
 		shown = true,

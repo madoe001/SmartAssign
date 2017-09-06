@@ -15,8 +15,6 @@ _G.GUI.SA_DropDownMenu = {}
  
  _G.GUI.SA_DropDownList = {}
  
- _G.GUI.SA_DropDownList.data = {SAL["Ability"],  SAL["Timer"]}
- 
  _G.GUI.SA_ScrollFrame = {}
  
  _G.GUI.SA_CheckBox = {}
