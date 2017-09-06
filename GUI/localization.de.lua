@@ -25,6 +25,8 @@ L["Damage Dealer"] = "Damage Dealer"
 
 L["Ability"] = "F\195\164higkeit"
 
+L["Extra Text"] = "Extra Text"
+
 L["Timer"] = "Timer"
 
 L["Classic"] = "Classic"

@@ -24,7 +24,13 @@ end
 
 -- onclick event handling
 local function OnClick(self)
-   UIDropDownMenu_SetSelectedID(DropDownListButton, self:GetID())
+	if self:GetID() == 1 then
+		self.selectedId = SAL["Ability"]
+	elseif self:GetID() == 2 then
+		self.selectedId = SAL["Timer"]
+	end
+	print(self.selectedId)
+    UIDropDownMenu_SetSelectedID(DropDownListButton, self:GetID())
 end
 
 -- clears the dropdownlist, sets data and a startvalue
@@ -48,11 +54,11 @@ local function CreateDropDownList(frame, data)
 		DropDownListButton = CreateFrame("Button", "DropDownListButton", frame,"UIDropDownMenuTemplate")
 	end
 	
-	SetData(DropDownListButton, data, 1)
+	SetData(DropDownListButton, data, nil)
 	
 	DropDownListButton:SetPoint("CENTER", 20, 0) -- 20 = x
 	DropDownListButton:SetHeight(BUTTON_HEIGHT)
-    DropDownListButton:RegisterForClicks("LeftButtonDown", "RightButtonDown") -- only right and left click
+    DropDownListButton:RegisterForClicks("LeftButtonDown") -- only left click
     
     DropDownListButton.label = DropDownListButton:CreateFontString("DropDownListButton-label", "ARTWORK", "GameFontNormalSmall")
 	DropDownListButton.label:SetHeight(BUTTON_HEIGHT)
@@ -78,6 +84,15 @@ function InitDDL(self, level)
       info.func = OnClick
       UIDropDownMenu_AddButton(info, level)
    end
+end
+
+function SA_DropDownList:GetSelectedID(frame)
+	return frame.selectedID
+end
+
+function SA_DropDownList:SetSelectedID(value)
+	DropDownListButton.selectedID = value
+	UIDropDownMenu_SetSelectedID(DropDownListButton, value)
 end
 
 function SA_DropDownList:LoadDropDownList(frame, data)

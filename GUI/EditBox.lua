@@ -30,14 +30,25 @@ local function CreateEditBox(frame, inputType)
 	-- when the text inside the editbox changes
 	EditBox:SetScript("OnTextChanged", function(self, userInput)
 		if userInput then
-		self.label:SetText("")
-		if string.len(self:GetText()) == 0 then 
-			if self.inputType == "string" then
-				ConfigLabel("[SpellID] text", 0.5, 0.5, 0.5, 0.8)
-			elseif self.inputType == "number" then
-				ConfigLabel("Time in sec", 0.5, 0.5, 0.5, 0.8)
+			if self.inputType == "number" then
+				if self:GetText() ~= "" then
+					if tonumber(self:GetText()) <= 0 then
+						self:SetText("")
+					else
+						self:SetText(self:GetText())
+					end
+				elseif self.inputType == "string" then
+					self:SetText(self:GetText())
+				end
 			end
-		end
+			self.label:SetText("")
+			if string.len(self:GetText()) == 0 then 
+				if self.inputType == "string" then
+					ConfigLabel("[SpellID] text", 0.5, 0.5, 0.5, 0.8)
+				elseif self.inputType == "number" then
+					ConfigLabel("Time in sec", 0.5, 0.5, 0.5, 0.8)
+				end
+			end
 		end
 	end)
 	
