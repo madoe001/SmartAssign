@@ -1,4 +1,4 @@
-if GetLocale() ~= "enGB" then return end
+if GetLocale() ~= "enUS" then return end
 
 if not _G.GUI.Locales then _G.GUI.Locales = {} end
 
@@ -9,18 +9,18 @@ _G.GUI.Locales = L
 
 L["SmartAssign"] = "SmartAssign"
 
-L["SmartAssign loaded. For more informartion about Slashcommands type in '/smart slash'."] = "SmartAssign geladen. F\195\188r mehr Informationen zu Slashcommands, gebe '/smart slash' ein."
+L["SmartAssign loaded. For more informartion about Slashcommands type in '/smart slash'."] = "SmartAssign loaded. For more informartion about Slashcommands type in '/smart slash'."
 
-L["Player"] = "Spieler"
+L["Player"] = "Player"
 
 -- DATA
-L["Healer"] = "Heiler"
+L["Healer"] = "Healer"
 
 L["Tank"] = "Tank"
 
 L["Damage Dealer"] = "Damage Dealer"
 
-L["Ability"] = "F\195\164higkeit"
+L["Ability"] = "Ability"
 
 L["Extra Text"] = "Extra Text"
 
@@ -28,55 +28,55 @@ L["Timer"] = "Timer"
 
 L["Classic"] = "Classic"
 
-L["Ragefire Chasm"] = "Der Flammenschlund"
+L["Ragefire Chasm"] = "Ragefire Chasm"
 
 L["Adarogg"] = "Adarogg"
 
-L["Dark Shaman Koranthal"] = "Dunkelschamane Koranthal"
+L["Dark Shaman Koranthal"] = "Dark Shaman Koranthal"
 
-L["Slagmaw"] = "Nagma"
+L["Slagmaw"] = "Slagmaw"
 
-L["Lava Guard Gordoth"] = "Lavawache Gordoth"
+L["Lava Guard Gordoth"] = "Lava Guard Gordoth"
 
-L["Deadmines"] = "Die Todesminen"
+L["Deadmines"] = "Deadmines"
 
 L["Glubtok"] = "Glubtok"
 
-L["Helix Gearbreaker"] = "Helix Ritzelbrecher"
+L["Helix Gearbreaker"] = "Helix Gearbreaker"
 
-L["Foe Reaper 5000"] = "Feindschnitter 5000"
+L["Foe Reaper 5000"] = "Foe Reaper 5000"
 
-L["Admiral Ripsnarl"] = "Admiral Knurrreisser"
+L["Admiral Ripsnarl"] = "Admiral Ripsnarl"
 
-L["Captain Cookie"] = "Kapit\195\164n Kr\195\188mel"
+L["Captain Cookie"] = "Captain Cookie"
 
-L["Vanessa VanCleef"] = "Vanessa van Cleef"
+L["Vanessa VanCleef"] = "Vanessa VanCleef"
 
-L["Wailing Caverns"] = "Die H\195\182hlen des Wehklagens"
+L["Wailing Caverns"] = "Wailing Caverns"
 
-L["Lady Anacondra"] = "Lady Anakondra"
+L["Lady Anacondra"] = "Lady Anacondra"
 
 L["Kresh"] = "Kresh"
 
 L["Lord Pythas"] = "Lord Pythas"
 
-L["Lord Cobrahn"] = "Lord Kobrahn"
+L["Lord Cobrahn"] = "Lord Cobrahn"
 
 L["Skum"] = "Skum"
 
 L["Lord Serpentis"] = "Lord Serpentis"
 
-L["Verdan the Everliving"] = "Verdan der Ewiglebende"
+L["Verdan the Everliving"] = "Verdan the Everliving"
 
-L["Mutanus the Devourer"] = "Mutanus der Verschlinger"
+L["Mutanus the Devourer"] = "Mutanus the Devourer"
 
-L["Shadowfang Keep"] = "Burg Schattenfang"
+L["Shadowfang Keep"] = "Shadowfang Keep"
 
 L["Baron Ashbury"] = "Baron Ashbury"
 
-L["Baron Silverlaine"] = "Baron Silberlein"
+L["Baron Silverlaine"] = "Baron Silverlaine"
 
-L["Commander Springvale"] = "Kommandant Gr\195\188ntal"
+L["Commander Springvale"] = "Commander Springvale"
 
 L["Lord Walden"] = "Lord Walden"
 
@@ -85,49 +85,54 @@ L["Lord Godfrey"] = "Lord Godfrey"
 L["WOTLK"] = "WOTLK"
 
 -- SlashCommands
-L["'func' must be a function."] = "'func' muss eine Funktion sein." 
+L["'func' must be a function."] = "'func' must be a function."
 
-L["Command %s not found. Use '/smart slash' for a full list of commands."] = "Kommando %s nicht gefunden. Benutze '/smart slash' f\195\188r eine \195\156bersicht aller Kommandos"
+L["Command %s not found. Use '/smart slash' for a full list of commands."] = "Command %s not found. Use '/smart slash' for a full list of commands."
 
-L["Slash commands:"] = "Slash Kommandos:"
+L["Slash commands:"] = "Slash commands:"
 
-L["/smart - Open the SmartAssign window."] = "/smart - SmartAssign Fenster \195\182ffnen"
+L["/smart - Open the SmartAssign window."] = "/smart - Open the SmartAssign window."
 
-L["/smart slash - Prints a list of all slash commands."] = "/smart slash - Zeige alle m\195\182glichen Slash Kommandos"
+L["/smart slash - Prints a list of all slash commands."] = "/smart slash - Prints a list of all slash commands."
 
 -- MiniMapButton
 
-L["SmartAssign_Minimap_Clicks"] = "|cffFF0000Klicken: |cffFFFFFFSmartAssign \195\182ffnen"
+L["SmartAssign_Minimap_Clicks"] = "|cffFF0000Click: |cffFFFFFFOpen SmartAssign"
 
-L["/smart mmb - Toggle MiniMapButton."] = "/smart mmb - Aktiviert/Deaktiviert den Minikartenbutton."
+L["/smart mmb - Toggle MiniMapButton."] = "/smart mmb - Toggle MiniMapButton."
 
 -- EditBox
 
-L["Time in sec"] = "Zeit in s"
+L["Time in sec"] = "Time in sec"
 
-L["[SpellID] text"] = "[SpellID] Text"
+L["[SpellID] text"] = "[SpellID] text"
 
 -- ScrollFrame
 
-L[" has no childs!"] = " hat keine Kinder!"
+L[" has no childs!"] = " has no childs!"
+
+-- mainHUD
+L["Player is in Instance."] = "Player is in Instance."
+
+L["Player is not in Instance."] = "Player is not in Instance."
 
 -- ASSERTS
-L["'func' in 'DropDownMenu SetOnClick' must be a function."] = "'func' in 'DropDownMenu SetOnClick' muss eine Funktion sein."
+L["'func' in 'DropDownMenu SetOnClick' must be a function."] = "'func' in 'DropDownMenu SetOnClick' must be a function."
 
-L["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownMenu.data for infos."] = "'data' muss eine Tabelle sein. Schaue in 'Init.lua' die Tabelle _G.GUI.DropDownMenu.data an."
+L["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownMenu.data for infos."] = "'data' must be a table. See 'Init.lua' at _G.GUI.DropDownMenu.data for infos."
 
-L["'func' in 'DropDownList SetOnClick' must be a function."] = "'func' in 'DropDownList SetOnClick' muss eine Funktion sein."
+L["'func' in 'DropDownList SetOnClick' must be a function."] = "'func' in 'DropDownList SetOnClick' must be a function."
 
-L["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownList.data for infos."] = "'data' muss eine Tabelle sein. Schaue in 'Init.lua' die Tabelle _G.GUI.DropDownList.data an."
+L["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownList.data for infos."] = "'data' must be a table. See 'Init.lua' at _G.GUI.DropDownList.data for infos."
 
-L["'exec' must be a string."] = "'exec' muss ein String sein."
+L["'exec' must be a string."] = "'exec' must be a string."
 
-L["'helpText' must be a string."] = "'helpText' muss ein String sein."
+L["'helpText' must be a string."] = "'helpText' must be a string."
 
-L["%s already exists."] = "%s existiert bereits."
+L["%s already exists."] = "%s already exists."
 
-L["'checkboxText' must be a string."] = "'checkboxText' muss ein String sein."
+L["'checkboxText' must be a string."] = "'checkboxText' must be a string."
 
-L["'max' must be higher then 0."] = "'max' muss gr\195\182sser als 0 sein."
+L["'max' must be greater than 0."] = "'max' must be greater than 0."
 
-L["'inputType' must be string or number."] = "'inputType' muss String oder Nummer sein."
+L["'inputType' must be string or number."] = "'inputType' must be string or number."

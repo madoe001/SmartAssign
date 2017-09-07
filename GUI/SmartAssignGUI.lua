@@ -1,12 +1,16 @@
 -- Global vars --
 local _G = _G
 local SmartAssign = _G.SmartAssign
+
 local GUI = _G.GUI
 local DropDownMenu = GUI.SA_DropDownMenu
 local DropDownList = GUI.SA_DropDownList
 local ScrollFrame = GUI.SA_ScrollFrame
 local CheckBox = GUI.SA_CheckBox
 local EditBox = GUI.SA_EditBox
+
+local mainHUD = _G.HUD.mainHUD
+
 local SlashCommands = _G.SmartAssign.SlashCommands
 local MiniMapButton = SmartAssign.MiniMapButton
 
@@ -213,6 +217,10 @@ end
 
 function SA_GUI_LOCAL:CreateEditBox(frame, inputType)
 	return (EditBox:LoadEditBox(frame,  inputType))
+end
+
+function LoadHUD()
+	mainHUD:LoadHUD()
 end
 
 function SA_GUI_LOCAL:SetScripts()
