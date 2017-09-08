@@ -1,3 +1,4 @@
+﻿
 local startTime = 0
 local endTime = 0
 local totalTime = 0
