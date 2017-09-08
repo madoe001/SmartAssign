@@ -20,6 +20,7 @@ local SAL = _G.GUI.Locales
 -- tables
 local SA_GUI = {}
 local SA_GUI_LOCAL = {}
+
 -- make GUI global --
 _G.SmartAssign.SA_GUI = SA_GUI
 
@@ -91,8 +92,6 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	EditBox:SetMaxLetters(frame.editbox, 6) -- number size --> 6
 	frame.editbox:Hide()
 	
-	SA_GUI_LOCAL:SetScripts()
-	
 	DropDownList:SetPoint("LEFT", frame.leftSide, "RIGHT", 0, 0)
 	EditBox:SetPoint("LEFT", frame.dropDownList, "RIGHT", 5, 0)
 	DropDownMenu:SetPoint("LEFT", frame.editbox, "RIGHT", 0, 0)
@@ -101,6 +100,8 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	
 	-- make main frame movable
 	SA_GUI_LOCAL:MakeMovable(frame)
+	
+	SA_GUI_LOCAL:SetScripts()
 end
 
 -- create Window
@@ -219,11 +220,11 @@ function SA_GUI_LOCAL:CreateEditBox(frame, inputType)
 	return (EditBox:LoadEditBox(frame,  inputType))
 end
 
-function LoadHUD()
-	mainHUD:LoadHUD()
-end
-
 function SA_GUI_LOCAL:SetScripts()
+	--[[mainFrame.mainHud:SetScript("OnUpdate",function(self, elapsed)
+		mainHUD:OnUpdate_TestInstance()
+	end)]]
+	
 	mainFrame.timerCheckBox:SetScript("OnClick", function(self, button, down)
 		if mainFrame.timerCheckBox:GetChecked() then
 			mainFrame.extraCheckBox:Disable()
@@ -241,6 +242,7 @@ function SA_GUI_LOCAL:SetScripts()
 	end)
 	
 	mainFrame:SetScript("OnUpdate", function(self, elapsed)
+		--mainHUD:OnUpdate_TestInstance()
 		if mainFrame.scrollFrame.instanceButton ~= nil then
 			if mainFrame.scrollFrame.bossButton ~= nil then
 				mainFrame.dropDownList:Show()

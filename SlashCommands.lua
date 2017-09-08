@@ -34,7 +34,6 @@ local HelpList = {
 local resetFunctions = {} -- container for reset functions
 
 function SlashCommands:Init()
-print("INIT SlashCommands")
 	SLASH_SMARTASSIGN1 = "/smartassign"
 	SLASH_SMARTASSIGN2 = "/smart"
 	SlashCmdList["SMARTASSIGN"] = function(msg)
@@ -92,7 +91,6 @@ end
 
 -- Add a ResetFunction of a Frame
 function SlashCommands:AddResetFunction(func, ...)
-print(func)
 	assert(type(func) == "function", SAL["'func' must be a function."])
 	local name
 	for i=1,select("#",...) do

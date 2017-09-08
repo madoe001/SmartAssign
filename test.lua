@@ -22,5 +22,3 @@ frame:RegisterEvent("PLAYER_REGEN_ENABLED")
 frame:RegisterEvent("PLAYER_REGEN_DISABLED")
 
 frame:SetScript("OnEvent", SmartAssign_OnEvent)
-
-print ("Maik ist unfähig")

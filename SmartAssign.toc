@@ -20,6 +20,8 @@ DATA\Data.lua
 SlashCommands.lua
 MiniMapButton.lua
 
+HUD\mainHUD.lua
+
 GUI\DropDownList.lua
 GUI\DropDownMenu.lua
 GUI\ScrollFrame.lua

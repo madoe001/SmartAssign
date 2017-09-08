@@ -15,16 +15,16 @@ _G.GUI.Locales = {}
 
 _G.GUI.SA_DropDownMenu = {}
  
- _G.GUI.SA_DropDownList = {}
+_G.GUI.SA_DropDownList = {}
  
- _G.GUI.SA_ScrollFrame = {}
+_G.GUI.SA_ScrollFrame = {}
  
- _G.GUI.SA_CheckBox = {}
+_G.GUI.SA_CheckBox = {}
  
- _G.GUI.SA_EditBox = {}
+_G.GUI.SA_EditBox = {}
  
- _G.HUD = {}
+_G.HUD = {}
  
- _G.mainHUD = {}
+_G.HUD.mainHUD = {}
  
- _G.HUD.BossPlate = {} 
+_G.HUD.BossPlate = {} 
