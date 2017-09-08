@@ -8,6 +8,7 @@ local DropDownList = GUI.SA_DropDownList
 local ScrollFrame = GUI.SA_ScrollFrame
 local CheckBox = GUI.SA_CheckBox
 local EditBox = GUI.SA_EditBox
+local TimerGUI = GUI.SA_TimerGUI
 
 local mainHUD = _G.HUD.mainHUD
 
@@ -20,6 +21,7 @@ local SAL = _G.GUI.Locales
 -- tables
 local SA_GUI = {}
 local SA_GUI_LOCAL = {}
+local Assignments = {}
 -- make GUI global --
 _G.SmartAssign.SA_GUI = SA_GUI
 
@@ -80,7 +82,13 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	
 	frame.scrollFrame = SA_GUI_LOCAL:CreateScrollFrame(LeftSide, frame.dropDownList)
 	SlashCommands:AddResetFunction(SA_GUI_LOCAL.ScrollFrameReset,"ScrollFrame")
+		
+	local timerGUI = TimerGUI:new_assignment(frame, frame.dropDownList , 5, 0)
+	timerGUI:Hide()
+	frame.tg = timerGUI
 	
+	table.insert(Assignments, timerGUI)
+
 	frame.timerCheckBox = SA_GUI_LOCAL:CreateCheckBox(frame, SAL["Ability"])
 	frame.timerCheckBox:Hide()
 	
@@ -91,9 +99,13 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	EditBox:SetMaxLetters(frame.editbox, 6) -- number size --> 6
 	frame.editbox:Hide()
 	
+
+	
 	SA_GUI_LOCAL:SetScripts()
 	
-	DropDownList:SetPoint("LEFT", frame.leftSide, "RIGHT", 0, 0)
+
+	
+	DropDownList:SetPoint("TOPLEFT", frame, 20 + frame.leftSide:GetWidth(), -50 * #Assignments )
 	EditBox:SetPoint("LEFT", frame.dropDownList, "RIGHT", 5, 0)
 	DropDownMenu:SetPoint("LEFT", frame.editbox, "RIGHT", 0, 0)
 	frame.timerCheckBox:SetPoint("TOP", frame.dropDownMenu, "BOTTOM", 0, 0)
@@ -233,7 +245,7 @@ function SA_GUI_LOCAL:SetScripts()
 	end)
 	
 	mainFrame.extraCheckBox:SetScript("OnClick", function(self, button, down)
-		if mainFrame.extraCheckBox:GetChecked() then
+	if mainFrame.extraCheckBox:GetChecked() then
 			mainFrame.timerCheckBox:Disable()
 		else
 			mainFrame.timerCheckBox:Enable()
@@ -255,20 +267,22 @@ function SA_GUI_LOCAL:SetScripts()
 				frame.editbox:Hide()
 			end]]
 			if DropDownList:GetSelectedID(mainFrame.dropDownList) == 2 and mainFrame.scrollFrame.bossButton then
-				mainFrame.editbox:Show()
+				mainFrame.tg:Show()
+				--mainFrame.editbox:Show()
 			else
-				mainFrame.editbox:Hide()
+				mainFrame.tg:Hide()
+				--mainFrame.editbox:Hide()
 			end
 		end
-		if (mainFrame.editbox:GetText() == "" or mainFrame.editbox:GetText() == "0") then
-			mainFrame.dropDownMenu:Hide()
-			mainFrame.timerCheckBox:Hide()
-			mainFrame.extraCheckBox:Hide()
-		else
-			mainFrame.dropDownMenu:Show()
-			mainFrame.timerCheckBox:Show()
-			mainFrame.extraCheckBox:Show()
-		end
+		--if (mainFrame.editbox:GetText() == "" or mainFrame.editbox:GetText() == "0") then
+		--	mainFrame.dropDownMenu:Hide()
+		--	mainFrame.timerCheckBox:Hide()
+		--	mainFrame.extraCheckBox:Hide()
+		--else
+		--	mainFrame.dropDownMenu:Show()
+		--	mainFrame.timerCheckBox:Show()
+		--	mainFrame.extraCheckBox:Show()
+		--end
 	end)
 end
 

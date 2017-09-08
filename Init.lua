@@ -13,9 +13,11 @@ _G.GUI = {}
 
 _G.GUI.Locales = {}
 
+_G.GUI.SA_TimerGUI = {}
+
 _G.GUI.SA_DropDownMenu = {}
- 
- _G.GUI.SA_DropDownList = {}
+  
+_G.GUI.SA_DropDownList = {}
  
  _G.GUI.SA_ScrollFrame = {}
  
