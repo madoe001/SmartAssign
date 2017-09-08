@@ -27,6 +27,7 @@ GUI\DropDownMenu.lua
 GUI\ScrollFrame.lua
 GUI\CheckBox.lua
 GUI\EditBox.lua
+GUI\TimerGUI.lua
 GUI\SmartAssignGUI.lua
 
 test.lua

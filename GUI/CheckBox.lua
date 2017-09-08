@@ -19,14 +19,14 @@ local function CreateCheckBox(frame, checkboxText)
 	CheckBoxFrame.label = CheckBoxFrame:CreateFontString("CheckBoxFrame-label", "ARTWORK", "GameFontNormalSmall")
 	CheckBoxFrame.label:SetHeight(25)
 	CheckBoxFrame.label:SetText(checkboxText)
-	CheckBoxFrame.label:SetPoint("LEFT", CheckBoxFrame, "RIGHT", 0, 0)
+	CheckBoxFrame.label:SetPoint("LEFT", CheckBoxFrame, "RIGHT", 0,0)
 	
 	return CheckBoxFrame
 end
 
 function SA_CheckBox:LoadCheckBox(frame, checkboxText)
 	assert(type(checkboxText) == "string", SAL["'checkboxText' must be a string."])
-	return CreateCheckBox(frame, checkboxText)
+	return CreateCheckBox(frame, checkboxText, x, y)
 end
 
 function SA_CheckBox:GetChecked()
