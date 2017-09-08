@@ -9,10 +9,9 @@
 
 Init.lua
 
-localization.deDe.lua
-localization.enUS.lua
-localization.enGB.lua
-GUI\localization.de.lua
+GUI\localization.deDe.lua
+GUI\localization.enUS.lua
+GUI\localization.enGB.lua
 
 embedLIBS.xml
 
@@ -21,11 +20,14 @@ DATA\Data.lua
 SlashCommands.lua
 MiniMapButton.lua
 
+HUD\mainHUD.lua
+
 GUI\DropDownList.lua
 GUI\DropDownMenu.lua
 GUI\ScrollFrame.lua
 GUI\CheckBox.lua
 GUI\EditBox.lua
+GUI\TimerGUI.lua
 GUI\SmartAssignGUI.lua
 
 test.lua

@@ -46,6 +46,7 @@ function CreateScrollBar(frame)
 	-- when the user use the scrollbar refresh the position of buttons
 	ScrollBar:SetScript("OnValueChanged", function(self, value)
 		self:GetParent():SetVerticalScroll(value) -- set to new value
+		print(value)
 		if ScrollFrame.mainBTN == nil and ScrollFrame.lvlClicked == 0 then
 			local mainButtons = GetMainButtons(Content.data)
 			for i=1, #mainButtons, 1 do
@@ -179,13 +180,19 @@ function CreateContent(frame, data)
 											bossButtons[i]:Show()
 										end
 									else
-									ScrollFrame.lvlClicked = 1
-									ScrollFrame.instanceButton = nil
-									self.clicked = false
-									SA_ScrollFrame:HideButtons()
-									ClearAllPoints()
-									SetAllPlusTex()
-									SetInstanceButtons(self, Content.data[ScrollFrame.mainBTN:GetText()])
+										ScrollFrame.lvlClicked = 1
+										ScrollFrame.instanceButton = nil
+										self.clicked = false
+										SA_ScrollFrame:HideButtons()
+										ClearAllPoints()
+										SetAllPlusTex()
+										SetInstanceButtons(self, Content.data[ScrollFrame.mainBTN:GetText()])
+										
+										if ScrollFrame.bossButton then
+											SetNilTex(ScrollFrame.bossButton)
+											ScrollFrame.bossButton = nil
+											ScrollFrame.bossButton.clicked = false
+										end
 									end
 								end
 							end)
@@ -337,45 +344,31 @@ function ConfigBossButtons(button, key)
 	button.clicked = false
 	button:Hide()
 	
-	local tex = button:CreateTexture(nil, "ARTWORK")
-	tex:SetAllPoints(true)
-	tex:SetTexture(nil)
-	button:SetNormalTexture(tex)
-	button:GetNormalTexture():ClearAllPoints()
-	button:GetNormalTexture():SetPoint("RIGHT", button, "RIGHT", 0, 0)
-	button:GetNormalTexture():SetPoint("LEFT", button, "LEFT", 0, 0)
+	SetNilTex(button)
 	
 	button:SetScript("OnClick", function(self, button)
 		if button == "LeftButton" then
 			if self.clicked == false then
+				if ScrollFrame.bossButton then
+					if self:GetText() ~= ScrollFrame.bossButton:GetText() then
+						SetNilTex(ScrollFrame.bossButton)
+						ScrollFrame.bossButton.clicked = false
+						ScrollFrame.bossButton = nil
+					end
+				end
 				ScrollFrame.lvlClicked = 3
 				self.clicked = true
 				ScrollFrame.bossButton = self 
 				
 				-- set highlight
-				local tex = self:CreateTexture(nil, "ARTWORK")
-				tex:SetAllPoints(true)
-				tex:SetSize(20, 20)
-				tex:SetTexture("Interface\\BUTTONS\\UI-ListBox-Highlight")
-				self:SetNormalTexture(tex)
-				self:GetNormalTexture():ClearAllPoints()
-				self:GetNormalTexture():SetPoint("RIGHT", self, "RIGHT", 0, 0)
-				self:GetNormalTexture():SetPoint("LEFT", self, "LEFT", 0, 0)
-				DisableBossButtons()
+				SetListHightlightTex(self)
 			else
 				ScrollFrame.lvlClicked = 2
 				self.clicked = false
 				ScrollFrame.bossButton = nil
 				
 				-- clear highlight
-				local tex = self:CreateTexture(nil, "ARTWORK")
-				tex:SetAllPoints(true)
-				tex:SetTexture(nil)
-				self:SetNormalTexture(tex)
-				self:GetNormalTexture():ClearAllPoints()
-				self:GetNormalTexture():SetPoint("RIGHT", self, "RIGHT", 0, 0)
-				self:GetNormalTexture():SetPoint("LEFT", self, "LEFT", 0, 0)
-				DisableBossButtons()
+				SetNilTex(self)
 			end
 		end
 	end)
@@ -443,6 +436,26 @@ function SetMinusTexture(button)
 	button:SetNormalTexture(tex)
 	button:GetNormalTexture():ClearAllPoints()
 	button:GetNormalTexture():SetPoint("RIGHT", button, "RIGHT", 0, 0)
+end
+
+function SetNilTex(button)
+	local tex = button:CreateTexture(nil, "ARTWORK")
+	tex:SetAllPoints(true)
+	tex:SetTexture(nil)
+	button:SetNormalTexture(tex)
+	button:GetNormalTexture():ClearAllPoints()
+	button:GetNormalTexture():SetPoint("RIGHT", button, "RIGHT", 0, 0)
+	button:GetNormalTexture():SetPoint("LEFT", button, "LEFT", 0, 0)
+end
+
+function SetListHightlightTex(button)
+	local tex = button:CreateTexture(nil, "ARTWORK")
+	tex:SetAllPoints(true)
+	tex:SetTexture("Interface\\BUTTONS\\UI-ListBox-Highlight")
+	button:SetNormalTexture(tex)
+	button:GetNormalTexture():ClearAllPoints()
+	button:GetNormalTexture():SetPoint("RIGHT", button, "RIGHT", 0, 0)
+	button:GetNormalTexture():SetPoint("LEFT", button, "LEFT", 0, 0)
 end
 
 -- set a new header, needed if get a new level of buttons

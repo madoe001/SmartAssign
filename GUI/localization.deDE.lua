@@ -115,6 +115,12 @@ L["[SpellID] text"] = "[SpellID] Text"
 
 L[" has no childs!"] = " hat keine Kinder!"
 
+-- mainHUD
+
+L["Player is in Instance."] = "Der Spieler ist in einer Instanz."
+
+L["Player is not in Instance."] = "Der Spieler ist in keiner Instanz."
+
 -- ASSERTS
 L["'func' in 'DropDownMenu SetOnClick' must be a function."] = "'func' in 'DropDownMenu SetOnClick' muss eine Funktion sein."
 
@@ -132,6 +138,6 @@ L["%s already exists."] = "%s existiert bereits."
 
 L["'checkboxText' must be a string."] = "'checkboxText' muss ein String sein."
 
-L["'max' must be higher then 0."] = "'max' muss gr\195\182sser als 0 sein."
+L["'max' must be greater than 0."] = "'max' muss gr\195\182sser als 0 sein."
 
 L["'inputType' must be string or number."] = "'inputType' muss String oder Nummer sein."

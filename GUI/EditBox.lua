@@ -85,7 +85,7 @@ end
 
 -- setter for max letters
 function SA_EditBox:SetMaxLetters(self, max)
-	assert(max > 0, SAL["'max' must be higher then 0."])
+	assert(max > 0, SAL["'max' must be greater than 0."])
 	self:SetMaxLetters(max)
 end
 
