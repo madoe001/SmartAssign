@@ -1,3 +1,7 @@
+--Author: Bartlomiej Grabelus, Maik Dömmecke
+
+local _G = _G
+
 if GetLocale() ~= "enUS" then return end
 
 if not _G.GUI.Locales then _G.GUI.Locales = {} end

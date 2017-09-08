@@ -1,14 +1,22 @@
+--Author: Bartlomiej Grabelus
+
 local _G = _G
 
 local SA_ScrollFrame =  _G.GUI.SA_ScrollFrame
 
+-- localization
 local SAL = _G.GUI.Locales
 
--- Create the full ScrollFrame
+-- CreateScrollFrame(): Creation of the ScrollFrame
+--
+-- creates the scrollframe and create a table for the buttons of the scrollframe.
+-- Sets the count of main buttons to 0
+-- than create the scrollbar and content of the scrollframe
+--
+-- frame: Parent frame
 local function CreateScrollFrame(frame)
-	if not ScrollFrame then
-		ScrollFrame = CreateFrame("ScrollFrame", "ScrollFrame", frame)
-	end
+	local ScrollFrame = CreateFrame("ScrollFrame", "ScrollFrame", frame)
+
 	ScrollFrame.buttons = {}
 	ScrollFrame.mainButtonCount = 0
 	
@@ -26,52 +34,55 @@ local function CreateScrollFrame(frame)
 	return ScrollFrame
 end
 
--- Create the ScrollBar for the ScrollFrame
+-- CreateScrollBar(): Create the ScrollBar for the ScrollFrame
+--
+-- frame: Parent frame
 function CreateScrollBar(frame)
 	if not ScrollBar then
 		ScrollBar = CreateFrame("Slider", "ScrollBar", ScrollFrame, "UIPanelScrollBarTemplate")
 	end
 	
+	-- setting a secure frame attribute, on which we can acces with GetAttribute(<name>)
 	ScrollBar:SetAttribute("buttoncount",0)
 	
 	ScrollBar:SetPoint("TOPLEFT", frame, "TOPRIGHT", -12, -16)
 	ScrollBar:SetPoint("BOTTOMLEFT", frame, "BOTTOMRIGHT", -12, 16)
 	
-	ScrollBar:SetMinMaxValues(1, 100)
-	ScrollBar:SetValueStep(1)
-	ScrollBar.scrollStep = 1
-	ScrollBar:SetValue(0)
+	ScrollBar:SetMinMaxValues(1, 100) -- set minumum and maximum of scrollbar, for scrolling
+	ScrollBar:SetValueStep(1) -- set scrolling step value
+	ScrollBar.scrollStep = 1 -- set scrolling step value
+	ScrollBar:SetValue(0) -- set starting scroll value
 	ScrollBar:SetWidth(16)
 	
 	-- when the user use the scrollbar refresh the position of buttons
 	ScrollBar:SetScript("OnValueChanged", function(self, value)
 		self:GetParent():SetVerticalScroll(value) -- set to new value
 		print(value)
-		if ScrollFrame.mainBTN == nil and ScrollFrame.lvlClicked == 0 then
+		if ScrollFrame.mainBTN == nil and ScrollFrame.lvlClicked == 0 then -- when main Buttons
 			local mainButtons = GetMainButtons(Content.data)
 			for i=1, #mainButtons, 1 do
 			    mainButtons[i]:ClearAllPoints()
-				mainButtons[i]:SetPoint("LEFT", ScrollFrame, "LEFT", 0, value-1)
+				mainButtons[i]:SetPoint("LEFT", ScrollFrame, "LEFT", 0, value-25) -- scroll value - buttonheight
 			end
-		elseif ScrollFrame.mainBTN ~= nil and ScrollFrame.lvlClicked == 1 then
+		elseif ScrollFrame.mainBTN ~= nil and ScrollFrame.lvlClicked == 1 then -- when Instance Buttons
 			local instanceButtons = GetInstanceButtons(Content.data)
 			for i=1, #instanceButtons, 1 do
 				instanceButtons[i]:ClearAllPoints()
-				instanceButtons[i]:SetPoint("LEFT", ScrollFrame, "LEFT", 0, value-1)
+				instanceButtons[i]:SetPoint("LEFT", ScrollFrame, "LEFT", 0, value-25) -- scroll value - buttonheight
 			end
-		elseif ScrollFrame.instanceButton ~= nil and ScrollFrame.lvlClicked == 2 then
+		elseif ScrollFrame.instanceButton ~= nil and ScrollFrame.lvlClicked == 2 then -- when instance Buttons
 			local bossData = GetBossData(ScrollFrame.mainBTN, ScrollFrame.instanceButton:GetText(), Content.data)
 			local bossButtons = GetBossButtons(bossData)
 			bossButtons[1]:ClearAllPoints()
-			bossButtons[1]:SetPoint("LEFT", ScrollFrame.instanceButton, "LEFT", 0, value-25)
+			bossButtons[1]:SetPoint("LEFT", ScrollFrame.instanceButton, "LEFT", 0, value-25) -- scroll value - buttonheight
 			for i=2, #bossButtons, 1 do
 				bossButtons[i]:ClearAllPoints()
-				bossButtons[i]:SetPoint("LEFT", bossButtons[i-1], "LEFT", 0, -25)
+				bossButtons[i]:SetPoint("LEFT", bossButtons[i-1], "LEFT", 0, -25) -- scroll value - buttonheight
 			end
 		end
 	end)
 	
-	local ScrollBG = ScrollBar:CreateTexture("ScrollBar_Tex", "BACKGROUND")
+	local ScrollBG = ScrollBar:CreateTexture("ScrollBar_Tex", "BACKGROUND") -- tex for ScrollBar
 	ScrollBG:SetAllPoints(ScrollBar)
 	ScrollBG:SetTexture(0, 0, 0, 0.4)
 	ScrollBar:Hide()
@@ -88,12 +99,20 @@ function CreateScrollBar(frame)
 	end)
 end
 
--- Create the Content of the ScrollBar(dependent of data)
+-- CreateContent(): Create the Content of the ScrollBar(dependent of data)
+--
+-- create a content frame and set the size to the parent size, than create the
+-- buttons dependent to the size of the data table.
+-- Then fill the buttons which a text and a OnClick EventHandler
+--
+-- frame: Parent frame
+-- data: the buttons
 function CreateContent(frame, data)
 	-- if empty nothing to show
 	if next(data) == nil then
 		return
 	end
+	
 	if not Content then
 		Content = CreateFrame("Frame", "ScrollFrame_Content", frame)
 	end
@@ -106,42 +125,42 @@ function CreateContent(frame, data)
 	local i = 1
 	for k, v in pairs(data) do
 		if type(k) == "string" then
-			local btn1 = ConfigMainButton(ScrollFrame.buttons[i], k)
+			local btn1 = ConfigMainButton(ScrollFrame.buttons[i], k) -- configurate the main button
 
 			if i == 1 then -- set position of first button
 				btn1:SetPoint("TOPLEFT", ScrollFrame, "TOPLEFT", 0, 0)
 			else
 				btn1:SetPoint("TOPLEFT", ScrollFrame.buttons[i -(i-1)], "BOTTOMLEFT", 0, 0)
 			end
-			btn1:Show() -- only first level buttons shown
-			if type(v) == "table" then
+			btn1:Show() -- only main buttons shown
+			if type(v) == "table" then -- if the value is a table
 				if GetDepth(v) >= 2 then -- if the Depth is 2 or higher, we have a second table in the table
-					for k, v in pairs(v) do
+					for k, v in pairs(v) do -- loop through the instance buttons
 						btn1.hasChilds = true
-						SetPlusTexture(btn1)
+						SetPlusTexture(btn1) -- set a plus for the main button
 					
-						btn1:SetScript("OnClick", function(self, button)
+						btn1:SetScript("OnClick", function(self, button) -- OnClick EventHandling for main button
 							if button == "LeftButton" then
-								if not self.clicked then 
+								if not self.clicked then -- if wasn´t clicked befor
 									ScrollFrame.lvlClicked = 1
-									ScrollFrame.mainBTN = self
+									ScrollFrame.mainBTN = self -- set the main Button which was clicked
 									self.clicked = true
-									SetMinusTexture(self)
+									SetMinusTexture(self) -- now set the plus to minus
 								
 									-- hide buttons and set the selected button as Header
 									SA_ScrollFrame:HideButtons()
 									ClearAllPoints()
 									NewHeader(self)
-									SetInstanceButtons(self, Content.data[self:GetText()])
-								else
-									ScrollBar:SetAttribute("buttoncount", 0)
+									SetInstanceButtons(self, Content.data[self:GetText()]) -- set the instance button dependent to 
+								else                                                       -- the main Button
+									ScrollBar:SetAttribute("buttoncount", 0) -- if was befor clicked
 								
 									ScrollFrame.lvlClicked = 0
 									ScrollFrame.mainBTN = nil
-									SetAllClicked(false)
-									SetAllPlusTex()
+									SetAllClicked(false) -- by entering the main level all buttons clicked set to false
+									SetAllPlusTex() -- restore plus texture
 							
-									SetMainButtons()
+									SetMainButtons() -- set all main buttons in scrollframe
 								end
 							end
 						end)
@@ -149,29 +168,29 @@ function CreateContent(frame, data)
 						i = i + 1
 						
 						if type(k) == "string" then
-							local btn2 = ConfigInstanceButton(ScrollFrame.buttons[i], k)
-							if type(v) == "table" then
+							local btn2 = ConfigInstanceButton(ScrollFrame.buttons[i], k) -- configurate the instance button
+							if type(v) == "table" then -- table in table --> bosses in instance
 								btn2.hasChilds = true
 							else
 								btn2.hasChilds = false
 							end
-							btn2:SetScript("OnClick", function(self, button)
+							btn2:SetScript("OnClick", function(self, button) -- OnClick EventHandling
 								if button == "LeftButton" then
 									ScrollBar:SetAttribute("buttoncount",0)
 									if not self.clicked then 
 										ScrollFrame.lvlClicked = 2
-										ScrollFrame.instanceButton = self
+										ScrollFrame.instanceButton = self -- set instance button
 										self.clicked = true
-										SetMinusTexture(self)
+										SetMinusTexture(self) -- set minus
 										
 										-- hide buttons and set the selected button as Header
 										SA_ScrollFrame:HideButtons()
 										ClearAllPoints()
-										NewHeader(self)
-										local bossData = GetBossData(ScrollFrame.mainBTN, self:GetText(), Content.data)
-										local bossButtons = GetBossButtons(bossData)
+										NewHeader(self) -- set a new header
+										local bossData = GetBossData(ScrollFrame.mainBTN, self:GetText(), Content.data) -- get teh boss data of the table
+										local bossButtons = GetBossButtons(bossData) -- get the boss buttons in the buttons
 										
-										ScrollBar:SetAttribute("buttoncount", #bossButtons)
+										ScrollBar:SetAttribute("buttoncount", #bossButtons) -- set the buttoncount to the number of bosses
 										
 										bossButtons[1]:SetPoint("TOPLEFT", self, "TOPLEFT", 0, -25)
 										bossButtons[1]:Show()
@@ -179,16 +198,16 @@ function CreateContent(frame, data)
 											bossButtons[i]:SetPoint("TOPLEFT", bossButtons[i-1], "TOPLEFT", 0, -25)
 											bossButtons[i]:Show()
 										end
-									else
+									else -- if instance button wasn´t clicked befor
 										ScrollFrame.lvlClicked = 1
 										ScrollFrame.instanceButton = nil
 										self.clicked = false
-										SA_ScrollFrame:HideButtons()
+										SA_ScrollFrame:HideButtons() -- hide all buttons
 										ClearAllPoints()
-										SetAllPlusTex()
-										SetInstanceButtons(self, Content.data[ScrollFrame.mainBTN:GetText()])
+										SetAllPlusTex() -- set all plus
+										SetInstanceButtons(self, Content.data[ScrollFrame.mainBTN:GetText()]) -- Set all instance buttons dependent to the main button
 										
-										if ScrollFrame.bossButton then
+										if ScrollFrame.bossButton then -- if a boss button was clicked, then overwrite the highlighting of the button and the values
 											SetNilTex(ScrollFrame.bossButton)
 											ScrollFrame.bossButton = nil
 											ScrollFrame.bossButton.clicked = false
@@ -196,11 +215,11 @@ function CreateContent(frame, data)
 									end
 								end
 							end)
-						i = CreateBossButton(v, i)
+						i = CreateBossButton(v, i) -- create the boss button
 					end
 				end
 			else
-				btn1:SetScript("OnClick", function(self, button)
+				btn1:SetScript("OnClick", function(self, button) -- the button which has no child
 				print("|cFFFF0000"..self:GetText()..SAL[" has no childs!"].."|r")
 				end)
 			end
@@ -211,18 +230,30 @@ end
 	--Content.texture:SetAllPoints()
 	--Content.texture:SetTexture("Interface/GLUES/MainMenu/Glues-BlizzardLogo")
 	
-	frame:SetScrollChild(Content)
+	frame:SetScrollChild(Content) -- set the scrollChild for the ScrollFrame
 end
 
+-- SA_ScrollFrame:SetPoint(): To set the Point of the ScrollFrame outside the Class
+--
+-- framePosition: Region of the Frame
+-- relativeToFrame: relative to which Frame want to position
+-- relativePos: relative to the Region of the Frame, to which want to position
+-- x: x movement of the Frame
+-- y: y movement of the Frame
 function SA_ScrollFrame:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 	ScrollFrame:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
 
+-- SA_ScrollFrame:LoadScrollFrame(): Loader for the ScrollFrame
+--
+-- frame: Parent frame
 function SA_ScrollFrame:LoadScrollFrame(frame)
 	return CreateScrollFrame(frame)
 end
 
--- reset function
+-- SA_ScrollFrame:Reset(): reset function for the ScrollFrame
+-- 
+-- set all to start
 function SA_ScrollFrame:Reset(frame)
 	ScrollFrame.mainBTN = nil
 	ScrollFrame.instanceButton = nil
@@ -239,7 +270,10 @@ function SA_ScrollFrame:Reset(frame)
 	ScrollBar:SetAttribute("buttoncount", ScrollFrame.mainButtonCount)
 end
 
--- Create all Buttons for the ScrollFrame
+-- SA_ScrollFrame:CreateButtons(): Create all Buttons for the ScrollFrame
+--
+-- data: which are neede to create the buttons text and how much buttons
+-- frame: Parent frame
 function SA_ScrollFrame:CreateButtons(data, frame)
 	for i=1,GetArraySize(data, GetDepth(data), 0) do
 		ScrollFrame.buttons[i] = CreateFrame("Button",nil,Content)
@@ -252,7 +286,10 @@ function SA_ScrollFrame:CreateButtons(data, frame)
 	ScrollFrame.lvlClicked = 0
 end
 
--- This function is for the boss buttons (third level)
+-- CreateBossButton(): This function is for the boss buttons (third level)
+--
+-- table: data for buttons
+-- i: needed for the buttons container
 function CreateBossButton(table, i)
 	if type(table) == "table" then
 		for k, v in pairs(table) do
@@ -267,7 +304,10 @@ function CreateBossButton(table, i)
 	return i
 end
 
--- configure a main button(first level)
+-- ConfigMainButton(): configure a main button(first level)
+-- 
+-- button: which button want to configure
+-- key: the text want to set in the button
 function ConfigMainButton(button, key)
 	fontstring = button:CreateFontString()
 	fontstring:SetFontObject(GameFontNormal)
@@ -281,7 +321,12 @@ function ConfigMainButton(button, key)
 	return button
 end
 
--- configure the main buttons, e.g. font
+-- ConfigMainButtons(): configure the main button, e.g. font
+--
+-- set a font and a nil texture for the button (overwrite existing texture, for having no texture)
+-- raise buttoncount and mainButtonCount by 1
+--
+-- button: which want to configure
 function ConfigMainButtons(button)
 	fontstring = button:CreateFontString()
 	fontstring:SetFontObject(GameFontNormal)
@@ -303,7 +348,14 @@ function ConfigMainButtons(button)
 	ScrollBar:SetAttribute("buttoncount", ScrollBar:GetAttribute("buttoncount") + 1)
 end
 
--- configure instance buttons(second level)
+-- ConfigInstanceButton(): configure instance buttons(second level)
+--
+-- set a font and a nil texture for the button (overwrite existing texture, for having no texture)
+-- hide the button and set plus texture
+-- raise buttoncount by 1
+--
+-- button: which want to configure
+-- key: text which want to set in button
 function ConfigInstanceButton(button, key)
 	fontstring = button:CreateFontString()
 	fontstring:SetFontObject(GameFontNormal)
@@ -322,7 +374,7 @@ function ConfigInstanceButton(button, key)
 	
 	button:Hide()
 					
-	button.level = 2
+	button.level = 2 -- level of button
 	
 	SetPlusTexture(button)
 	button.clicked = false
@@ -332,7 +384,10 @@ function ConfigInstanceButton(button, key)
 	return button
 end
 
--- configure boss buttons(third level)
+-- ConfigBossButtons(): configure boss buttons(third level)
+--
+-- button: which want to configure
+-- key: text which want to set in button
 function ConfigBossButtons(button, key)
 	fontstring = button:CreateFontString()
 	fontstring:SetFontObject(GameFontNormal)
@@ -342,15 +397,16 @@ function ConfigBossButtons(button, key)
 	button:SetFontString(fontstring)
 	button.level = 3
 	button.clicked = false
-	button:Hide()
+	button:Hide() -- hide
 	
-	SetNilTex(button)
+	SetNilTex(button) -- set a nil texture
 	
+	-- EventHandling for the boss button, if the boss button was clicked highlight him
 	button:SetScript("OnClick", function(self, button)
 		if button == "LeftButton" then
 			if self.clicked == false then
 				if ScrollFrame.bossButton then
-					if self:GetText() ~= ScrollFrame.bossButton:GetText() then
+					if self:GetText() ~= ScrollFrame.bossButton:GetText() then -- if clicked on another boss button
 						SetNilTex(ScrollFrame.bossButton)
 						ScrollFrame.bossButton.clicked = false
 						ScrollFrame.bossButton = nil
@@ -358,7 +414,7 @@ function ConfigBossButtons(button, key)
 				end
 				ScrollFrame.lvlClicked = 3
 				self.clicked = true
-				ScrollFrame.bossButton = self 
+				ScrollFrame.bossButton = self  -- set to actual clicked boss button
 				
 				-- set highlight
 				SetListHightlightTex(self)
@@ -374,7 +430,7 @@ function ConfigBossButtons(button, key)
 	end)
 end
 
--- ######################### NEXT ConfigAllButtons für Reset, um alle Buttons wieder die alte Texture zu geben etc
+-- ConfigAllButtons(): needed for reset, to set all buttons to start configuration
 function ConfigAllButtons()
 	for i=1, #ScrollFrame.buttons, 1 do
 		if ScrollFrame.buttons[i].level == 1 then
@@ -386,7 +442,10 @@ function ConfigAllButtons()
 		end
 	end
 end
--- Setter for buttons, if all are clicked or not
+
+-- SetAllClicked(): Setter for buttons, if all are clicked or not
+--
+-- clicked: boolean value to which want to set, if clicked or not
 function SetAllClicked(clicked)
 	for i=1,GetArraySize(Content.data, GetDepth(Content.data), 0) do
 		if ScrollFrame.lvlClicked == 1 and ScrollFrame.mainBTN ~= nil then
@@ -403,7 +462,8 @@ function SetAllClicked(clicked)
 	end
 end
 
--- Setter for setting all buttons(only level 1 and 2) a plus texture
+-- SetAllPlusTex(): Setter for setting all buttons(only level 1 and 2) a plus texture
+-- if they have a child
 function SetAllPlusTex()
 	for i=1,GetArraySize(Content.data, GetDepth(Content.data), 0) do
 		local button = ScrollFrame.buttons[i]
@@ -416,7 +476,9 @@ function SetAllPlusTex()
 	end
 end
 
--- set the plus texture in a button
+-- SetPlusTexture(): set the plus texture in a button
+--
+-- button: on which want to set the plus texture
 function SetPlusTexture(button)
 	local tex = button:CreateTexture(nil, "ARTWORK")
 	tex:SetAllPoints(true)
@@ -427,7 +489,9 @@ function SetPlusTexture(button)
 	button:GetNormalTexture():SetPoint("RIGHT", button, "RIGHT", 0, 0)
 end
 
--- set the minus texture in a button
+-- SetMinusTexture(): set the minus texture in a button
+--
+-- button: on which want to set the minus texture
 function SetMinusTexture(button)
 	local tex = button:CreateTexture(nil, "ARTWORK")
 	tex:SetAllPoints(true)
@@ -438,6 +502,10 @@ function SetMinusTexture(button)
 	button:GetNormalTexture():SetPoint("RIGHT", button, "RIGHT", 0, 0)
 end
 
+-- SetNilTex(): set a nil texture in a button
+-- needed if want to overwrite a texture
+--
+-- button: on which want to overwrite the texture
 function SetNilTex(button)
 	local tex = button:CreateTexture(nil, "ARTWORK")
 	tex:SetAllPoints(true)
@@ -448,6 +516,9 @@ function SetNilTex(button)
 	button:GetNormalTexture():SetPoint("LEFT", button, "LEFT", 0, 0)
 end
 
+-- SetListHightlightTex(): set a highlight texture on a button, e.g which was clicked
+--
+-- button: on which want to set the hightlight
 function SetListHightlightTex(button)
 	local tex = button:CreateTexture(nil, "ARTWORK")
 	tex:SetAllPoints(true)
@@ -458,7 +529,9 @@ function SetListHightlightTex(button)
 	button:GetNormalTexture():SetPoint("LEFT", button, "LEFT", 0, 0)
 end
 
--- set a new header, needed if get a new level of buttons
+-- NewHeader(): set a new header, needed if get a new level of buttons
+--
+-- button: which is the new header
 function NewHeader(button)
 	button:SetFrameLevel(255) -- to be a top of ui
 	button:SetPoint("TOPLEFT", ScrollFrame, "TOPLEFT", 0, 0)
@@ -480,20 +553,22 @@ function NewHeader(button)
 	button:Show()
 end
 
--- Clear all points of the buttons, needed if set ne Points
+-- ClearAllPoints(): Clear all points of the buttons, needed if set new Points
 function ClearAllPoints()
 	for i=1,GetArraySize(Content.data, GetDepth(Content.data), 0) do
 		ScrollFrame.buttons[i]:ClearAllPoints()
 	end
 end
 
--- Hide all buttons, needed if click on a button
+-- SA_ScrollFrame:HideButtons(): Hide all buttons, needed if click on a button
 function SA_ScrollFrame:HideButtons()
 	for i=1,GetArraySize(Content.data, GetDepth(Content.data), 0) do
 		ScrollFrame.buttons[i]:Hide()
 	end
 end
 
+-- DisableBossButtons(): Disable all boss buttons expected the clicked boss button
+-- than the user can´t interact with the boss buttons
 function DisableBossButtons()
 	if ScrollFrame.bossButton ~= nil then
 		local bossButtons = SA_ScrollFrame:GetBossButtons()
@@ -510,6 +585,9 @@ function DisableBossButtons()
 	end
 end
 
+-- GetMainButton(): Get all main buttons of the button container dependent to data
+--
+-- data: filtered main data
 function GetMainButtons(data)
 	local score = {}
 	for k, v in pairs(data) do
@@ -524,7 +602,9 @@ function GetMainButtons(data)
 	return score
 end
 
--- Get all instance buttons(second level)
+-- GetInstanceButtons(): Get all instance buttons(second level) of the button container
+--
+-- data: filtered instance data
 function GetInstanceButtons(data)
 	local instanceButtons = copyButtons(data)
 	local score = {}
@@ -540,7 +620,11 @@ function GetInstanceButtons(data)
 	return score
 end
 
--- Get all Boss buttons(third level)
+-- GetBossButtons(): Get all Boss buttons(third level) of the button container
+--
+-- filter data with GetBossData()
+--
+-- data: filtered boss data
 function GetBossButtons(data)
 	local bossButtons = data
 	local score = {}
@@ -555,12 +639,17 @@ function GetBossButtons(data)
 	return score
 end
 
--- Get the Bosses of an Instance
+-- GetBossData(): Get the Bosses of an Instance in the table data
+--
+-- mainBTN: main Button which was clicked
+-- buttonText: instance name
+-- data: data of all buttons
 function GetBossData(mainBTN, buttonText, data)
 	local nextLvlData = data[mainBTN:GetText()]
 	return nextLvlData[buttonText]
 end
 
+-- SA_ScrollFrame:GetBossButtons(): Get all boss buttons of the button container 
 function SA_ScrollFrame:GetBossButtons()
 	local score = {}
 	for i=1, #ScrollFrame.buttons, 1 do
@@ -571,7 +660,8 @@ function SA_ScrollFrame:GetBossButtons()
 	return score
 end
 
--- set all Buttons which where shown at start
+-- SetMainButtons(): set all Buttons which where shown at start to main buttons
+-- neede when get back to main buttons
 function SetMainButtons()
 	SA_ScrollFrame:HideButtons()
 	ClearAllPoints()
@@ -591,9 +681,14 @@ function SetMainButtons()
 	SetAllPlusTex()
 end
 
--- set all instanceButton(second level)
+-- SetInstanceButtons(): set all instanceButton(second level) under the Header
+-- dependent to the main Button(header)
+-- neede when clicked on a main button
+--
+-- self: the main Button
+-- data: with the button data(text)
 function SetInstanceButtons(self, data)
-	local instanceButtons = GetInstanceButtons(data)
+	local instanceButtons = GetInstanceButtons(data) -- get filtered buttons, only instance buttons
 	ConfigInstanceButton(instanceButtons[1], instanceButtons[1]:GetText())
 	if ScrollFrame.mainBTN ~= nil then
 		if ScrollFrame.mainBTN == self:GetText() then
@@ -611,7 +706,11 @@ function SetInstanceButtons(self, data)
 	end
 end
 
--- Get the Size of a table
+-- GetArraySize(): lua function to get the Size of a table
+--
+-- table: of which want the size
+-- depth: how depth want to go
+-- len: needed for recursive function
 function GetArraySize(table, depth, len)
 	local lengthNum = len
 	for k,v in pairs(table) do -- for every key in the table with a corresponding non-nil value 
@@ -625,7 +724,7 @@ function GetArraySize(table, depth, len)
 	return lengthNum
 end
 
--- Get depth of a table
+-- GetDepth(): lua function to get depth of a table
 function GetDepth(table)
 	local depth = 1
 	if next(table) == nil then
@@ -641,7 +740,10 @@ function GetDepth(table)
 	return depth + 1
 end
 
+-- copyButtons(): copy the buttons(only keys) of a original container
 -- needed for copy all second level buttons in new table
+--
+-- orig: original button container
 function copyButtons(orig)
     local copy = {}
     for k, v in pairs(orig) do

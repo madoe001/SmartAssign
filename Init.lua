@@ -1,3 +1,6 @@
+--Author: Bartlomiej Grabelus
+-- this lua file init all global tables
+
 -- Global vars --
 local _G = _G
 

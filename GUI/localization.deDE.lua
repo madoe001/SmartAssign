@@ -1,3 +1,5 @@
+--Author: Bartlomiej Grabelus
+
 local _G = _G
 
 if GetLocale() ~= "deDE" then 

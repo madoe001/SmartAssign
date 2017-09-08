@@ -1,3 +1,5 @@
+--Author: Bartlomiej Grabelus
+-- this lua holds all data for smartassign
 local _G = _G
 
 local SAL = _G.GUI.Locales

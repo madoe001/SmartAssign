@@ -1,3 +1,5 @@
+--Author: Bartlomiej Grabelus
+
 local _G = _G
 
 local bossPlate = _G.HUD.BossPlate
