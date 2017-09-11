@@ -9,6 +9,8 @@ local SAL = _G.GUI.Locales
 
 local isInstance
 local instanceType
+local instanceName
+local unit
 local hudFrame
 
 function mainHUD:CreateMainHUD()
