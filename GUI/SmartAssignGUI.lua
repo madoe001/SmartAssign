@@ -56,6 +56,7 @@ function SA_GUI_LOCAL:Init(event, addon)
 		SlashCommands:Init() -- init slashcommands
 		SlashCommands:AddResetFunction(SA_GUI_LOCAL.ResetFrames, "frames")
 		MiniMapButton:Init() -- init minimapbutton
+		mainHUD:CreateMainHUD()
 	end
 end
 	
@@ -73,7 +74,7 @@ end
 -- frame: Parent frame
 -- ######################## NEXT Container für Frames und Hide über eine func welche im container sucht und Hide ausführt und ein HideAll
 function SA_GUI_LOCAL:CreateGUI(frame)
-	local window = SA_GUI_LOCAL:CreateWindow(frame)
+	frame = SA_GUI_LOCAL:CreateWindow(frame)
 	
 	-- close Button
 	frame.closeButton = SA_GUI_LOCAL:CreateButton(frame, "closeButton", nil, 0, 0, "TOPRIGHT", 0, 0, "UIPanelCloseButton")

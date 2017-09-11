@@ -49,7 +49,7 @@ end
 -- x: x movement of the Frame
 -- y: y movement of the Frame
 function SA_DropDownMenu:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
-	DropDownMenuButton:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
+	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
 
 -- GetSelectedItem(): Getter for the selected item

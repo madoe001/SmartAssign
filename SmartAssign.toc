@@ -21,6 +21,7 @@ SlashCommands.lua
 MiniMapButton.lua
 
 HUD\mainHUD.lua
+HUD\bossPlate.lua
 
 GUI\DropDownList.lua
 GUI\DropDownMenu.lua

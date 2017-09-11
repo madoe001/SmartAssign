@@ -15,7 +15,7 @@ local assert, type = assert, type
 -- x: x movement of the Frame
 -- y: y movement of the Frame
 function SA_EditBox:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
-	EditBox:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
+	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
 
 -- CreateEditBox(): Creation function for the editbox
@@ -73,7 +73,7 @@ end
 --
 -- text: which want to set
 -- r: red
--- g: yellow
+-- g: green
 -- b: blue
 -- a: alpha
 function ConfigLabel(text, r, g, b, a)

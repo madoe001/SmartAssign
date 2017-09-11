@@ -36,7 +36,7 @@ end
 -- x: x movement of the Frame
 -- y: y movement of the Frame
 function SA_DropDownList:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
-	DropDownListButton:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
+	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
 
 -- OnClick(): The OnClickEventHandling function for the DropDownList

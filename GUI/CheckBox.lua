@@ -19,7 +19,7 @@ local assert, type = assert, type
 -- x: x movement of the Frame
 -- y: y movement of the Frame
 function SA_CheckBox:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
-	CheckBoxFrame:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
+	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
 
 -- CreateCheckBox(): Creates a CheckBox
@@ -56,5 +56,6 @@ end
 
 -- SA_CheckBox:GetChecked(): returns boolean, if the checkbox is checked
 function SA_CheckBox:GetChecked()
-	return CheckBoxFrame:GetChecked()
+print("HH")
+	return self:GetChecked()
 end

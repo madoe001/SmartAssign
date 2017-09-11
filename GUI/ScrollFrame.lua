@@ -241,7 +241,7 @@ end
 -- x: x movement of the Frame
 -- y: y movement of the Frame
 function SA_ScrollFrame:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
-	ScrollFrame:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
+	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
 
 -- SA_ScrollFrame:LoadScrollFrame(): Loader for the ScrollFrame
