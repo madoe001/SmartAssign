@@ -20,8 +20,9 @@ DATA\Data.lua
 SlashCommands.lua
 MiniMapButton.lua
 
-HUD\mainHUD.lua
 HUD\bossPlate.lua
+HUD\bossSpellIcon.lua
+HUD\mainHUD.lua
 
 GUI\DropDownList.lua
 GUI\DropDownMenu.lua
