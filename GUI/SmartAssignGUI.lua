@@ -8,12 +8,11 @@ local GUI = _G.GUI
 
 -- components
 local DropDownMenu = GUI.SA_DropDownMenu
-local DropDownList = GUI.SA_DropDownList
 local ScrollFrame = GUI.SA_ScrollFrame
 local CheckBox = GUI.SA_CheckBox
 local EditBox = GUI.SA_EditBox
 local Assignment = GUI.Assignment
-
+local flag = true
 -- hud
 local mainHUD = _G.HUD.mainHUD
 
@@ -90,17 +89,14 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	frame.dropDownMenu = SA_GUI_LOCAL:CreateDropDownMenu(frame, DropDownMenu.data)
 	frame.dropDownMenu:Hide()
 	
-	frame.dropDownList = SA_GUI_LOCAL:CreateDropDownList(frame, DropDownList.data)
-	frame.dropDownList:Hide()
-	
 	frame.scrollFrame = SA_GUI_LOCAL:CreateScrollFrame(LeftSide, frame.dropDownList)
 	SlashCommands:AddResetFunction(SA_GUI_LOCAL.ScrollFrameReset,"ScrollFrame") -- add the reset function of the scrollframe to slashcommands
 		
-	local assign = Assignment:new_assignment(frame, frame.dropDownList , 5, 0)
+	local assign = Assignment:new_assignment(frame, frame.leftSide , 5, 0)
 	assign:Hide()
-	frame.tg = assign
+	frame.assign = assign
 	
-	table.insert(Assignments, timerGUI)
+	table.insert(Assignments, assign)
 
 	frame.timerCheckBox = SA_GUI_LOCAL:CreateCheckBox(frame, SAL["Ability"])
 	frame.timerCheckBox:Hide()
@@ -108,13 +104,9 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	frame.extraCheckBox = SA_GUI_LOCAL:CreateCheckBox(frame, SAL["Extra Text"])
 	frame.extraCheckBox:Hide()
 	
-	frame.editbox = SA_GUI_LOCAL:CreateEditBox(frame, "number")
-	EditBox:SetMaxLetters(frame.editbox, 6) -- number size --> 6
-	frame.editbox:Hide()
-	
+	--EditBox:SetMaxLetters(frame.editbox, 6) -- number size --> 6
 	-- set position of the components
-	frame.dropDownList:SetPoint("LEFT", frame.leftSide, "RIGHT", 0, 0)
-	frame.editbox:SetPoint("LEFT", frame.dropDownList, "RIGHT", 5, 0)
+	--frame.dropDownList:SetPoint("LEFT", frame.leftSide, "RIGHT", 0, 0)
 	frame.dropDownMenu:SetPoint("LEFT", frame.editbox, "RIGHT", 0, 0)
 	frame.timerCheckBox:SetPoint("TOP", frame.dropDownMenu, "BOTTOM", 0, 0)
 	frame.extraCheckBox:SetPoint("TOP", frame.timerCheckBox, "BOTTOM", 0, 0)
@@ -247,20 +239,11 @@ function SA_GUI_LOCAL:CreateFont(frame, name, text, position, x, y, size)
 	return (fontString)
 end
 
--- SA_GUI_LOCAL:CreateDropDownMenu(): create a DropDownMenu
 -- 
 -- frame: Parent frame
 -- data: for the DropDownMenu
 function SA_GUI_LOCAL:CreateDropDownMenu(frame, data) 
 	return (DropDownMenu:LoadDropDownMenu(frame, data))
-end
-
--- SA_GUI_LOCAL:CreateDropDownList(): create a DropDownList
--- 
--- frame: Parent frame
--- data: for the DropDownList
-function SA_GUI_LOCAL:CreateDropDownList(frame, data) 
-	return (DropDownList:LoadDropDownList(frame, data))
 end
 
 -- SA_GUI_LOCAL:CreateScrollFrame(): create a ScrollFrame
@@ -276,14 +259,6 @@ end
 -- checkbosText: text which want to set
 function SA_GUI_LOCAL:CreateCheckBox(frame, checkboxText)
 	return (CheckBox:LoadCheckBox(frame, checkboxText))
-end
-
--- SA_GUI_LOCAL:CreateEditBox(): create a editbox
---
--- frame: Parent frame
--- inputType: string or number allowed
-function SA_GUI_LOCAL:CreateEditBox(frame, inputType)
-	return (EditBox:LoadEditBox(frame,  inputType))
 end
 
 -- SA_GUI_LOCAL:SetScripts(): set the scripts for all components(EventHandling)
@@ -312,26 +287,28 @@ function SA_GUI_LOCAL:SetScripts()
 		--mainHUD:OnUpdate_TestInstance()
 		if mainFrame.scrollFrame.instanceButton ~= nil then -- if clicked on instance button
 			if mainFrame.scrollFrame.bossButton ~= nil then -- if clicked on boss button
-				mainFrame.dropDownList:Show()
+				mainFrame.assign:Show()			
+	--mainFrame.dropDownList:Show()
 			else
-				mainFrame.dropDownList:Hide()
+				mainFrame.assign:Hide()			
+				--mainFrame.dropDownList:Hide()
 			end
 		end
-		if DropDownList:GetSelectedID(mainFrame.dropDownList) ~= nil then -- if something is selected
+		--if DropDownList:GetSelectedID(mainFrame.dropDownList) ~= nil then -- if something is selected
 			--[[if DropDownList:GetSelectedID(frame.dropDownList) == 1 then
 				frame.editbox:Show()
 			else
 				frame.editbox:Hide()
 			end]]
 			-- ############### Funktioniert nicht !!!!
-			if DropDownList:GetSelectedID(mainFrame.dropDownList) == 2 and mainFrame.scrollFrame.bossButton then -- if timer is selected
-				mainFrame.tg:Show()
+		--	if DropDownList:GetSelectedID(mainFrame.dropDownList) == 2 and mainFrame.scrollFrame.bossButton then -- if timer is selected
+		--		mainFrame.tg:Show()
 				--mainFrame.editbox:Show()
-			else
-				mainFrame.tg:Hide()
+		--	else
+		--		mainFrame.tg:Hide()
 				--mainFrame.editbox:Hide()
-			end
-		end
+		--	end
+		--end
 		-- ??
 		--if (mainFrame.editbox:GetText() == "" or mainFrame.editbox:GetText() == "0") then
 		--	mainFrame.dropDownMenu:Hide()
@@ -362,7 +339,6 @@ function SA_GUI_LOCAL:ResetFrames()
 		SA_GUI.frame.dropDownList:Hide()
 		DropDownList:SetSelectedID(nil) -- wird zu benutzerdefiniert
 		SA_GUI.frame.editbox:Hide()
-		SA_GUI.frame.dropDownMenu:Hide()
 		SA_GUI.frame.timerCheckBox:Hide()
 		SA_GUI.frame.extraCheckBox:Hide()
 		ScrollFrame:Reset(mainFrame)
