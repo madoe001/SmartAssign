@@ -5,7 +5,7 @@ local _G = _G
 local SA_ScrollFrame =  _G.GUI.SA_ScrollFrame
 
 -- localization
-local SAL = _G.GUI.Locales
+local GUIL = _G.GUI.Locales
 
 -- CreateScrollFrame(): Creation of the ScrollFrame
 --
@@ -210,7 +210,6 @@ function CreateContent(frame, data)
 										if ScrollFrame.bossButton then -- if a boss button was clicked, then overwrite the highlighting of the button and the values
 											SetNilTex(ScrollFrame.bossButton)
 											ScrollFrame.bossButton = nil
-											ScrollFrame.bossButton.clicked = false
 										end
 									end
 								end
@@ -220,7 +219,7 @@ function CreateContent(frame, data)
 				end
 			else
 				btn1:SetScript("OnClick", function(self, button) -- the button which has no child
-				print("|cFFFF0000"..self:GetText()..SAL[" has no childs!"].."|r")
+				print("|cFFFF0000"..self:GetText()..GUIL[" has no childs!"].."|r")
 				end)
 			end
 		end
