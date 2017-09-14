@@ -16,7 +16,7 @@ _G.GUI = {}
 
 _G.GUI.Locales = {}
 
-_G.GUI.SA_Assignment = {}
+_G.GUI.Assignment = {}
 
 _G.GUI.SA_DropDownMenu = {}
 

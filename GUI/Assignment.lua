@@ -30,7 +30,7 @@ do
 			xVal = x,
 			yVal = y,
 			compl = 0,
-			dropDownAssignType = dropDownAssign:Load
+			dropDownAssignType = dropDownAssign:LoadDropDownList(frame, dropDownAssign.data), 
 			editTimer = editBox:LoadEditBox(frame, "number"),
 			cb = checkBox:LoadCheckBox(frame, "test"),
 			Hide = hide,
@@ -43,10 +43,11 @@ do
 			if(self:GetText() == "" or self:GetText() == 0) then
 				obj.cb:Hide()
 			else
-				obj.cb:Show(dropDownAssign:Load)
+				obj.cb:Show()
 			end
-		end)				
-		
+		end
+	)				
+	
 		--Positionierung der grafischen Elemente
 		--am linken Rand ausgerichtet, 
 		--rechts von dem angegebenen Element zum Beispiel das EditField	

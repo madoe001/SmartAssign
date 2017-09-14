@@ -12,7 +12,7 @@ local DropDownList = GUI.SA_DropDownList
 local ScrollFrame = GUI.SA_ScrollFrame
 local CheckBox = GUI.SA_CheckBox
 local EditBox = GUI.SA_EditBox
-local TimerGUI = GUI.SA_TimerGUI
+local Assignment = GUI.Assignment
 
 -- hud
 local mainHUD = _G.HUD.mainHUD
@@ -96,9 +96,9 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	frame.scrollFrame = SA_GUI_LOCAL:CreateScrollFrame(LeftSide, frame.dropDownList)
 	SlashCommands:AddResetFunction(SA_GUI_LOCAL.ScrollFrameReset,"ScrollFrame") -- add the reset function of the scrollframe to slashcommands
 		
-	local timerGUI = TimerGUI:new_assignment(frame, frame.dropDownList , 5, 0)
-	timerGUI:Hide()
-	frame.tg = timerGUI
+	local assign = Assignment:new_assignment(frame, frame.dropDownList , 5, 0)
+	assign:Hide()
+	frame.tg = assign
 	
 	table.insert(Assignments, timerGUI)
 
