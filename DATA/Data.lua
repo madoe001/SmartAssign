@@ -42,7 +42,6 @@ _G.Dungeons ={
 									SAL["Lord Godfrey"],}},
 	[SAL["WOTLK"]] = {}
 }
-foo = _G.Dungeons;
 
 -- Cooldown.lua
 _G.ClassList = {
@@ -231,3 +230,35 @@ _G.SmartAssign.minimap = {
 		minimapPos = 218,
 		clicked = false,
 	}
+
+SA_BossList = SA_BossList or {"Classic", "Burning Crusade", "Wrath of the Lich King", "Cataclysm", "Mist of Pandaria",
+		"Warlords of Draenor", "Legion"};
+		
+function addExpansionToList(expansionName)
+	SA_BossList[expansionName] = {ExpansionName = expansionName};
+end
+function removeExpansionFromList(expansionName)
+	SA_BossList[expansionName] = nil;
+end
+
+function addRaidToList(expansionName, raidName)
+	SA_BossList[expansionName][raidName] = {RaidName = raidName};
+end
+function removeRaidFromList(expansionName, raidName)
+	SA_BossList[expansionName][raidName] = nil;
+end
+
+function addBossToList(expansionName, raidName, bossName)
+	SA_BossList[expansionName][raidName][bossName] = {BossName = bossName};
+end
+function removeBossFromList(expansionName, raidName, BossName)
+	SA_BossList[expansionName][raidName][bossName] = nil;
+end
+
+function addAbillityToList(expansionName, raidName, bossName, abillityName, spellID)
+	SA_BossList[expansionName][raidName][bossName][abillityName] = {AbillityName = abillityName,
+															SpellID = spellID};
+end
+function removeBossFromList(expansionName, raidName, BossName)
+	SA_BossList[expansionName][raidName][bossName][abillityName] = nil;
+end
