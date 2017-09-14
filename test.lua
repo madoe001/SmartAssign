@@ -45,6 +45,15 @@ testFrame = CreateFrame("Frame","testFrame",UIParent)
 testFrame:SetScript("OnEvent",caric.Init)
 testFrame:RegisterEvent("ADDON_LOADED")
 
+local closeButton = CreateFrame("Button", "closeButton", testFrame, "UIPanelCloseButton")
+closeButton:SetPoint("TOPRIGHT", testFrame)
+-- when click on Button Hide frame
+closeButton:SetScript("OnClick", function (self, button)
+	if button == "LeftButton" then
+		testFrame:Hide()
+	end
+end)
+
 
 function caric:CreateGUI(frame)
 	local window  = caric:CreateWindow(frame)
