@@ -32,9 +32,7 @@ _G.HUD = {}
  
 _G.HUD.mainHUD = {}
  
-_G.HUD.BossPlate = {}
+_G.HUD.BossPlate = {} 
 
-
-
-
+_G.HUD.BossSpellIcon = {}
 

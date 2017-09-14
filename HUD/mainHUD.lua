@@ -4,8 +4,11 @@ local _G = _G
 
 local mainHUD = _G.HUD.mainHUD
 local bossPlate = _G.HUD.BossPlate
+local bossSpellIcon = _G.HUD.BossSpellIcon
 
 local SAL = _G.GUI.Locales
+
+local playerName, playerGUID = UnitName("player"), UnitGUID("player")
 
 local isInstance
 local instanceType
@@ -26,6 +29,7 @@ function mainHUD:CreateMainHUD()
 	hudFrame:SetScript("OnEvent", mainHUD.OnEnteringEvent_TestInstance)
 	--hudFrame:Hide()
 	CreateBossPlate(hudFrame)
+	CreateBossSpellIcon(hudFrame)
 end
 
 function mainHUD:Show()
@@ -57,4 +61,8 @@ end
 
 function CreateBossPlate(frame)
 	bossPlate:CreateBossPlate(frame)
+end
+
+function CreateBossSpellIcon(frame)
+	bossSpellIcon:CreatebossSpellIcon(frame)
 end
