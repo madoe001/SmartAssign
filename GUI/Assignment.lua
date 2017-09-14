@@ -4,12 +4,13 @@
 
 --Neuer Scope damits private ist
 do
-	
+	local dropDownAssign = _G.GUI.SA_DropDownList
+
 	local checkBox = _G.GUI.SA_CheckBox
 
 	local editBox = _G.GUI.SA_EditBox
-	
-	local TimerGUI = _G.GUI.SA_TimerGUI
+			
+	local Assignment = _G.GUI.Assignment
 
 	local function show(self)
 		self.editTimer:Show()
@@ -23,12 +24,13 @@ do
 		return self.compl
 	end
 
-	function TimerGUI:new_assignment(frame, relativeElement, x, y)
+	function Assignment:new_assignment(frame, relativeElement, x, y)
 			
 		local obj = {
 			xVal = x,
 			yVal = y,
 			compl = 0,
+			dropDownAssignType = dropDownAssign:Load
 			editTimer = editBox:LoadEditBox(frame, "number"),
 			cb = checkBox:LoadCheckBox(frame, "test"),
 			Hide = hide,
@@ -41,7 +43,7 @@ do
 			if(self:GetText() == "" or self:GetText() == 0) then
 				obj.cb:Hide()
 			else
-				obj.cb:Show()
+				obj.cb:Show(dropDownAssign:Load)
 			end
 		end)				
 		

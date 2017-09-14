@@ -16,7 +16,7 @@ _G.GUI = {}
 
 _G.GUI.Locales = {}
 
-_G.GUI.SA_TimerGUI = {}
+_G.GUI.SA_Assignment = {}
 
 _G.GUI.SA_DropDownMenu = {}
 
@@ -32,4 +32,9 @@ _G.HUD = {}
  
 _G.HUD.mainHUD = {}
  
-_G.HUD.BossPlate = {} 
+_G.HUD.BossPlate = {}
+
+
+
+
+
