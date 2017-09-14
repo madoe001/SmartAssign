@@ -7,6 +7,8 @@
 
 ## X-Embeds: LibStub, CallbackHandler-1.0, LibDataBroker-1.1, LibDBIcon-1.0
 
+## SavedVariables: foo, bar
+
 Init.lua
 
 GUI\localization.deDe.lua
@@ -32,7 +34,7 @@ GUI\DropDownMenu.lua
 GUI\ScrollFrame.lua
 GUI\CheckBox.lua
 GUI\EditBox.lua
-GUI\TimerGUI.lua
+GUI\Assignment.lua
 GUI\SmartAssignGUI.lua
 
 test.lua

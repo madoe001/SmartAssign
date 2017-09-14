@@ -42,6 +42,7 @@ _G.Dungeons ={
 									SAL["Lord Godfrey"],}},
 	[SAL["WOTLK"]] = {}
 }
+foo = _G.Dungeons;
 
 -- Cooldown.lua
 _G.ClassList = {
