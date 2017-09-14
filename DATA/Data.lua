@@ -259,6 +259,16 @@ function addAbillityToList(expansionName, raidName, bossName, abillityName, spel
 	SA_BossList[expansionName][raidName][bossName][abillityName] = {AbillityName = abillityName,
 															SpellID = spellID};
 end
-function removeBossFromList(expansionName, raidName, BossName)
+function removeBossFromList(expansionName, raidName, bossName)
 	SA_BossList[expansionName][raidName][bossName][abillityName] = nil;
+end
+
+function getAbillities(expansionName, raidName, bossName)
+	local abillities = {}
+	for key, value in pairs(SA_BossList[expansionName][raidName][bossName]) do
+		if key ~= "BossName" then
+			table.insert(abillities, key)
+		end
+	end
+	return abillities
 end
