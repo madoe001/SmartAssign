@@ -29,6 +29,8 @@ _G.GUI.SA_CheckBox = {}
 _G.GUI.SA_EditBox = {}
  
 _G.HUD = {}
+
+_G.HUD.Locales = {}
  
 _G.HUD.mainHUD = {}
  

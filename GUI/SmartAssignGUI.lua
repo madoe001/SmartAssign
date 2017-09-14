@@ -20,7 +20,7 @@ local SlashCommands = _G.SmartAssign.SlashCommands
 local MiniMapButton = SmartAssign.MiniMapButton
 
 -- for localization
-local SAL = _G.GUI.Locales
+local GUIL = _G.GUI.Locales
 
 -- tables
 local SA_GUI = {}
@@ -50,8 +50,8 @@ function SA_GUI_LOCAL:Init(event, addon)
 	if (event == "ADDON_LOADED" and addon == "SmartAssign") then
 		SA_GUI_LOCAL:CreateGUI(SA_GUI.frame)
 		-- color the text |cffHEXCOLOR STRING |r << EndTag
-		print("|cff15c39a<|r|cff436eee"..SAL["SmartAssign"].."|r|cff15c39a>|r"..
-		"|cffffa500"..SAL["SmartAssign loaded. For more informartion about Slashcommands type in '/smart slash'."].."|r")
+		print("|cff15c39a<|r|cff436eee"..GUIL["SmartAssign"].."|r|cff15c39a>|r"..
+		"|cffffa500"..GUIL["SmartAssign loaded. For more informartion about Slashcommands type in '/smart slash'."].."|r")
 		SlashCommands:Init() -- init slashcommands
 		SlashCommands:AddResetFunction(SA_GUI_LOCAL.ResetFrames, "frames")
 		MiniMapButton:Init() -- init minimapbutton
@@ -82,7 +82,7 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	SA_GUI_LOCAL:CreateTitleBar(frame)
 	
 	-- Title
-	frame.title = SA_GUI_LOCAL:CreateFont(frame, "titleFont", SAL["SmartAssign"], nil, 0, 5, 22)
+	frame.title = SA_GUI_LOCAL:CreateFont(frame, "titleFont", GUIL["SmartAssign"], nil, 0, 5, 22)
 	
 	frame.leftSide = SA_GUI_LOCAL:CreateLeftSide(frame) -- here put the scrollframe inside
 	
@@ -98,10 +98,10 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	
 	table.insert(Assignments, assign)
 
-	frame.timerCheckBox = SA_GUI_LOCAL:CreateCheckBox(frame, SAL["Ability"])
+	frame.timerCheckBox = SA_GUI_LOCAL:CreateCheckBox(frame, GUIL["Ability"])
 	frame.timerCheckBox:Hide()
 	
-	frame.extraCheckBox = SA_GUI_LOCAL:CreateCheckBox(frame, SAL["Extra Text"])
+	frame.extraCheckBox = SA_GUI_LOCAL:CreateCheckBox(frame, GUIL["Extra Text"])
 	frame.extraCheckBox:Hide()
 	
 	--EditBox:SetMaxLetters(frame.editbox, 6) -- number size --> 6
@@ -159,6 +159,9 @@ function SA_GUI_LOCAL:CreateLeftSide(frame)
 	LeftSide:SetWidth(frame:GetWidth() * 0.3)
 	LeftSide:SetHeight(frame:GetHeight()-40)
 	LeftSide:SetPoint("TOPLEFT", frame, 20, -20)
+	
+	-- create a line
+	SA_GUI_LOCAL:CreateLine(LeftSide ,1, frame:GetHeight()-40, "RIGHT", LeftSide, 10, 0)
 	
 	return LeftSide
 end
@@ -238,6 +241,24 @@ function SA_GUI_LOCAL:CreateFont(frame, name, text, position, x, y, size)
 	
 	return (fontString)
 end
+
+
+-- SA_GUI_LOCAL:CreateLine(): function to create a line
+-- if horizontal: height = 1 to 2
+-- if vertical: width = 1 to 2
+--
+-- region: where to position
+-- frame: relative to which frame
+-- x: x movement
+-- y: y movement
+function SA_GUI_LOCAL:CreateLine(parent ,width, height, region, frame, x, y)
+	local line = parent:CreateTexture()
+    line:SetTexture("Interface\\Tooltips\\UI-Tooltip-Background")
+    
+	line:SetSize(width , height)
+	line:SetPoint(region, frame, x, y)
+end
+
 
 -- 
 -- frame: Parent frame

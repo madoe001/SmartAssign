@@ -7,11 +7,16 @@
 
 ## X-Embeds: LibStub, CallbackHandler-1.0, LibDataBroker-1.1, LibDBIcon-1.0
 
+## SavedVariables: SA_BossList, SA_Cooldowns
+
 Init.lua
 
 GUI\localization.deDe.lua
 GUI\localization.enUS.lua
 GUI\localization.enGB.lua
+HUD\localization.deDe.lua
+HUD\localization.enUS.lua
+HUD\localization.enGB.lua
 
 embedLIBS.xml
 

@@ -2,7 +2,7 @@
 
 local _G = _G
 local SA_EditBox = _G.GUI.SA_EditBox
-local SAL = _G.GUI.Locales
+local GUIL = _G.GUI.Locales
 
 -- for failurehandling
 local assert, type = assert, type
@@ -80,7 +80,7 @@ function ConfigLabel(text, r, g, b, a)
 	EditBox.label = EditBox:CreateFontString("EditBox-label", "ARTWORK", "GameFontNormalSmall")
 	EditBox.label:SetHeight(25)
 	EditBox.label:SetTextColor(r, g, b, a)
-	EditBox.label:SetText(SAL[text])
+	EditBox.label:SetText(GUIL[text])
 	EditBox.label:SetPoint("LEFT", EditBox, "LEFT", 0, 0)
 end
 
@@ -114,7 +114,7 @@ end
 -- self: on which want to set max
 -- max: the max value
 function SA_EditBox:SetMaxLetters(self, max)
-	assert(max > 0, SAL["'max' must be greater than 0."])
+	assert(max > 0, GUIL["'max' must be greater than 0."])
 	self:SetMaxLetters(max)
 end
 
@@ -125,6 +125,6 @@ end
 -- frame: Parent frame
 -- inputType: of the editbox 
 function SA_EditBox:LoadEditBox(frame, inputType)
-	assert((inputType == "string" or inputType == "number"), SAL["'inputType' must be string or number."])
+	assert((inputType == "string" or inputType == "number"), GUIL["'inputType' must be string or number."])
 	return CreateEditBox(frame, inputType)
 end

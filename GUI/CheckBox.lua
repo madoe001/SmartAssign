@@ -3,7 +3,7 @@
 local _G = _G
 
 -- Localization
-local SAL = _G.GUI.Locales
+local GUIL = _G.GUI.Locales
 
 -- Get Global table for CheckBox
 local SA_CheckBox = _G.GUI.SA_CheckBox
@@ -50,7 +50,7 @@ end
 -- frame: Parent frame
 -- checkboxText: the text which want to set
 function SA_CheckBox:LoadCheckBox(frame, checkboxText)
-	assert(type(checkboxText) == "string", SAL["'checkboxText' must be a string."])
+	assert(type(checkboxText) == "string", GUIL["'checkboxText' must be a string."])
 	return CreateCheckBox(frame, checkboxText)
 end
 
