@@ -5,7 +5,7 @@ local _G = _G
 local SA_DropDownList = _G.GUI.SA_DropDownList
 
 -- localization
-local SAL = _G.GUI.Locales
+local GUIL = _G.GUI.Locales
 
 -- for failurehandling
 local assert, type = assert, type
@@ -20,7 +20,7 @@ local BUTTON_HEIGHT = 25
 -- frame: For which want to set the EventHandling
 -- func: The function which want to set for the event
 function SA_DropDownList:SetOnClick(frame, func)
-    assert(type(func) == "function", SAL["'func' in 'DropDownList SetOnClick' must be a function."])
+    assert(type(func) == "function", GUIL["'func' in 'DropDownList SetOnClick' must be a function."])
 	if func then
 		frame.ButtonOnClick = func
 	else
@@ -48,9 +48,9 @@ end
 -- self: The frame on which was clicked
 local function OnClick(self)
 	if self:GetID() == 1 then
-		self.selectedId = SAL["Ability"]
+		self.selectedId = GUIL["Ability"]
 	elseif self:GetID() == 2 then
-		self.selectedId = SAL["Timer"]
+		self.selectedId = GUIL["Timer"]
 	end
 	print(self.selectedId)
     UIDropDownMenu_SetSelectedID(DropDownListButton, self:GetID())
@@ -152,6 +152,6 @@ end
 -- frame: Parent frame
 -- data: which want to set in the DropDownList
 function SA_DropDownList:LoadDropDownList(frame, data)
-	assert(type(data) == "table", SAL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownList.data for infos."])
+	assert(type(data) == "table", GUIL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownList.data for infos."])
 	return CreateDropDownList(frame, data)
 end
