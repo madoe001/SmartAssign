@@ -130,7 +130,6 @@ end
 
 function initialize(self, level)
 	local info = UIDropDownMenu_CreateInfo()
-	
 	for k,v in pairs(SA_BossList) do
 		info = UIDropDownMenu_CreateInfo()
 		info.text = k
@@ -141,8 +140,9 @@ function initialize(self, level)
 	
 end
 
+
 UIDropDownMenu_Initialize(DropDownMenuTest, initialize)
 UIDropDownMenu_SetWidth(DropDownMenuTest, 100);
 UIDropDownMenu_SetButtonWidth(DropDownMenuTest, 124)
-UIDropDownMenu_SetSelectedID(DropDownMenuTest, 1)
+UIDropDownMenu_SetText(DropDownMenuTest, "Expansion")
 UIDropDownMenu_JustifyText(DropDownMenuTest, "LEFT")
