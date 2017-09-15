@@ -20,7 +20,7 @@ do
 	local function hide(self)
 		self.dropDownAssignType:Hide()
 		self.editTimer:Hide()
-		print("Hide wurde aufgerufen")
+		--print("Hide wurde aufgerufen")
 	end
 
 	local function createTimerAssign(self)
@@ -38,7 +38,9 @@ do
 	end
 
 	local function createAbilityAssign(self)
-		
+		for key, value in pairs(getAbillities("")) do 
+			print(value)
+		end	
 	end
 
 	function Assignment:new_assignment(frame,  relativeElement, x, y)

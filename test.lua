@@ -39,9 +39,9 @@ function caric:Init(event, addon)
 end
 
 -- frame erstellen und events registrieren
-testFrame = CreateFrame("Frame","testFrame",UIParent)
-testFrame:SetScript("OnEvent",caric.Init)
-testFrame:RegisterEvent("ADDON_LOADED")
+--testFrame = CreateFrame("Frame","testFrame",UIParent)
+--testFrame:SetScript("OnEvent",caric.Init)
+--testFrame:RegisterEvent("ADDON_LOADED")
 
 
 function caric:CreateGUI(frame)
