@@ -5,7 +5,7 @@ local _G = _G
 local SA_DropDownList = _G.GUI.SA_DropDownList
 
 -- localization
-local GUIL = _G.GUI.Locales
+local SAL = _G.GUI.Locales
 
 -- for failurehandling
 local assert, type = assert, type
@@ -20,7 +20,7 @@ local BUTTON_HEIGHT = 25
 -- frame: For which want to set the EventHandling
 -- func: The function which want to set for the event
 function SA_DropDownList:SetOnClick(frame, func)
-    assert(type(func) == "function", GUIL["'func' in 'DropDownList SetOnClick' must be a function."])
+    assert(type(func) == "function", SAL["'func' in 'DropDownList SetOnClick' must be a function."])
 	if func then
 		frame.ButtonOnClick = func
 	else
@@ -48,9 +48,9 @@ end
 -- self: The frame on which was clicked
 local function OnClick(self)
 	if self:GetID() == 1 then
-		self.selectedId = GUIL["Ability"]
+		self.selectedId = SAL["Ability"]
 	elseif self:GetID() == 2 then
-		self.selectedId = GUIL["Timer"]
+		self.selectedId = SAL["Timer"]
 	end
 	print(self.selectedId)
     UIDropDownMenu_SetSelectedID(DropDownListButton, self:GetID())
@@ -76,7 +76,6 @@ local function SetData(frame, data, startValue)
 	if startValue then
 		UIDropDownMenu_SetSelectedID(frame, startValue) 
 	end
-	print("data", frame.data[1])
 end
 
 -- CreateDropDownList(): Create a DropDownList
@@ -107,6 +106,7 @@ local function CreateDropDownList(frame, data)
     UIDropDownMenu_SetButtonWidth(DropDownListButton, (DropDownListButton.label:GetStringWidth()-(DropDownListButton.label:GetStringWidth()*0.5)))
     UIDropDownMenu_SetWidth(DropDownListButton, DropDownListButton.label:GetStringWidth());
     UIDropDownMenu_JustifyText(DropDownListButton, "CENTER")
+    
     return DropDownListButton
 end
 
@@ -118,7 +118,7 @@ end
 --
 -- self: the frame which init
 -- level: at which want to set
-function SA_DropDownList:InitDDL(self, level)
+function InitDDL(self, level)
    UIDropDownMenu_SetText(DropDownListButton, "");
    local info = UIDropDownMenu_CreateInfo()
    for key,value in pairs(self.data) do
@@ -152,6 +152,6 @@ end
 -- frame: Parent frame
 -- data: which want to set in the DropDownList
 function SA_DropDownList:LoadDropDownList(frame, data)
-	assert(type(data) == "table", GUIL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownList.data for infos."])
+	assert(type(data) == "table", SAL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownList.data for infos."])
 	return CreateDropDownList(frame, data)
 end

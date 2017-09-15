@@ -5,7 +5,7 @@ local _G = _G
 local SA_DropDownMenu = _G.GUI.SA_DropDownMenu
 
 -- localization
-local GUIL = _G.GUI.Locales
+local SAL = _G.GUI.Locales
 
 -- used in OnClick
 local DropDownData = {}
@@ -33,7 +33,7 @@ end
 -- frame: For which want to set the EventHandling
 -- func: The function which want to set for the event
 function SA_DropDownMenu:SetOnClick(frame, func)
-    assert(type(func) == "function", GUIL["'func' in 'DropDownMenu SetOnClick' must be a function."])
+    assert(type(func) == "function", SAL["'func' in 'DropDownMenu SetOnClick' must be a function."])
 	if func then
 		frame.ButtonOnClick = func
 	else
@@ -143,7 +143,7 @@ end
 -- self: the frame which init
 -- level: at which want to set (only 2 levels)
 function InitDDM(frame, level) 
-frame.selectedName = GUIL["Player"];
+frame.selectedName = SAL["Player"];
 UIDropDownMenu_SetText(frame, frame.selectedName);
 
 level = level or 1; -- level 1 data (Classes)
@@ -152,7 +152,7 @@ level = level or 1; -- level 1 data (Classes)
        local info = UIDropDownMenu_CreateInfo();
        info.hasArrow = true; -- creates submenu
        info.notCheckable = true;
-       info.text = GUIL[cat];
+       info.text = SAL[cat];
        info.value = {
          ["Category"] = cat;
        };
@@ -187,6 +187,6 @@ end
 -- frame: Parent frame
 -- data: which want to set in the DropDownMenu
 function SA_DropDownMenu:LoadDropDownMenu(frame, data)
-	assert(type(data) == "table", GUIL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownMenu.data for infos."])
+	assert(type(data) == "table", SAL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownMenu.data for infos."])
 	return CreateDropDownButton(frame, data)
 end

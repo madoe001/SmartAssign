@@ -19,10 +19,10 @@ do
 
 	local function hide(self)
 		self.dropDownAssignType:Hide()
-		self.editTimer:Hide()
+		--self.editTimer:Hide()
 		--print("Hide wurde aufgerufen")
 	end
-
+--[[
 	local function createTimerAssign(self)
 		self.editTimer:SetScript("OnUpdate", function(self, elapsed)
 			if(self:GetText() ~= "" or self:GetText() ~= 0) then
@@ -35,15 +35,16 @@ do
 		self.editTimer:SetPoint("Left", self.dropDownAssignType, "RIGHT", xVal, yVal )
 		editBox:SetMaxLetters(self.editTimer, 6)	
 		self.editTimer:Show()	
-	end
+	end]]
 
 
 	function Assignment:new_assignment(frame,  relativeElement, x, y)
 		local obj = {
 			xVal = x,
-			yVal = y,
-			dropDownAssignType = dropDownAssign:LoadDropDownList(frame,{"Timer"}), 
-			editTimer = editBox:LoadEditBox(frame, "number"),
+			xVal = y,
+			--dropDownAssignType = dropDownAssign:LoadDropDownList(frame,{"Timer"}), 
+			dropDownAssignType = dropDownAssign:LoadDropDownList(frame, dropDownAssign.data, "test"),
+		--	editTimer = editBox:LoadEditBox(frame, "number"),
 			--bn = bossName,
 			--en = expansionName,
 			--rn = raidName,
@@ -54,15 +55,16 @@ do
 
 		-- DropDownMenu von Ability oder Timer 
 		--nur zum nachladen der GUI Elemente
-		
+--[[		
 		obj.dropDownAssignType:SetScript("OnUpdate", function(self, elapsed)
 			if dropDownAssign:GetSelectedID(self) == 1 then
-				createTimerAssign(obj)
+--				createTimerAssign(obj)
 			elseif dropDownAssign:GetSelectedID(self) == 2 then
 		
 			end
 		end)			
 		obj.dropDownAssignType:SetPoint("Left", relativeElement, "RIGHT", xVal, yVal)
+		]]
 		return obj
 	end
 end
