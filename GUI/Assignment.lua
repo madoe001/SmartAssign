@@ -37,18 +37,12 @@ do
 		self.editTimer:Show()	
 	end
 
-	local function createAbilityAssign(self)
-		for key, value in pairs(getAbillities("")) do 
-			print(value)
-		end	
-	end
 
 	function Assignment:new_assignment(frame,  relativeElement, x, y)
-			
 		local obj = {
 			xVal = x,
 			yVal = y,
-			dropDownAssignType = dropDownAssign:LoadDropDownList(frame, dropDownAssign.data), 
+			dropDownAssignType = dropDownAssign:LoadDropDownList(frame,{"Timer"}), 
 			editTimer = editBox:LoadEditBox(frame, "number"),
 			--bn = bossName,
 			--en = expansionName,
@@ -58,18 +52,16 @@ do
 			Show = show, 
 		}
 
+		-- DropDownMenu von Ability oder Timer 
+		--nur zum nachladen der GUI Elemente
+		
 		obj.dropDownAssignType:SetScript("OnUpdate", function(self, elapsed)
-
 			if dropDownAssign:GetSelectedID(self) == 1 then
-		--		createTimerAssign(obj)
-				createAbilityAssign()
-			elseif dropDownAssign:GetSelectedID(self) == 2 then
-				--createAbilityAssign()
 				createTimerAssign(obj)
+			elseif dropDownAssign:GetSelectedID(self) == 2 then
+		
 			end
 		end)			
-	
-		
 		obj.dropDownAssignType:SetPoint("Left", relativeElement, "RIGHT", xVal, yVal)
 		return obj
 	end

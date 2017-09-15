@@ -76,6 +76,7 @@ local function SetData(frame, data, startValue)
 	if startValue then
 		UIDropDownMenu_SetSelectedID(frame, startValue) 
 	end
+	print("data", frame.data[1])
 end
 
 -- CreateDropDownList(): Create a DropDownList
@@ -106,7 +107,6 @@ local function CreateDropDownList(frame, data)
     UIDropDownMenu_SetButtonWidth(DropDownListButton, (DropDownListButton.label:GetStringWidth()-(DropDownListButton.label:GetStringWidth()*0.5)))
     UIDropDownMenu_SetWidth(DropDownListButton, DropDownListButton.label:GetStringWidth());
     UIDropDownMenu_JustifyText(DropDownListButton, "CENTER")
-    
     return DropDownListButton
 end
 
@@ -118,7 +118,7 @@ end
 --
 -- self: the frame which init
 -- level: at which want to set
-function InitDDL(self, level)
+function SA_DropDownList:InitDDL(self, level)
    UIDropDownMenu_SetText(DropDownListButton, "");
    local info = UIDropDownMenu_CreateInfo()
    for key,value in pairs(self.data) do
