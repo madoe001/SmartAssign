@@ -34,6 +34,7 @@ GUI\DropDownMenu.lua
 GUI\ScrollFrame.lua
 GUI\CheckBox.lua
 GUI\EditBox.lua
+GUI\PlayerAssign.lua
 GUI\Assignment.lua
 GUI\SmartAssignGUI.lua
 

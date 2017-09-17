@@ -86,8 +86,8 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	
 	frame.leftSide = SA_GUI_LOCAL:CreateLeftSide(frame) -- here put the scrollframe inside
 	
-	frame.dropDownMenu = SA_GUI_LOCAL:CreateDropDownMenu(frame, DropDownMenu.data)
-	frame.dropDownMenu:Hide()
+	--frame.dropDownMenu = SA_GUI_LOCAL:CreateDropDownMenu(frame, DropDownMenu.data)
+	--frame.dropDownMenu:Hide()
 	
 	frame.scrollFrame = SA_GUI_LOCAL:CreateScrollFrame(LeftSide, frame.dropDownList)
 	SlashCommands:AddResetFunction(SA_GUI_LOCAL.ScrollFrameReset,"ScrollFrame") -- add the reset function of the scrollframe to slashcommands
@@ -98,18 +98,18 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	
 	table.insert(Assignments, assign)
 
-	frame.timerCheckBox = SA_GUI_LOCAL:CreateCheckBox(frame, GUIL["Ability"])
-	frame.timerCheckBox:Hide()
+	--frame.timerCheckBox = SA_GUI_LOCAL:CreateCheckBox(frame, GUIL["Ability"])
+	--frame.timerCheckBox:Hide()
 	
-	frame.extraCheckBox = SA_GUI_LOCAL:CreateCheckBox(frame, GUIL["Extra Text"])
-	frame.extraCheckBox:Hide()
+	--frame.extraCheckBox = SA_GUI_LOCAL:CreateCheckBox(frame, GUIL["Extra Text"])
+	--frame.extraCheckBox:Hide()
 	
 	--EditBox:SetMaxLetters(frame.editbox, 6) -- number size --> 6
 	-- set position of the components
 	--frame.dropDownList:SetPoint("LEFT", frame.leftSide, "RIGHT", 0, 0)
-	frame.dropDownMenu:SetPoint("LEFT", frame.editbox, "RIGHT", 0, 0)
-	frame.timerCheckBox:SetPoint("TOP", frame.dropDownMenu, "BOTTOM", 0, 0)
-	frame.extraCheckBox:SetPoint("TOP", frame.timerCheckBox, "BOTTOM", 0, 0)
+	--frame.dropDownMenu:SetPoint("LEFT", frame.editbox, "RIGHT", 0, 0)
+	--frame.timerCheckBox:SetPoint("TOP", frame.dropDownMenu, "BOTTOM", 0, 0)
+	--frame.extraCheckBox:SetPoint("TOP", frame.timerCheckBox, "BOTTOM", 0, 0)
 	
 	-- make main frame movable
 	SA_GUI_LOCAL:MakeMovable(frame)
@@ -263,9 +263,9 @@ end
 -- 
 -- frame: Parent frame
 -- data: for the DropDownMenu
-function SA_GUI_LOCAL:CreateDropDownMenu(frame, data) 
-	return (DropDownMenu:LoadDropDownMenu(frame, data))
-end
+--function SA_GUI_LOCAL:CreateDropDownMenu(frame, data) 
+--	return (DropDownMenu:LoadDropDownMenu(frame, data))
+--end
 
 -- SA_GUI_LOCAL:CreateScrollFrame(): create a ScrollFrame
 --
@@ -278,9 +278,9 @@ end
 --
 -- frame: Parent frame
 -- checkbosText: text which want to set
-function SA_GUI_LOCAL:CreateCheckBox(frame, checkboxText)
-	return (CheckBox:LoadCheckBox(frame, checkboxText))
-end
+--function SA_GUI_LOCAL:CreateCheckBox(frame, checkboxText)
+--	return (CheckBox:LoadCheckBox(frame, checkboxText))
+--end
 
 -- SA_GUI_LOCAL:SetScripts(): set the scripts for all components(EventHandling)
 function SA_GUI_LOCAL:SetScripts()
@@ -288,21 +288,21 @@ function SA_GUI_LOCAL:SetScripts()
 		mainHUD:OnUpdate_TestInstance()
 	end)]]
 	
-	mainFrame.timerCheckBox:SetScript("OnClick", function(self, button, down)
-		if mainFrame.timerCheckBox:GetChecked() then -- if checked disable the extracheckbox
-			mainFrame.extraCheckBox:Disable()
-		else
-			mainFrame.extraCheckBox:Enable()
-		end
-	end)
+--	mainFrame.timerCheckBox:SetScript("OnClick", function(self, button, down)
+--		if mainFrame.timerCheckBox:GetChecked() then -- if checked disable the extracheckbox
+--			mainFrame.extraCheckBox:Disable()
+--		else
+--			mainFrame.extraCheckBox:Enable()
+--		end
+--	end)
 	
-	mainFrame.extraCheckBox:SetScript("OnClick", function(self, button, down)
-	if mainFrame.extraCheckBox:GetChecked() then -- if checked disable the timercheckbox
-			mainFrame.timerCheckBox:Disable()
-		else
-			mainFrame.timerCheckBox:Enable()
-		end
-	end)
+--	mainFrame.extraCheckBox:SetScript("OnClick", function(self, button, down)
+--	if mainFrame.extraCheckBox:GetChecked() then -- if checked disable the timercheckbox
+--			mainFrame.timerCheckBox:Disable()
+--		else
+--			mainFrame.timerCheckBox:Enable()
+--		end
+--	end)
 	
 	mainFrame:SetScript("OnUpdate", function(self, elapsed)
 		--mainHUD:OnUpdate_TestInstance()
@@ -357,11 +357,11 @@ function SA_GUI_LOCAL:ResetFrames()
 	if SA_GUI.frame then
 		SA_GUI.frame:ClearAllPoints()
 		SA_GUI.frame:SetPoint("CENTER", SA_GUI.frame.x, SA_GUI.frame.y)
-		SA_GUI.frame.dropDownList:Hide()
-		DropDownList:SetSelectedID(nil) -- wird zu benutzerdefiniert
-		SA_GUI.frame.editbox:Hide()
-		SA_GUI.frame.timerCheckBox:Hide()
-		SA_GUI.frame.extraCheckBox:Hide()
+--		SA_GUI.frame.dropDownList:Hide()
+--		DropDownList:SetSelectedID(nil) -- wird zu benutzerdefiniert
+--		SA_GUI.frame.editbox:Hide()
+--		SA_GUI.frame.timerCheckBox:Hide()
+--		SA_GUI.frame.extraCheckBox:Hide()
 		ScrollFrame:Reset(mainFrame)
 	end
 end

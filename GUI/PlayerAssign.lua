@@ -17,17 +17,40 @@ do
 	local DropDownList = _G.GUI.SA_DropDownList
 	
 	local EditBox = _G.GUI.SA_EditBox
+	
+	local function hide(self)
+		self.abilityCB:Hide()
+		self.textCB:Hide()
+		self.dropDownPlayer:Hide()
+		self.dropDownCooldown:Hide()
+		self.offset:Hide()
+	end
+	
+	local function show(self)
+		self.abilityCB:Show()
+		self.textCB:Show()
+		self.dropDownPlayer:Show()
+		self.dropDownCooldown:Show()
+		self.offset:Show()
+	end
 
-	function PlayerAssign:new_playerAssign(frame, relativeElement, lastElement)
+	function PlayerAssign:new_playerAssign(frame, relativeElement, lastElement, xVal, yVal)
 		
 		local obj = {
-			frame = frame,
+			--Klassenattribute
+			x = xVal,
+			y = yVal,
+			mainFrame = frame,
 			abilityCB = CheckBox:LoadCheckBox(frame, "Ability"),
 			textCB = CheckBox:LoadCheckBox(frame, "Extra Text"),
 			dropDownPlayer = DropDownList:LoadDropDownList(frame, {"p1", "p2", "p3"}),
-			dropDownPlayer = DropDownList:LoadDropDownList(frame, {"a1", "a2", "a3"}),
-			offest = EditBox:LoadeditBox(frame, "number"),	
-	}
+			dropDownCooldown = DropDownList:LoadDropDownList(frame, {"a1", "a2", "a3"}),
+			offset = EditBox:LoadEditBox(frame, "number"),	
+			
+			--Klassenmethoden bzw. referenzen drauf
+			Hide = hide,
+			Show = show,
+		}
 		
 		obj.abilityCB:SetScript("OnClick", function(self, button, down)
 			if obj.textCB:GetChecked() then
@@ -43,6 +66,19 @@ do
 				obj.extraCB:Enable()
 			end
 		end)
+
+		obj.dropDownPlayer:SetPoint("Left",relativeElement, "RIGHT",5, 0)
+		obj.abilityCB:SetPoint("Left", obj.dropDownPlayer, "RIGHT", xVal, yVal)
+		obj.textCB:SetPoint("Top", obj.abilityCB, "BOTTOM", 0, 0)
+		obj.dropDownCooldown:SetPoint("Left", obj.textCB, "RIGHT", xVal, yVal)
+		obj.offset:SetPoint("Left", obj.abilityCB, "RIGHT", 0, 0)
+		
+		obj.abilityCB:Hide()
+		obj.textCB:Hide()
+		--obj.dropDownPlayer:Hide()
+		obj.dropDownCooldown:Hide()
+		obj.offset:Hide()
+		return obj
 	end
 
 end

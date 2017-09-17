@@ -48,9 +48,9 @@ end
 -- self: The frame on which was clicked
 local function OnClick(self)
 	if self:GetID() == 1 then
-		self.selectedId = SAL["Ability"]
-	elseif self:GetID() == 2 then
 		self.selectedId = SAL["Timer"]
+	elseif self:GetID() == 2 then
+		self.selectedId = SAL["Ability"]
 	end
 	print(self.selectedId)
     UIDropDownMenu_SetSelectedID(DropDownListButton, self:GetID())
