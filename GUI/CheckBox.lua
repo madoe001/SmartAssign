@@ -29,8 +29,8 @@ end
 --
 -- frame: Parent frame
 -- checkboxText: Text which want to set on the right side
-local function CreateCheckBox(frame, checkboxText)
-	local CheckBoxFrame = CreateFrame("CheckButton", "CheckButton", frame, "UICheckButtonTemplate")
+local function CreateCheckBox(frame, checkboxText, name)
+	local CheckBoxFrame = CreateFrame("CheckButton", name, frame, "UICheckButtonTemplate")
 
 	CheckBoxFrame:ClearAllPoints()
 	CheckBoxFrame:SetText(checkboxText)
@@ -49,9 +49,13 @@ end
 --
 -- frame: Parent frame
 -- checkboxText: the text which want to set
-function SA_CheckBox:LoadCheckBox(frame, checkboxText)
+function SA_CheckBox:LoadCheckBox(frame, checkboxText, name)
 	assert(type(checkboxText) == "string", GUIL["'checkboxText' must be a string."])
-	return CreateCheckBox(frame, checkboxText)
+	return CreateCheckBox(frame, checkboxText, name)
+end
+
+function SA_CheckBox:SetChecked(value)
+	self:SetChecked(value)
 end
 
 -- SA_CheckBox:GetChecked(): returns boolean, if the checkbox is checked

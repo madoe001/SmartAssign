@@ -1,4 +1,4 @@
---Klasse, zum einteilen eines Spielers. 
+﻿--Klasse, zum einteilen eines Spielers. 
 --Mit Hilfe dieser Klasse soll es Möglich sein eine Liste von Spielern in einem Dropdownmenu angezeigt zu bekommen
 --im Anschluss soll ausgewählt werden können was der Spieler bei einer Bossfähigkeit oder bei einem bestimmtetn Timer machen soll
 	--entweder eine ability benutzen oder dem Spieler wird ein extra Text angezeigt um zum Beispiel den Spieler dazu zu bewegen sich
@@ -41,11 +41,14 @@ do
 			x = xVal,
 			y = yVal,
 			mainFrame = frame,
+
 			abilityCB = CheckBox:LoadCheckBox(frame, "Ability"),
 			textCB = CheckBox:LoadCheckBox(frame, "Extra Text"),
-			dropDownPlayer = DropDownList:LoadDropDownList(frame, {"p1", "p2", "p3"}),
-			dropDownCooldown = DropDownList:LoadDropDownList(frame, {"a1", "a2", "a3"}),
-			offset = EditBox:LoadEditBox(frame, "number"),	
+			dropDownPlayer = DropDownList:LoadDropDownList(frame,"mb1",  {"p1", "p2", "p3"}),
+			dropDownCooldown = DropDownList:LoadDropDownList(frame,"mb2", {"a1", "a2", "a3"}),
+			--offset = caric:CreateEditBox(frame, "off", 50, 20),
+			offset = EditBox:LoadEditBox(frame, "offs", "number"),	
+
 			
 			--Klassenmethoden bzw. referenzen drauf
 			Hide = hide,
@@ -54,28 +57,29 @@ do
 		
 		obj.abilityCB:SetScript("OnClick", function(self, button, down)
 			if obj.textCB:GetChecked() then
-				obj.textCB:Disable()
-			else
-				obj.textCB:Enable()
+				obj.textCB:SetChecked(false)
 			end
+			obj.dropDownCooldown:Show()
+			obj.offset:Show()
 		end) 
+
 		obj.textCB:SetScript("OnClick", function(self, button, down)
-			if obj.textCB:GetChecked() then
-				obj.extraCB:Disable()
-			else
-				obj.extraCB:Enable()
+			if obj.abilityCB:GetChecked() then
+				obj.abilityCB:SetChecked(false)
 			end
 		end)
-
-		obj.dropDownPlayer:SetPoint("Left",relativeElement, "RIGHT",5, 0)
-		obj.abilityCB:SetPoint("Left", obj.dropDownPlayer, "RIGHT", xVal, yVal)
-		obj.textCB:SetPoint("Top", obj.abilityCB, "BOTTOM", 0, 0)
-		obj.dropDownCooldown:SetPoint("Left", obj.textCB, "RIGHT", xVal, yVal)
-		obj.offset:SetPoint("Left", obj.abilityCB, "RIGHT", 0, 0)
 		
+		--obj.offset:SetMaxLetters(obj.offset, 6) 
+
+		obj.dropDownPlayer:SetPoint("LEFT",relativeElement, "RIGHT",5, 0)
+		obj.abilityCB:SetPoint("LEFT", obj.dropDownPlayer, "RIGHT", 5, 0)
+		obj.textCB:SetPoint("TOP", obj.abilityCB, "BOTTOM", 0, 0)
+		obj.dropDownCooldown:SetPoint("LEFT", obj.abilityCB, "RIGHT", 50,0)
+		obj.offset:SetPoint("LEFT", obj.dropDownCooldown, "RIGHT", 10, 0)
+	
 		obj.abilityCB:Hide()
 		obj.textCB:Hide()
-		--obj.dropDownPlayer:Hide()
+		obj.dropDownPlayer:Hide()
 		obj.dropDownCooldown:Hide()
 		obj.offset:Hide()
 		return obj

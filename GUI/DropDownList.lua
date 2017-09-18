@@ -53,7 +53,7 @@ local function OnClick(self)
 		self.selectedId = SAL["Ability"]
 	end
 	print(self.selectedId)
-    UIDropDownMenu_SetSelectedID(DropDownListButton, self:GetID())
+       -- UIDropDownMenu_SetSelectedID(self, self:GetID())
 end
 
 -- SetData(): Setter for the data which want to set in the DropDownList
@@ -87,9 +87,9 @@ end
 -- UIDropDownMenu_SetButtonWidth(): for setting the width of the Button
 -- UIDropDownMenu_SetWidth(): for setting the width of the place for the text
 -- UIDropDownMenu_JustifyText(): for justifing the text
-local function CreateDropDownList(frame, data)
-	local DropDownListButton = CreateFrame("Button", "DropDownListButton", frame,"UIDropDownMenuTemplate")
-	
+
+local function CreateDropDownList(frame, name, data)
+	local DropDownListButton = CreateFrame("Button", name, frame,"UIDropDownMenuTemplate")	
 	SetData(DropDownListButton, data, nil)
 	
 	DropDownListButton:SetPoint("CENTER", 20, 0) -- 20 = x
@@ -119,7 +119,7 @@ end
 -- self: the frame which init
 -- level: at which want to set
 function InitDDL(self, level)
-   UIDropDownMenu_SetText(DropDownListButton, "");
+   UIDropDownMenu_SetText(self, "");
    local info = UIDropDownMenu_CreateInfo()
    for key,value in pairs(self.data) do
       info = UIDropDownMenu_CreateInfo()
@@ -151,7 +151,8 @@ end
 --
 -- frame: Parent frame
 -- data: which want to set in the DropDownList
-function SA_DropDownList:LoadDropDownList(frame, data)
+
+function SA_DropDownList:LoadDropDownList(frame, name, data)
 	assert(type(data) == "table", SAL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownList.data for infos."])
-	return CreateDropDownList(frame, data)
+	return CreateDropDownList(frame, name, data)
 end

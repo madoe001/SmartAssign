@@ -48,9 +48,9 @@ end
 -- relativePos: relative to the Region of the Frame, to which want to position
 -- x: x movement of the Frame
 -- y: y movement of the Frame
-function SA_DropDownMenu:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
-	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
-end
+--function SA_DropDownMenu:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
+--	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
+--end
 
 -- GetSelectedItem(): Getter for the selected item
 --
@@ -103,9 +103,9 @@ end
 -- UIDropDownMenu_SetButtonWidth(): for setting the width of the Button
 -- UIDropDownMenu_SetWidth(): for setting the width of the place for the text
 -- UIDropDownMenu_JustifyText(): for justifing the text
-local function CreateDropDownButton(frame, data)
-	local DropDownMenuButton = CreateFrame("Button", "SA_DropDownMenuButton", frame,"UIDropDownMenuTemplate")
-	local DropDownMenu = CreateFrame('Frame', "SA_DropDownMenu", DropDownMenuButton)
+local function CreateDropDownButton(frame, buttonName, menuName, data)
+	local DropDownMenuButton = CreateFrame("Button", buttonName, frame,"UIDropDownMenuTemplate")
+	local DropDownMenu = CreateFrame('Frame', menuName, DropDownMenuButton)
 	
 	SetData(DropDownMenuButton, data, 1)
 	DropDownMenuButton:SetBackdrop({ 
@@ -116,9 +116,9 @@ local function CreateDropDownButton(frame, data)
 	
 	--DropDownMenuButton:SetPoint("LEFT", 20, 0) -- 20 = x
 	DropDownMenuButton:SetHeight(BUTTON_HEIGHT)
-    DropDownMenuButton:RegisterForClicks("LeftButtonDown", "RightButtonDown") -- only right and left click
+    	DropDownMenuButton:RegisterForClicks("LeftButtonDown", "RightButtonDown") -- only right and left click
     
-    DropDownMenuButton.label = DropDownMenuButton:CreateFontString("DropDownMenu-label", "ARTWORK", "GameFontNormalSmall")
+    	DropDownMenuButton.label = DropDownMenuButton:CreateFontString("DropDownMenu-label", "ARTWORK", "GameFontNormalSmall")
 	--DropDownMenuButton.label:SetPoint("LEFT", DropDownMenu, "LEFT")
 	DropDownMenuButton.label:SetHeight(BUTTON_HEIGHT)
 	DropDownMenuButton.label:SetText("DropDownMenu-label")
@@ -186,7 +186,7 @@ end
 --
 -- frame: Parent frame
 -- data: which want to set in the DropDownMenu
-function SA_DropDownMenu:LoadDropDownMenu(frame, data)
+function SA_DropDownMenu:LoadDropDownMenu(frame, buttonName, menuName, data)
 	assert(type(data) == "table", SAL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownMenu.data for infos."])
-	return CreateDropDownButton(frame, data)
+	return CreateDropDownButton(frame, buttonName, menuName, data)
 end
