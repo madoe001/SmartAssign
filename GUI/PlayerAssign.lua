@@ -71,11 +71,11 @@ do
 		
 		--obj.offset:SetMaxLetters(obj.offset, 6) 
 
-		obj.dropDownPlayer:SetPoint("LEFT",relativeElement, "RIGHT",5, 0)
-		obj.abilityCB:SetPoint("LEFT", obj.dropDownPlayer, "RIGHT", 5, 0)
-		obj.textCB:SetPoint("TOP", obj.abilityCB, "BOTTOM", 0, 0)
-		obj.dropDownCooldown:SetPoint("LEFT", obj.abilityCB, "RIGHT", 50,0)
-		obj.offset:SetPoint("LEFT", obj.dropDownCooldown, "RIGHT", 10, 0)
+		obj.dropDownPlayer:SetPoint("LEFT",relativeElement, "RIGHT", obj.x,obj.y)
+		obj.abilityCB:SetPoint("LEFT", obj.dropDownPlayer, "RIGHT", obj.x, obj.y)
+		obj.textCB:SetPoint("TOP", obj.abilityCB, "BOTTOM", 0,0)
+		obj.dropDownCooldown:SetPoint("LEFT", obj.abilityCB, "RIGHT", obj.x,obj.y)
+		obj.offset:SetPoint("LEFT", obj.dropDownCooldown, "RIGHT", obj.x, obj.y)
 	
 		obj.abilityCB:Hide()
 		obj.textCB:Hide()

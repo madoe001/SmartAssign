@@ -32,6 +32,15 @@ do
 		--print("Hide wurde aufgerufen")
 	end
 
+	local function OnClick(self)
+		if self:GetID() == 2 then
+			self.selectedId = SAL["Timer"]
+		elseif self:GetID() == 2 then
+			 self.selectedId = SAL["Ability"]
+		end	
+		UIDropDownMenu_SetSelectedID(dropDownAssign, self:GetID())
+	end
+
 	local function createTimerAssign(self)
 		self.editTimer:SetScript("OnUpdate", function(self, elapsed)
 			if(self:GetText() ~= "" or self:GetText() ~= 0) then
@@ -45,7 +54,7 @@ do
 		editBox:SetMaxLetters(self.editTimer, 6)	
 		self.editTimer:Show()	
 		if #self.playerAssigns == 0 then
-					table.insert(self.playerAssigns, pa:new_playerAssign(self.mainFrame, self.editTimer, 0, 0,0))
+			table.insert(self.playerAssigns, pa:new_playerAssign(self.mainFrame, self.editTimer, 0, 0,0))
 		end			
 	end
 
@@ -54,7 +63,16 @@ do
 		local obj = {
 			xVal = x,
 			xVal = y,
-			dropDownAssignType = dropDownAssign:LoadDropDownList(frame,"smartB1", dropDownAssign.data),
+			dropDownAssignType = dropDownAssign:LoadDropDownList(frame,"smartB1", dropDownAssign.data, function(self) 
+		local info = UIDropDownMenu_CreateInfo()
+		for key, value in pairs(self.data) do
+			info = UIDropDownMenu_CreateInfo()
+			info.text = value
+			info.value = value
+			info.func = OnClick
+			UIDropDownMenu_AddButton(info, level)
+		end
+	end),
 			editTimer = editBox:LoadEditBox(frame, "editTimer",  "number"),
 			playerAssigns = {},
 			mainFrame = frame,
@@ -65,12 +83,10 @@ do
 		-- DropDownMenu von Ability oder Timer 
 		--nur zum nachladen der GUI Elemente
 
-		obj.dropDownAssignType:SetScript("OnUpdate", function(self, elapsed)
+	obj.dropDownAssignType:SetScript("OnUpdate", function(self, elapsed)
 			if dropDownAssign:GetSelectedID(self) == 1 then
 				if #obj.playerAssigns == 0 then
 					table.insert(obj.playerAssigns, pa:new_playerAssign(obj.mainFrame, obj.editTimer, 0, 10,0))
-					
-					--print("AssignGUI wurde erstellt")
 				end
 				createTimerAssign(obj)
 			elseif dropDownAssign:GetSelectedID(self) == 2 then
@@ -80,8 +96,11 @@ do
 		
 		table.insert(obj.playerAssigns, pa:new_playerAssign(frame, obj.dropDownAssignType, 0, 20,0))
 
+	--	table.insert(obj.playerAssigns, pa:new_playerAssign(frame, obj.dropDownAssignType, 0, 20,100))
 		obj.dropDownAssignType:SetPoint("Left", relativeElement, "RIGHT", xVal, yVal)
 		obj.dropDownAssignType:Hide()
+		print(obj.playerAssigns[1])
+	--	print(obj.playerAssigns[2])
 		return obj
 	end
 end

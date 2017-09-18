@@ -51,7 +51,7 @@ function caric:CreateGUI(frame)
 	caric:CreateButton(frame, "closeButton", nil, 30, 30, 450,0, "UIPanelCloseBUtton")
 	
 	-- Expansion
-	createExpansionDropDown (testFrame, -150, 200, 100)
+	createExpansionDropDown(testFrame, -150, 200, 100)
 	caric:CreateEditBox(frame,"ExpansionEditBox",100,30,170,-35)	
 	caric:CreateButton(frame, "ExpansionAddButton", "add", 30, 30, 270,-35)
 	ExpansionAddButton:SetScript("OnClick", function() 
