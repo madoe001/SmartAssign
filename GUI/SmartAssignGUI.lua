@@ -89,7 +89,7 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	--frame.dropDownMenu = SA_GUI_LOCAL:CreateDropDownMenu(frame, DropDownMenu.data)
 	--frame.dropDownMenu:Hide()
 	
-	frame.scrollFrame = SA_GUI_LOCAL:CreateScrollFrame(LeftSide, frame.dropDownList)
+	frame.scrollFrame = SA_GUI_LOCAL:CreateScrollFrame(LeftSide, "InstanceScrollFrame")
 	SlashCommands:AddResetFunction(SA_GUI_LOCAL.ScrollFrameReset,"ScrollFrame") -- add the reset function of the scrollframe to slashcommands
 		
 	local assign = Assignment:new_assignment(frame, frame.leftSide , 5, 0)
@@ -270,8 +270,8 @@ end
 -- SA_GUI_LOCAL:CreateScrollFrame(): create a ScrollFrame
 --
 -- frame: Parent frame
-function SA_GUI_LOCAL:CreateScrollFrame(frame)
-	return (ScrollFrame:LoadScrollFrame(frame))
+function SA_GUI_LOCAL:CreateScrollFrame(frame, name)
+	return (ScrollFrame:LoadScrollFrame(frame, name))
 end
 
 -- SA_GUI_LOCAL:CreateCheckBox(): create a checkbox

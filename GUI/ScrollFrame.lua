@@ -14,8 +14,8 @@ local SAL = _G.GUI.Locales
 -- than create the scrollbar and content of the scrollframe
 --
 -- frame: Parent frame
-local function CreateScrollFrame(frame)
-	local ScrollFrame = CreateFrame("ScrollFrame", "ScrollFrame", frame)
+local function CreateScrollFrame(frame, name)
+	local ScrollFrame = CreateFrame("ScrollFrame", name, frame)
 
 	ScrollFrame.buttons = {}
 	ScrollFrame.mainButtonCount = 0
@@ -247,8 +247,8 @@ end
 -- SA_ScrollFrame:LoadScrollFrame(): Loader for the ScrollFrame
 --
 -- frame: Parent frame
-function SA_ScrollFrame:LoadScrollFrame(frame)
-	return CreateScrollFrame(frame)
+function SA_ScrollFrame:LoadScrollFrame(frame, name)
+	return CreateScrollFrame(frame, name)
 end
 
 -- SA_ScrollFrame:Reset(): reset function for the ScrollFrame

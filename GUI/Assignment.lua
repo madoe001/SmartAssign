@@ -15,7 +15,7 @@ do
 	local Assignment = _G.GUI.Assignment
 
 	local function show(self)
-		--print("show wurde aufgerufen")
+		print("show wurde aufgerufen")
 		self.dropDownAssignType:Show()
 		for i = 1, #self.playerAssigns, 1 do
 			self.playerAssigns[i]:Show()
@@ -40,7 +40,7 @@ do
 		--Positionierung der grafischen Elemente
 		--am linken Rand ausgerichtet, 
 		--rechts von dem angegebenen Element zum Beispiel das EditField	
-		self.editTimer:SetPoint("Left", self.dropDownAssignType, "RIGHT", xVal, yVal )
+		self.editTimer:SetPoint("LEFT", self.dropDownAssignType, "RIGHT", xVal, yVal )
 		editBox:SetMaxLetters(self.editTimer, 6)	
 		self.editTimer:Show()	
 		if #self.playerAssigns == 0 then
@@ -62,7 +62,7 @@ do
 		}
 
 		-- DropDownMenu von Ability oder Timer 
-		--nur zum nachladen der GUI Elemente
+		-- nur zum nachladen der GUI Elemente
 
 		obj.dropDownAssignType:SetScript("OnUpdate", function(self, elapsed)
 			if dropDownAssign:GetSelectedID(self) == 1 then
@@ -76,7 +76,7 @@ do
 		
 			end
 		end)			
-		obj.dropDownAssignType:SetPoint("Left", relativeElement, "RIGHT", xVal, yVal)
+		obj.dropDownAssignType:SetPoint("LEFT", relativeElement, "RIGHT", xVal, yVal)
 		
 		return obj
 	end

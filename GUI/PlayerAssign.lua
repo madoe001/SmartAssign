@@ -41,10 +41,10 @@ do
 			x = xVal,
 			y = yVal,
 			mainFrame = frame,
-			abilityCB = CheckBox:LoadCheckBox(frame, "Ability"),
-			textCB = CheckBox:LoadCheckBox(frame, "Extra Text"),
-			dropDownPlayer = DropDownList:LoadDropDownList(frame, {"p1", "p2", "p3"}),
-			dropDownCooldown = DropDownList:LoadDropDownList(frame, {"a1", "a2", "a3"}),
+			abilityCB = CheckBox:LoadCheckBox(frame, "Ability", "AbilityCheckBox"),
+			textCB = CheckBox:LoadCheckBox(frame, "Extra Text", "ExtraTextCheckBox"),
+			dropDownPlayer = DropDownList:LoadDropDownList(frame, {"p1", "p2", "p3"}, "PlayerDropDownList"),
+			dropDownCooldown = DropDownList:LoadDropDownList(frame, {"a1", "a2", "a3"}, "CDDropDownList"),
 			offset = EditBox:LoadEditBox(frame, "number"),	
 			
 			--Klassenmethoden bzw. referenzen drauf
@@ -66,12 +66,14 @@ do
 				obj.extraCB:Enable()
 			end
 		end)
+		
+		obj.offset:SetMaxLetters(obj.offset, 6) 
 
-		obj.dropDownPlayer:SetPoint("Left",relativeElement, "RIGHT",5, 0)
-		obj.abilityCB:SetPoint("Left", obj.dropDownPlayer, "RIGHT", xVal, yVal)
-		obj.textCB:SetPoint("Top", obj.abilityCB, "BOTTOM", 0, 0)
-		obj.dropDownCooldown:SetPoint("Left", obj.textCB, "RIGHT", xVal, yVal)
-		obj.offset:SetPoint("Left", obj.abilityCB, "RIGHT", 0, 0)
+		obj.dropDownPlayer:SetPoint("LEFT",relativeElement, "RIGHT",5, 0)
+		obj.abilityCB:SetPoint("LEFT", obj.dropDownPlayer, "RIGHT", xVal, yVal)
+		obj.textCB:SetPoint("TOP", obj.abilityCB, "BOTTOM", 0, 0)
+		obj.dropDownCooldown:SetPoint("LEFT", obj.textCB, "RIGHT", xVal, yVal)
+		obj.offset:SetPoint("LEFT", obj.abilityCB, "RIGHT", 0, 0)
 		
 		obj.abilityCB:Hide()
 		obj.textCB:Hide()
