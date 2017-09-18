@@ -59,26 +59,27 @@ do
 	end
 
 
-	function Assignment:new_assignment(frame,  relativeElement, x, y)
+	function Assignment:new_assignment(frame, relativeElement, x, y)
 		local obj = {
 			xVal = x,
 			xVal = y,
-			dropDownAssignType = dropDownAssign:LoadDropDownList(frame,"smartB1", dropDownAssign.data, function(self) 
-		local info = UIDropDownMenu_CreateInfo()
-		for key, value in pairs(self.data) do
-			info = UIDropDownMenu_CreateInfo()
-			info.text = value
-			info.value = value
-			info.func = OnClick
-			UIDropDownMenu_AddButton(info, level)
-		end
-	end),
+			mainFrame = CreateFrame("Frame", nil, frame),
+			dropDownAssignType = dropDownAssign:LoadDropDownList(mainFrame,"smartB1", dropDownAssign.data, function(self) 
+				local info = UIDropDownMenu_CreateInfo()
+				for key, value in pairs(self.data) do
+					info = UIDropDownMenu_CreateInfo()
+					info.text = value
+					info.value = value
+					info.func = OnClick
+					UIDropDownMenu_AddButton(info, level)
+				end
+			end),
 			editTimer = editBox:LoadEditBox(frame, "editTimer",  "number"),
 			playerAssigns = {},
-			mainFrame = frame,
 			Hide = hide,
 			Show = show, 
 		}
+		obj.mainFrame:SetPoint("LEFT", relativeElement, "RIGHT", 0 , 0)
 
 		-- DropDownMenu von Ability oder Timer 
 		--nur zum nachladen der GUI Elemente
@@ -94,13 +95,11 @@ do
 			end
 		end)			
 		
-		table.insert(obj.playerAssigns, pa:new_playerAssign(frame, obj.dropDownAssignType, 0, 20,0))
-
-	--	table.insert(obj.playerAssigns, pa:new_playerAssign(frame, obj.dropDownAssignType, 0, 20,100))
 		obj.dropDownAssignType:SetPoint("Left", relativeElement, "RIGHT", xVal, yVal)
+		table.insert(obj.playerAssigns, pa:new_playerAssign(obj.mainFrame, obj.dropDownAssignType , #obj.playerAssigns, 20,0))
+
+		table.insert(obj.playerAssigns, pa:new_playerAssign(obj.mainFrame, obj.dropDownAssignType, #obj.playerAssigns, 20, -80))
 		obj.dropDownAssignType:Hide()
-		print(obj.playerAssigns[1])
-	--	print(obj.playerAssigns[2])
 		return obj
 	end
 end
