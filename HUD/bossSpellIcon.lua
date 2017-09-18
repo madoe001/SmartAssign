@@ -23,7 +23,6 @@ function bossSpellIcon:CreatebossSpellIcon(frame)
 	RegisterAllEvents()
 end
 
--- ############ NEXT reagiert noch auf Player cast(aber nicht mehr so sensibel)
 -- bossSpellIcon:OnEvent(): OnEvent function for the bossSpellIcon
 --
 -- Events:
@@ -36,37 +35,38 @@ end
 --
 -- event: event, which call´s the function
 function bossSpellIcon:OnEvent(event, ...)
-	unit = UnitGUID("target")
+	unit = ...
 	name = UnitName("target")
-	local canAttack = UnitCanAttack("target", "player") -- if the target can attack the player, than true
-	if event == "UNIT_SPELLCAST_START" then
-		if bossSpellIcon:PreCheck(canAttack) then
-			bossSpellIcon:BossCastingInfo("target")
-			bossSpellIcon:CreateSpellIcon()
-			iconFrame:Show()
-			iconFrame:SetScript("OnUpdate", bossSpellIcon.IconTextUpdate)
+	if unit == "target" then -- only target --> ersetzen durch boss1 bis boss5
+		local canAttack = UnitCanAttack("target", "player") -- if the target can attack the player, than true
+		if event == "UNIT_SPELLCAST_START" then
+			if bossSpellIcon:PreCheck(canAttack) then
+				bossSpellIcon:BossCastingInfo("target")
+				bossSpellIcon:CreateSpellIcon()
+				iconFrame:Show()
+				iconFrame:SetScript("OnUpdate", bossSpellIcon.IconTextUpdate)
+			end
 		end
-	end
-	if event == "UNIT_SPELLCAST_CHANNEL_START" then
-		if bossSpellIcon:PreCheck(canAttack) then
-			bossSpellIcon:BossChannelingInfo("target")
-			bossSpellIcon:CreateSpellIcon()
-			iconFrame:Show()
+		if event == "UNIT_SPELLCAST_CHANNEL_START" then
+			if bossSpellIcon:PreCheck(canAttack) then
+				bossSpellIcon:BossChannelingInfo("target")
+				bossSpellIcon:CreateSpellIcon()
+				iconFrame:Show()
+			end
 		end
-	end
-	if event == "UNIT_SPELLCAST_STOP" then
-		if bossSpellIcon:PreCheck(canAttack) then
-			iconFrame:Hide()
-			iconFrame:SetScript("OnUpdate", nil)
-			iconFrame.SpellStartsIn = 0.0
+		if event == "UNIT_SPELLCAST_STOP" then
+			if bossSpellIcon:PreCheck(canAttack) then
+				iconFrame:Hide()
+				iconFrame:SetScript("OnUpdate", nil)
+				iconFrame.SpellStartsIn = 0.0
+			end
 		end
-	end
-	if event == "UNIT_SPELLCAST_CHANNEL_STOP" then
-		if bossSpellIcon:PreCheck(canAttack) then
-			iconFrame:Hide()
-			iconFrame:SetScript("OnUpdate", nil)
+		if event == "UNIT_SPELLCAST_CHANNEL_STOP" then
+			if bossSpellIcon:PreCheck(canAttack) then
+				iconFrame:Hide()
+				iconFrame:SetScript("OnUpdate", nil)
+			end
 		end
-	end
 	--[[if event == "UNIT_SPELLCAST_SUCCEEDED" then
 		if bossSpellIcon:PreCheck(canAttack) then
 			iconFrame:Hide()
@@ -74,6 +74,7 @@ function bossSpellIcon:OnEvent(event, ...)
 			print("SUCC")
 		end
 	end]] -- makes problems
+	end
 end
 
 -- RegisterAllEvents(): registers all events at one time 
@@ -107,15 +108,59 @@ end
 --
 -- unit: the unit which is casting a spell
 function bossSpellIcon:BossCastingInfo(unit)
-	local name, _, text, texture, startTime, endTime, _, castID, notInterruptible, spellID = UnitCastingInfo(unit)
-	local castingTime = select(4, GetSpellInfo(spellID))
+	local name, _, _, texture, _, _, _, _, notInterruptible, spellID = UnitCastingInfo(unit)
 	iconFrame.spell = name
 	iconFrame.spellID = spellID
 	iconFrame.tex = texture
-	if castingTime then
-		iconFrame.SpellStartsIn = round(castingTime/1e3, 2)
-	end
+	iconFrame.SpellStartsIn = bossSpellIcon:BossCastingTime(iconFrame.spell, unit, true)
+
 	channeling = false -- is not channeling
+end
+
+-- bossSpellIcon:UnitIsCasting(): used to get spellname, spellStart and spellEnd, which is needed in bossSpellIcon:BossCastingTime
+--
+-- spell: the spellname
+-- unit: e.g "boss1"
+-- 
+-- returns the spellname, the start time of the spell end the end time
+function bossSpellIcon:BossIsCasting(spell, unit)
+	unit = unit or not 'player'
+	if not UnitExists(unit) then 
+		return 
+	end
+	local spellName, _, _, _, spellStart, spellEnd, _, spellId = UnitCastingInfo(unit)
+	if not spellName then 
+		return 
+	end
+	if spell then
+		if type(spell) == "string" then
+			if spellName == spell then 
+				return spellName, spellStart, spellEnd
+			end
+		elseif type(tonumber(spell)) == "number" then
+			if tonumber(spell) == spellId then 
+				return spellName, spellStart, spellEnd
+			end
+		end    
+	else
+		return spellName, spellStart, spellEnd
+	end
+end
+
+-- bossSpellIcon:UnitCastingTime(): function to get the boss casting time
+--
+-- spell: the spellname
+-- unit: e.g "boss1"
+-- remaining: if want remaining casting time --> true else false
+function bossSpellIcon:BossCastingTime(spell, unit, remaining)
+	local _, startTime, endTime = bossSpellIcon:BossIsCasting(spell, unit)
+	if startTime and endTime then
+		if remaining then
+			return round(((endTime - (GetTime() * 1e3)) / 1e3), 2)
+		else
+			return round((((GetTime() * 1e3) - startTime) / 1e3), 2)
+		end
+	end
 end
 
 -- bossSpellIcon:BossChannelingInfo(): get all needed information about the spell which is channeling by a unit
@@ -125,7 +170,50 @@ function bossSpellIcon:BossChannelingInfo(unit)
 	local name, _, text, texture, startTime, endTime, _, notInterruptible = UnitChannelInfo(unit)
 	iconFrame.spell = name
 	iconFrame.tex = texture
+	iconFrame.channelingTime = bossSpellIcon:BossChannelingTime(iconFrame.spell, unit, true)
 	channeling = true -- is channeling
+end
+
+-- bossSpellIcon:BossIsChanneling(): used to get spellname, spellStart and spellEnd, which is needed in bossSpellIcon:
+--
+-- spell: the spellname
+-- unit: e.g "boss1"
+-- 
+-- returns the spellname, the start time of the spell end the end time
+function bossSpellIcon:BossIsChanneling(spell, unit)
+	unit = unit or 'player'
+	if not UnitExists(unit) then
+		return 
+	end
+	local spellName, _, _, _, spellStart, spellEnd = UnitChannelInfo(unit)
+	if not spellName then 
+		return 
+	end
+	if spell then
+		if type(spell) == 'string' then
+			if spellName == spell then 
+				return spellName, spellStart, spellEnd 
+			end
+		end    
+	else
+		return spellName, spellStart, spellEnd
+	end
+end
+
+-- bossSpellIcon:BossChannelingTime(): function to get the boss channeling time
+--
+-- spell: the spellname
+-- unit: e.g "boss1"
+-- remaining: if want remaining channeling time --> true else false
+function bossSpellIcon:BossChannelingTime(spell, unit, remaining)
+local _, startTime, endTime = bossSpellIcon:BossIsChanneling(spell, unit)
+	if startTime and endTime then
+		if remaining then
+			return ((endTime - (GetTime() * 1e3)) / 1e3)
+		else
+			return (((GetTime() * 1e3) - startTime) / 1e3)
+		end
+	end
 end
 
 -- bossSpellIcon:CreateSpellIcon(): createt all needed components for the spell icon
@@ -144,7 +232,7 @@ function bossSpellIcon:CreateSpellIcon()
 	iconFrame.label:SetPoint("TOP", iconFrame, "BOTTOM", 0, -10)
 	iconFrame.label:SetTextHeight(16)
 	if channeling then -- check if spell is channeling
-		iconFrame.label:SetText(iconFrame.spell..HL[" is channeling now!"])
+		iconFrame.label:SetText(iconFrame.spell..HL[" is channeling now!"].."\n".."|cFFFF0000"..iconFrame.channelingTime..HL[" sec remaining"].."|r")
 	elseif iconFrame.SpellStartsIn then
 		iconFrame.label:SetText(HL["Starts in "]..iconFrame.SpellStartsIn..HL[" sec"])
 	else
@@ -161,11 +249,20 @@ function bossSpellIcon:IconTextUpdate(elapsed)
 	if iconFrame.SpellStartsIn then -- check if have a value
 		TimeSinceLastUpdate = TimeSinceLastUpdate + elapsed;
 		while TimeSinceLastUpdate > iconFrame.updateIntervall do
-			iconFrame.SpellStartsIn = iconFrame.SpellStartsIn - iconFrame.updateIntervall
-			if iconFrame.SpellStartsIn <= 0.0 then -- if spell casted
-				TimeSinceLastUpdate = 0.0
-			else
-				iconFrame.label:SetText(HL["Starts in "]..iconFrame.SpellStartsIn..HL[" sec"])
+			if iconFrame.SpellStartsIn then
+				iconFrame.SpellStartsIn = iconFrame.SpellStartsIn - iconFrame.updateIntervall
+				if iconFrame.SpellStartsIn <= 0.0 then -- if spell casted
+					TimeSinceLastUpdate = 0.0
+				else
+					iconFrame.label:SetText(HL["Starts in "]..iconFrame.SpellStartsIn..HL[" sec"])
+				end
+			elseif iconFrame.channelingTime then
+				iconFrame.channelingTime = iconFrame.channelingTime - iconFrame.updateIntervall
+				if iconFrame.channelingTime <= 0.0 then -- if spell casted
+					TimeSinceLastUpdate = 0.0
+				else
+					iconFrame.label:SetText("|cFFFF0000"..iconFrame.channelingTime..HL[" sec remaining"].."|r")
+				end
 			end
 			TimeSinceLastUpdate = TimeSinceLastUpdate - iconFrame.updateIntervall
 		end

@@ -21,3 +21,5 @@ L["Starts in "] = "Startet in "
 L[" sec"] = " s"
 
 L[" is channeling now!"] = " ist am kanalisieren!"
+
+L[" sec remaining"] = " s verbleibend"

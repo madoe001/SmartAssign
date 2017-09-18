@@ -18,3 +18,5 @@ L["Starts in "] = "Starts in "
 L[" sec"] = " sec"
 
 L[" is channeling now!"] = " is channeling now!"
+
+L[" sec remaining"] = " sec remaining"

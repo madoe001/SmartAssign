@@ -321,7 +321,7 @@ function SA_GUI_LOCAL:SetScripts()
 			else
 				frame.editbox:Hide()
 			end]]
-			-- ############### Funktioniert nicht !!!!
+			
 		--	if DropDownList:GetSelectedID(mainFrame.dropDownList) == 2 and mainFrame.scrollFrame.bossButton then -- if timer is selected
 		--		mainFrame.tg:Show()
 				--mainFrame.editbox:Show()
