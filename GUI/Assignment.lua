@@ -17,6 +17,7 @@ do
 	local function show(self)
 		--print("show wurde aufgerufen")
 		self.dropDownAssignType:Show()
+		self.editTimer:Show()
 		for i = 1, #self.playerAssigns, 1 do
 			self.playerAssigns[i]:Show()
 		end
@@ -26,7 +27,7 @@ do
 		self.dropDownAssignType:Hide()
 		self.editTimer:Hide()
 		for i = 1, #self.playerAssigns, 1 do
-			--self.playerAssigns[i]:Hide()
+			self.playerAssigns[i]:Hide()
 		end
 		--print("Hide wurde aufgerufen")
 	end
@@ -44,7 +45,7 @@ do
 		editBox:SetMaxLetters(self.editTimer, 6)	
 		self.editTimer:Show()	
 		if #self.playerAssigns == 0 then
-					table.insert(self.playerAssigns, pa:new_playerAssign(self.mainFrame, self.mainFrame, 0, 0,0))
+					table.insert(self.playerAssigns, pa:new_playerAssign(self.mainFrame, self.editTimer, 0, 0,0))
 		end			
 	end
 
@@ -53,8 +54,8 @@ do
 		local obj = {
 			xVal = x,
 			xVal = y,
-			dropDownAssignType = dropDownAssign:LoadDropDownList(frame, dropDownAssign.data, "test"),
-			editTimer = editBox:LoadEditBox(frame, "number"),
+			dropDownAssignType = dropDownAssign:LoadDropDownList(frame,"smartB1", dropDownAssign.data),
+			editTimer = editBox:LoadEditBox(frame, "editTimer",  "number"),
 			playerAssigns = {},
 			mainFrame = frame,
 			Hide = hide,
@@ -76,8 +77,11 @@ do
 		
 			end
 		end)			
-		obj.dropDownAssignType:SetPoint("Left", relativeElement, "RIGHT", xVal, yVal)
 		
+		table.insert(obj.playerAssigns, pa:new_playerAssign(frame, obj.dropDownAssignType, 0, 20,0))
+
+		obj.dropDownAssignType:SetPoint("Left", relativeElement, "RIGHT", xVal, yVal)
+		obj.dropDownAssignType:Hide()
 		return obj
 	end
 end

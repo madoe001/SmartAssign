@@ -54,6 +54,10 @@ function SA_CheckBox:LoadCheckBox(frame, checkboxText)
 	return CreateCheckBox(frame, checkboxText)
 end
 
+function SA_CheckBox:SetChecked(value)
+	self:SetChecked(value)
+end
+
 -- SA_CheckBox:GetChecked(): returns boolean, if the checkbox is checked
 function SA_CheckBox:GetChecked()
 print("HH")

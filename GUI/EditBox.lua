@@ -18,6 +18,45 @@ function SA_EditBox:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
 
+-- ConfigLabel(): Configuration of label with text and textcolor
+--
+-- text: which want to set
+-- r: red
+-- g: green
+-- b: blue
+-- a: alpha
+local function ConfigLabel(self, text, r, g, b, a)
+	self.label = self:CreateFontString("EditBox-label", "ARTWORK", "GameFontNormalSmall")
+	self.label:SetHeight(25)
+	self.label:SetTextColor(r, g, b, a)
+	self.label:SetText(GUIL[text])
+	self.label:SetPoint("LEFT", EditBox, "LEFT", 0, 0)
+end
+
+
+-- ConfigEditBo(): Configuration of the editbox
+--
+-- clear all points of the frame.
+-- Set to one line editbox and no autofocus
+-- And set the Script for OnHide Event, where set a label
+local function ConfigEditBox(self)
+	self:ClearAllPoints()
+	self:SetMultiLine(false)
+	self:SetAutoFocus(false)
+	self:EnableMouse(true)
+	self:SetHeight(25)
+	
+	self:SetScript("OnHide", function(self)
+	self.label:SetText("")
+		if self.inputType == "string" then
+				ConfigLabel(self, "[SpellID] text", 0.5, 0.5, 0.5, 0.8)
+		elseif self.inputType == "number" then
+				ConfigLabel(self, "Time in sec", 0.5, 0.5, 0.5, 0.8)
+		end
+		self:SetText("")
+	end)
+end
+
 -- CreateEditBox(): Creation function for the editbox
 --
 -- create a editbox frame and set the inputType of the editbox.
@@ -25,20 +64,20 @@ end
 --
 -- frame: Parent frame
 -- inputType: which type of editbox(number, string)
-local function CreateEditBox(frame, inputType)
-	local EditBox = CreateFrame("EditBox", "EditBox", frame, "InputBoxTemplate")
+local function CreateEditBox(frame, name, inputType)
+	local EditBox = CreateFrame("EditBox", name, frame, "InputBoxTemplate")
 
 	EditBox.inputType = inputType -- determinates if inputType is string or number
 
-	ConfigEditBox()
+	ConfigEditBox(EditBox)
 	-- check which inputType
 	if inputType == "number" then
 		EditBox:SetWidth(frame:GetWidth() * 0.05)
 		EditBox:SetNumeric(true) -- set only numeric input
-		ConfigLabel("Time in sec", 0.5, 0.5, 0.5, 0.8) -- config the label for the editbox
+		ConfigLabel(EditBox, "Time in sec", 0.5, 0.5, 0.5, 0.8) -- config the label for the editbox
 	elseif inputType == "string" then
 		EditBox:SetWidth(frame:GetWidth() * 0.2)
-		ConfigLabel("[SpellID] text", 0.5, 0.5, 0.5, 0.8) -- config the label for the editbox
+		ConfigLabel(EditBox, "[SpellID] text", 0.5, 0.5, 0.5, 0.8) -- config the label for the editbox
 	end
 	
 	-- when the text inside the editbox changes
@@ -58,54 +97,16 @@ local function CreateEditBox(frame, inputType)
 			self.label:SetText("")
 			if string.len(self:GetText()) == 0 then -- when the editbox is empty set the configurated label
 				if self.inputType == "string" then
-					ConfigLabel("[SpellID] text", 0.5, 0.5, 0.5, 0.8)
+					ConfigLabel(EditBox, "[SpellID] text", 0.5, 0.5, 0.5, 0.8)
 				elseif self.inputType == "number" then
-					ConfigLabel("Time in sec", 0.5, 0.5, 0.5, 0.8)
+					ConfigLabel(EditBox, "Time in sec", 0.5, 0.5, 0.5, 0.8)
 				end
 			end
 		end
 	end)
-	
 	return EditBox
 end
 
--- ConfigLabel(): Configuration of label with text and textcolor
---
--- text: which want to set
--- r: red
--- g: green
--- b: blue
--- a: alpha
-function ConfigLabel(text, r, g, b, a)
-	EditBox.label = EditBox:CreateFontString("EditBox-label", "ARTWORK", "GameFontNormalSmall")
-	EditBox.label:SetHeight(25)
-	EditBox.label:SetTextColor(r, g, b, a)
-	EditBox.label:SetText(GUIL[text])
-	EditBox.label:SetPoint("LEFT", EditBox, "LEFT", 0, 0)
-end
-
--- ConfigEditBo(): Configuration of the editbox
---
--- clear all points of the frame.
--- Set to one line editbox and no autofocus
--- And set the Script for OnHide Event, where set a label
-function ConfigEditBox()
-	EditBox:ClearAllPoints()
-	EditBox:SetMultiLine(false)
-	EditBox:SetAutoFocus(false)
-	EditBox:EnableMouse(true)
-	EditBox:SetHeight(25)
-	
-	EditBox:SetScript("OnHide", function(self)
-	self.label:SetText("")
-		if self.inputType == "string" then
-				ConfigLabel("[SpellID] text", 0.5, 0.5, 0.5, 0.8)
-		elseif self.inputType == "number" then
-				ConfigLabel("Time in sec", 0.5, 0.5, 0.5, 0.8)
-		end
-		self:SetText("")
-	end)
-end
 
 -- SA_EditBox:SetMaxLetters(): Setter for setting the maximum of allowed text
 --
@@ -124,7 +125,7 @@ end
 --
 -- frame: Parent frame
 -- inputType: of the editbox 
-function SA_EditBox:LoadEditBox(frame, inputType)
+function SA_EditBox:LoadEditBox(frame, name, inputType)
 	assert((inputType == "string" or inputType == "number"), GUIL["'inputType' must be string or number."])
-	return CreateEditBox(frame, inputType)
+	return CreateEditBox(frame, name, inputType)
 end
