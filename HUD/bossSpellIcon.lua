@@ -13,9 +13,9 @@ local channeling = false -- needed to check if unit channels a spell
 
 -- bossSpellIcon:CreatebossSpellIcon(): function to create the bossSpellIcon
 function bossSpellIcon:CreatebossSpellIcon(frame)
-	iconFrame = CreateFrame("Frame", nil, frame)
+	iconFrame = CreateFrame("Frame", "iconFrame", frame)
 	iconFrame.label = iconFrame:CreateFontString("SpellIcon-label", "ARTWORK", "GameFontNormalSmall")
-	iconFrame.icon = iconFrame:CreateTexture(nil,"BACKGROUND")
+	iconFrame.icon = iconFrame:CreateTexture("iconFrameTexture","BACKGROUND")
 	iconFrame.updateIntervall = 1.0 -- needed for OnUpdate Event, how much call the inner construct of OnUpdate function
 	
 	iconFrame:SetScript("OnEvent", bossSpellIcon.OnEvent)

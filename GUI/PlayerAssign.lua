@@ -1,4 +1,4 @@
---Klasse, zum einteilen eines Spielers. 
+﻿--Klasse, zum einteilen eines Spielers. 
 --Mit Hilfe dieser Klasse soll es Möglich sein eine Liste von Spielern in einem Dropdownmenu angezeigt zu bekommen
 --im Anschluss soll ausgewählt werden können was der Spieler bei einer Bossfähigkeit oder bei einem bestimmtetn Timer machen soll
 	--entweder eine ability benutzen oder dem Spieler wird ein extra Text angezeigt um zum Beispiel den Spieler dazu zu bewegen sich
@@ -41,12 +41,14 @@ do
 			x = xVal,
 			y = yVal,
 			mainFrame = frame,
+
 			abilityCB = CheckBox:LoadCheckBox(frame, "Ability"),
 			textCB = CheckBox:LoadCheckBox(frame, "Extra Text"),
 			dropDownPlayer = DropDownList:LoadDropDownList(frame,"mb1",  {"p1", "p2", "p3"}),
 			dropDownCooldown = DropDownList:LoadDropDownList(frame,"mb2", {"a1", "a2", "a3"}),
 			--offset = caric:CreateEditBox(frame, "off", 50, 20),
 			offset = EditBox:LoadEditBox(frame, "offs", "number"),	
+
 			
 			--Klassenmethoden bzw. referenzen drauf
 			Hide = hide,
@@ -66,6 +68,8 @@ do
 				obj.abilityCB:SetChecked(false)
 			end
 		end)
+		
+		obj.offset:SetMaxLetters(obj.offset, 6) 
 
 		obj.dropDownPlayer:SetPoint("LEFT",relativeElement, "RIGHT",5, 0)
 		obj.abilityCB:SetPoint("LEFT", obj.dropDownPlayer, "RIGHT", 5, 0)

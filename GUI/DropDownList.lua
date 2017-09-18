@@ -87,9 +87,9 @@ end
 -- UIDropDownMenu_SetButtonWidth(): for setting the width of the Button
 -- UIDropDownMenu_SetWidth(): for setting the width of the place for the text
 -- UIDropDownMenu_JustifyText(): for justifing the text
+
 local function CreateDropDownList(frame, name, data)
-	local DropDownListButton = CreateFrame("Button", name, frame,"UIDropDownMenuTemplate")
-	
+	local DropDownListButton = CreateFrame("Button", name, frame,"UIDropDownMenuTemplate")	
 	SetData(DropDownListButton, data, nil)
 	
 	DropDownListButton:SetPoint("CENTER", 20, 0) -- 20 = x
@@ -151,6 +151,7 @@ end
 --
 -- frame: Parent frame
 -- data: which want to set in the DropDownList
+
 function SA_DropDownList:LoadDropDownList(frame, name, data)
 	assert(type(data) == "table", SAL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownList.data for infos."])
 	return CreateDropDownList(frame, name, data)

@@ -4,6 +4,8 @@ local _G = _G
 
 local SA_ScrollFrame =  _G.GUI.SA_ScrollFrame
 
+local ScrollFrame
+
 -- localization
 local SAL = _G.GUI.Locales
 
@@ -14,8 +16,8 @@ local SAL = _G.GUI.Locales
 -- than create the scrollbar and content of the scrollframe
 --
 -- frame: Parent frame
-local function CreateScrollFrame(frame)
-	local ScrollFrame = CreateFrame("ScrollFrame", "ScrollFrame", frame)
+local function CreateScrollFrame(frame, name)
+	ScrollFrame = CreateFrame("ScrollFrame", name, frame)
 
 	ScrollFrame.buttons = {}
 	ScrollFrame.mainButtonCount = 0
@@ -39,7 +41,7 @@ end
 -- frame: Parent frame
 function CreateScrollBar(frame)
 	if not ScrollBar then
-		ScrollBar = CreateFrame("Slider", "ScrollBar", ScrollFrame, "UIPanelScrollBarTemplate")
+		ScrollBar = CreateFrame("Slider", "ScrollBar", frame, "UIPanelScrollBarTemplate")
 	end
 	
 	-- setting a secure frame attribute, on which we can acces with GetAttribute(<name>)
@@ -247,8 +249,8 @@ end
 -- SA_ScrollFrame:LoadScrollFrame(): Loader for the ScrollFrame
 --
 -- frame: Parent frame
-function SA_ScrollFrame:LoadScrollFrame(frame)
-	return CreateScrollFrame(frame)
+function SA_ScrollFrame:LoadScrollFrame(frame, name)
+	return CreateScrollFrame(frame, name)
 end
 
 -- SA_ScrollFrame:Reset(): reset function for the ScrollFrame
@@ -276,14 +278,14 @@ end
 -- frame: Parent frame
 function SA_ScrollFrame:CreateButtons(data, frame)
 	for i=1,GetArraySize(data, GetDepth(data), 0) do
-		ScrollFrame.buttons[i] = CreateFrame("Button",nil,Content)
-		local btn = ScrollFrame.buttons[i]
+		frame.buttons[i] = CreateFrame("Button","button"..i,Content)
+		local btn = frame.buttons[i]
 		btn.clicked = false
 		btn.hasChild = false
 		btn:SetSize(frame:GetWidth()-12,25)
 		btn:RegisterForClicks("LeftButtonUp") -- only left button click
 	end
-	ScrollFrame.lvlClicked = 0
+	frame.lvlClicked = 0
 end
 
 -- CreateBossButton(): This function is for the boss buttons (third level)
