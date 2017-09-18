@@ -49,7 +49,7 @@ end
 -- event: the event, which was called this function
 function bossPlate:OnEvent(event, ...)
 	if event ==  "PLAYER_TARGET_CHANGED" then
-		debuffs = table.wipe(debuffs) 
+		bossPlate:ResetAll()
 		unit = UnitGUID("target") -- wird später über unit aus show ersetzt (boss1 bis boss5)
 		name = UnitName("target")
 		local canAttack = UnitCanAttack("target", "player") -- if the target can attack the player, than true
@@ -336,12 +336,14 @@ end
 function bossPlate:UpdateDebuff(name, count, expirationTime)
 	if expirationTime > 1 then
 		local debuff = bossPlate:GetBossDebuff(name)
-		if count > 0 then
-			debuff.count = count
-			debuff:SetAttribute("count", count)
+		if debuff then
+			if count > 0 then
+				debuff.count = count
+				debuff:SetAttribute("count", count)
+			end
+			debuff.expTime = expirationTime
+			debuff:SetAttribute("exptime", expirationTime) -- set a attributes for controlling later
 		end
-		debuff.expTime = expirationTime
-		debuff:SetAttribute("exptime", expirationTime) -- set a attributes for controlling later
 	else
 		local debuff = bossPlate:GetBossDebuff(name)
 		if debuff then
@@ -450,20 +452,26 @@ function bossPlate:HideAllBossDebuff()
 	end
 end
 
+function bossPlate:ResetAll()
+	for i = 1, #debuffs do
+		if(debuffs[i]) then
+			bossPlate:ResetDebuff(debuffs[i])
+		end
+	end
+	debuffs = table.wipe(debuffs)
+end
+
 function bossPlate:ResetDebuff(self)
-	self.tex = nil
-	self.count = 0
-	self.expTime = 0
-	self:SetAttribute("exptime", 0)
-	self:SetAttribute("count", 0)
-	self.icon = self:CreateTexture(nil,"OVERLAY")
-	self.icon:SetTexture(nil)
-	self.icon:ClearAllPoints()
-	self.icon:Hide()
-	self:Hide()
-	self:SetScript("OnUpdate", nil)
-	self:SetScript("OnHide", nil)
-	self:SetScript("OnAttributeChanged",nil)
+		self.tex = nil
+		self.icon = self:CreateTexture(nil,"OVERLAY")
+		self.icon:SetTexture(nil)
+		self.icon:ClearAllPoints()
+		self.icon:Hide()
+		self:Hide()
+		self:SetScript("OnUpdate", nil)
+		self:SetScript("OnHide", nil)
+		self:SetScript("OnAttributeChanged",nil)
+		self = nil
 end
 
 -- later needed
