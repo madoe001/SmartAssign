@@ -69,7 +69,7 @@ do
 			end
 		end)
 		
-		obj.offset:SetMaxLetters(obj.offset, 6) 
+		--obj.offset:SetMaxLetters(obj.offset, 6) 
 
 		obj.dropDownPlayer:SetPoint("LEFT",relativeElement, "RIGHT",5, 0)
 		obj.abilityCB:SetPoint("LEFT", obj.dropDownPlayer, "RIGHT", 5, 0)
