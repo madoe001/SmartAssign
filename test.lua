@@ -46,7 +46,6 @@ testFrame:SetScript("OnEvent",caric.Init)
 testFrame:RegisterEvent("ADDON_LOADED")
 
 function caric:CreateGUI(frame)
-<<<<<<< HEAD
 	--Fenster
 	caric:CreateWindow(frame)
 	caric:CreateButton(frame, "closeButton", nil, 30, 30, 450,0, "UIPanelCloseBUtton")
@@ -141,19 +140,6 @@ function caric:CreateGUI(frame)
 	caric:CreateButton(frame, "CooldownDeleteButton", "delete", 45, 30, 300,-375)
 	CooldownDeleteButton:SetScript("OnClick", function() removeExpansion(UIDropDownMenu_GetText(BossDropDown) );
 										 UIDropDownMenu_SetSelectedID(BossDropDown, 1) end)
-=======
-	local window  = caric:CreateWindow(frame)
-	local editBox = caric:CreateEditBox(frame,"editBox",70,30)
-	local closeButton = caric:CreateButton(frame, "closeButton", nil, 30, 30,  "UIPanelCloseBUtton")
-	closeButton:SetPoint("TOPLEFT", 450, 0)
-	local addButton = caric:CreateButton(frame, "addButton", "add", 30, 30)
-	addButton:SetPoint("TOPLEFT", 200, -45)
-	addButton:SetScript("OnClick", function() addExpansionToList(editBox:GetText()) end)
-	local deleteButton = caric:CreateButton(frame, "deleteButton", "delete", 40, 30)
-	deleteButton:SetPoint("TOPLEFT", 310, -230) 
-	deleteButton:SetScript("OnClick", function() removeExpansionFromList(UIDropDownMenu_GetText(DropDownMenuTest) );
-										 UIDropDownMenu_SetSelectedID(DropDownMenuTest, 1) end)
->>>>>>> 79d8a5dd14107e3478088cd18c4e893560c86527
 end
 
 function caric:CreateWindow(frame)
@@ -169,29 +155,29 @@ function caric:CreateWindow(frame)
 	return (frame)
 end
 
-function caric:CreateButton(frame, name, text, width, height, template)
+function caric:CreateButton(frame, name, text, width, height,x,y, template)
 	if(template == nil) then
 		template = "OptionsButtonTemplate"
 	end
 	local button = CreateFrame("Button", name, frame, template)
 	button:SetWidth(width)
 	button:SetHeight(height)
-	--button:SetPoint("TOPLEFT",x,y)
+	button:SetPoint("TOPLEFT",x,y)
 	button:SetText(text)
 	return (button)
 end
 
-function caric:CreateFont(frame, name, text,  size)
+function caric:CreateFont(frame, name, text,x,y,size)
 	local fontString = frame:CreateFontString(name)
-	--fontString:SetPoint("TOPLEFT",x,y)
+	fontString:SetPoint("TOPLEFT",x,y)
 	fontString:SetFont("Fonts\\MORPHEUS.ttf", size, "")
 	fontString:SetText(text)
 	return (fontString)
 end
 
-function caric:CreateEditBox(frame, name, width, height)
+function caric:CreateEditBox(frame, name, width, height, x,y)
 	local editBox = CreateFrame("EditBox", name, frame, "InputBoxTemplate")
-	--editBox:SetPoint("TOPLEFT",x,y)
+	editBox:SetPoint("TOPLEFT",x,y)
 	editBox:SetWidth(width)
 	editBox:SetHeight(height)
 	editBox:SetAutoFocus(false)
