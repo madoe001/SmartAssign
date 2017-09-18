@@ -29,6 +29,7 @@ HUD\bossPlate.lua
 HUD\bossSpellIcon.lua
 HUD\mainHUD.lua
 
+GUI\DropDowns.lua
 GUI\DropDownList.lua
 GUI\DropDownMenu.lua
 GUI\ScrollFrame.lua

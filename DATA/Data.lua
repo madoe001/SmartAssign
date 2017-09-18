@@ -234,32 +234,32 @@ _G.SmartAssign.minimap = {
 SA_BossList = SA_BossList or {"Classic", "Burning Crusade", "Wrath of the Lich King", "Cataclysm", "Mist of Pandaria",
 		"Warlords of Draenor", "Legion"};
 		
-function addExpansionToList(expansionName)
-	SA_BossList[expansionName] = {ExpansionName = expansionName};
+function addExpansion(expansionName)
+	SA_BossList[expansionName] = {};
 end
-function removeExpansionFromList(expansionName)
+function removeExpansion(expansionName)
 	SA_BossList[expansionName] = nil;
 end
 
-function addRaidToList(expansionName, raidName)
-	SA_BossList[expansionName][raidName] = {RaidName = raidName};
+function addRaid(expansionName, raidName)
+	SA_BossList[expansionName][raidName] = {};
 end
-function removeRaidFromList(expansionName, raidName)
+function removeRaid(expansionName, raidName)
 	SA_BossList[expansionName][raidName] = nil;
 end
 
-function addBossToList(expansionName, raidName, bossName)
-	SA_BossList[expansionName][raidName][bossName] = {BossName = bossName};
+function addBoss(expansionName, raidName, bossName)
+	SA_BossList[expansionName][raidName][bossName] = {};
 end
-function removeBossFromList(expansionName, raidName, BossName)
+function removeBoss(expansionName, raidName, bossName)
 	SA_BossList[expansionName][raidName][bossName] = nil;
 end
 
-function addAbillityToList(expansionName, raidName, bossName, abillityName, spellID)
+function addAbillity(expansionName, raidName, bossName, abillityName, spellID)
 	SA_BossList[expansionName][raidName][bossName][abillityName] = {AbillityName = abillityName,
 															SpellID = spellID};
 end
-function removeBossFromList(expansionName, raidName, bossName)
+function removeAbillity(expansionName, raidName, bossName, abillityName)
 	SA_BossList[expansionName][raidName][bossName][abillityName] = nil;
 end
 
