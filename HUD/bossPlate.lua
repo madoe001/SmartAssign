@@ -372,7 +372,6 @@ end
 function bossPlate:DebuffOnAttributeChanged(name, value)
 	if name == "exptime" then
 		if value == 0 then
-			print(self.name.."HIDE")
 			bossPlate:ResetDebuff(self)
 		elseif value > 0 then
 			self:SetValue(value)
