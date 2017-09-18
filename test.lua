@@ -46,14 +46,100 @@ testFrame:SetScript("OnEvent",caric.Init)
 testFrame:RegisterEvent("ADDON_LOADED")
 
 function caric:CreateGUI(frame)
-	local window  = caric:CreateWindow(frame)
-	local editBox = caric:CreateEditBox(frame,"editBox",70,30,100,-45)
-	local closeButton = caric:CreateButton(frame, "closeButton", nil, 30, 30, 450,0, "UIPanelCloseBUtton")
-	local addButton = caric:CreateButton(frame, "addButton", "add", 30, 30, 200,-45)
-	addButton:SetScript("OnClick", function() addExpansionToList(editBox:GetText()) end)
-	local deleteButton = caric:CreateButton(frame, "deleteButton", "delete", 40, 30, 310,-230)
-	deleteButton:SetScript("OnClick", function() removeExpansionFromList(UIDropDownMenu_GetText(DropDownMenuTest) );
-										 UIDropDownMenu_SetSelectedID(DropDownMenuTest, 1) end)
+	--Fenster
+	caric:CreateWindow(frame)
+	caric:CreateButton(frame, "closeButton", nil, 30, 30, 450,0, "UIPanelCloseBUtton")
+	
+	-- Expansion
+	createExpansionDropDown (testFrame, -150, 200, 100)
+	caric:CreateEditBox(frame,"ExpansionEditBox",100,30,170,-35)	
+	caric:CreateButton(frame, "ExpansionAddButton", "add", 30, 30, 270,-35)
+	ExpansionAddButton:SetScript("OnClick", function() 
+											if(ExpansionEditBox:GetText() ~= "" and ExpansionEditBox:GetText() ~= "Expansion") then 
+												addExpansion(ExpansionEditBox:GetText())
+												ExpansionEditBox:SetText("")
+											end	end)
+	caric:CreateButton(frame, "ExpansionDeleteButton", "delete", 45, 30, 300,-35)
+	ExpansionDeleteButton:SetScript("OnClick", function() removeExpansion(UIDropDownMenu_GetText(ExpansionDropDown) );
+										 UIDropDownMenu_SetSelectedID(ExpansionDropDown, 1)
+										 caric.ex = ""
+										 caric.ra = ""
+										 caric.bo = ""
+										 caric.ab = ""
+										 UIDropDownMenu_SetText(ExpansionDropDown,"Expansion")
+										 UIDropDownMenu_SetText(RaidDropDown,"Raid")
+										 UIDropDownMenu_SetText(BossDropDown,"Boss")
+										 UIDropDownMenu_SetText(AbillityDropDown,"Abillity")end)
+										 
+	-- Raid
+	createRaidDropDown (testFrame, -150, 160, 100)
+	caric:CreateEditBox(frame,"RaidEditBox",100,30,170,-75)	
+	caric:CreateButton(frame, "RaidAddButton", "add", 30, 30, 270,-75)
+	RaidAddButton:SetScript("OnClick", function() 
+									   if (RaidEditBox:GetText() ~= "" and RaidEditBox:GetText() ~= "Raid" and caric.ex ~= "") then
+											addRaid(caric.ex, RaidEditBox:GetText())
+											RaidEditBox:SetText("")
+									   end end)
+	caric:CreateButton(frame, "RaidDeleteButton", "delete", 45, 30, 300,-75)
+	RaidDeleteButton:SetScript("OnClick", function() removeRaid(caric.ex, UIDropDownMenu_GetText(RaidDropDown) );
+										 UIDropDownMenu_SetSelectedID(RaidDropDown, 1)
+										 caric.ra = ""
+										 caric.bo = ""
+										 caric.ab = ""
+										 UIDropDownMenu_SetText(RaidDropDown,"Raid")
+										 UIDropDownMenu_SetText(BossDropDown,"Boss")
+										 UIDropDownMenu_SetText(AbillityDropDown,"Abillity") end)
+										 
+	-- Boss									 
+	createBossDropDown (testFrame, -150, 120, 100)
+	caric:CreateEditBox(frame,"BossEditBox",100,30,170,-115)	
+	caric:CreateButton(frame, "BossAddButton", "add", 30, 30, 270,-115)
+	BossAddButton:SetScript("OnClick", function() 
+										if (BossEditBox:GetText() ~= "" and BossEditBox:GetText() ~= "Boss" and caric.ex ~= "" and caric.ra ~= "") then
+											addBoss(caric.ex, caric.ra, BossEditBox:GetText())
+											BossEditBox:SetText("")
+										end end)
+	caric:CreateButton(frame, "BossDeleteButton", "delete", 45, 30, 300,-115)
+	BossDeleteButton:SetScript("OnClick", function() removeBoss(caric.ex, caric.ra, UIDropDownMenu_GetText(BossDropDown) );
+										 UIDropDownMenu_SetSelectedID(BossDropDown, 1)
+										 caric.bo = ""
+										 caric.ab = ""
+										 UIDropDownMenu_SetText(BossDropDown,"Boss")
+										 UIDropDownMenu_SetText(AbillityDropDown,"Abillity") end)
+										 
+	-- Abillity									 
+	createAbillityDropDown (testFrame, -150, 80, 100)
+	caric:CreateEditBox(frame,"AbillityEditBox",100,30,170,-155)	
+	caric:CreateEditBox(frame,"SpellIDEditBox",50,30,275,-155)
+	caric:CreateButton(frame, "AbillityAddButton", "add", 30, 30, 325,-155)
+	AbillityAddButton:SetScript("OnClick", function() if (AbillityEditBox:GetText() ~= "" and SpellIDEditBox:GetText() ~= "" and AbillityEditBox:GetText() ~= "Abillity" and caric.ex ~= "" and caric.ra ~= "" and caric.bo ~= "" ) then
+											addAbillity(caric.ex, caric.ra, caric.bo, AbillityEditBox:GetText(), SpellIDEditBox:GetText())
+											AbillityEditBox:SetText("")
+											SpellIDEditBox:SetText("")
+										end end)
+	caric:CreateButton(frame, "AbillityDeleteButton", "delete", 45, 30, 355,-155)
+	AbillityDeleteButton:SetScript("OnClick", function() removeAbillity(caric.ex, caric.ra, caric.bo, UIDropDownMenu_GetText(AbillityDropDown) );
+										 UIDropDownMenu_SetSelectedID(AbillityDropDown, 1)
+										 caric.ab = ""
+										 UIDropDownMenu_SetText(AbillityDropDown,"Abillity") end)
+										 
+	-- Player									 
+	createPlayerDropDown (testFrame, -150, -100, 100)
+	caric:CreateEditBox(frame,"PlayerEditBox",100,30,170,-335)	
+	caric:CreateButton(frame, "PlayerAddButton", "add", 30, 30, 270,-335)
+	PlayerAddButton:SetScript("OnClick", function() addExpansion(BossEditBox:GetText()) end)
+	caric:CreateButton(frame, "PlayerDeleteButton", "delete", 45, 30, 300,-335)
+	PlayerDeleteButton:SetScript("OnClick", function() removeExpansion(UIDropDownMenu_GetText(BossDropDown) );
+										 UIDropDownMenu_SetSelectedID(BossDropDown, 1) end)
+				
+	-- Cooldown
+	createCooldownDropDown (testFrame, -150, -140, 100)
+	caric:CreateEditBox(frame,"CooldownEditBox",100,30,170,-375)	
+	caric:CreateButton(frame, "CooldownAddButton", "add", 30, 30, 270,-375)
+	CooldownAddButton:SetScript("OnClick", function() addExpansion(BossEditBox:GetText()) end)
+	caric:CreateButton(frame, "CooldownDeleteButton", "delete", 45, 30, 300,-375)
+	CooldownDeleteButton:SetScript("OnClick", function() removeExpansion(UIDropDownMenu_GetText(BossDropDown) );
+										 UIDropDownMenu_SetSelectedID(BossDropDown, 1) end)
 end
 
 function caric:CreateWindow(frame)
@@ -98,51 +184,17 @@ function caric:CreateEditBox(frame, name, width, height, x, y)
 	editBox:Show()
 	return (editBox)
 end
-
-function caric:CreateDropDownMenu(frame, name, width, x ,y)
-	local dropDown = CreateFrame("Button", name, frame, "UIDropDownMenuTemplate")
-	dropDown:ClearAllPoints()
-	dropDown:SetPoint("TOPLEFT", 0, 0)
-	UIDropDownMenu_SetWidth(dropDown, width);
-    UIDropDownMenu_SetButtonWidth(dropDown, width + 24)
-	
-	UIDropDownMenu_Initialize(dropDown, initialize)
-	UIDropDownMenu_SetSelectedID(dropDown, 1)
-	UIDropDownMenu_JustifyText(dropDown, "LEFT")
-	dropDown:Show()
-	return (dropDown)
+caric.ex = ""
+caric.ra = ""
+caric.bo = ""
+caric.ab = ""
+caric.pl = ""
+caric.cd = ""
+function caric:prin()
+	print("Expansion: " .. caric.ex .. 
+		  "\nRaid: " .. caric.ra .. 
+		  "\nBoss: " .. caric.bo ..
+		  "\nAbillity: " .. caric.ab ..
+		  "\nPlayer: " .. caric.pl ..
+		  "\nCooldown: " .. caric.cd)
 end
-
-------------------------------------------------------------
-
-if not DropDownMenuTest then
-   CreateFrame("Button", "DropDownMenuTest", testFrame, "UIDropDownMenuTemplate")
-end
-
-DropDownMenuTest:ClearAllPoints()
-DropDownMenuTest:SetPoint("CENTER", 0, 0)
-DropDownMenuTest:Show()
-
-
-function OnClick(self)
-   UIDropDownMenu_SetSelectedID(DropDownMenuTest, self:GetID())
-end
-
-function initialize(self, level)
-	local info = UIDropDownMenu_CreateInfo()
-	for k,v in pairs(SA_BossList) do
-		info = UIDropDownMenu_CreateInfo()
-		info.text = k
-		info.value = v
-		info.func = OnClick
-		UIDropDownMenu_AddButton(info, level)
-	end
-	
-end
-
-
-UIDropDownMenu_Initialize(DropDownMenuTest, initialize)
-UIDropDownMenu_SetWidth(DropDownMenuTest, 100);
-UIDropDownMenu_SetButtonWidth(DropDownMenuTest, 124)
-UIDropDownMenu_SetText(DropDownMenuTest, "Expansion")
-UIDropDownMenu_JustifyText(DropDownMenuTest, "LEFT")
