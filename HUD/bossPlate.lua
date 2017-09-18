@@ -22,7 +22,7 @@ local debuffs = {}
 --
 -- frame: parent frame
 function bossPlate:CreateBossPlate(frame)
-	SA_BossNamePlate = CreateFrame("Frame", "Nameplate", frame)
+	SA_BossNamePlate = CreateFrame("Frame", "BossNameplate", frame)
 	SA_BossNamePlate:SetWidth(160)
 	SA_BossNamePlate:SetHeight(100)
 	SA_BossNamePlate:ClearAllPoints()
@@ -110,10 +110,10 @@ end
 function bossPlate:CreateNamePlateComp(frame)
 	SA_BossNamePlate.name = SA_BossNamePlate:CreateFontString("name-label", "ARTWORK", "GameFontNormalSmall") -- name of boss
 	
-	healthBar = CreateFrame("StatusBar", nil, SA_BossNamePlate) -- healtBar
+	healthBar = CreateFrame("StatusBar", "healthBar", SA_BossNamePlate) -- healtBar
 	healthBar.label = healthBar:CreateFontString("HealthBar-label", "ARTWORK", "GameFontNormalSmall") -- label how much health of max health the boss have
 	
-	manaBar = CreateFrame("StatusBar", nil, SA_BossNamePlate) -- manaBar
+	manaBar = CreateFrame("StatusBar", "manaBar", SA_BossNamePlate) -- manaBar
 	manaBar.label = manaBar:CreateFontString("ManaBar-label", "ARTWORK", "GameFontNormalSmall") -- label how much mana of max mana the boss have
 end
 
@@ -159,7 +159,7 @@ end
 
 -- bossPlate:HealthBackground(): creates a background for the healthBar
 function bossPlate:HealthBackground()
-	healthBar.bg = healthBar:CreateTexture(nil, "BORDER")
+	healthBar.bg = healthBar:CreateTexture("healthBarBorderTexture", "BORDER")
 	healthBar.bg:SetTexture(0,0,0)
 	healthBar.bg:ClearAllPoints()
 	healthBar.bg:SetPoint("CENTER", healthBar, 0, -10)
@@ -201,7 +201,7 @@ end
 
 -- bossPlate:ManaBackground(): create a background for the manaBar
 function bossPlate:ManaBackground()
-	manaBar.bg = manaBar:CreateTexture(nil, "BORDER")
+	manaBar.bg = manaBar:CreateTexture("manaBarBorderTexture", "BORDER")
 	manaBar.bg:SetTexture(0,0,0)
 	manaBar.bg:ClearAllPoints()
 	manaBar.bg:SetPoint("CENTER", manaBar, 0, -10)
@@ -243,6 +243,7 @@ function bossPlate:ConfigBossDebuffIcons()
 	for i = 1, #debuffs do
 		local debuff = debuffs[i]
 		debuff:SetSize(24, 24)
+		print("ConfigBossDebuffIcons() "..debuff.name)
 		bossPlate:ConfigDebuffIconTexture(debuff, i)
 		if debuff.count ~= 0 then
 			bossPlate:ConfigCountLabel(debuff)
@@ -261,13 +262,17 @@ function bossPlate:ConfigDebuffIconTexture(debuff, placeInTable)
 	
 	if placeInTable == 1 then
 		if UnitMana("target") ~= 0 then
+			print("ConfigDebuffIconTexture: manaBar")
 			debuff.icon:SetPoint("TOPLEFT", manaBar, "BOTTOMLEFT", 0, 0)
 		else
+			print("ConfigDebuffIconTexture: healthBar")
 			debuff.icon:SetPoint("TOPLEFT", healthBar, "BOTTOMLEFT", 0, 0)
 		end
 	elseif placeInTable % 6 == 0 then -- only six debufficons i a row
+		print("ConfigDebuffIconTexture: next ROW")
 		debuff.icon:SetPoint("BOTTOM", debuffs[placeInTable-5], 0, -1)
 	else
+		print("ConfigDebuffIconTexture: next Debuff")
 		debuff.icon:SetPoint("RIGHT", debuffs[placeInTable-1], 1, 0)
 	end
 	debuff.icon:SetTexture(debuff.tex)
@@ -342,8 +347,8 @@ function bossPlate:CreateDebuffIconComp(debuffIconFrame, count)
 		debuffIconFrame.countLabel = debuffIconFrame:CreateFontString("debuffIconFrameCount-label", "ARTWORK", "GameFontNormalSmall")
 	end
 	debuffIconFrame.expireLabel = debuffIconFrame:CreateFontString("debuffIconFrameExpire-label", "ARTWORK", "GameFontNormalSmall")
-	debuffIconFrame.icon = debuffIconFrame:CreateTexture(nil,"BACKGROUND")
-	debuffIconFrame.statusBar = CreateFrame("StatusBar", nil, debuffIconFrame)
+	debuffIconFrame.icon = debuffIconFrame:CreateTexture("DebuffIcon","BACKGROUND")
+	debuffIconFrame.statusBar = CreateFrame("StatusBar", "CDStatusBar", debuffIconFrame)
 end
 
 function bossPlate:CreateDebuffExpireStatusBar(debuff)
@@ -352,7 +357,7 @@ function bossPlate:CreateDebuffExpireStatusBar(debuff)
 	debuff.statusBar:SetStatusBarTexture("Interface\\TargetingFrame\\UI-StatusBar")
 	debuff.statusBar:SetSize(280, 28)
 	debuff.statusBar:SetStatusBarColor(0, 1, 0, 1)
-	debuff.statusBar:SetPoint("CENTER", SA_BossNamePlate, "CENTER", 0, 0)
+	debuff.statusBar:SetPoint("TOP", SA_BossNamePlate, "TOP", 0, 0)
 	debuff.statusBar:SetValue(round(debuff.expTime - GetTime(), 0))
 	debuff.statusBar:SetMinMaxValues(0, round(debuff.expTime - GetTime(), 0))
 	debuff.statusBar:Show()
