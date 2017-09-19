@@ -34,6 +34,9 @@ frame:SetScript("OnEvent", SmartAssign_OnEvent)
 
 --table
 caric = {}
+caric.framusCounter = 0;
+caric.assignCounter = 0;
+
 function caric:Init(event, addon)
 	if(event == "ADDON_LOADED" and addon == "SmartAssign") then
 		caric:CreateGUI(testFrame)
@@ -47,9 +50,10 @@ testFrame:RegisterEvent("ADDON_LOADED")
 
 function caric:CreateGUI(frame)
 	--Fenster
-	caric:CreateWindow(frame)
+	local window = caric:CreateWindow(frame)
 	caric:CreateButton(frame, "closeButton", nil, 30, 30, 450,0, "UIPanelCloseBUtton")
 	
+	--[[
 	-- Expansion
 	createExpansionDropDown(testFrame, -150, 200, 100)
 	caric:CreateEditBox(frame,"ExpansionEditBox",100,30,170,-35)	
@@ -123,17 +127,15 @@ function caric:CreateGUI(frame)
 										 caric.ab = ""
 										 UIDropDownMenu_SetText(AbillityDropDown,"Abillity") end)
 										 
-	-- Player									 
-	createPlayerDropDown (testFrame, -150, -100, 100)
-				
+	-- Player		
+	local playerDP1 = createPlayerDropDown (testFrame, -150, -100, 100)
+	createCooldownDropDown (testFrame, -20, -100, 100, playerDP1)
+	local playerDP2 = createPlayerDropDown (testFrame, -150, -140, 100)					
 	-- Cooldown
-	createCooldownDropDown (testFrame, -150, -140, 100)
-	caric:CreateEditBox(frame,"CooldownEditBox",100,30,170,-375)	
-	caric:CreateButton(frame, "CooldownAddButton", "add", 30, 30, 270,-375)
-	CooldownAddButton:SetScript("OnClick", function() addExpansion(BossEditBox:GetText()) end)
-	caric:CreateButton(frame, "CooldownDeleteButton", "delete", 45, 30, 300,-375)
-	CooldownDeleteButton:SetScript("OnClick", function() removeExpansion(UIDropDownMenu_GetText(BossDropDown) );
-										 UIDropDownMenu_SetSelectedID(BossDropDown, 1) end)
+	createCooldownDropDown (testFrame, -20, -140, 100, playerDP2)
+	]]
+	local bg = caric:createAssignmentBackground(window)
+	local framuus = caric:createFramusBackground(bg)
 end
 
 function caric:CreateWindow(frame)
@@ -146,6 +148,36 @@ function caric:CreateWindow(frame)
 		insets = { left = 4, right = 4, top = 4, bottom = 4 }
 		});
 	frame:SetBackdropColor(0.0,0.0,0.0,1.0)
+	return (frame)
+end
+
+function caric:createAssignmentBackground(parent)
+	caric.assignCounter = caric.assignCounter + 1
+	local frame = CreateFrame("Frame","assign"..caric.assignCounter,parent)
+	frame:SetWidth(400)
+	frame:SetHeight(70)
+	frame:SetPoint("TOP",0,-20)
+	frame:SetBackdrop({
+		bgFile="Interface/DialogFrame/UI-DialogBox-Background",
+		tile = false, tileSize = 4, edgeSize = 32,
+		insets = { left = 4, right = 4, top = 4, bottom = 4 }
+		});
+	frame:SetBackdropColor(0.0,0.0,0.0,0.65)
+	return (frame)
+end
+
+function caric:createFramusBackground(parent)
+	caric.framusCounter = caric.framusCounter + 1
+	local frame = CreateFrame("Frame","framus"..caric.framusCounter,parent)
+	frame:SetWidth(300)
+	frame:SetHeight(30)
+	frame:SetPoint("RIGHT",-10,0)
+	frame:SetBackdrop({
+		bgFile="Interface/DialogFrame/UI-DialogBox-Background",
+		tile = false, tileSize = 4, edgeSize = 32,
+		insets = { left = 4, right = 4, top = 4, bottom = 4 }
+		});
+	frame:SetBackdropColor(0.0,0.0,0.0,0.65)
 	return (frame)
 end
 
@@ -192,3 +224,4 @@ function caric:prin()
 		  "\nPlayer: " .. caric.pl ..
 		  "\nCooldown: " .. caric.cd)
 end
+

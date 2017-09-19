@@ -5,7 +5,6 @@
 local _G = _G
 
 -- create globals
-SA_Players = SA_Players or UnitName("player")
 SA_Cooldowns = SA_Cooldowns or {
    ["Warrior"] = {
 		["97462"] = { -- Shout
