@@ -125,12 +125,6 @@ function caric:CreateGUI(frame)
 										 
 	-- Player									 
 	createPlayerDropDown (testFrame, -150, -100, 100)
-	caric:CreateEditBox(frame,"PlayerEditBox",100,30,170,-335)	
-	caric:CreateButton(frame, "PlayerAddButton", "add", 30, 30, 270,-335)
-	PlayerAddButton:SetScript("OnClick", function() addExpansion(BossEditBox:GetText()) end)
-	caric:CreateButton(frame, "PlayerDeleteButton", "delete", 45, 30, 300,-335)
-	PlayerDeleteButton:SetScript("OnClick", function() removeExpansion(UIDropDownMenu_GetText(BossDropDown) );
-										 UIDropDownMenu_SetSelectedID(BossDropDown, 1) end)
 				
 	-- Cooldown
 	createCooldownDropDown (testFrame, -150, -140, 100)

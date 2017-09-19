@@ -169,13 +169,16 @@ function createPlayerDropDown (parentFrame, x, y, width)
 
 	function initPlayerDropDown(self, level)
 		local info = UIDropDownMenu_CreateInfo()
-		for k,v in pairs(SA_BossList) do
-			info = UIDropDownMenu_CreateInfo()
-			info.text = k
-			info.value = v
-			info.func = OnClickPlayerDropDown
-			UIDropDownMenu_AddButton(info, level)
-		end	
+		SA_Players = SmartAssign:getAllMembers()
+		if(SA_Players ~= nil) then
+			for k,v in pairs(SA_Players) do
+				info = UIDropDownMenu_CreateInfo()
+				info.text = k
+				info.value = v
+				info.func = OnClickPlayerDropDown
+				UIDropDownMenu_AddButton(info, level)
+			end	
+		end
 	end
 
 	UIDropDownMenu_Initialize(PlayerDropDown, initPlayerDropDown)
@@ -199,14 +202,21 @@ function createCooldownDropDown (parentFrame, x, y, width)
 	end
 
 	function initCooldownDropDown(self, level)
-		local info = UIDropDownMenu_CreateInfo()
-		for k,v in pairs(SA_BossList) do
-			info = UIDropDownMenu_CreateInfo()
-			info.text = k
-			info.value = v
-			info.func = OnClickCooldownDropDown
-			UIDropDownMenu_AddButton(info, level)
-		end	
+		local info = UIDropDownMenu_CreateInfo
+		
+		local playerName = UIDropDownMenu_GetText(PlayerDropDown)
+		local playerClass = SA_Players[playerName]
+		if(SA_Players[playerName] ~= nil)then
+			for k,v in pairs(ClassList:GetClassSpellNames(SA_Players[playerName])) do
+				info = UIDropDownMenu_CreateInfo()
+				info.text = v
+				info.value = v
+				info.func = OnClickCooldownDropDown
+				UIDropDownMenu_AddButton(info, level)
+			end	
+		else 
+		print("leer")
+		end
 	end
 	caric:prin()
 
