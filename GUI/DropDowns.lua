@@ -155,17 +155,15 @@ function createAbillityDropDown (parentFrame, x, y, width)
 end
 
 function createPlayerDropDown (parentFrame, x, y, width)
-	if not PlayerDropDown then
-		CreateFrame("Button", "PlayerDropDown", parentFrame, "UIDropDownMenuTemplate")
-	end
+	
+	local framus = CreateFrame("Button", "PlayerDropDown"..caric.framusCounter, parentFrame, "UIDropDownMenuTemplate")
+	caric["PlayerDropDown"..caric.framusCounter] = framus
 
-	PlayerDropDown:ClearAllPoints()
-	PlayerDropDown:SetPoint("CENTER", x, y)
-	PlayerDropDown:Show()
+	framus:ClearAllPoints()
+	framus:SetPoint("CENTER", x, y)
+	framus:Show()
 
-	function OnClickPlayerDropDown(self)
-		UIDropDownMenu_SetSelectedID(PlayerDropDown, self:GetID())
-	end
+	
 
 	function initPlayerDropDown(self, level)
 		local info = UIDropDownMenu_CreateInfo()
@@ -175,36 +173,35 @@ function createPlayerDropDown (parentFrame, x, y, width)
 				info = UIDropDownMenu_CreateInfo()
 				info.text = k
 				info.value = v
-				info.func = OnClickPlayerDropDown
+				info.func = function (self)
+							UIDropDownMenu_SetSelectedID(framus, self:GetID())	
+							end
 				UIDropDownMenu_AddButton(info, level)
 			end	
 		end
 	end
 
-	UIDropDownMenu_Initialize(PlayerDropDown, initPlayerDropDown)
-	UIDropDownMenu_SetWidth(PlayerDropDown, width);
-	UIDropDownMenu_SetButtonWidth(PlayerDropDown, width +24)
-	UIDropDownMenu_SetText(PlayerDropDown, "Player")
-	UIDropDownMenu_JustifyText(PlayerDropDown, "LEFT")
+	UIDropDownMenu_Initialize(framus, initPlayerDropDown)
+	UIDropDownMenu_SetWidth(framus, width);
+	UIDropDownMenu_SetButtonWidth(framus, width +24)
+	UIDropDownMenu_SetText(framus, "Player")
+	UIDropDownMenu_JustifyText(framus, "LEFT")
+	return framus
 end
 
-function createCooldownDropDown (parentFrame, x, y, width)
-	if not CooldownDropDown then
-		CreateFrame("Button", "CooldownDropDown", parentFrame, "UIDropDownMenuTemplate")
-	end
+function createCooldownDropDown (parentFrame, x, y, width, ref)
 
-	CooldownDropDown:ClearAllPoints()
-	CooldownDropDown:SetPoint("CENTER", x, y)
-	CooldownDropDown:Show()
+	local framus = CreateFrame("Button", "CooldownDropDown"..caric.framusCounter, parentFrame, "UIDropDownMenuTemplate")
+	framus.ref = ref
 
-	function OnClickCooldownDropDown(self)
-		UIDropDownMenu_SetSelectedID(CooldownDropDown, self:GetID())
-	end
+	framus:ClearAllPoints()
+	framus:SetPoint("CENTER", x, y)
+	framus:Show()	
 
 	function initCooldownDropDown(self, level)
 		local info = UIDropDownMenu_CreateInfo
 		
-		local playerName = UIDropDownMenu_GetText(PlayerDropDown)
+		local playerName = UIDropDownMenu_GetText(ref)
 		if(SA_Players ~= nil) then
 			local playerClass = SA_Players[playerName]		
 			if(SA_Players[playerName] ~= nil)then
@@ -212,16 +209,17 @@ function createCooldownDropDown (parentFrame, x, y, width)
 					info = UIDropDownMenu_CreateInfo()
 					info.text = v
 					info.value = v
-					info.func = OnClickCooldownDropDown
+					info.func = function (self)	UIDropDownMenu_SetSelectedID(framus, self:GetID()) end
 					UIDropDownMenu_AddButton(info, level)
 				end	
 			end
 		end
 	end
 
-	UIDropDownMenu_Initialize(CooldownDropDown, initCooldownDropDown)
-	UIDropDownMenu_SetWidth(CooldownDropDown, width);
-	UIDropDownMenu_SetButtonWidth(CooldownDropDown, width +24)
-	UIDropDownMenu_SetText(CooldownDropDown, "Cooldown")
-	UIDropDownMenu_JustifyText(CooldownDropDown, "LEFT")
+	UIDropDownMenu_Initialize(framus, initCooldownDropDown)
+	UIDropDownMenu_SetWidth(framus, width);
+	UIDropDownMenu_SetButtonWidth(framus, width +24)
+	UIDropDownMenu_SetText(framus, "Cooldown")
+	UIDropDownMenu_JustifyText(framus, "LEFT")
+	return framus
 end
