@@ -26,7 +26,7 @@ function bossPlate:CreateBossPlate(frame)
 	SA_BossNamePlate:SetWidth(160)
 	SA_BossNamePlate:SetHeight(100)
 	SA_BossNamePlate:ClearAllPoints()
-	SA_BossNamePlate:SetPoint("CENTER", frame:GetWidth()*0.15, frame:GetHeight()*0.05)
+	SA_BossNamePlate:SetPoint("CENTER", frame:GetWidth()*0.15, frame:GetHeight()*0.15)
 	bossPlate:RegisterAllEvents()
 	SA_BossNamePlate:SetScript("OnEvent",bossPlate.OnEvent)
 	SA_BossNamePlate:SetScript("OnUpdate", function(elapsed) 
@@ -49,9 +49,7 @@ end
 -- event: the event, which was called this function
 function bossPlate:OnEvent(event, ...)
 	if event ==  "PLAYER_TARGET_CHANGED" then
-		bossPlate:DeleteAllBossDebuff() -- hide all debufficons
-		bossPlate:GetBossDebuffs() -- get debuffs
-		bossPlate:ConfigBossDebuffIcons() -- config debuffs
+		bossPlate:ResetAll()
 		unit = UnitGUID("target") -- wird später über unit aus show ersetzt (boss1 bis boss5)
 		name = UnitName("target")
 		local canAttack = UnitCanAttack("target", "player") -- if the target can attack the player, than true
@@ -64,7 +62,8 @@ function bossPlate:OnEvent(event, ...)
 						bossPlate:ShowHealth()
 						bossPlate:ShowMana()
 						healthBar:Show()
-						
+						bossPlate:GetBossDebuffs() -- get debuffs
+						bossPlate:ConfigBossDebuffIcons() -- config debuffs
 						SA_BossNamePlate:Show() -- show all
 					else
 						SA_BossNamePlate:Hide() -- hide all
@@ -195,7 +194,7 @@ function bossPlate:ConfigManaBar()
 	manaBar:SetStatusBarTexture("Interface\\TargetingFrame\\UI-StatusBar")
 	manaBar:SetWidth(150)
 	manaBar:SetHeight(20)
-	manaBar:SetStatusBarColor(0,0,1)
+	manaBar:SetStatusBarColor(0,0,1, 0.5)
 	manaBar:SetPoint("TOP", healthBar, "BOTTOM", 0, 0)
 end
 
@@ -242,38 +241,33 @@ end
 function bossPlate:ConfigBossDebuffIcons()
 	for i = 1, #debuffs do
 		local debuff = debuffs[i]
-		debuff:SetSize(24, 24)
-		print("ConfigBossDebuffIcons() "..debuff.name)
+		if debuff.expTime then
+			 bossPlate:ConfigDebuffExpireStatusBar(debuff)
+			 --bossPlate:ConfigExpireLabel(debuff) -- nicht alle code teile implementiert
+		end
 		bossPlate:ConfigDebuffIconTexture(debuff, i)
 		if debuff.count ~= 0 then
 			bossPlate:ConfigCountLabel(debuff)
-		end
-		if debuff.expTime then
-			 bossPlate:CreateDebuffExpireStatusBar(debuff)
-			 --bossPlate:ConfigExpireLabel(debuff)
 		end
 	end
 end
 
 function bossPlate:ConfigDebuffIconTexture(debuff, placeInTable)
-	debuff.icon:SetSize(24, 24)
+	debuff.icon:SetSize(25, 25)
 	debuff.icon:ClearAllPoints()
-	debuff.icon:SetAlpha(0.3)
+	debuff.icon:SetPoint("CENTER", debuff, 0, 0)
+	debuff.icon:SetAlpha(0.5)
 	
 	if placeInTable == 1 then
 		if UnitMana("target") ~= 0 then
-			print("ConfigDebuffIconTexture: manaBar")
-			debuff.icon:SetPoint("TOPLEFT", manaBar, "BOTTOMLEFT", 0, 0)
+			debuff:SetPoint("TOPLEFT", manaBar, "BOTTOMLEFT", 0, 0)
 		else
-			print("ConfigDebuffIconTexture: healthBar")
-			debuff.icon:SetPoint("TOPLEFT", healthBar, "BOTTOMLEFT", 0, 0)
+			debuff:SetPoint("TOPLEFT", healthBar, "BOTTOMLEFT", 0, 0)
 		end
 	elseif placeInTable % 6 == 0 then -- only six debufficons i a row
-		print("ConfigDebuffIconTexture: next ROW")
-		debuff.icon:SetPoint("BOTTOM", debuffs[placeInTable-5], 0, -1)
-	else
-		print("ConfigDebuffIconTexture: next Debuff")
-		debuff.icon:SetPoint("RIGHT", debuffs[placeInTable-1], 1, 0)
+		debuff:SetPoint("TOP", debuffs[placeInTable-5], "BOTTOM", 0, -1)
+	elseif placeInTable > 1 and debuffs[1] then
+		debuff:SetPoint("LEFT", debuffs[placeInTable-1], "RIGHT", 1, 0)
 	end
 	debuff.icon:SetTexture(debuff.tex)
 	debuff.icon:SetDesaturated(1) -- make greyscale
@@ -291,29 +285,30 @@ end
 function bossPlate:ConfigExpireLabel(debuff)
 	debuff.expireLabel:ClearAllPoints()
 	debuff.expireLabel:SetPoint("CENTER", debuff, 0, 0)
-	debuff.expireLabel:SetTextHeight(22)
-	debuff.expireLabel:SetText(round(debuff.expTime - GetTime(), 0))
-	debuff.isExpireLabel = true
+	debuff.expireLabel:SetTextHeight(18)
+	debuff.expireLabel:SetText(debuff.expTime)
+	debuff.isExpireLabel = false
 end
 
 function bossPlate:GetBossDebuffs()
 	for i=1,40 do
-		local name, _, icon, count, _, _, expirationTime,
+		local name, _, icon, count, _, duration, expirationTime,
 		_, _, _, spellId, _, _, _, _, _, _, _ = UnitDebuff("target",i)
 		if name then
-			bossPlate:AddBossDebuff(name, icon, count, expirationTime)
+			bossPlate:AddBossDebuff(name, icon, count, duration, round(-(GetTime() - expirationTime), 0))
 		end
 	end
 end
 
-function bossPlate:AddBossDebuff(name, texture, count, expirationTime)
+function bossPlate:AddBossDebuff(name, texture, count, duration, expirationTime)
 	if not bossPlate:BossDebuffContains(name) then
-		local debuffIconFrame = CreateFrame("Frame", "debuffIconFrame", SA_BossNamePlate)
+		local debuffIconFrame = CreateFrame("StatusBar", name.."debuffIconFrame", SA_BossNamePlate)
 		debuffIconFrame.name = name
 		debuffIconFrame.tex = texture
 		debuffIconFrame.count = count
-		debuffIconFrame.expTime = expirationTime - GetTime()
-		debuffIconFrame:SetAttribute("expTime", round(expirationTime - GetTime(), 0)) -- set a attributes for controlling later
+		debuffIconFrame.duration = duration
+		debuffIconFrame.expTime = expirationTime
+		debuffIconFrame:SetAttribute("exptime", expirationTime) -- set a attributes for controlling later
 		debuffIconFrame:SetAttribute("count", count)
 		debuffIconFrame:SetScript("OnAttributeChanged", bossPlate.DebuffOnAttributeChanged)
 		debuffIconFrame:SetScript("OnUpdate", bossPlate.UpdateBossDebuffs)
@@ -321,6 +316,7 @@ function bossPlate:AddBossDebuff(name, texture, count, expirationTime)
 		
 		bossPlate:CreateDebuffIconComp(debuffIconFrame, count)
 		tinsert(debuffs, debuffIconFrame)
+		debuffIconFrame.place = #debuffs
 	end
 end
 
@@ -329,93 +325,103 @@ function bossPlate:UpdateBossDebuffs()
 		local name, _, _, count, _, _, expirationTime,
 		_, _, _, spellId, _, _, _, _, _, _, _ = UnitDebuff("target",i)
 		if name then
-			bossPlate:UpdateDebuff(name, count, expirationTime)
+			bossPlate:UpdateDebuff(name, count, round(-(GetTime() - expirationTime), 0))
 		end
 	end
-end
-
-function bossPlate:UpdateDebuff(name, count, expirationTime)
-	local debuff = bossPlate:GetBossDebuff(name)
-	debuff.count = count
-	debuff.expTime = expirationTime - GetTime()
-	debuff:SetAttribute("expTime", round(expirationTime - GetTime(), 0)) -- set a attributes for controlling later
-	debuff:SetAttribute("count", count)
-end
-
-function bossPlate:CreateDebuffIconComp(debuffIconFrame, count)
-	if count ~= 0 then
-		debuffIconFrame.countLabel = debuffIconFrame:CreateFontString("debuffIconFrameCount-label", "ARTWORK", "GameFontNormalSmall")
-	end
-	debuffIconFrame.expireLabel = debuffIconFrame:CreateFontString("debuffIconFrameExpire-label", "ARTWORK", "GameFontNormalSmall")
-	debuffIconFrame.icon = debuffIconFrame:CreateTexture("DebuffIcon","BACKGROUND")
-	debuffIconFrame.statusBar = CreateFrame("StatusBar", "CDStatusBar", debuffIconFrame)
-end
-
-function bossPlate:CreateDebuffExpireStatusBar(debuff)
-	debuff.statusBar:SetOrientation("VERTICAL")
-	debuff.statusBar:ClearAllPoints()
-	debuff.statusBar:SetStatusBarTexture("Interface\\TargetingFrame\\UI-StatusBar")
-	debuff.statusBar:SetSize(280, 28)
-	debuff.statusBar:SetStatusBarColor(0, 1, 0, 1)
-	debuff.statusBar:SetPoint("TOP", SA_BossNamePlate, "TOP", 0, 0)
-	debuff.statusBar:SetValue(round(debuff.expTime - GetTime(), 0))
-	debuff.statusBar:SetMinMaxValues(0, round(debuff.expTime - GetTime(), 0))
-	debuff.statusBar:Show()
-end
-
-function bossPlate:DebuffOnAttributeChanged(name, value)
-	if name == "exptime" then
-		if self.statusBar then
-			if value == 0 then
-				self.statusBar:Hide()
-				self.icon:Hide()
-			elseif value > 0 then
-				self.statusBar:SetValue(round(value - GetTime(), 0))
-			end
-		elseif self.isExpireLabel then
-			if value == 0 then
-				self.expireLabel:Hide()
-				self.icon:Hide()
-			elseif value > 0 then
-				self.expireLabel:SetText(round(value - GetTime(), 0))
-			end
-		end 
-	end
-	if name == "count" then
-		if value == 0 then
-			if self.countLabel then
-				self.countLabel:Hide()
-			end
-		elseif value > 0 then
-			self.countLabel:SetText(self.count)
-		end
-	end
-end
-
-function bossPlate:OnIconHide(self)
-	tremove(debuffs, self)
 	for i = 1, #debuffs do
 		bossPlate:ReorderDebuffIcon(debuffs[i], i)
 	end
 end
 
-function bossPlate:ReorderDebuffIcon(debuff, placeInTable)
-	if placeInTable == 1 then
-		if UnitMana("target") ~= 0 then
-			debuff.icon:SetPoint("LEFT", manaBar, 0, 0)
-		else
-			debuff.icon:SetPoint("LEFT", healthBar, 0, 0)
+function bossPlate:UpdateDebuff(name, count, expirationTime)
+	if expirationTime > 1 then
+		local debuff = bossPlate:GetBossDebuff(name)
+		if debuff then
+			if count > 0 then
+				debuff.count = count
+				debuff:SetAttribute("count", count)
+			end
+			debuff.expTime = expirationTime
+			debuff:SetAttribute("exptime", expirationTime) -- set a attributes for controlling later
 		end
-	elseif placeInTable % 6 == 0 then -- only six debufficons i a row
-		debuff.icon:SetPoint("BOTTOM", debuffs[placeInTable - 5], 0, -1)
 	else
-		debuff.icon:SetPoint("RIGHT", debuffs[placeInTable - 1], 1, 0)
+		local debuff = bossPlate:GetBossDebuff(name)
+		if debuff then
+			debuff:SetAttribute("exptime", 0)
+		end
 	end
 end
 
-function bossPlate:HideAllDebuffs()
+function bossPlate:CreateDebuffIconComp(debuffIconFrame, count)
+	if count ~= 0 then
+		debuffIconFrame.countLabel = debuffIconFrame:CreateFontString(debuffIconFrame.name.."debuffIconFrameCount-label", "ARTWORK", "GameFontNormalSmall")
+	end
+	debuffIconFrame.expireLabel = debuffIconFrame:CreateFontString(debuffIconFrame.name.."debuffIconFrameExpire-label", "ARTWORK", "GameFontNormalSmall")
+	debuffIconFrame.icon = debuffIconFrame:CreateTexture(nil,"OVERLAY")
+end
+
+function bossPlate:ConfigDebuffExpireStatusBar(debuff)
+	debuff:SetOrientation("VERTICAL")
+	debuff:ClearAllPoints()
+	debuff:SetStatusBarTexture("Interface\\TargetingFrame\\UI-StatusBar")
+	debuff:SetSize(28, 28)
+	debuff:SetStatusBarColor(0, 1, 0, 0.5)
+	debuff:SetValue(debuff:GetAttribute("exptime"))
+	debuff:SetMinMaxValues(0, debuff.duration)
+	debuff:Show()
+end
+
+function bossPlate:DebuffOnAttributeChanged(name, value)
+	if name == "exptime" then
+		if value == 0 then
+			bossPlate:ResetDebuff(self)
+		elseif value > 0 then
+			self:SetValue(value)
+		end
+	elseif self.isExpireLabel then
+		if value == 1 then
+			self.expireLabel:Hide()
+			self:Hide()
+			self.icon:SetTexture(nil)
+		elseif value > 1 then
+			self.expireLabel:SetText(round(value, 0))
+		end 
+	end
+	if name == "count" then
+		if value == 1 then
+			if self.countLabel then
+				self.countLabel:Hide()
+			end
+		elseif value > 1 then
+			self.countLabel:SetText(value)
+		end
+	end
+end
+
+function bossPlate:OnIconHide()
+	self:Hide()
+	self.icon:SetTexture(nil)
+	tremove(debuffs, self.place)
 	for i = 1, #debuffs do
-		debuffs[i]:Hide()
+		if #debuffs > 0 then
+			bossPlate:ReorderDebuffIcon(debuffs[i], i)
+		end
+	end
+end
+
+function bossPlate:ReorderDebuffIcon(debuff, placeInTable)
+	if debuff then
+		if placeInTable == 1 then
+			if UnitMana("target") ~= 0 then
+				debuff:SetPoint("LEFT", manaBar, "LEFT", 0, 0)
+			else
+				debuff:SetPoint("LEFT", healthBar, "LEFT", 0, 0)
+			end
+		elseif placeInTable % 6 == 0 then -- only six debufficons i a row
+			debuff:SetPoint("TOP", debuffs[placeInTable - 5], "BOTTOM", 0, -1)
+		elseif placeInTable > 1 and debuffs[1] then
+			debuff:SetPoint("LEFT", debuffs[placeInTable - 1], "RIGHT", 1, 0)
+		end
 	end
 end
 
@@ -438,11 +444,34 @@ function bossPlate:BossDebuffContains(spell)
 	return false
 end
 
-function bossPlate:DeleteAllBossDebuff()
+function bossPlate:HideAllBossDebuff()
 	for i = 1, #debuffs do
-		debuffs[i]:Hide()
-		tremove(debuffs, debuffs[i])
+		if(debuffs[i]) then
+			debuffs[i]:SetAttribute("exptime", 0)
+		end
 	end
+end
+
+function bossPlate:ResetAll()
+	for i = 1, #debuffs do
+		if(debuffs[i]) then
+			bossPlate:ResetDebuff(debuffs[i])
+		end
+	end
+	debuffs = table.wipe(debuffs)
+end
+
+function bossPlate:ResetDebuff(self)
+		self.tex = nil
+		self.icon = self:CreateTexture(nil,"OVERLAY")
+		self.icon:SetTexture(nil)
+		self.icon:ClearAllPoints()
+		self.icon:Hide()
+		self:Hide()
+		self:SetScript("OnUpdate", nil)
+		self:SetScript("OnHide", nil)
+		self:SetScript("OnAttributeChanged",nil)
+		self = nil
 end
 
 -- later needed

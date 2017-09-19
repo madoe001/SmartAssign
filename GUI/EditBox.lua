@@ -30,7 +30,7 @@ local function ConfigLabel(self, text, r, g, b, a)
 	self.label:SetHeight(25)
 	self.label:SetTextColor(r, g, b, a)
 	self.label:SetText(GUIL[text])
-	self.label:SetPoint("LEFT", EditBox, "LEFT", 0, 0)
+	self.label:SetPoint("LEFT", self, "LEFT", 0, 0)
 end
 
 

@@ -34,7 +34,7 @@ do
 		self.offset:Show()
 	end
 
-	function PlayerAssign:new_playerAssign(frame, relativeElement, lastElement, xVal, yVal)
+	function PlayerAssign:new_playerAssign(frame, relativeElement,lastElement, xVal, yVal)
 		
 		local obj = {
 			--Klassenattribute
@@ -44,16 +44,17 @@ do
 
 			abilityCB = CheckBox:LoadCheckBox(frame, "Ability"),
 			textCB = CheckBox:LoadCheckBox(frame, "Extra Text"),
-			dropDownPlayer = DropDownList:LoadDropDownList(frame,"mb1",  {"p1", "p2", "p3"}),
-			dropDownCooldown = DropDownList:LoadDropDownList(frame,"mb2", {"a1", "a2", "a3"}),
+			dropDownPlayer = DropDownList:LoadDropDownList(frame,"mb1" .. lastElement,  {"p1", "p2", "p3"}),
+			dropDownCooldown = DropDownList:LoadDropDownList(frame,"mb2" .. lastElement, {"a1", "a2", "a3"}),
 			--offset = caric:CreateEditBox(frame, "off", 50, 20),
-			offset = EditBox:LoadEditBox(frame, "offs", "number"),	
+			offset = EditBox:LoadEditBox(frame, "offs"..lastElement, "number"),	
 
 			
 			--Klassenmethoden bzw. referenzen drauf
 			Hide = hide,
 			Show = show,
 		}
+
 		
 		obj.abilityCB:SetScript("OnClick", function(self, button, down)
 			if obj.textCB:GetChecked() then
@@ -71,11 +72,12 @@ do
 		
 		--obj.offset:SetMaxLetters(obj.offset, 6) 
 
-		obj.dropDownPlayer:SetPoint("LEFT",relativeElement, "RIGHT",5, 0)
-		obj.abilityCB:SetPoint("LEFT", obj.dropDownPlayer, "RIGHT", 5, 0)
-		obj.textCB:SetPoint("TOP", obj.abilityCB, "BOTTOM", 0, 0)
-		obj.dropDownCooldown:SetPoint("LEFT", obj.abilityCB, "RIGHT", 50,0)
-		obj.offset:SetPoint("LEFT", obj.dropDownCooldown, "RIGHT", 10, 0)
+		obj.dropDownPlayer:SetPoint("LEFT", relativeElement, "RIGHT", 0, obj.y)
+	
+		obj.abilityCB:SetPoint("LEFT", obj.dropDownPlayer, "RIGHT", obj.x, 0)
+		obj.textCB:SetPoint("TOP", obj.abilityCB, "BOTTOM", 0,0)
+		obj.dropDownCooldown:SetPoint("LEFT", obj.abilityCB, "RIGHT", obj.x+30,0)
+		obj.offset:SetPoint("LEFT", obj.dropDownCooldown, "RIGHT", obj.x, 0)
 	
 		obj.abilityCB:Hide()
 		obj.textCB:Hide()
