@@ -34,6 +34,30 @@ do
 		self.offset:Show()
 	end
 
+	local function setPoint(self, relativeElement, x, y)
+		self.x = x
+		self.y = y
+		
+		self.dropDownPlayer:SetPoint("LEFT", relativeElement, "RIGHT", 0, self.y)
+	
+		self.abilityCB:SetPoint("LEFT", self.dropDownPlayer, "RIGHT", self.x, 0)
+		self.textCB:SetPoint("TOP", self.abilityCB, "BOTTOM", 0,0)
+		self.dropDownCooldown:SetPoint("LEFT", self.abilityCB, "RIGHT", self.x+30,0)
+	end
+
+	local function delete(self)
+		x = nil
+		y = nil
+		abilityCB = nil
+		textCB = nil
+		dropDownPlayer = nil
+		dropDownCooldown = nil
+		_G["mb1"..self.index] = nil
+		_G["mb2"..self.index] = nil
+	end
+
+	
+
 	function PlayerAssign:new_playerAssign(frame, relativeElement,lastElement, xVal, yVal)
 		
 		local obj = {
@@ -41,18 +65,19 @@ do
 			x = xVal,
 			y = yVal,
 			mainFrame = frame,
+			index = lastElement,
 
 			abilityCB = CheckBox:LoadCheckBox(frame, "Ability"),
 			textCB = CheckBox:LoadCheckBox(frame, "Extra Text"),
 			dropDownPlayer = DropDownList:LoadDropDownList(frame,"mb1" .. lastElement,  {"p1", "p2", "p3"}),
 			dropDownCooldown = DropDownList:LoadDropDownList(frame,"mb2" .. lastElement, {"a1", "a2", "a3"}),
-			--offset = caric:CreateEditBox(frame, "off", 50, 20),
 			offset = EditBox:LoadEditBox(frame, "offs"..lastElement, "number"),	
-
 			
-			--Klassenmethoden bzw. referenzen drauf
+			--Klasseamethoden bzw. referenzen drauf
 			Hide = hide,
 			Show = show,
+			SetPoint = setPoint,
+			Delete = delete
 		}
 
 		
@@ -78,7 +103,7 @@ do
 		obj.textCB:SetPoint("TOP", obj.abilityCB, "BOTTOM", 0,0)
 		obj.dropDownCooldown:SetPoint("LEFT", obj.abilityCB, "RIGHT", obj.x+30,0)
 		obj.offset:SetPoint("LEFT", obj.dropDownCooldown, "RIGHT", obj.x, 0)
-	
+
 		obj.abilityCB:Hide()
 		obj.textCB:Hide()
 		obj.dropDownPlayer:Hide()

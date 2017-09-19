@@ -92,11 +92,10 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	frame.scrollFrame = SA_GUI_LOCAL:CreateScrollFrame(LeftSide, "InstanceScrollFrame")
 	SlashCommands:AddResetFunction(SA_GUI_LOCAL.ScrollFrameReset,"ScrollFrame") -- add the reset function of the scrollframe to slashcommands
 		
-	local assign = Assignment:new_assignment(frame, frame.leftSide , 5, 0)
-	assign:Hide()
+	local assign = Assignment:new_assignment(frame, frame.leftSide , 5, -100)
 	frame.assign = assign
 	
-	table.insert(Assignments, assign)
+	--table.insert(Assignments, assign)
 
 	--frame.timerCheckBox = SA_GUI_LOCAL:CreateCheckBox(frame, GUIL["Ability"])
 	--frame.timerCheckBox:Hide()

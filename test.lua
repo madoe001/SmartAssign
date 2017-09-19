@@ -1,5 +1,5 @@
 ﻿
---[[local startTime = 0
+local startTime = 0
 local endTime = 0
 local totalTime = 0
 local frame = CreateFrame("Frame")
@@ -191,4 +191,4 @@ function caric:prin()
 		  "\nAbillity: " .. caric.ab ..
 		  "\nPlayer: " .. caric.pl ..
 		  "\nCooldown: " .. caric.cd)
-end]]
+end
