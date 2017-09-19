@@ -205,20 +205,19 @@ function createCooldownDropDown (parentFrame, x, y, width)
 		local info = UIDropDownMenu_CreateInfo
 		
 		local playerName = UIDropDownMenu_GetText(PlayerDropDown)
-		local playerClass = SA_Players[playerName]
-		if(SA_Players[playerName] ~= nil)then
-			for k,v in pairs(ClassList:GetClassSpellNames(SA_Players[playerName])) do
-				info = UIDropDownMenu_CreateInfo()
-				info.text = v
-				info.value = v
-				info.func = OnClickCooldownDropDown
-				UIDropDownMenu_AddButton(info, level)
-			end	
-		else 
-		print("leer")
+		if(SA_Players ~= nil) then
+			local playerClass = SA_Players[playerName]		
+			if(SA_Players[playerName] ~= nil)then
+				for k,v in pairs(ClassList:GetClassSpellNames(SA_Players[playerName])) do
+					info = UIDropDownMenu_CreateInfo()
+					info.text = v
+					info.value = v
+					info.func = OnClickCooldownDropDown
+					UIDropDownMenu_AddButton(info, level)
+				end	
+			end
 		end
 	end
-	caric:prin()
 
 	UIDropDownMenu_Initialize(CooldownDropDown, initCooldownDropDown)
 	UIDropDownMenu_SetWidth(CooldownDropDown, width);
