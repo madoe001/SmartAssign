@@ -93,6 +93,7 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	SlashCommands:AddResetFunction(SA_GUI_LOCAL.ScrollFrameReset,"ScrollFrame") -- add the reset function of the scrollframe to slashcommands
 		
 	local assign = AssignmentFrame:new_scrollframe(frame, frame.leftSide , 5, -100)
+	assign:Hide()
 	frame.assign = assign
 	
 	--table.insert(Assignments, assign)
