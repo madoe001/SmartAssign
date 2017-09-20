@@ -7,7 +7,7 @@ local ClassList = _G.ClassList
 local SmartAssign = _G.SmartAssign
 
 function ClassList:GetClassSpellNames(class)
-   local spellList = ClassList[class]
+   local spellList = SA_Cooldowns[class]
    local spellNames = {}
    if(spellList) then
       for spellId, spellInformation in pairs(spellList) do

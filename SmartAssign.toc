@@ -7,7 +7,7 @@
 
 ## X-Embeds: LibStub, CallbackHandler-1.0, LibDataBroker-1.1, LibDBIcon-1.0
 
-## SavedVariables: SA_BossList, SA_Cooldowns
+## SavedVariables: SA_BossList, SA_Cooldowns, SA_Players
 
 Init.lua
 
@@ -37,6 +37,8 @@ GUI\CheckBox.lua
 GUI\EditBox.lua
 GUI\PlayerAssign.lua
 GUI\Assignment.lua
+GUI\AssignmentFrame.lua
+
 GUI\SmartAssignGUI.lua
 
 test.lua
