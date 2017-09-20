@@ -212,7 +212,6 @@ function CreateContent(frame, data)
 										if ScrollFrame.bossButton then -- if a boss button was clicked, then overwrite the highlighting of the button and the values
 											SetNilTex(ScrollFrame.bossButton)
 											ScrollFrame.bossButton = nil
-											ScrollFrame.bossButton.clicked = false
 										end
 									end
 								end
