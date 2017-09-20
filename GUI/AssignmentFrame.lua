@@ -38,6 +38,7 @@ do
 		obj.scrollbar:SetScript("OnValueChanged",function(self,value) 
   	    	self:GetParent():SetVerticalScroll(value) 
 end) 
+	return obj
 	end	
 
 		
