@@ -31,7 +31,7 @@ local function CreateScrollFrame(frame, name)
 	ScrollFrame.texture:SetTexture(0, 0, 0, 0)
 	
 	CreateScrollBar(ScrollFrame)
-	CreateContent(ScrollFrame, _G.Dungeons)
+	CreateContent(ScrollFrame, SA_Dungeons)
 	
 	return ScrollFrame
 end
@@ -49,7 +49,6 @@ function CreateScrollBar(frame)
 	
 	ScrollBar:SetPoint("TOPLEFT", frame, "TOPRIGHT", -12, -16)
 	ScrollBar:SetPoint("BOTTOMLEFT", frame, "BOTTOMRIGHT", -12, 16)
-	
 	ScrollBar:SetMinMaxValues(1, 100) -- set minumum and maximum of scrollbar, for scrolling
 	ScrollBar:SetValueStep(1) -- set scrolling step value
 	ScrollBar.scrollStep = 1 -- set scrolling step value
@@ -59,7 +58,6 @@ function CreateScrollBar(frame)
 	-- when the user use the scrollbar refresh the position of buttons
 	ScrollBar:SetScript("OnValueChanged", function(self, value)
 		self:GetParent():SetVerticalScroll(value) -- set to new value
-		print(value)
 		if ScrollFrame.mainBTN == nil and ScrollFrame.lvlClicked == 0 then -- when main Buttons
 			local mainButtons = GetMainButtons(Content.data)
 			for i=1, #mainButtons, 1 do
@@ -154,6 +152,8 @@ function CreateContent(frame, data)
 									ClearAllPoints()
 									NewHeader(self)
 									SetInstanceButtons(self, Content.data[self:GetText()]) -- set the instance button dependent to 
+									
+									ScrollBar:SetMinMaxValues(1,GetArraySize(Content.data[self:GetText()], 1, 0) * GetArraySize(Content.data[self:GetText()], 1, 0)/3) -- set minumum and maximum of scrollbar, for scrolling
 								else                                                       -- the main Button
 									ScrollBar:SetAttribute("buttoncount", 0) -- if was befor clicked
 								
@@ -163,6 +163,7 @@ function CreateContent(frame, data)
 									SetAllPlusTex() -- restore plus texture
 							
 									SetMainButtons() -- set all main buttons in scrollframe
+									ScrollBar:SetMinMaxValues(1,GetArraySize(Content.data, 1, 0) * GetArraySize(Content.data, 1, 0)/3) -- set minumum and maximum of scrollbar, for scrolling
 								end
 							end
 						end)
@@ -200,6 +201,7 @@ function CreateContent(frame, data)
 											bossButtons[i]:SetPoint("TOPLEFT", bossButtons[i-1], "TOPLEFT", 0, -25)
 											bossButtons[i]:Show()
 										end
+										ScrollBar:SetMinMaxValues(1,GetArraySize(bossButtons, 1, 0)*GetArraySize(bossButtons, 1, 0)/3)
 									else -- if instance button wasn´t clicked befor
 										ScrollFrame.lvlClicked = 1
 										ScrollFrame.instanceButton = nil
@@ -212,8 +214,8 @@ function CreateContent(frame, data)
 										if ScrollFrame.bossButton then -- if a boss button was clicked, then overwrite the highlighting of the button and the values
 											SetNilTex(ScrollFrame.bossButton)
 											ScrollFrame.bossButton = nil
-											ScrollFrame.bossButton.clicked = false
 										end
+										ScrollBar:SetMinMaxValues(1,GetArraySize(Content.data[ScrollFrame.mainBTN:GetText()], 1, 0) * GetArraySize(Content.data[ScrollFrame.mainBTN:GetText()], 1, 0)/3)
 									end
 								end
 							end)

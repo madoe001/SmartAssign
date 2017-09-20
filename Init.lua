@@ -181,6 +181,8 @@ _G.GUI.Assignment = {}
 
 _G.GUI.PlayerAssignment = {}
 
+_G.GUI.AssignmentFrame = {}
+
 _G.GUI.SA_DropDownMenu = {}
 
 _G.GUI.SA_DropDownList = {}

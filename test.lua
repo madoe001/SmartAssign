@@ -155,3 +155,4 @@ function caric:prin()
 		  "\nPlayer: " .. caric.pl ..
 		  "\nCooldown: " .. caric.cd)
 end
+
