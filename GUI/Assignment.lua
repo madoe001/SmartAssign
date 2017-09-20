@@ -7,6 +7,8 @@ do
 	local dropDownAssign = _G.GUI.SA_DropDownList
 
 	local pa = _G.GUI.PlayerAssignment
+	
+	local SAL = _G.GUI.Locales
 
 	local checkBox = _G.GUI.SA_CheckBox
 
