@@ -7,11 +7,7 @@
 
 ## X-Embeds: LibStub, CallbackHandler-1.0, LibDataBroker-1.1, LibDBIcon-1.0
 
-<<<<<<< HEAD
-## SavedVariables: SA_BossList, SA_Cooldowns, SA_Players, SA_LastSelected
-=======
-## SavedVariables: SA_BossList, SA_Cooldowns, SA_Players, SA_Dungeons
->>>>>>> dd1f6a105a5912a458ac2243d1114685daea08a6
+## SavedVariables: SA_BossList, SA_Cooldowns, SA_Players, SA_LastSelected, SA_Dungeons
 
 Init.lua
 
