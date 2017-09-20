@@ -255,9 +255,12 @@ function removeBoss(expansionName, raidName, bossName)
 	SA_BossList[expansionName][raidName][bossName] = nil;
 end
 
-function addAbillity(expansionName, raidName, bossName, abillityName, spellID)
+function addAbillity(expansionName, raidName, bossName, abillityName, spellID, cooldown, starthp, endhp)
 	SA_BossList[expansionName][raidName][bossName][abillityName] = {AbillityName = abillityName,
-															SpellID = spellID};
+															SpellID = spellID,
+															Cooldown = cooldown,
+															StartHP = starthp,
+															EndHP = endhp};
 end
 function removeAbillity(expansionName, raidName, bossName, abillityName)
 	SA_BossList[expansionName][raidName][bossName][abillityName] = nil;

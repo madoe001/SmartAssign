@@ -7,7 +7,7 @@
 
 ## X-Embeds: LibStub, CallbackHandler-1.0, LibDataBroker-1.1, LibDBIcon-1.0
 
-## SavedVariables: SA_BossList, SA_Cooldowns, SA_Players
+## SavedVariables: SA_BossList, SA_Cooldowns, SA_Players, SA_LastSelected
 
 Init.lua
 
@@ -38,6 +38,8 @@ GUI\EditBox.lua
 GUI\PlayerAssign.lua
 GUI\Assignment.lua
 GUI\SmartAssignGUI.lua
+GUI\BossSelectFrame.lua
+GUI\NewAbillityWindow.lua
 
 test.lua
 

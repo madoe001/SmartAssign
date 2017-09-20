@@ -4,7 +4,16 @@
 -- Global vars --
 local _G = _G
 
--- create globals
+-- INIT DEFAULT SAVED_VARIABLES
+
+if(SA_LastSelected == nil) then
+	SA_LastSelected = {}
+	SA_LastSelected.expansion = ""
+	SA_LastSelected.raid = ""
+	SA_LastSelected.boss = ""
+	SA_LastSelected.abillity = ""
+end
+
 SA_Cooldowns = SA_Cooldowns or {
    ["Warrior"] = {
 		["97462"] = { -- Shout
