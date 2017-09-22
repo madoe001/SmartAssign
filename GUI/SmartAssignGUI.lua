@@ -11,7 +11,7 @@ local DropDownMenu = GUI.SA_DropDownMenu
 local ScrollFrame = GUI.SA_ScrollFrame
 local CheckBox = GUI.SA_CheckBox
 local EditBox = GUI.SA_EditBox
-local AssignmentFrame = GUI.AssignmentFrame
+local AssignmentFrame = _G.GUI.AssignmentFrame
 local flag = true
 -- hud
 local mainHUD = _G.HUD.mainHUD
@@ -94,23 +94,13 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 		
 	local assign = AssignmentFrame:new_scrollframe(frame, frame.leftSide , 5, -100)
 	assign:Hide()
+	print("Frame wird erstellt")
 	frame.assign = assign
 	
-	--table.insert(Assignments, assign)
+	
 
-	--frame.timerCheckBox = SA_GUI_LOCAL:CreateCheckBox(frame, GUIL["Ability"])
-	--frame.timerCheckBox:Hide()
-	
-	--frame.extraCheckBox = SA_GUI_LOCAL:CreateCheckBox(frame, GUIL["Extra Text"])
-	--frame.extraCheckBox:Hide()
-	
-	--EditBox:SetMaxLetters(frame.editbox, 6) -- number size --> 6
-	-- set position of the components
-	--frame.dropDownList:SetPoint("LEFT", frame.leftSide, "RIGHT", 0, 0)
-	--frame.dropDownMenu:SetPoint("LEFT", frame.editbox, "RIGHT", 0, 0)
-	--frame.timerCheckBox:SetPoint("TOP", frame.dropDownMenu, "BOTTOM", 0, 0)
-	--frame.extraCheckBox:SetPoint("TOP", frame.timerCheckBox, "BOTTOM", 0, 0)
-	
+	table.insert(Assignments, assign)
+
 	-- make main frame movable
 	SA_GUI_LOCAL:MakeMovable(frame)
 	
@@ -284,62 +274,14 @@ end
 
 -- SA_GUI_LOCAL:SetScripts(): set the scripts for all components(EventHandling)
 function SA_GUI_LOCAL:SetScripts()
-	--[[mainFrame.mainHud:SetScript("OnUpdate",function(self, elapsed)
-		mainHUD:OnUpdate_TestInstance()
-	end)]]
-	
---	mainFrame.timerCheckBox:SetScript("OnClick", function(self, button, down)
---		if mainFrame.timerCheckBox:GetChecked() then -- if checked disable the extracheckbox
---			mainFrame.extraCheckBox:Disable()
---		else
---			mainFrame.extraCheckBox:Enable()
---		end
---	end)
-	
---	mainFrame.extraCheckBox:SetScript("OnClick", function(self, button, down)
---	if mainFrame.extraCheckBox:GetChecked() then -- if checked disable the timercheckbox
---			mainFrame.timerCheckBox:Disable()
---		else
---			mainFrame.timerCheckBox:Enable()
---		end
---	end)
-	
 	mainFrame:SetScript("OnUpdate", function(self, elapsed)
-		--mainHUD:OnUpdate_TestInstance()
 		if mainFrame.scrollFrame.instanceButton ~= nil then -- if clicked on instance button
 			if mainFrame.scrollFrame.bossButton ~= nil then -- if clicked on boss button
 				mainFrame.assign:Show()			
-	--mainFrame.dropDownList:Show()
 			else
 				mainFrame.assign:Hide()			
-				--mainFrame.dropDownList:Hide()
 			end
 		end
-		--if DropDownList:GetSelectedID(mainFrame.dropDownList) ~= nil then -- if something is selected
-			--[[if DropDownList:GetSelectedID(frame.dropDownList) == 1 then
-				frame.editbox:Show()
-			else
-				frame.editbox:Hide()
-			end]]
-			
-		--	if DropDownList:GetSelectedID(mainFrame.dropDownList) == 2 and mainFrame.scrollFrame.bossButton then -- if timer is selected
-		--		mainFrame.tg:Show()
-				--mainFrame.editbox:Show()
-		--	else
-		--		mainFrame.tg:Hide()
-				--mainFrame.editbox:Hide()
-		--	end
-		--end
-		-- ??
-		--if (mainFrame.editbox:GetText() == "" or mainFrame.editbox:GetText() == "0") then
-		--	mainFrame.dropDownMenu:Hide()
-		--	mainFrame.timerCheckBox:Hide()
-		--	mainFrame.extraCheckBox:Hide()
-		--else
-		--	mainFrame.dropDownMenu:Show()
-		--	mainFrame.timerCheckBox:Show()
-		--	mainFrame.extraCheckBox:Show()
-		--end
 	end)
 end
 

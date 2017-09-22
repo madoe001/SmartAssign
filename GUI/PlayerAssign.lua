@@ -56,7 +56,14 @@ do
 		_G["mb2"..self.index] = nil
 	end
 
-	
+	local function strata(self, priority)
+		self.abilityCB:SetFrameStrata(priority)
+		self.textCB:SetFrameStrata(priority)
+		self.dropDownPlayer:SetFrameStrata(priority)
+		self.dropDownCooldown:SetFrameStrata(priority)
+		self.offset:SetFrameStrata(priority)
+	end
+
 
 	function PlayerAssign:new_playerAssign(frame, relativeElement,lastElement, xVal, yVal)
 		
@@ -76,10 +83,12 @@ do
 			--Klasseamethoden bzw. referenzen drauf
 			Hide = hide,
 			Show = show,
+			SetFrameStrata = strata,
 			SetPoint = setPoint,
 			Delete = delete
 		}
-
+		setmetatable(obj, self)
+		self.__index = self
 		
 		obj.abilityCB:SetScript("OnClick", function(self, button, down)
 			if obj.textCB:GetChecked() then
@@ -97,11 +106,14 @@ do
 		
 		--obj.offset:SetMaxLetters(obj.offset, 6) 
 
+		obj.offset:SetWidth(60)
 		obj.dropDownPlayer:SetPoint("LEFT", relativeElement, "RIGHT", 0, obj.y)
-	
+		UIDropDownMenu_SetWidth(obj.dropDownPlayer, 50)
+		
 		obj.abilityCB:SetPoint("LEFT", obj.dropDownPlayer, "RIGHT", obj.x, 0)
 		obj.textCB:SetPoint("TOP", obj.abilityCB, "BOTTOM", 0,0)
 		obj.dropDownCooldown:SetPoint("LEFT", obj.abilityCB, "RIGHT", obj.x+30,0)
+		UIDropDownMenu_SetWidth(obj.dropDownCooldown, 50)
 		obj.offset:SetPoint("LEFT", obj.dropDownCooldown, "RIGHT", obj.x, 0)
 
 		obj.abilityCB:Hide()

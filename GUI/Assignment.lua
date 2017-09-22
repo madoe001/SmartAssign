@@ -21,6 +21,11 @@ do
 		self.dropDownAssignType:Show()
 		self.editTimer:Show()
 		self.new:Show()
+
+		for k, v in pairs(self.deleteButtons) do
+				v:Show()
+		end
+
 		for k, v in pairs(self.playerAssigns) do
 			v:Show()
 		end
@@ -29,6 +34,12 @@ do
 	local function hide(self)
 		self.dropDownAssignType:Hide()
 		self.editTimer:Hide()
+		self.new:Hide()
+		
+		for k, v in pairs(self.deleteButtons) do
+			v:Hide()
+		end
+
 		for i = 1, #self.playerAssigns, 1 do
 			self.playerAssigns[i]:Hide()
 		end
@@ -68,7 +79,7 @@ do
 		for k, v in pairs(self.playerAssigns) do
 			if foundElement == true then
 			
-				v:SetPoint( self.dropDownAssignType,  0, -80 * counter)
+				v:SetPoint( self.editTimer,  0, -80 * counter)
 				print("Counter: "..counter)
 				counter = counter + 1
 			end
@@ -84,6 +95,23 @@ do
 	
 
 	local function setPoint(self, relativeElement, offsetx, offsety)
+
+	end
+
+	local function frameStrata(self,priority )
+		
+		
+		self.dropDownAssignType:SetFrameStrata(priority)
+		self.editTimer:SetFrameStrata(priority)
+		self.new:SetFrameStrata(priority)
+		
+		for k, v in pairs(self.deleteButtons) do
+			v:SetFrameStrata(priority)
+		end
+		
+		for i = 1, #self.playerAssigns, 1 do
+			self.playerAssigns[i]:SetFrameStrata(priority)
+		end
 
 	end
 
@@ -103,7 +131,7 @@ do
 				end
 			end),
 			new = CreateFrame("Button", "newPlayerAssign", mainFrame, "OptionsButtonTemplate"),
-			editTimer = editBox:LoadEditBox(frame, "editTimer",  "number"),
+			editTimer = editBox:LoadEditBox(mainFrame, "editTimer1234",  "number"),
 			playerAssigns = {},
 			deleteButtons = {},
 			counter = 1,
@@ -111,40 +139,38 @@ do
 			
 			SetPoint = setPoint,
 			Hide = hide,
-			Show = show, 
+			Show = show,
+			SetFrameStrata = frameStrata
 		}
+		setmetatable(obj, self)
+		self.__index = self
+
+		print("Assignment created")
+
 		--obj.mainFrame:SetPoint("LEFT", obj.dropDownAssignType, "RIGHT", 0 , 0)
 		obj.mainFrame:SetWidth(100)
 		obj.mainFrame:SetHeight(100)
 
-		obj.new:SetPoint("CENTER", 0, 0)
 		-- DropDownMenu von Ability oder Timer 
 		--nur zum nachladen der GUI Elemente
-		obj.dropDownAssignType:SetScript("OnUpdate", function(self, elapsed)
-			if dropDownAssign:GetSelectedID(self) == 1 then
-				if #obj.playerAssigns == 0 then
-					table.insert(obj.playerAssigns, pa:new_playerAssign(obj.mainFrame, obj.editTimer, 0, 10,0))
-				end
-				createTimerAssign(obj)
-			elseif dropDownAssign:GetSelectedID(self) == 2 then
 		
-			end
-		end)			
-		
-		obj.dropDownAssignType:SetPoint("Left", relativeElement, "TOPRIGHT", x, y)
-		
+		obj.dropDownAssignType:SetPoint("Left", relativeElement, "TOPRIGHT", 10, y)
+		--obj.dropDownAssignType:SetWidth(100)		
+		UIDropDownMenu_SetWidth(obj.dropDownAssignType, 50)
+		obj.editTimer:SetPoint("TOPLEFT", obj.dropDownAssignType, "TOPRIGHT", 0, 0)
+		obj.editTimer:SetWidth(60)
 		obj.new:SetWidth(25)
 		obj.new:SetHeight(25)
 		obj.new:SetText("+")
 		local size = #obj.playerAssigns
-		obj.new:SetPoint("LEFT", obj.dropDownAssignType, "RIGHT", 50, 0)
+		obj.new:SetPoint("LEFT", obj.editTimer, "RIGHT", 5, 0)
 		
 		obj.new:SetScript("OnClick", function(self, button, down)
 			obj.counter = obj.counter + 1 
-			obj.playerAssigns[obj.counter] = pa:new_playerAssign(obj.mainFrame, obj.dropDownAssignType, obj.counter, 0, -80 * obj.amountPlayer)
+			obj.playerAssigns[obj.counter] = pa:new_playerAssign(obj.mainFrame, obj.editTimer, obj.counter, 0, -80 * obj.amountPlayer)
 			obj.amountPlayer = obj.amountPlayer + 1
 			
-			obj.new:SetPoint("LEFT", obj.dropDownAssignType, "RIGHT", 50, -80 * obj.amountPlayer)
+			obj.new:SetPoint("LEFT", obj.editTimer, "RIGHT", 5, -80 * obj.amountPlayer)
 			--obj.new:SetPoint("TOP", obj.playerAssigns[obj.counter].dropDownPlayer, "BOTTOMLEFT", 30, -30)
 			local delete = CreateFrame("Button", "deletePlayerAssign"..#obj.playerAssigns, obj.mainFrame, "OptionsButtonTemplate")
 			delete:SetWidth(25)
@@ -162,10 +188,11 @@ do
 				obj.playerAssigns[index] = nil
 				self:Hide()
 				
-				obj.new:SetPoint("LEFT", obj.dropDownAssignType, "RIGHT", 50, -80 * obj.amountPlayer)
+				obj.new:SetPoint("LEFT", obj.editTimer, "RIGHT", 5, -80 * obj.amountPlayer)
 				self = nil
 			end)
-			table.insert(obj.deleteButtons, delete)			
+			table.insert(obj.deleteButtons, delete)		
+			obj.playerAssigns[obj.counter]:Show()
 		end)
 				
 		obj.dropDownAssignType:Hide()
