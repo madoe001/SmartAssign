@@ -48,6 +48,7 @@ end
 --
 -- event: the event, which was called this function
 function bossPlate:OnEvent(event, ...)
+bossPlate:ReorderAllDebuffs()
 	if event ==  "PLAYER_TARGET_CHANGED" then
 		bossPlate:ResetAll()
 		unit = UnitGUID("target") -- wird später über unit aus show ersetzt (boss1 bis boss5)
@@ -80,14 +81,20 @@ function bossPlate:OnEvent(event, ...)
 		manaBar:Hide() -- first hide if have mana show
 		bossPlate:ShowHealth()
 		bossPlate:ShowMana()
+		bossPlate:GetBossDebuffs() -- get debuffs
+		bossPlate:ConfigBossDebuffIcons() -- config debuffs
 	elseif event == "UNIT_HEALTH" then -- get new mana and health and set new values to the statusbars
 		health = UnitHealth("target")
 		mana = UnitMana("target")
+		bossPlate:GetBossDebuffs() -- get debuffs
+		bossPlate:ConfigBossDebuffIcons() -- config debuffs
 		bossPlate:SetNewValues(health, mana)
 	elseif event == "UNIT_MANA" then -- get new mana and health and set new values to the statusbars
 		mana = UnitMana("target")
 		health = UnitHealth("target")
 		bossPlate:SetNewValues(health, mana)
+		bossPlate:GetBossDebuffs() -- get debuffs
+		bossPlate:ConfigBossDebuffIcons() -- config debuffs
 	elseif event == "UNIT_AURA" then
 		bossPlate:GetBossDebuffs() -- get debuffs
 		bossPlate:ConfigBossDebuffIcons() -- config debuffs
@@ -256,7 +263,7 @@ function bossPlate:ConfigDebuffIconTexture(debuff, placeInTable)
 	debuff.icon:SetSize(25, 25)
 	debuff.icon:ClearAllPoints()
 	debuff.icon:SetPoint("CENTER", debuff, 0, 0)
-	debuff.icon:SetAlpha(0.5)
+	debuff.icon:SetAlpha(1)
 	
 	if placeInTable == 1 then
 		if UnitMana("target") ~= 0 then
@@ -270,7 +277,6 @@ function bossPlate:ConfigDebuffIconTexture(debuff, placeInTable)
 		debuff:SetPoint("LEFT", debuffs[placeInTable-1], "RIGHT", 1, 0)
 	end
 	debuff.icon:SetTexture(debuff.tex)
-	debuff.icon:SetDesaturated(1) -- make greyscale
 	
 end
 
@@ -357,7 +363,7 @@ function bossPlate:CreateDebuffIconComp(debuffIconFrame, count)
 		debuffIconFrame.countLabel = debuffIconFrame:CreateFontString(debuffIconFrame.name.."debuffIconFrameCount-label", "ARTWORK", "GameFontNormalSmall")
 	end
 	debuffIconFrame.expireLabel = debuffIconFrame:CreateFontString(debuffIconFrame.name.."debuffIconFrameExpire-label", "ARTWORK", "GameFontNormalSmall")
-	debuffIconFrame.icon = debuffIconFrame:CreateTexture(nil,"OVERLAY")
+	debuffIconFrame.icon = debuffIconFrame:CreateTexture(nil,"BACKGROUND")
 end
 
 function bossPlate:ConfigDebuffExpireStatusBar(debuff)
@@ -365,7 +371,7 @@ function bossPlate:ConfigDebuffExpireStatusBar(debuff)
 	debuff:ClearAllPoints()
 	debuff:SetStatusBarTexture("Interface\\TargetingFrame\\UI-StatusBar")
 	debuff:SetSize(28, 28)
-	debuff:SetStatusBarColor(0, 1, 0, 0.5)
+	debuff:SetStatusBarColor(0, 0, 0, 0.6)
 	debuff:SetValue(debuff:GetAttribute("exptime"))
 	debuff:SetMinMaxValues(0, debuff.duration)
 	debuff:Show()
@@ -409,18 +415,31 @@ function bossPlate:OnIconHide()
 	end
 end
 
+function bossPlate:ReorderAllDebuffs()
+	for i = 1, #debuffs do
+		if #debuffs > 0 then
+			bossPlate:ReorderDebuffIcon(debuffs[i], i)
+		end
+	end
+end
+
 function bossPlate:ReorderDebuffIcon(debuff, placeInTable)
 	if debuff then
-		if placeInTable == 1 then
-			if UnitMana("target") ~= 0 then
-				debuff:SetPoint("LEFT", manaBar, "LEFT", 0, 0)
-			else
-				debuff:SetPoint("LEFT", healthBar, "LEFT", 0, 0)
+		if debuff.icon then
+			debuff.icon:SetPoint("CENTER", debuff, 0, 0)
+			if placeInTable == 1 then
+				if UnitMana("target") ~= 0 then
+					debuff:SetPoint("TOPLEFT", manaBar, "BOTTOMLEFT", 0, 0)
+				else
+					debuff:SetPoint("TOPLEFT", healthBar, "BOTTOMLEFT", 0, 0)
+				end
+			elseif placeInTable % 6 == 0 then -- only six debufficons i a row
+				debuff:SetPoint("TOP", debuffs[placeInTable - 5], "BOTTOM", 0, -1)
+			elseif placeInTable > 1 and debuffs[1] then
+				debuff:SetPoint("LEFT", debuffs[placeInTable - 1], "RIGHT", 1, 0)
 			end
-		elseif placeInTable % 6 == 0 then -- only six debufficons i a row
-			debuff:SetPoint("TOP", debuffs[placeInTable - 5], "BOTTOM", 0, -1)
-		elseif placeInTable > 1 and debuffs[1] then
-			debuff:SetPoint("LEFT", debuffs[placeInTable - 1], "RIGHT", 1, 0)
+		else
+			debuff.icon:ClearAllPoints()
 		end
 	end
 end
@@ -463,10 +482,11 @@ end
 
 function bossPlate:ResetDebuff(self)
 		self.tex = nil
-		self.icon = self:CreateTexture(nil,"OVERLAY")
+		self.icon = self:CreateTexture(nil)
 		self.icon:SetTexture(nil)
 		self.icon:ClearAllPoints()
 		self.icon:Hide()
+		self.icon:SetAlpha(0)
 		self:Hide()
 		self:SetScript("OnUpdate", nil)
 		self:SetScript("OnHide", nil)
