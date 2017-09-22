@@ -4,7 +4,7 @@ local _G = _G
 
 local SAL = _G.GUI.Locales
 
-_G.Dungeons ={
+SA_Dungeons =  SA_Dungeons or {
 	[SAL["Classic"]] = {
 		[SAL["Ragefire Chasm"]] = {SAL["Adarogg"],
 								   SAL["Dark Shaman Koranthal"],
@@ -34,7 +34,8 @@ _G.Dungeons ={
 								    "TEST7",
 								    "TEST8",
 								    "TEST9",
-								    "TEST0",},
+								    "TEST0",
+								    },
 		[SAL["Shadowfang Keep"]] = {SAL["Baron Ashbury"],
 									SAL["Baron Silverlaine"],
 									SAL["Commander Springvale"],
@@ -255,9 +256,12 @@ function removeBoss(expansionName, raidName, bossName)
 	SA_BossList[expansionName][raidName][bossName] = nil;
 end
 
-function addAbillity(expansionName, raidName, bossName, abillityName, spellID)
+function addAbillity(expansionName, raidName, bossName, abillityName, spellID, cooldown, starthp, endhp)
 	SA_BossList[expansionName][raidName][bossName][abillityName] = {AbillityName = abillityName,
-															SpellID = spellID};
+															SpellID = spellID,
+															Cooldown = cooldown,
+															StartHP = starthp,
+															EndHP = endhp};
 end
 function removeAbillity(expansionName, raidName, bossName, abillityName)
 	SA_BossList[expansionName][raidName][bossName][abillityName] = nil;
