@@ -3,22 +3,23 @@
 
 do
 
-	local Assignmentframe = _G.GUI.AssignmentFrame
+	local AssignmentFrame = _G.GUI.AssignmentFrame
 	
 	local Assignment = _G.GUI.Assignment
 	
 	local function show(self)
+		print("Show wurde aufgerufen")
 		self.scrollframe:Show()
 		self.scrollbar:Show()
 		self.new:Show()
 		self.delete:Show()
-		
 		for k, v in pairs(self.assignments) do
 			v:Show()
 		end
 	end
 	
 	local function hide(self)
+		print("Hide wurde aufgerufen")
 		self.scrollframe:Hide()
 		self.scrollbar:Hide()
 		self.new:Hide()
@@ -29,12 +30,12 @@ do
 	end
 
 
-	function Assignmentframe:new_scrollframe(frame, relativeElement, x, y)
+	function AssignmentFrame:new_scrollframe(frame, relativeElement, x, y)
 	local obj = {
 			scrollframe = CreateFrame("Scrollframe", nil, frame),   
 			scrollbar = CreateFrame("Slider", nil, scrollframe, "UIPanelScrollBarTemplate"),		
-			new = CreateFrame("Button", "newAssignment", scrollframe, "OptionsButtonTemplate"),
-			delete = CreateFrame("Button", "deleteAssignment", scrollframe, "OptionsButtonTemplate"),
+			new = CreateFrame("Button", nil, frame, "OptionsButtonTemplate"),
+			delete = CreateFrame("Button", nil, frame, "OptionsButtonTemplate"),
 
 			assignments = {},
 			Show = show,
@@ -42,14 +43,14 @@ do
 			
 		}
 
-
-
 		obj.new:SetScript("OnClick", function(self, button, down)
-				local assignment = Assignment:new_assignment(obj.scrollframe, obj.scrollframe, -10, 10)
+				local assignment = Assignment:new_assignment(obj.scrollframe, relativeElement, -10, -100)
 				table.insert(obj.assignments, assignment)
-				--obj.scrollframe:SetScrollChild(assignment)
+				assignment:Show()
+				assignment:SetFrameStrata("HIGH")
+				obj.scrollframe:SetScrollChild(assignment.mainFrame)
 		end)
-		obj.scrollframe:SetScrollChild(obj.assignments[1])
+	
 		obj.new:SetPoint("BOTTOMLEFT", obj.scrollframe, "BOTTOMLEfT", 10, 10)
 		obj.new:SetWidth(25)
 		obj.new:SetHeight(25)
@@ -62,8 +63,8 @@ do
 		obj.delete:SetText("-")
 		obj.delete:SetFrameStrata("HIGH")
 		
-		obj.new:Hide()
-		obj.delete:Hide()
+		--obj.new:Hide()
+		--obj.delete:Hide()
 
 		-- Main Test Frame
 		local scrollframe=CreateFrame("ScrollFrame","myFrame",frame)
@@ -74,7 +75,6 @@ do
 		obj.scrollframe:SetPoint("TOPLEFT",relativeElement, "TOPRIGHT" ,0,0)
 		obj.scrollframe:SetPoint( "BOTTOMRIGHT" ,-10, 10)
 		obj.scrollframe:EnableMouse(true)
-		obj.scrollframe:SetMovable(true)
 		obj.scrollframe:RegisterForDrag("LeftButton")
 		obj.scrollframe:SetScript("OnDragStart",scrollframe.StartMoving)
 		obj.scrollframe:SetScript("OnDragStop",scrollframe.StopMovingOrSizing)
@@ -93,7 +93,4 @@ do
 end) 
 	return obj.scrollframe
 	end	
-
-		
-	
 end
