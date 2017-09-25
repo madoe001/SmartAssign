@@ -34,12 +34,12 @@ frame:SetScript("OnEvent", SmartAssign_OnEvent)
 
 --table
 caric = {}
-caric.framusCounter = 0;
+caric.framusCounter = 42;
 caric.assignCounter = 0;
 
 function caric:Init(event, addon)
 	if(event == "ADDON_LOADED" and addon == "SmartAssign") then
-		caric:CreateGUI(testFrame)
+		--caric:CreateGUI(testFrame)
 	end
 end
 
@@ -65,7 +65,7 @@ function caric:CreateGUI(frame)
 	-- Cooldown
 	createCooldownDropDown (testFrame, -20, -140, 100, playerDP2)
 	]]
-	BossSelectFrame:show(window)
+	--BossSelectFrame:show(window)
 	--NewAbillityWindow:show()
 end
 
@@ -155,4 +155,95 @@ function caric:prin()
 		  "\nPlayer: " .. caric.pl ..
 		  "\nCooldown: " .. caric.cd)
 end
+
+
+if (not SA_WEAKAURA) then
+	SA_WEAKAURA = {}
+	SA_WEAKAURA.duration = 0
+	SA_WEAKAURA.offset = 5
+end
+SA_WA = {}
+function SA_WA:addPlayer()
+	local playerName = GetUnitName("Player")
+	
+end
+
+function SA_WA:addAssign(spellid, timer , assignmentName)  
+	local playerName = GetUnitName("Player")
+	if (not SA_WEAKAURA[playerName]) then
+		SA_WEAKAURA[playerName] = {}
+	end
+	if (not SA_WEAKAURA[playerName][assignmentName]) then
+		SA_WEAKAURA[playerName][assignmentName] = {}
+	end
+	SA_WEAKAURA[playerName][assignmentName].spellid = spellid
+	SA_WEAKAURA[playerName][assignmentName].timer = timer
+end
+
+function SA_WA:getClosestTimer(spellID) 
+	local playerName = GetUnitName("Player")
+	if (not SA_WEAKAURA[playerName]) then
+		return nil
+	end  
+	local closestKey = nil
+	local closestTime = 10000000000
+	local deltaTime = 0
+	for k,v in pairs (SA_WEAKAURA[playerName]) do
+		if (SA_WEAKAURA[playerName][k].spellid == spellID) then
+			deltaTime = SA_WEAKAURA[playerName][k].timer - SA_WEAKAURA.duration
+			if(deltaTime > 0 and deltaTime < closestTime) then
+				closestKey = k;
+				closestTime = deltaTime;
+			end
+		end
+	end
+	SA_WEAKAURA.closestKey = closestKey
+	return closestKey
+end
+
+function SA_OnEvent(frame, event, encounterID, ...)
+   if event == "ENCOUNTER_START" then
+	SA_WEAKAURA.start = GetTime()
+	SA_WEAKAURA.combat = true
+	SA_WEAKAURA.encounterID = encounterID
+   end 
+   if event == "ENCOUNTER_END" then
+	SA_WEAKAURA.combat = false
+   end 
+end
+
+function SA_Update()
+	if SA_WEAKAURA.combat then
+		SA_WEAKAURA.duration = GetTime() - SA_WEAKAURA.start
+	else
+		SA_WEAKAURA.duration = 0
+	end
+end
+
+frame:RegisterEvent("ENCOUNTER_START")
+frame:RegisterEvent("ENCOUNTER_END")
+
+frame:SetScript("OnEvent", SA_OnEvent)
+frame:SetScript("OnUpdate", SA_Update)
+
+
+local SA_prefix = "<SMART_ASSIGN>"
+frame:RegisterEvent("CHAT_MSG_ADDON");
+RegisterAddonMessagePrefix(SA_prefix);
+
+SLASH_WRITE1 = "/write";
+function SlashCmdList.WRITE(msg, editbox)
+	if msg then 
+		print(msg); 
+		SendAddonMessage(prefix,msg,"PARTY");
+	end
+end
+
+local function print_msg(...)
+	_,_,prefix, msg, channel, sender = ...;
+	if(prefix == SA_prefix) then 
+		print ("\n" .. sec .. "\n" .. third .. "\n" .. sender .. ": " .. msg .. " in" .. channel);
+	end		
+end
+frame:SetScript("OnEvent", print_msg);
 
