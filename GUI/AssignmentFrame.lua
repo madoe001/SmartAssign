@@ -43,14 +43,6 @@ do
 			
 		}
 
-		obj.new:SetScript("OnClick", function(self, button, down)
-				local assignment = Assignment:new_assignment(obj.scrollframe, relativeElement, -10, -100)
-				table.insert(obj.assignments, assignment)
-				assignment:Show()
-				assignment:SetFrameStrata("HIGH")
-				obj.scrollframe:SetScrollChild(assignment.mainFrame)
-		end)
-	
 		obj.new:SetPoint("BOTTOMLEFT", obj.scrollframe, "BOTTOMLEfT", 10, 10)
 		obj.new:SetWidth(25)
 		obj.new:SetHeight(25)
@@ -67,8 +59,13 @@ do
 		--obj.delete:Hide()
 
 		-- Main Test Frame
-		local scrollframe=CreateFrame("ScrollFrame","myFrame",frame)
-		obj.scrollframe:SetBackdrop(StaticPopup1:GetBackdrop())
+		obj.scrollframe:SetBackdrop({
+			bgFile="Interface/DialogFrame/UI-DialogBox-Background",
+			edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+			tile = false, tileSize = 4, edgeSize = 32,
+			insets = { left = 4, right = 4, top = 4, bottom = 4 }
+		})
+		obj.scrollframe:SetBackdropColor(0.0,0.0,0.0,0.4)
 		
 		--obj.scrollframe:SetSize(300,400)
 		obj.scrollframe:ClearAllPoints()
@@ -76,9 +73,10 @@ do
 		obj.scrollframe:SetPoint( "BOTTOMRIGHT" ,-10, 10)
 		obj.scrollframe:EnableMouse(true)
 		obj.scrollframe:RegisterForDrag("LeftButton")
-		obj.scrollframe:SetScript("OnDragStart",scrollframe.StartMoving)
-		obj.scrollframe:SetScript("OnDragStop",scrollframe.StopMovingOrSizing)
+		obj.scrollframe:SetScript("OnDragStart",obj.scrollframe.StartMoving)
+		obj.scrollframe:SetScript("OnDragStop",obj.scrollframe.StopMovingOrSizing)
 		obj.scrollframe:SetHitRectInsets(10,10,10,10)
+		
 		-- Scroll Bar
 		obj.scrollbar = CreateFrame("Slider","sb",obj.scrollframe,"UIPanelScrollBarTemplate") 
 		obj.scrollbar:SetPoint("TOPLEFT",obj.scrollframe,"TOPRIGHT",5,-20) 
@@ -89,8 +87,24 @@ do
 		obj.scrollbar:SetValue(0) 
 		obj.scrollbar:SetWidth(16)
 		obj.scrollbar:SetScript("OnValueChanged",function(self,value) 
-  	    	self:GetParent():SetVerticalScroll(value) 
-end) 
+  	    		self:GetParent():SetVerticalScroll(value) 
+		end) 
+
+		obj.new:SetScript("OnClick", function(self, button, down)
+				local assignment = Assignment:new_assignment(obj.scrollframe, relativeElement, 10, 0)
+				table.insert(obj.assignments, assignment)
+				assignment:Show()
+				assignment:SetFrameStrata("HIGH")
+				obj.scrollframe:SetScrollChild(assignment.mainFrame)
+		end)
+		
+		obj.delete:SetScript("OnClick", function(self, button, down)
+				assignment:Show()
+				assignment:SetFrameStrata("HIGH")
+				obj.scrollframe:SetScrollChild(assignment.mainFrame)
+		end)
+
+
 	return obj.scrollframe
 	end	
 end

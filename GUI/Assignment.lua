@@ -95,6 +95,9 @@ do
 	
 
 	local function setPoint(self, relativeElement, offsetx, offsety)
+		self.x = offsetx
+		self.y = offsety
+		self.dropDownAssignType:SetPoint("TOPLEFT", self.mainFrame, "TOPLEFT", 10, offsety - 30)
 
 	end
 
@@ -115,6 +118,10 @@ do
 
 	end
 
+	local function getheight(self)
+		return self.mainFrame:GetHeight() + 10
+	end
+
 	function Assignment:new_assignment(frame, relativeElement, x, y)
 		local obj = {
 			xVal = x,
@@ -130,8 +137,8 @@ do
 					UIDropDownMenu_AddButton(info, level)
 				end
 			end),
-			new = CreateFrame("Button", "newPlayerAssign", mainFrame, "OptionsButtonTemplate"),
 			editTimer = editBox:LoadEditBox(mainFrame, "editTimer1234",  "number"),
+			new = CreateFrame("Button", "newPlayerAssign", mainFrame, "OptionsButtonTemplate"),
 			playerAssigns = {},
 			deleteButtons = {},
 			counter = 1,
@@ -140,22 +147,30 @@ do
 			SetPoint = setPoint,
 			Hide = hide,
 			Show = show,
+			GetHeight =getheight,
 			SetFrameStrata = frameStrata
 		}
 		setmetatable(obj, self)
 		self.__index = self
+		
+		obj.mainFrame:SetPoint("TOPLEFT", frame ,"TOPLEFT", x , y)
+		--obj.mainFrame:SetPoint("BOTTOMRIGHT",frame, "BOTTOMRIGHT", -10 , 0)
 
-		print("Assignment created")
-
-		--obj.mainFrame:SetPoint("LEFT", obj.dropDownAssignType, "RIGHT", 0 , 0)
-		obj.mainFrame:SetWidth(100)
-		obj.mainFrame:SetHeight(100)
-
+		obj.mainFrame:SetWidth(frame:GetWidth() )
+		obj.mainFrame:SetHeight(150)
+		
+		obj.mainFrame:SetBackdrop({
+			bgFile="Interface/DialogFrame/UI-DialogBox-Background",
+			edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+			tile = false, tileSize = 4, edgeSize = 32,
+			insets = { left = 4, right = 4, top = 4, bottom = 4 }
+			});
+		obj.mainFrame:SetBackdropColor(0.0,0.0,0.0,0.65)
+		
+		
 		-- DropDownMenu von Ability oder Timer 
 		--nur zum nachladen der GUI Elemente
-		
-		obj.dropDownAssignType:SetPoint("Left", relativeElement, "TOPRIGHT", 10, y)
-		--obj.dropDownAssignType:SetWidth(100)		
+		obj.dropDownAssignType:SetPoint("TOPLEFT", obj.mainFrame, "TOPLEFT", 10, y - 30)
 		UIDropDownMenu_SetWidth(obj.dropDownAssignType, 50)
 		obj.editTimer:SetPoint("TOPLEFT", obj.dropDownAssignType, "TOPRIGHT", 0, 0)
 		obj.editTimer:SetWidth(60)
@@ -179,6 +194,8 @@ do
 			local index = obj.counter
 			print("index:"..index)
 			delete:SetPoint("LEFT", obj.playerAssigns[index].offset, "RIGHT", 10, 0)
+			local height = obj.mainFrame:GetHeight()
+			obj.mainFrame:SetHeight(height + 80)
 			delete:SetScript("OnClick", function(self, button, down)
 				
 				updatePlayerAssignPosition(obj, obj.playerAssigns[index])
