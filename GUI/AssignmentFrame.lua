@@ -37,11 +37,16 @@ do
 			new = CreateFrame("Button", nil, frame, "OptionsButtonTemplate"),
 			delete = CreateFrame("Button", nil, frame, "OptionsButtonTemplate"),
 
+			content = CreateFrame("Frame", nil),
 			assignments = {},
+			index = 0,
+			lastElement = {},
 			Show = show,
 			Hide = hide,
 			
 		}
+
+		obj.content:SetParent(obj.scrollframe)
 
 		obj.new:SetPoint("BOTTOMLEFT", obj.scrollframe, "BOTTOMLEfT", 10, 10)
 		obj.new:SetWidth(25)
@@ -76,7 +81,9 @@ do
 		obj.scrollframe:SetScript("OnDragStart",obj.scrollframe.StartMoving)
 		obj.scrollframe:SetScript("OnDragStop",obj.scrollframe.StopMovingOrSizing)
 		obj.scrollframe:SetHitRectInsets(10,10,10,10)
-		
+		obj.content:SetWidth(obj.scrollframe:GetWidth())
+		obj.content:SetHeight(200)
+		obj.content:SetPoint("TOPLEFT", obj.scrollframe, "TOPLEFT")
 		-- Scroll Bar
 		obj.scrollbar = CreateFrame("Slider","sb",obj.scrollframe,"UIPanelScrollBarTemplate") 
 		obj.scrollbar:SetPoint("TOPLEFT",obj.scrollframe,"TOPRIGHT",5,-20) 
@@ -91,11 +98,19 @@ do
 		end) 
 
 		obj.new:SetScript("OnClick", function(self, button, down)
-				local assignment = Assignment:new_assignment(obj.scrollframe, relativeElement, 10, 0)
+				local assignment = Assignment:new_assignment(obj.content, relativeElement, obj.index, 100, 0)
 				table.insert(obj.assignments, assignment)
 				assignment:Show()
 				assignment:SetFrameStrata("HIGH")
-				obj.scrollframe:SetScrollChild(assignment.mainFrame)
+				if obj.index == 0 then
+					assignment.mainFrame:SetPoint("TOP", obj.content)
+				obj.lastElement = assignment.mainFrame
+				else
+					assignment.mainFrame:SetPoint("TOPLEFT", obj.lastElement, "BOTTOMLEFT")
+					obj.lastElement = assignment.mainFrame
+				end
+				obj.index = obj.index + 1
+				obj.scrollframe:SetScrollChild(obj.content)
 		end)
 		
 		obj.delete:SetScript("OnClick", function(self, button, down)
