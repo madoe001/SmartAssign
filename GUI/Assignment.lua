@@ -126,7 +126,7 @@ do
 		local obj = {
 			xVal = x,
 			xVal = y,
-			mainFrame = CreateFrame("Frame", nil, frame),
+			mainFrame = CreateFrame("Frame", nil, UIParent),
 			dropDownAssignType = dropDownAssign:LoadDropDownList(mainFrame,"smartB1", dropDownAssign.data, function(self) 
 				local info = UIDropDownMenu_CreateInfo()
 				for key, value in pairs(self.data) do
@@ -138,7 +138,7 @@ do
 				end
 			end),
 			editTimer = editBox:LoadEditBox(mainFrame, "editTimer1234",  "number"),
-			new = CreateFrame("Button", "newPlayerAssign", mainFrame, "OptionsButtonTemplate"),
+			new = CreateFrame("Button", "newPlayerAssign", frame, "OptionsButtonTemplate"),
 			playerAssigns = {},
 			deleteButtons = {},
 			counter = 1,

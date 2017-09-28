@@ -242,11 +242,11 @@ end
 -- x: x movement
 -- y: y movement
 function SA_GUI_LOCAL:CreateLine(parent ,width, height, region, frame, x, y)
-	local line = parent:CreateTexture()
-    line:SetTexture("Interface\\Tooltips\\UI-Tooltip-Background")
+	--local line = parent:CreateTexture()
+    	--line:SetTexture("Interface\\Tooltips\\UI-Tooltip-Background")
     
-	line:SetSize(width , height)
-	line:SetPoint(region, frame, x, y)
+	--line:SetSize(width , height)
+	--line:SetPoint(region, frame, x, y)
 end
 
 

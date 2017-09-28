@@ -91,7 +91,7 @@ do
 		end) 
 
 		obj.new:SetScript("OnClick", function(self, button, down)
-				local assignment = Assignment:new_assignment(obj.scrollframe, relativeElement, 10, 0)
+				local assignment = Assignment:new_assignment(obj.scrollframe, relativeElement, 1, 10, 0)
 				table.insert(obj.assignments, assignment)
 				assignment:Show()
 				assignment:SetFrameStrata("HIGH")
