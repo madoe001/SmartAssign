@@ -75,39 +75,38 @@ function NewAbillityWindow:show()
 										 SA_LastSelected.abillity = ""
 										 UIDropDownMenu_SetText(BossDropDown,"Boss")
 										 UIDropDownMenu_SetText(AbillityDropDown,"Abillity") end)
-										 
-										 -- Abillity									 
-	createAbillityDropDown (NewAbillityWindow.frame,  -125, 0, 150)
-	caric:CreateEditBox(NewAbillityWindow.frame,"AbillityEditBox",50,50,150,30)
-	caric:CreateFont(NewAbillityWindow.frame, "AbillityNameFont", "Abillity Name",50,70,15)
-	caric:CreateEditBox(NewAbillityWindow.frame,"SpellIDEditBox",50,0,150,30)
-	caric:CreateFont(NewAbillityWindow.frame, "SpellIDFont", "SpellID",50,20,15)
-	caric:CreateEditBox(NewAbillityWindow.frame,"CoolDownEditBox",50,-50,150,30)
-	caric:CreateFont(NewAbillityWindow.frame, "CoolDownFont", "CoolDown (s)",50,-30,15)
-	caric:CreateEditBox(NewAbillityWindow.frame,"StartHPEditBox",50,-100,150,30)
-	caric:CreateFont(NewAbillityWindow.frame, "StartHPFont", "StartHP (%)",50,-80,15)
-	caric:CreateEditBox(NewAbillityWindow.frame,"EndHPEditBox",50,-150,150,30)
-	caric:CreateFont(NewAbillityWindow.frame, "EndHPFont", "EndHP (%)",50,-130,15)
-	caric:CreateButton(NewAbillityWindow.frame, "AbillityAddButton", "add", -15, -180, 50,30)
+				
+	-- Phase
+	createPhaseDropDown (NewAbillityWindow.frame,  -125, 0, 150)
+	caric:CreateFont(NewAbillityWindow.frame, "PhaseTriggerFont", "Phase Trigger",50,40,15)
+	phaseTriggerOptions = {"%HP","%Energy", "Time","Text"}
+	createBlankDropDown (NewAbillityWindow.frame, 50, 10, 150, "PhaseTriggerDD", phaseTriggerOptions, "Trigger")
+	
+	
+	-- Abillity									 
+	createAbillityDropDown (NewAbillityWindow.frame,  -125, -280, 150)
+	abillityTriggerOptions = {"%HP","%Energy", "Time","Text"}
+	createBlankDropDown (NewAbillityWindow.frame, 50, 10, 150, "AbillityTriggerDD", abillityTriggerOptions, "Trigger")
+	caric:CreateFont(NewAbillityWindow.frame, "AbillityTriggerFont", "Abillity Trigger",50,-170,15)
+	caric:CreateEditBox(NewAbillityWindow.frame,"AbillityEditBox",50,-240,150,30)
+	caric:CreateFont(NewAbillityWindow.frame, "AbillityNameFont", "Abillity Name",50,-220,15)
+	caric:CreateEditBox(NewAbillityWindow.frame,"CoolDownEditBox",50,-290,150,30)
+	caric:CreateFont(NewAbillityWindow.frame, "CoolDownFont", "CoolDown (s)",50,-270,15)
+	caric:CreateButton(NewAbillityWindow.frame, "AbillityAddButton", "add", -15, -330, 50,30)
+	--TODO Schnittstelle anpassen, weil abgeändert
 	AbillityAddButton:SetScript("OnClick", function() if (NewAbillityWindow:checkAbillityInputs()) then
-											print ("Meh1")
 											addAbillity(SA_LastSelected.expansion, SA_LastSelected.raid, SA_LastSelected.boss, AbillityEditBox:GetText(), 
 														SpellIDEditBox:GetText(),CoolDownEditBox:GetText(), StartHPEditBox:GetText(), EndHPEditBox:GetText())
-											AbillityEditBox:SetText("")
-											SpellIDEditBox:SetText("")
+											AbillityEditBox:SetText("")											
 											CoolDownEditBox:SetText("")
-											StartHPEditBox:SetText("")
-											EndHPEditBox:SetText("")
 										end end)
-	caric:CreateButton(NewAbillityWindow.frame, "AbillityDeleteButton", "delete", 100, -180, 50,30)
+	caric:CreateButton(NewAbillityWindow.frame, "AbillityDeleteButton", "delete", 100, -330, 50,30)
+	--TODO Schnittstelle anpassen, weil abgeändert
 	AbillityDeleteButton:SetScript("OnClick", function() removeAbillity(SA_LastSelected.expansion, SA_LastSelected.raid, SA_LastSelected.boss, UIDropDownMenu_GetText(AbillityDropDown) );
 										 UIDropDownMenu_SetSelectedID(AbillityDropDown, 1)
 										 SA_LastSelected.abillity = ""
 										 AbillityEditBox:SetText("")
-										 SpellIDEditBox:SetText("")
 										 CoolDownEditBox:SetText("")
-										 StartHPEditBox:SetText("")
-										 EndHPEditBox:SetText("")
 										 UIDropDownMenu_SetText(AbillityDropDown,"Abillity") end)
 	
 	caric:CreateButton(NewAbillityWindow.frame, "closeButton", nil, 240,350,30,30, "UIPanelCloseBUtton")	
@@ -140,16 +139,7 @@ function NewAbillityWindow:checkAbillityInputs()
 	if(not NewAbillityWindow:checkInput(AbillityEditBox:GetText(),4)) then
 		ret = false
 	end
-	if(not NewAbillityWindow:checkInput(SpellIDEditBox:GetText(),4)) then
-		ret = false
-	end
 	if(not NewAbillityWindow:checkInput(CoolDownEditBox:GetText(),4)) then
-		ret = false
-	end
-	if(not NewAbillityWindow:checkInput(StartHPEditBox:GetText(),4)) then
-		ret = false
-	end
-	if(not NewAbillityWindow:checkInput(EndHPEditBox:GetText(),4)) then
 		ret = false
 	end
 	return ret

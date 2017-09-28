@@ -40,6 +40,7 @@ caric.assignCounter = 0;
 function caric:Init(event, addon)
 	if(event == "ADDON_LOADED" and addon == "SmartAssign") then
 		--caric:CreateGUI(testFrame)
+		--NewAbillityWindow:show()
 	end
 end
 
@@ -141,21 +142,6 @@ function caric:CreateEditBox(frame, name, x,y, width, height)
 	editBox:Show()
 	return (editBox)
 end
-caric.ex = ""
-caric.ra = ""
-caric.bo = ""
-caric.ab = ""
-caric.pl = ""
-caric.cd = ""
-function caric:prin()
-	print("Expansion: " .. caric.ex .. 
-		  "\nRaid: " .. caric.ra .. 
-		  "\nBoss: " .. caric.bo ..
-		  "\nAbillity: " .. caric.ab ..
-		  "\nPlayer: " .. caric.pl ..
-		  "\nCooldown: " .. caric.cd)
-end
-
 
 if (not SA_WEAKAURA) then
 	SA_WEAKAURA = {}
@@ -209,6 +195,9 @@ function SA_OnEvent(frame, event, encounterID, ...)
    end 
    if event == "ENCOUNTER_END" then
 	SA_WEAKAURA.combat = false
+	_,_,_,endStatus = ...
+	print(endStatus)
+	SA_WEAKAURA.bossKill = endStatus
    end 
 end
 
@@ -227,23 +216,74 @@ frame:SetScript("OnEvent", SA_OnEvent)
 frame:SetScript("OnUpdate", SA_Update)
 
 
+local framus = CreateFrame("Frame")
 local SA_prefix = "<SMART_ASSIGN>"
-frame:RegisterEvent("CHAT_MSG_ADDON");
-RegisterAddonMessagePrefix(SA_prefix);
+framus:RegisterEvent("CHAT_MSG_ADDON");
+RegisterAddonMessagePrefix("<SMART_ASSIGN>");
 
-SLASH_WRITE1 = "/write";
-function SlashCmdList.WRITE(msg, editbox)
-	if msg then 
-		print(msg); 
-		SendAddonMessage(prefix,msg,"PARTY");
-	end
+function caricWrite(playerName, assignmentName, spellID, timer) 
+	local msg = "";
+	msg = msg .. "PLAYERNAME~" .. playerName .. "§"
+	msg = msg .. "ASSIGNMENTNAME~" .. assignmentName .. "§"
+	msg = msg .. "SPELLID~" .. spellID .. "§"
+	msg = msg .. "TIMER~" .. timer
+	print (msg)
+	SendAddonMessage(SA_prefix,msg,"PARTY");
 end
 
 local function print_msg(...)
 	_,_,prefix, msg, channel, sender = ...;
-	if(prefix == SA_prefix) then 
-		print ("\n" .. sec .. "\n" .. third .. "\n" .. sender .. ": " .. msg .. " in" .. channel);
+	if(prefix == "<SMART_ASSIGN>") then 
+		local arguments = mysplit(msg, "§")
+		for num,arg in pairs (arguments) do
+			print (arg)
+		end
 	end		
 end
-frame:SetScript("OnEvent", print_msg);
+framus:SetScript("OnEvent", print_msg);
 
+function mysplit(inputstr, sep)
+        if sep == nil then
+                sep = "%s"
+        end
+        local t={} ; i=1
+        for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+                t[i] = str
+                i = i + 1
+        end
+        return t
+end
+
+--[[
+	Justin Funktion. Mit der Funktion kann man alle RaidBosse aus allen Expansions 
+	in die Saved Variables speichern. Hierbei werden sogar die MapIDs und BossIDs 
+	mit gespeichert. Die Boss / EncounterIDs können später zum filtern genutzt werden.
+]]
+function fillRaidsAndBosses()
+	local t = 1
+	for t = 1, EJ_GetNumTiers() , 1 do
+	
+		EJ_SelectTier(t)
+		tiername,_ = EJ_GetTierInfo(t)
+		SA_BossList[tiername] = {}
+		
+		local i = 1
+		while EJ_GetInstanceByIndex(i, true) do
+			SA_instanceId, SA_name = EJ_GetInstanceByIndex(i, true)
+			print(SA_instanceId, SA_name)
+			SA_BossList[tiername][SA_name] = {}
+			SA_BossList[tiername][SA_name].instanceID = SA_instanceId
+			EJ_SelectInstance(SA_instanceId)
+			i = i+1
+    
+			local j = 1
+			while EJ_GetEncounterInfoByIndex(j, instanceId) do
+				local name, _, encounterId = EJ_GetEncounterInfoByIndex(j, instanceId)
+				SA_BossList[tiername][SA_name][name] = {}
+				SA_BossList[tiername][SA_name][name].encounterID = encounterId
+				print("--> ",encounterId, name)
+				j = j+1
+			end
+		end
+	end
+end

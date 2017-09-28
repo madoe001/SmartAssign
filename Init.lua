@@ -11,6 +11,7 @@ if(SA_LastSelected == nil) then
 	SA_LastSelected.expansion = ""
 	SA_LastSelected.raid = ""
 	SA_LastSelected.boss = ""
+	SA_LastSelected.phase = ""
 	SA_LastSelected.abillity = ""
 end
 
