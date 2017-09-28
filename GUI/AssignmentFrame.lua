@@ -8,7 +8,7 @@ do
 	local Assignment = _G.GUI.Assignment
 	
 	local function show(self)
-		print("Show wurde aufgerufen")
+		--print("Show wurde aufgerufen")
 		self.scrollframe:Show()
 		self.scrollbar:Show()
 		self.new:Show()
@@ -19,7 +19,7 @@ do
 	end
 	
 	local function hide(self)
-		print("Hide wurde aufgerufen")
+		--print("Hide wurde aufgerufen")
 		self.scrollframe:Hide()
 		self.scrollbar:Hide()
 		self.new:Hide()
@@ -36,23 +36,24 @@ do
 
 		for k, v in pairs(self.assignments) do
 			if v ~= toBeDeleted then
-				print("asdf")
 				table.insert(cacheList, v)
-			else 
-				v = nil
 			end
 		end
 		for k, v in pairs(cacheList) do
 			if ctr == 1 then
 				v.mainFrame:SetPoint("TOPLEFT", self.content, "TOPLEFT", 10, -10)
-				print("An den anfang setzen")
 			else
-				print("next")
 				v.mainFrame:SetPoint("TOPLEFT", cacheList[ctr - 1].mainFrame, "BOTTOMLEFT")
 			end
 			ctr = ctr + 1
 		end
-
+		self.assignments = cacheList	
+		
+		if #cacheList > 0 then
+			self.lastElement = cacheList[#cacheList].mainFrame
+		end
+		print("New last element ", cacheList[#cacheList])
+		self.amountAssigns = #cacheList
 		
 	end
 
@@ -69,6 +70,7 @@ do
 			lastElement = {},
 			Show = show,
 			Hide = hide,
+			amountAssigns = 0,
 			
 		}
 
@@ -115,11 +117,12 @@ do
 		end) 
 
 		obj.new:SetScript("OnClick", function(self, button, down)
+				print("Last Element: ", obj.lastElement)
 				local assignment = Assignment:new_assignment(obj.content, relativeElement, obj.index, 0, 0)
 				table.insert(obj.assignments, assignment)
 				assignment:Show()
 				assignment:SetFrameStrata("HIGH")
-				if obj.index == 1 then
+				if obj.amountAssigns == 0 then
 					assignment.mainFrame:SetPoint("TOP", obj.content, 0, -10)
 				obj.lastElement = assignment.mainFrame
 				else
@@ -136,7 +139,7 @@ do
 				delete:SetText("-")
 				delete:SetFrameStrata("HIGH")
 
-				
+				obj.amountAssigns = obj.amountAssigns + 1	
 				delete:SetScript("OnClick", function(self, button, down)
 					assignment:Hide()
 					self:Hide()

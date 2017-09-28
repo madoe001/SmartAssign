@@ -73,24 +73,24 @@ do
 	end
 	
 	local function updatePlayerAssignPosition(self, toBeDeletedItem)
-		local foundElement = false
 		local counter = 0
-		local ctr = -1
+		local cacheList = {}
+
+		print(toBeDeletedItem)
 		for k, v in pairs(self.playerAssigns) do
-			if foundElement == true then
-			
-				v:SetPoint( self.editTimer,  0, -80 * counter)
-				print("Counter: "..counter)
-				counter = counter + 1
+			if v ~= toBeDeletedItem then
+				table.insert(cacheList, v)
 			end
-			if v == toBeDeletedItem then
-				foundElement = true
-			elseif foundElement ~= true then
-				counter = counter + 1
-			end
-			ctr = ctr +1
 		end
-		print("Anzahl geupdatet: "..ctr)
+
+		for k, v in pairs(cacheList) do
+			v:SetPoint(self.editTimer, 0, -80 * counter)
+			counter = counter + 1
+		end
+
+		self.playerAssigns = cacheList
+		self.amountPlayer = #cacheList
+
 	end
 	
 
@@ -176,7 +176,11 @@ do
 		
 		obj.new:SetScript("OnClick", function(self, button, down)
 			obj.counter = obj.counter + 1 
-			obj.playerAssigns[obj.counter] = pa:new_playerAssign(obj.mainFrame, obj.editTimer, obj.index .. obj.counter, 0, -80 * obj.amountPlayer)
+			
+			local playerAssign = pa:new_playerAssign(obj.mainFrame, obj.editTimer, obj.index .. obj.counter, 0, -80 * obj.amountPlayer)
+			
+			table.insert(obj.playerAssigns, playerAssign)
+			
 			obj.amountPlayer = obj.amountPlayer + 1
 			
 			obj.new:SetPoint("LEFT", obj.editTimer, "RIGHT", 5, -80 * obj.amountPlayer)
@@ -186,26 +190,27 @@ do
 			delete:SetText("-")
 			local index = obj.counter
 			print("index:"..index)
-			delete:SetPoint("LEFT", obj.playerAssigns[index].offset, "RIGHT", 10, 0)
+			delete:SetPoint("LEFT", playerAssign.offset, "RIGHT", 10, 0)
 			local height = obj.mainFrame:GetHeight()
 			obj.mainFrame:SetHeight(height + 80)
 			delete:SetScript("OnClick", function(self, button, down)
 				
-				updatePlayerAssignPosition(obj, obj.playerAssigns[index])
-				obj.amountPlayer = obj.amountPlayer - 1
-				obj.playerAssigns[index]:Hide()
+				updatePlayerAssignPosition(obj, playerAssign)
+				print(obj.amountPlayer)
+				playerAssign:Hide()
+				playerAssign:Delete()
 				
-				obj.playerAssigns[index]:Delete()
-				obj.playerAssigns[index] = nil
+				playerAssign = nil
+				
 				local height = obj.mainFrame:GetHeight()
+				
 				obj.mainFrame:SetHeight(height - 80)
 				self:Hide()
 				
 				obj.new:SetPoint("LEFT", obj.editTimer, "RIGHT", 5, -80 * obj.amountPlayer)
-				self = nil
 			end)
 			table.insert(obj.deleteButtons, delete)		
-			obj.playerAssigns[obj.counter]:Show()
+			playerAssign:Show()
 		end)
 				
 		obj.dropDownAssignType:Hide()
