@@ -35,7 +35,7 @@ do
 		self.dropDownAssignType:Hide()
 		self.editTimer:Hide()
 		self.new:Hide()
-		
+		self.mainFrame:Hide()	
 		for k, v in pairs(self.deleteButtons) do
 			v:Hide()
 		end
@@ -148,17 +148,9 @@ do
 		obj.editTimer = editBox:LoadEditBox(obj.mainFrame, "editTimer"..obj.index,  "number")
 		obj.new =  CreateFrame("Button", "newPlayerAssign"..obj.index, obj.mainFrame, "OptionsButtonTemplate")
 		obj.dropDownAssignType = dropDownAssign:LoadDropDownList(obj.mainFrame ,"smartB" .. obj.index, dropDownAssign.data, function(self) 
-				local info = UIDropDownMenu_CreateInfo()
-				for key, value in pairs(self.data) do
-					info = UIDropDownMenu_CreateInfo()
-					info.text = value
-					info.value = value
-					info.func = OnClick
-					UIDropDownMenu_AddButton(info, level)
-				end
 		end)
 
-		obj.mainFrame:SetWidth(frame:GetWidth() )
+		obj.mainFrame:SetWidth(frame:GetWidth() - 20)
 		obj.mainFrame:SetHeight(120)
 		
 		obj.mainFrame:SetBackdrop({
