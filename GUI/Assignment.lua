@@ -35,7 +35,7 @@ do
 		self.dropDownAssignType:Hide()
 		self.editTimer:Hide()
 		self.new:Hide()
-		
+		self.mainFrame:Hide()	
 		for k, v in pairs(self.deleteButtons) do
 			v:Hide()
 		end
@@ -122,28 +122,20 @@ do
 		return self.mainFrame:GetHeight() + 10
 	end
 
-	function Assignment:new_assignment(frame, relativeElement, x, y)
+	function Assignment:new_assignment(frame, relativeElement, number, x, y)
 		local obj = {
 			xVal = x,
 			xVal = y,
-			mainFrame = CreateFrame("Frame", nil, UIParent),
-			dropDownAssignType = dropDownAssign:LoadDropDownList(mainFrame,"smartB1", dropDownAssign.data, function(self) 
-				local info = UIDropDownMenu_CreateInfo()
-				for key, value in pairs(self.data) do
-					info = UIDropDownMenu_CreateInfo()
-					info.text = value
-					info.value = value
-					info.func = OnClick
-					UIDropDownMenu_AddButton(info, level)
-				end
-			end),
-			editTimer = editBox:LoadEditBox(mainFrame, "editTimer1234",  "number"),
-			new = CreateFrame("Button", "newPlayerAssign", frame, "OptionsButtonTemplate"),
+			name = "assignment" .. number, 
+			mainFrame = CreateFrame("Frame", "assignmentFrame"..number, frame),
+			dropDownAssignType = {},
+			editTimer = {}, 
+			new = {},
 			playerAssigns = {},
 			deleteButtons = {},
 			counter = 1,
 			amountPlayer = 0,
-			
+			index = number,
 			SetPoint = setPoint,
 			Hide = hide,
 			Show = show,
@@ -152,12 +144,14 @@ do
 		}
 		setmetatable(obj, self)
 		self.__index = self
-		
-		obj.mainFrame:SetPoint("TOPLEFT", frame ,"TOPLEFT", x , y)
-		--obj.mainFrame:SetPoint("BOTTOMRIGHT",frame, "BOTTOMRIGHT", -10 , 0)
+		--obj.mainFrame:SetPoint("TOPLEFT", frame ,"TOPLEFT", x, y)
+		obj.editTimer = editBox:LoadEditBox(obj.mainFrame, "editTimer"..obj.index,  "number")
+		obj.new =  CreateFrame("Button", "newPlayerAssign"..obj.index, obj.mainFrame, "OptionsButtonTemplate")
+		obj.dropDownAssignType = dropDownAssign:LoadDropDownList(obj.mainFrame ,"smartB" .. obj.index, dropDownAssign.data, function(self) 
+		end)
 
-		obj.mainFrame:SetWidth(frame:GetWidth() )
-		obj.mainFrame:SetHeight(150)
+		obj.mainFrame:SetWidth(frame:GetWidth() - 20)
+		obj.mainFrame:SetHeight(120)
 		
 		obj.mainFrame:SetBackdrop({
 			bgFile="Interface/DialogFrame/UI-DialogBox-Background",
@@ -182,11 +176,10 @@ do
 		
 		obj.new:SetScript("OnClick", function(self, button, down)
 			obj.counter = obj.counter + 1 
-			obj.playerAssigns[obj.counter] = pa:new_playerAssign(obj.mainFrame, obj.editTimer, obj.counter, 0, -80 * obj.amountPlayer)
+			obj.playerAssigns[obj.counter] = pa:new_playerAssign(obj.mainFrame, obj.editTimer, obj.index .. obj.counter, 0, -80 * obj.amountPlayer)
 			obj.amountPlayer = obj.amountPlayer + 1
 			
 			obj.new:SetPoint("LEFT", obj.editTimer, "RIGHT", 5, -80 * obj.amountPlayer)
-			--obj.new:SetPoint("TOP", obj.playerAssigns[obj.counter].dropDownPlayer, "BOTTOMLEFT", 30, -30)
 			local delete = CreateFrame("Button", "deletePlayerAssign"..#obj.playerAssigns, obj.mainFrame, "OptionsButtonTemplate")
 			delete:SetWidth(25)
 			delete:SetHeight(25)
@@ -201,8 +194,11 @@ do
 				updatePlayerAssignPosition(obj, obj.playerAssigns[index])
 				obj.amountPlayer = obj.amountPlayer - 1
 				obj.playerAssigns[index]:Hide()
+				
 				obj.playerAssigns[index]:Delete()
 				obj.playerAssigns[index] = nil
+				local height = obj.mainFrame:GetHeight()
+				obj.mainFrame:SetHeight(height - 80)
 				self:Hide()
 				
 				obj.new:SetPoint("LEFT", obj.editTimer, "RIGHT", 5, -80 * obj.amountPlayer)

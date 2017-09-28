@@ -256,15 +256,19 @@ function removeBoss(expansionName, raidName, bossName)
 	SA_BossList[expansionName][raidName][bossName] = nil;
 end
 
-function addAbillity(expansionName, raidName, bossName, abillityName, spellID, cooldown, starthp, endhp)
-	SA_BossList[expansionName][raidName][bossName][abillityName] = {AbillityName = abillityName,
-															SpellID = spellID,
-															Cooldown = cooldown,
-															StartHP = starthp,
-															EndHP = endhp};
+function addPhase(expansionName, raidName, bossName, phaseName)
+	SA_BossList[expansionName][raidName][bossName][phaseName] = {};
 end
-function removeAbillity(expansionName, raidName, bossName, abillityName)
-	SA_BossList[expansionName][raidName][bossName][abillityName] = nil;
+function removePhase(expansionName, raidName, bossName, phaseName)
+	SA_BossList[expansionName][raidName][bossName][phaseName] = nil;
+end
+
+function addAbillity(expansionName, raidName, bossName, phaseName, abillityName, cooldown)
+	SA_BossList[expansionName][raidName][bossName][phaseName][abillityName] = {AbillityName = abillityName,
+															Cooldown = cooldown};
+end
+function removeAbillity(expansionName, raidName, bossName, phaseName, abillityName)
+	SA_BossList[expansionName][raidName][bossName][phaseName][abillityName] = nil;
 end
 
 function getAbillities(expansionName, raidName, bossName)

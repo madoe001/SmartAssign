@@ -28,20 +28,51 @@ do
 			v:Hide()
 		end
 	end
+	
+	local function updateAssignmentFrame(self, toBeDeleted)
+		local foundElement = false
+		local cacheList = {}
+		local ctr = 1		
 
+		for k, v in pairs(self.assignments) do
+			if v ~= toBeDeleted then
+				print("asdf")
+				table.insert(cacheList, v)
+			else 
+				v = nil
+			end
+		end
+		for k, v in pairs(cacheList) do
+			if ctr == 1 then
+				v.mainFrame:SetPoint("TOPLEFT", self.content, "TOPLEFT", 10, -10)
+				print("An den anfang setzen")
+			else
+				print("next")
+				v.mainFrame:SetPoint("TOPLEFT", cacheList[ctr - 1].mainFrame, "BOTTOMLEFT")
+			end
+			ctr = ctr + 1
+		end
+
+		
+	end
 
 	function AssignmentFrame:new_scrollframe(frame, relativeElement, x, y)
 	local obj = {
 			scrollframe = CreateFrame("Scrollframe", nil, frame),   
 			scrollbar = CreateFrame("Slider", nil, scrollframe, "UIPanelScrollBarTemplate"),		
 			new = CreateFrame("Button", nil, frame, "OptionsButtonTemplate"),
-			delete = CreateFrame("Button", nil, frame, "OptionsButtonTemplate"),
 
+			content = CreateFrame("Frame", nil),
 			assignments = {},
+			deleteButtons = {},
+			index = 1,
+			lastElement = {},
 			Show = show,
 			Hide = hide,
 			
 		}
+
+		obj.content:SetParent(obj.scrollframe)
 
 		obj.new:SetPoint("BOTTOMLEFT", obj.scrollframe, "BOTTOMLEfT", 10, 10)
 		obj.new:SetWidth(25)
@@ -49,15 +80,6 @@ do
 		obj.new:SetText("+")
 		obj.new:SetFrameStrata("HIGH")
 		
-		obj.delete:SetPoint("BOTTOMLEFT", obj.new, "BOTTOMRIGHT", 0, 0)
-		obj.delete:SetWidth(25)
-		obj.delete:SetHeight(25)
-		obj.delete:SetText("-")
-		obj.delete:SetFrameStrata("HIGH")
-		
-		--obj.new:Hide()
-		--obj.delete:Hide()
-
 		-- Main Test Frame
 		obj.scrollframe:SetBackdrop({
 			bgFile="Interface/DialogFrame/UI-DialogBox-Background",
@@ -76,12 +98,14 @@ do
 		obj.scrollframe:SetScript("OnDragStart",obj.scrollframe.StartMoving)
 		obj.scrollframe:SetScript("OnDragStop",obj.scrollframe.StopMovingOrSizing)
 		obj.scrollframe:SetHitRectInsets(10,10,10,10)
-		
+		obj.content:SetWidth(obj.scrollframe:GetWidth())
+		obj.content:SetHeight(200)
+		obj.content:SetPoint("TOPLEFT", obj.scrollframe, "TOPLEFT")
 		-- Scroll Bar
 		obj.scrollbar = CreateFrame("Slider","sb",obj.scrollframe,"UIPanelScrollBarTemplate") 
 		obj.scrollbar:SetPoint("TOPLEFT",obj.scrollframe,"TOPRIGHT",5,-20) 
 		obj.scrollbar:SetPoint("BOTTOMLEFT",obj.scrollframe,"BOTTOMRIGHT",5,20) 
-		obj.scrollbar:SetMinMaxValues(1,200) 
+		obj.scrollbar:SetMinMaxValues(1,200)
 		obj.scrollbar:SetValueStep(1) 
 		obj.scrollbar.scrollStep = 20
 		obj.scrollbar:SetValue(0) 
@@ -91,17 +115,35 @@ do
 		end) 
 
 		obj.new:SetScript("OnClick", function(self, button, down)
-				local assignment = Assignment:new_assignment(obj.scrollframe, relativeElement, 1, 10, 0)
+				local assignment = Assignment:new_assignment(obj.content, relativeElement, obj.index, 0, 0)
 				table.insert(obj.assignments, assignment)
 				assignment:Show()
 				assignment:SetFrameStrata("HIGH")
-				obj.scrollframe:SetScrollChild(assignment.mainFrame)
-		end)
-		
-		obj.delete:SetScript("OnClick", function(self, button, down)
-				assignment:Show()
-				assignment:SetFrameStrata("HIGH")
-				obj.scrollframe:SetScrollChild(assignment.mainFrame)
+				if obj.index == 1 then
+					assignment.mainFrame:SetPoint("TOP", obj.content, 0, -10)
+				obj.lastElement = assignment.mainFrame
+				else
+					assignment.mainFrame:SetPoint("TOPLEFT", obj.lastElement, "BOTTOMLEFT")
+					obj.lastElement = assignment.mainFrame
+				end
+				obj.index = obj.index + 1
+				obj.scrollframe:SetScrollChild(obj.content)
+			
+				local delete = CreateFrame("Button", nil, assignment.mainFrame, "OptionsButtonTemplate")
+				delete:SetPoint("BOTTOMLEFT", assignment.mainFrame, "BOTTOMLEFT", 10, 10)
+				delete:SetWidth(25)
+				delete:SetHeight(25)
+				delete:SetText("-")
+				delete:SetFrameStrata("HIGH")
+
+				
+				delete:SetScript("OnClick", function(self, button, down)
+					assignment:Hide()
+					self:Hide()
+					updateAssignmentFrame(obj, assignment)
+				end)
+				table.insert(obj.deleteButtons, delete)
+				obj.scrollframe:SetScrollChild(obj.content)
 		end)
 
 

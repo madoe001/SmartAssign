@@ -151,7 +151,7 @@ function SA_GUI_LOCAL:CreateLeftSide(frame)
 	LeftSide:SetPoint("TOPLEFT", frame, 20, -20)
 	
 	-- create a line
-	SA_GUI_LOCAL:CreateLine(LeftSide ,1, frame:GetHeight()-40, "RIGHT", LeftSide, 10, 0)
+	--SA_GUI_LOCAL:CreateLine(LeftSide ,1, frame:GetHeight()-40, "RIGHT", LeftSide, 10, 0)
 	
 	return LeftSide
 end

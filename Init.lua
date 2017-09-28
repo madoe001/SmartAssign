@@ -5,12 +5,14 @@
 local _G = _G
 
 -- INIT DEFAULT SAVED_VARIABLES
-
+SA_AbilityList = SA_AbilityList or {}
+SA_PhaseList = SA_PhaseList or {}
 if(SA_LastSelected == nil) then
 	SA_LastSelected = {}
 	SA_LastSelected.expansion = ""
 	SA_LastSelected.raid = ""
 	SA_LastSelected.boss = ""
+	SA_LastSelected.phase = ""
 	SA_LastSelected.abillity = ""
 end
 
