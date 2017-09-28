@@ -28,7 +28,33 @@ do
 			v:Hide()
 		end
 	end
+	
+	local function updateAssignmentFrame(self, toBeDeleted)
+		local foundElement = false
+		local cacheList = {}
+		local ctr = 1		
 
+		for k, v in pairs(self.assignments) do
+			if v ~= toBeDeleted then
+				print("asdf")
+				table.insert(cacheList, v)
+			else 
+				v = nil
+			end
+		end
+		for k, v in pairs(cacheList) do
+			if ctr == 1 then
+				v.mainFrame:SetPoint("TOPLEFT", self.content, "TOPLEFT", 10, -10)
+				print("An den anfang setzen")
+			else
+				print("next")
+				v.mainFrame:SetPoint("TOPLEFT", cacheList[ctr - 1].mainFrame, "BOTTOMLEFT")
+			end
+			ctr = ctr + 1
+		end
+
+		
+	end
 
 	function AssignmentFrame:new_scrollframe(frame, relativeElement, x, y)
 	local obj = {
@@ -39,7 +65,7 @@ do
 			content = CreateFrame("Frame", nil),
 			assignments = {},
 			deleteButtons = {},
-			index = 0,
+			index = 1,
 			lastElement = {},
 			Show = show,
 			Hide = hide,
@@ -79,7 +105,7 @@ do
 		obj.scrollbar = CreateFrame("Slider","sb",obj.scrollframe,"UIPanelScrollBarTemplate") 
 		obj.scrollbar:SetPoint("TOPLEFT",obj.scrollframe,"TOPRIGHT",5,-20) 
 		obj.scrollbar:SetPoint("BOTTOMLEFT",obj.scrollframe,"BOTTOMRIGHT",5,20) 
-		obj.scrollbar:SetMinMaxValues(1,200) 
+		obj.scrollbar:SetMinMaxValues(1,200)
 		obj.scrollbar:SetValueStep(1) 
 		obj.scrollbar.scrollStep = 20
 		obj.scrollbar:SetValue(0) 
@@ -93,7 +119,7 @@ do
 				table.insert(obj.assignments, assignment)
 				assignment:Show()
 				assignment:SetFrameStrata("HIGH")
-				if obj.index == 0 then
+				if obj.index == 1 then
 					assignment.mainFrame:SetPoint("TOP", obj.content, 0, -10)
 				obj.lastElement = assignment.mainFrame
 				else
@@ -114,6 +140,7 @@ do
 				delete:SetScript("OnClick", function(self, button, down)
 					assignment:Hide()
 					self:Hide()
+					updateAssignmentFrame(obj, assignment)
 				end)
 				table.insert(obj.deleteButtons, delete)
 				obj.scrollframe:SetScrollChild(obj.content)
