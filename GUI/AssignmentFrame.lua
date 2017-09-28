@@ -35,10 +35,10 @@ do
 			scrollframe = CreateFrame("Scrollframe", nil, frame),   
 			scrollbar = CreateFrame("Slider", nil, scrollframe, "UIPanelScrollBarTemplate"),		
 			new = CreateFrame("Button", nil, frame, "OptionsButtonTemplate"),
-			delete = CreateFrame("Button", nil, frame, "OptionsButtonTemplate"),
 
 			content = CreateFrame("Frame", nil),
 			assignments = {},
+			deleteButtons = {},
 			index = 0,
 			lastElement = {},
 			Show = show,
@@ -54,15 +54,6 @@ do
 		obj.new:SetText("+")
 		obj.new:SetFrameStrata("HIGH")
 		
-		obj.delete:SetPoint("BOTTOMLEFT", obj.new, "BOTTOMRIGHT", 0, 0)
-		obj.delete:SetWidth(25)
-		obj.delete:SetHeight(25)
-		obj.delete:SetText("-")
-		obj.delete:SetFrameStrata("HIGH")
-		
-		--obj.new:Hide()
-		--obj.delete:Hide()
-
 		-- Main Test Frame
 		obj.scrollframe:SetBackdrop({
 			bgFile="Interface/DialogFrame/UI-DialogBox-Background",
@@ -98,12 +89,12 @@ do
 		end) 
 
 		obj.new:SetScript("OnClick", function(self, button, down)
-				local assignment = Assignment:new_assignment(obj.content, relativeElement, obj.index, 100, 0)
+				local assignment = Assignment:new_assignment(obj.content, relativeElement, obj.index, 0, 0)
 				table.insert(obj.assignments, assignment)
 				assignment:Show()
 				assignment:SetFrameStrata("HIGH")
 				if obj.index == 0 then
-					assignment.mainFrame:SetPoint("TOP", obj.content)
+					assignment.mainFrame:SetPoint("TOP", obj.content, 0, -10)
 				obj.lastElement = assignment.mainFrame
 				else
 					assignment.mainFrame:SetPoint("TOPLEFT", obj.lastElement, "BOTTOMLEFT")
@@ -111,12 +102,21 @@ do
 				end
 				obj.index = obj.index + 1
 				obj.scrollframe:SetScrollChild(obj.content)
-		end)
-		
-		obj.delete:SetScript("OnClick", function(self, button, down)
-				assignment:Show()
-				assignment:SetFrameStrata("HIGH")
-				obj.scrollframe:SetScrollChild(assignment.mainFrame)
+			
+				local delete = CreateFrame("Button", nil, assignment.mainFrame, "OptionsButtonTemplate")
+				delete:SetPoint("BOTTOMLEFT", assignment.mainFrame, "BOTTOMLEFT", 10, 10)
+				delete:SetWidth(25)
+				delete:SetHeight(25)
+				delete:SetText("-")
+				delete:SetFrameStrata("HIGH")
+
+				
+				delete:SetScript("OnClick", function(self, button, down)
+					assignment:Hide()
+					self:Hide()
+				end)
+				table.insert(obj.deleteButtons, delete)
+				obj.scrollframe:SetScrollChild(obj.content)
 		end)
 
 
