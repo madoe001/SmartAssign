@@ -232,8 +232,7 @@ _G.SmartAssign.minimap = {
 		clicked = false,
 	}
 
-SA_BossList = SA_BossList or {"Classic", "Burning Crusade", "Wrath of the Lich King", "Cataclysm", "Mist of Pandaria",
-		"Warlords of Draenor", "Legion"};
+SA_BossList = SA_BossList or {};
 		
 function addExpansion(expansionName)
 	SA_BossList[expansionName] = {};

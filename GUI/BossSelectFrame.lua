@@ -27,10 +27,14 @@ function BossSelectFrame:show(parent, width, height, anchor, xOffset, yOffset)
 	
 	-- DropDownMenus einfügen
 	-- Expansion
-	createExpansionDropDown(BossSelectFrame.frame, 0, 50, width * 0.8)
-	createRaidDropDown(BossSelectFrame.frame, 0, 0, width * 0.8)								 
-	createBossDropDown(BossSelectFrame.frame, 0, -50, width * 0.8)
+	local expDD = createExpansionDropDown(BossSelectFrame.frame, 0, 50, width * 0.8, "BossSelectFrame_ExpansionDropDrown")
+	local raidDD = createRaidDropDown(BossSelectFrame.frame, 0, 0, width * 0.8, "BossSelectFrame_RaidDropDrown")								 
+	local bossDD = createBossDropDown(BossSelectFrame.frame, 0, -50, width * 0.8, "BossSelectFrame_BossDropDrown")
+	expDD.raid = raidDD
+	expDD.boss = bossDD
+	raidDD.boss = bossDD
 end
+
 
 function BossSelectFrame:hide()
 	ExpansionDropDown:Hide()

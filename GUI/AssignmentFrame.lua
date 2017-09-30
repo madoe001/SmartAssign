@@ -72,7 +72,35 @@ do
 			Hide = hide,
 			amountAssigns = 0,
 			
+			test = CreateFrame("Button", nil, frame, "OptionsButtonTemplate"),
 		}
+		
+		obj.test:SetScript("OnClick", function(self, button, down)
+			
+			if #obj.assignments > 0 then
+				
+				local test = {}
+				test["Type"] = "Timer"
+				test["Timer"] = 10
+				test["assigns"] = {}
+				test["assigns"]["playerAssign1"] = {}
+				test["assigns"]["playerAssign1"]["Player"] = "Mavei"
+				test["assigns"]["playerAssign1"]["TextOrCoolDown"] = "ability"
+				test["assigns"]["playerAssign1"]["Text"] = "rofln"
+				test["assigns"]["playerAssign1"]["offset"] = 0
+				
+				test["assigns"]["playerAssign2"] = {}
+				test["assigns"]["playerAssign2"]["Player"] = "Maik"
+				test["assigns"]["playerAssign2"]["TextOrCoolDown"] = "text"
+				test["assigns"]["playerAssign2"]["Text"] = "asdf"
+				test["assigns"]["playerAssign2"]["offset"] = 10
+				
+				obj.assignments[1]:SetAssign(test)
+			end
+		end)
+		obj.test:SetPoint("LEFT", obj.new, "RIGHT", 5 ,5)
+		obj.test:SetText("Test")
+		obj.test:SetFrameStrata("HIGH")		
 
 		obj.content:SetParent(obj.scrollframe)
 
@@ -93,7 +121,7 @@ do
 		
 		--obj.scrollframe:SetSize(300,400)
 		obj.scrollframe:ClearAllPoints()
-		obj.scrollframe:SetPoint("TOPLEFT",relativeElement, "TOPRIGHT" ,0,0)
+		obj.scrollframe:SetPoint("TOPLEFT",relativeElement, "TOPRIGHT" , 0, -25)
 		obj.scrollframe:SetPoint( "BOTTOMRIGHT" ,-10, 10)
 		obj.scrollframe:EnableMouse(true)
 		obj.scrollframe:RegisterForDrag("LeftButton")
@@ -103,6 +131,7 @@ do
 		obj.content:SetWidth(obj.scrollframe:GetWidth())
 		obj.content:SetHeight(200)
 		obj.content:SetPoint("TOPLEFT", obj.scrollframe, "TOPLEFT")
+
 		-- Scroll Bar
 		obj.scrollbar = CreateFrame("Slider","sb",obj.scrollframe,"UIPanelScrollBarTemplate") 
 		obj.scrollbar:SetPoint("TOPLEFT",obj.scrollframe,"TOPRIGHT",5,-20) 
@@ -148,7 +177,7 @@ do
 				table.insert(obj.deleteButtons, delete)
 				obj.scrollframe:SetScrollChild(obj.content)
 		end)
-
+	--	obj.new:Hide()
 
 	return obj.scrollframe
 	end	
