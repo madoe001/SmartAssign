@@ -79,8 +79,7 @@ do
 			dropDownPlayer = createPlayerDropDown(frame, 0, 0, 80, "mb1"..lastElement), 
 			dropDownCooldown = {},
 			offset = EditBox:LoadEditBox(frame, "offs"..lastElement, "number"),	
-			extraText = CreateFrame("EditBox", "extraText"..lastElement, frame,"InputBoxTemplate"), --EditBox:LoadEditBox(frame, "offs"..lastElement, "number"),	
-			
+			extraText = CreateFrame("EditBox", "extraText"..lastElement, frame,"InputBoxTemplate"), 
 			
 			--Klasseamethoden bzw. referenzen drauf
 			Hide = hide,

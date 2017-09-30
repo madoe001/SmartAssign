@@ -147,8 +147,11 @@ do
 		--obj.mainFrame:SetPoint("TOPLEFT", frame ,"TOPLEFT", x, y)
 		obj.editTimer = editBox:LoadEditBox(obj.mainFrame, "editTimer"..obj.index,  "number")
 		obj.new =  CreateFrame("Button", "newPlayerAssign"..obj.index, obj.mainFrame, "OptionsButtonTemplate")
-		obj.dropDownAssignType = dropDownAssign:LoadDropDownList(obj.mainFrame ,"smartB" .. obj.index, dropDownAssign.data, function(self) 
-		end)
+		obj.dropDownAssignType = createAbillityDropDown(obj.mainFrame, 0,0, 80, "smartB" .. obj.index)
+		
+		
+		--dropDownAssign:LoadDropDownList(obj.mainFrame ,"smartB" .. obj.index, dropDownAssign.data, function(self) 
+		--end)
 
 		obj.mainFrame:SetWidth(frame:GetWidth() - 20)
 		obj.mainFrame:SetHeight(120)
@@ -165,7 +168,6 @@ do
 		-- DropDownMenu von Ability oder Timer 
 		--nur zum nachladen der GUI Elemente
 		obj.dropDownAssignType:SetPoint("TOPLEFT", obj.mainFrame, "TOPLEFT", 10, y - 30)
-		UIDropDownMenu_SetWidth(obj.dropDownAssignType, 50)
 		obj.editTimer:SetPoint("TOPLEFT", obj.dropDownAssignType, "TOPRIGHT", 0, 0)
 		obj.editTimer:SetWidth(60)
 		obj.new:SetWidth(25)

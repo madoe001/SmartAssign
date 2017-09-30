@@ -103,6 +103,7 @@ do
 		obj.content:SetWidth(obj.scrollframe:GetWidth())
 		obj.content:SetHeight(200)
 		obj.content:SetPoint("TOPLEFT", obj.scrollframe, "TOPLEFT")
+
 		-- Scroll Bar
 		obj.scrollbar = CreateFrame("Slider","sb",obj.scrollframe,"UIPanelScrollBarTemplate") 
 		obj.scrollbar:SetPoint("TOPLEFT",obj.scrollframe,"TOPRIGHT",5,-20) 
@@ -148,7 +149,7 @@ do
 				table.insert(obj.deleteButtons, delete)
 				obj.scrollframe:SetScrollChild(obj.content)
 		end)
-
+		obj.new:Hide()
 
 	return obj.scrollframe
 	end	
