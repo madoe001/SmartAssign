@@ -46,7 +46,6 @@ end
 -- event: on which it was called
 -- addon: name of addon
 function SA_GUI_LOCAL:Init(event, addon)
---print("addon: "..addon)
 	if (event == "ADDON_LOADED" and addon == "SmartAssign") then
 		SA_GUI_LOCAL:CreateGUI(SA_GUI.frame)
 		-- color the text |cffHEXCOLOR STRING |r << EndTag
@@ -71,7 +70,6 @@ end
 -- SA_GUI_LOCAL:CreateGUI(): create content of the mainFrame
 --
 -- frame: Parent frame
--- ######################## NEXT Container für Frames und Hide über eine func welche im container sucht und Hide ausführt und ein HideAll
 function SA_GUI_LOCAL:CreateGUI(frame)
 	frame = SA_GUI_LOCAL:CreateWindow(frame)
 	
