@@ -235,63 +235,65 @@ function createPhaseDropDown (parentFrame, x, y, width)
 	UIDropDownMenu_JustifyText(PhaseDropDown, "LEFT")
 end
 
-function createAbillityDropDown (parentFrame, x, y, width)
-	if not AbillityDropDown then
-		CreateFrame("Button", "AbillityDropDown", parentFrame, "UIDropDownMenuTemplate")
-	end
+function createAbillityDropDown (parentFrame, x, y, width, name)
 
-	AbillityDropDown:ClearAllPoints()
-	AbillityDropDown:SetPoint("CENTER", x, y)
-	AbillityDropDown:Show()
+	local framus = CreateFrame("Button", name, parentFrame, "UIDropDownMenuTemplate")
+	
 
-	function OnClickAbillityDropDown(self)
-		UIDropDownMenu_SetSelectedID(AbillityDropDown, self:GetID())
-		SA_LastSelected.abillity = UIDropDownMenu_GetText(AbillityDropDown)
-		if AbillityEditBox then
-			AbillityEditBox:SetText(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss][SA_LastSelected.abillity].AbillityName)
-			CoolDownEditBox:SetText(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss][SA_LastSelected.abillity].Cooldown)
-		end
-	end
+	framus:ClearAllPoints()
+	framus:SetPoint("CENTER", x, y)	
+	framus:Show()
 
 	function initAbillityDropDown(self, level)
 		local info = UIDropDownMenu_CreateInfo()
 		local i = 0 -- laufvariable
 		local j = 0 -- Saved Value vom letzten eintrag
+		local eID = nil
 		if(SA_BossList[SA_LastSelected.expansion] ~= nil) then
 			if(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid] ~= nil) then
 				if(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss] ~= nil) then
-					if(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss][SA_LastSelected.phase] ~= nil) then
-						for k,v in pairs(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss][SA_LastSelected.phase]) do
-							info = UIDropDownMenu_CreateInfo()
-							info.text = k
-							info.value = v
-							info.func = OnClickAbillityDropDown
-							UIDropDownMenu_AddButton(info, level)
-						
-							-- Vorauswahl, des letzten eintrags
-							i = i+1
-							if(k == SA_LastSelected.abillity) then				
-								j = i
+					eID = SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID .. ""
+				end
+			end
+		end
+		local list = {"Timer"}
+		if (eID) then
+			if ( SA_AbilityList[eID] ) then
+				for dif, num in pairs( SA_AbilityList[eID] ) do
+					for name, v in pairs ( SA_AbilityList[eID][dif] ) do
+						local checkNewElement = true
+						for checkNum, checkName in ipairs ( list ) do
+							if( name == checkName ) then
+								checkNewElement = false
 							end
 						end
-						if(j ~= 0) then
-							UIDropDownMenu_SetSelectedID(AbillityDropDown, j)
+						if (checkNewElement == true ) then
+							table.insert(list, name )
 						end
 					end
 				end
 			end
-		end	
+		end
+		for k,v in pairs(list) do
+			info = UIDropDownMenu_CreateInfo()
+			info.text = v
+			info.value = v
+			info.func = function (self)
+							UIDropDownMenu_SetSelectedID(framus, self:GetID())
+						end
+			UIDropDownMenu_AddButton(info, level)
+		end		
 	end
 
-	UIDropDownMenu_Initialize(AbillityDropDown, initAbillityDropDown)
-	UIDropDownMenu_SetWidth(AbillityDropDown, width);
-	UIDropDownMenu_SetButtonWidth(AbillityDropDown, width +24)
-	if (SA_LastSelected.abillity == "") then
-		UIDropDownMenu_SetText(AbillityDropDown, "Abillity")
-	else
-		UIDropDownMenu_SetText(AbillityDropDown, SA_LastSelected.abillity)
-	end
-	UIDropDownMenu_JustifyText(AbillityDropDown, "LEFT")
+	UIDropDownMenu_Initialize(framus, initAbillityDropDown)
+	UIDropDownMenu_SetWidth(framus, width);
+	UIDropDownMenu_SetButtonWidth(framus, width +24)
+	UIDropDownMenu_SetText(framus, "Abillity")
+	UIDropDownMenu_SetText(framus, SA_LastSelected.abillity)
+	UIDropDownMenu_JustifyText(framus, "LEFT")
+	
+	return (framus) 
+	
 end
 
 function createPlayerDropDown (parentFrame, x, y, width, name)
@@ -352,7 +354,6 @@ function createCooldownDropDown (parentFrame, x, y, width,name, ref)
 			end
 		end
 	end
-
 	UIDropDownMenu_Initialize(framus, initCooldownDropDown)
 	UIDropDownMenu_SetWidth(framus, width);
 	UIDropDownMenu_SetButtonWidth(framus, width +24)

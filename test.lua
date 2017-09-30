@@ -41,6 +41,7 @@ function caric:Init(event, addon)
 	if(event == "ADDON_LOADED" and addon == "SmartAssign") then
 		--caric:CreateGUI(testFrame)
 		--NewAbillityWindow:show()
+		--BossSelectFrame:show(UIParent)
 	end
 end
 
@@ -188,9 +189,15 @@ function SA_OnEvent(frame, event, encounterID, ...)
 		SA_WEAKAURA.combat = true
 		SA_WEAKAURA.encounterID = encounterID	
 		local eID = encounterID .. ""
-		if ( SA_PhaseList[eID] ) then
-			SA_PhaseList[eID].SA_currentPhase = SA_PhaseList[eID].SA_firstPhase
-			SA_PhaseList[eID][SA_PhaseList[eID].SA_currentPhase].start = GetTime()
+		local difficulty = getDifficulty()
+		if ( SA_PhaseList[eID][difficulty] ) then
+			SA_PhaseList[eID][difficulty].SA_currentPhase = SA_PhaseList[eID][difficulty].SA_firstPhase
+			SA_PhaseList[eID][difficulty][SA_PhaseList[eID][difficulty].SA_currentPhase].start = GetTime()
+		end
+		if( SA_AbilityList[eID][difficulty] ) then
+			for k,v in pairs ( SA_AbilityList[eID][difficulty] ) do
+				SA_AbilityList[eID][difficulty][k].counter = 0
+			end
 		end
 	end 
    if event == "ENCOUNTER_END" then
@@ -211,6 +218,7 @@ function SA_Update()
 		updateHP()
 		updateEnergy()
 		phaseHandler()
+		abilityHandler()
 	end
 end
 
@@ -309,28 +317,106 @@ function mysplit(inputstr, sep)
         return t
 end
 
-
-function createPhase(encounterID, phaseName, previousPhase, trigger, triggerTyp)
+function createPhase(encounterID, phaseName, previousPhase, trigger, triggerTyp, mythicFlag, heroicFlag, normalFlag)
+	encounterID = encounterID .. ""
+	if ( not mythicFlag and not heroicFlag and not normalFlag ) then
+		return false
+	end
 	if (not SA_PhaseList[encounterID]) then
 		SA_PhaseList[encounterID] = {}
 		SA_PhaseList[encounterID].SA_firstPhase = phaseName
 		SA_PhaseList[encounterID].SA_currentPhase = phaseName
 	end
-	SA_PhaseList[encounterID][phaseName] = {}
-	SA_PhaseList[encounterID][phaseName].start = ""
-	SA_PhaseList[encounterID][phaseName].duration = 0
-	if ( not previousPhase ) then
-		SA_PhaseList[encounterID].SA_firstPhase = phaseName
-		SA_PhaseList[encounterID].SA_currentPhase = phaseName
-	else
-		SA_PhaseList[encounterID][previousPhase].nextPhase = phaseName
-		SA_PhaseList[encounterID][previousPhase].nextTriggerTyp = triggerTyp
-		if ( triggerTyp == "text" ) then
-			SA_PhaseList[encounterID][previousPhase].nextTrigger = trigger
+	local difficulties = {}
+	if ( mythicFlag ) then
+		table.insert(difficulties, "Mythic")
+	end
+	if ( heroicFlag ) then
+		table.insert(difficulties, "Heroic")
+	end
+	if ( normalFlag ) then
+		table.insert(difficulties, "Normal")
+	end
+	for number, difficulty in ipairs ( difficulties ) do
+		if (not SA_PhaseList[encounterID][difficulty]) then
+			SA_PhaseList[encounterID][difficulty] = {}
+			SA_PhaseList[encounterID][difficulty].SA_firstPhase = phaseName
+			SA_PhaseList[encounterID][difficulty].SA_currentPhase = phaseName
+		end
+		SA_PhaseList[encounterID][difficulty][phaseName] = {}
+		SA_PhaseList[encounterID][difficulty][phaseName].start = ""
+		SA_PhaseList[encounterID][difficulty][phaseName].duration = 0
+		if ( not previousPhase ) then
+			SA_PhaseList[encounterID][difficulty].SA_firstPhase = phaseName
+			SA_PhaseList[encounterID][difficulty].SA_currentPhase = phaseName
 		else
-			SA_PhaseList[encounterID][previousPhase].nextTrigger = tonumber(trigger)
-		end		
-	end	
+			SA_PhaseList[encounterID][difficulty][previousPhase].nextPhase = phaseName
+			SA_PhaseList[encounterID][difficulty][previousPhase].nextTriggerTyp = triggerTyp
+			if ( triggerTyp == "text" ) then
+				SA_PhaseList[encounterID][difficulty][previousPhase].nextTrigger = trigger
+			else
+				SA_PhaseList[encounterID][difficulty][previousPhase].nextTrigger = tonumber(trigger)
+			end		
+		end	
+	end
+	
+end
+
+--/script createAbility("1737", "Eyes", 10, true , true , true)
+--/script createAbility("1737", "Knock back", 7, true , true , true)
+--/script createPhase("1837", "P1", nil, nil, nil, true, nil, true)
+--/script createPhase("1837", "P2", "P1", 90, "HP", true, nil, true)
+--/script createPhase("1837", "P3", "P2", 80, "HP", true, nil, true)
+--/script createPhase("1837", "P4", "P3", 30, "Time", true, nil, true)
+function createAbility(encounterID, abilityName, cooldown, mythicFlag, heroicFlag, normalFlag)
+	encounterID = encounterID .. ""
+	if ( not mythicFlag and not heroicFlag and not normalFlag ) then
+		return false
+	end
+	print ("1")
+	if (not SA_AbilityList[encounterID] ) then
+		SA_AbilityList[encounterID] = {}
+	end
+	local difficulties = {}
+	if ( mythicFlag ) then
+		table.insert(difficulties, "Mythic")
+	end
+	if ( heroicFlag ) then
+		table.insert(difficulties, "Heroic")
+	end
+	if ( normalFlag ) then
+		table.insert(difficulties, "Normal")
+	end
+	print ("2")
+	for number,difficulty in ipairs ( difficulties ) do
+		if (not SA_AbilityList[encounterID][difficulty] ) then
+			SA_AbilityList[encounterID][difficulty] = {}
+		end
+		if (not SA_AbilityList[encounterID][difficulty][abilityName] ) then
+			SA_AbilityList[encounterID][difficulty][abilityName] = {}
+		end
+		SA_AbilityList[encounterID][difficulty][abilityName].cooldown = cooldown
+	end
+end
+
+function abilityHandler()
+	local eID = SA_WEAKAURA.encounterID .. ""
+	local difficulty = getDifficulty()
+	if(not SA_AbilityList[eID] or not SA_PhaseList[eID]) then
+		return false
+	end
+	if(not SA_AbilityList[eID][difficulty] or not SA_PhaseList[eID][difficulty]) then
+		return false
+	end
+	for k,v in pairs(SA_AbilityList[eID][difficulty]) do
+		local phase = SA_PhaseList[eID][difficulty].SA_currentPhase
+		local duration = SA_PhaseList[eID][difficulty][phase].duration
+		local oldCounter = SA_AbilityList[eID][difficulty][k].counter
+		SA_AbilityList[eID][difficulty][k].counter = tonumber(string.format("%i", (duration / SA_AbilityList[eID][difficulty][k].cooldown))) -- Trennen der Nachkommastellen
+		if(oldCounter < SA_AbilityList[eID][difficulty][k].counter) then
+			SendChatMessage(k .. " ".. SA_AbilityList[eID][difficulty][k].counter, "SAY", "Common");
+		end
+	end
 end
 
 function phaseHandler()
@@ -338,32 +424,51 @@ function phaseHandler()
 	if ( not SA_PhaseList[eID] ) then
 		return false 
 	end
-	local currentPhase = SA_PhaseList[eID].SA_currentPhase
-	SA_PhaseList[eID][currentPhase].duration = GetTime() - SA_PhaseList[eID][currentPhase].start
-	local triggerTyp = SA_PhaseList[eID][currentPhase].nextTriggerTyp
-	local trigger = SA_PhaseList[eID][currentPhase].nextTrigger
+	
+	local difficulty = getDifficulty()
+	if ( not SA_PhaseList[eID][difficulty] ) then
+		return false
+	end
+	
+	local currentPhase = SA_PhaseList[eID][difficulty].SA_currentPhase
+	SA_PhaseList[eID][difficulty][currentPhase].duration = GetTime() - SA_PhaseList[eID][difficulty][currentPhase].start
+	local triggerTyp = SA_PhaseList[eID][difficulty][currentPhase].nextTriggerTyp
+	local trigger = SA_PhaseList[eID][difficulty][currentPhase].nextTrigger
 	
 	if ( triggerTyp == "Energy" ) then
 		if ( SA_WEAKAURA.boss1Energy <= trigger ) then
-			SA_PhaseList[eID].SA_currentPhase = SA_PhaseList[eID][currentPhase].nextPhase
-			SA_PhaseList[eID][SA_PhaseList[eID].SA_currentPhase].start = GetTime()
-			SendChatMessage(SA_PhaseList[eID][currentPhase].nextPhase, "SAY", "Common");
+			SA_PhaseList[eID][difficulty].SA_currentPhase = SA_PhaseList[eID][difficulty][currentPhase].nextPhase
+			SA_PhaseList[eID][difficulty][SA_PhaseList[eID].SA_currentPhase].start = GetTime()
+			SendChatMessage(SA_PhaseList[eID][difficulty][currentPhase].nextPhase, "SAY", "Common");
 		end
 	elseif ( triggerTyp == "HP" ) then
 		if ( SA_WEAKAURA.boss1HP <= trigger ) then
-			SA_PhaseList[eID].SA_currentPhase = SA_PhaseList[eID][currentPhase].nextPhase
-			SA_PhaseList[eID][SA_PhaseList[eID].SA_currentPhase].start = GetTime()
-			SendChatMessage(SA_PhaseList[eID][currentPhase].nextPhase, "SAY", "Common");
+			SA_PhaseList[eID][difficulty].SA_currentPhase = SA_PhaseList[eID][difficulty][currentPhase].nextPhase
+			SA_PhaseList[eID][difficulty][SA_PhaseList[eID][difficulty].SA_currentPhase].start = GetTime()
+			SendChatMessage(SA_PhaseList[eID][difficulty][currentPhase].nextPhase, "SAY", "Common");
 		end
 	elseif ( triggerTyp == "Time" ) then
-		if ( SA_PhaseList[eID][currentPhase].duration >= trigger ) then
-			SA_PhaseList[eID].SA_currentPhase = SA_PhaseList[eID][currentPhase].nextPhase
-			SA_PhaseList[eID][SA_PhaseList[eID].SA_currentPhase].start = GetTime()
-			SendChatMessage(SA_PhaseList[eID][currentPhase].nextPhase, "SAY", "Common");
+		if ( SA_PhaseList[eID][difficulty][currentPhase].duration >= trigger ) then
+			SA_PhaseList[eID][difficulty].SA_currentPhase = SA_PhaseList[eID][difficulty][currentPhase].nextPhase
+			SA_PhaseList[eID][difficulty][SA_PhaseList[eID][difficulty].SA_currentPhase].start = GetTime()
+			SendChatMessage(SA_PhaseList[eID][difficulty][currentPhase].nextPhase, "SAY", "Common");
 		end
 	elseif ( triggerTyp == "Text") then --TODO
 	end
 	
+end
+
+function getDifficulty() 
+	local difficultyID  = select(3, GetInstanceInfo())
+	if ( difficultyID == 1 or difficultyID == 3 or difficultyID == 4 or difficultyID ==  14 ) then
+		return "Normal" 
+	elseif ( difficultyID == 2 or difficultyID == 5 or difficultyID == 6 or difficultyID ==  15 ) then
+		return "Heroic" 
+	elseif ( difficultyID == 16 or difficultyID == 23 ) then
+		return "Mythic" 
+	else
+		return false
+	end		
 end
 --[[
 	Justin Funktion. Mit der Funktion kann man alle RaidBosse aus allen Expansions 
