@@ -128,6 +128,7 @@ do
 		
 		obj.abilityCB:SetPoint("LEFT", obj.dropDownPlayer, "RIGHT", obj.x, 0)
 		obj.textCB:SetPoint("TOP", obj.abilityCB, "BOTTOM", 0,0)
+		obj.abilityCB:SetChecked(true)
 		
 		obj.dropDownCooldown:SetPoint("LEFT", obj.abilityCB, "RIGHT", obj.x+30,0)
 		obj.textCB:SetPoint("TOP", obj.abilityCB, "BOTTOM", 0,0)
