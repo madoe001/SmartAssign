@@ -76,9 +76,12 @@ do
 
 			abilityCB = CheckBox:LoadCheckBox(frame, "Ability"),
 			textCB = CheckBox:LoadCheckBox(frame, "Extra Text"),
-			dropDownPlayer = createPlayerDropDown(frame, 0, 0, 80, "mb1"..lastElement), --DropDownList:LoadDropDownList(frame,"mb1" .. lastElement,  {"p1", "p2", "p3"}),
+			dropDownPlayer = createPlayerDropDown(frame, 0, 0, 80, "mb1"..lastElement), 
 			dropDownCooldown = {},
 			offset = EditBox:LoadEditBox(frame, "offs"..lastElement, "number"),	
+			extraText = CreateFrame("EditBox", "extraText"..lastElement, frame,"InputBoxTemplate"), --EditBox:LoadEditBox(frame, "offs"..lastElement, "number"),	
+			
+			
 			--Klasseamethoden bzw. referenzen drauf
 			Hide = hide,
 			Show = show,
@@ -90,9 +93,18 @@ do
 		self.__index = self
 		print(obj.dropDownPlayer)
 		obj.dropDownCooldown = createCooldownDropDown(frame, 0,0, 80, "cooldown"..lastElement, obj.dropDownPlayer)
+		obj.extraText:SetWidth(80)
+		obj.extraText:SetHeight(50)
+		obj.extraText:SetAutoFocus(false)
+		obj.extraText.inputType = "String"
+		obj.extraText:Hide()
+		
+		
+		
 		obj.abilityCB:SetScript("OnClick", function(self, button, down)
 			if obj.textCB:GetChecked() then
 				obj.textCB:SetChecked(false)
+				obj.extraText:Hide()
 			end
 			obj.dropDownCooldown:Show()
 			obj.offset:Show()
@@ -101,9 +113,14 @@ do
 		obj.textCB:SetScript("OnClick", function(self, button, down)
 			if obj.abilityCB:GetChecked() then
 				obj.abilityCB:SetChecked(false)
+				obj.dropDownCooldown:Hide()
 			end
+			obj.extraText:Show()
 		end)
 		
+
+
+
 		--obj.offset:SetMaxLetters(obj.offset, 6) 
 
 		obj.offset:SetWidth(60)
@@ -111,7 +128,10 @@ do
 		
 		obj.abilityCB:SetPoint("LEFT", obj.dropDownPlayer, "RIGHT", obj.x, 0)
 		obj.textCB:SetPoint("TOP", obj.abilityCB, "BOTTOM", 0,0)
+		
 		obj.dropDownCooldown:SetPoint("LEFT", obj.abilityCB, "RIGHT", obj.x+30,0)
+		obj.textCB:SetPoint("TOP", obj.abilityCB, "BOTTOM", 0,0)
+		obj.extraText:SetPoint("LEFT", obj.abilityCB, "RIGHT", obj.x+50,0)
 		obj.offset:SetPoint("LEFT", obj.dropDownCooldown, "RIGHT", obj.x, 0)
 
 		obj.abilityCB:Hide()
