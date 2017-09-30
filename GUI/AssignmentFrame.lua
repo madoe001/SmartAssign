@@ -72,7 +72,35 @@ do
 			Hide = hide,
 			amountAssigns = 0,
 			
+			test = CreateFrame("Button", nil, frame, "OptionsButtonTemplate"),
 		}
+		
+		obj.test:SetScript("OnClick", function(self, button, down)
+			
+			if #obj.assignments > 0 then
+				
+				local test = {}
+				test["Type"] = "Timer"
+				test["Timer"] = 10
+				test["assigns"] = {}
+				test["assigns"]["playerAssign1"] = {}
+				test["assigns"]["playerAssign1"]["Player"] = "Mavei"
+				test["assigns"]["playerAssign1"]["TextOrCoolDown"] = "ability"
+				test["assigns"]["playerAssign1"]["Text"] = "rofln"
+				test["assigns"]["playerAssign1"]["offset"] = 0
+				
+				test["assigns"]["playerAssign2"] = {}
+				test["assigns"]["playerAssign2"]["Player"] = "Maik"
+				test["assigns"]["playerAssign2"]["TextOrCoolDown"] = "text"
+				test["assigns"]["playerAssign2"]["Text"] = "asdf"
+				test["assigns"]["playerAssign2"]["offset"] = 10
+				
+				obj.assignments[1]:SetAssign(test)
+			end
+		end)
+		obj.test:SetPoint("LEFT", obj.new, "RIGHT", 5 ,5)
+		obj.test:SetText("Test")
+		obj.test:SetFrameStrata("HIGH")		
 
 		obj.content:SetParent(obj.scrollframe)
 
