@@ -93,7 +93,7 @@ do
 		
 		--obj.scrollframe:SetSize(300,400)
 		obj.scrollframe:ClearAllPoints()
-		obj.scrollframe:SetPoint("TOPLEFT",relativeElement, "TOPRIGHT" ,0,0)
+		obj.scrollframe:SetPoint("TOPLEFT",relativeElement, "TOPRIGHT" , 0, -25)
 		obj.scrollframe:SetPoint( "BOTTOMRIGHT" ,-10, 10)
 		obj.scrollframe:EnableMouse(true)
 		obj.scrollframe:RegisterForDrag("LeftButton")
@@ -149,7 +149,7 @@ do
 				table.insert(obj.deleteButtons, delete)
 				obj.scrollframe:SetScrollChild(obj.content)
 		end)
-		obj.new:Hide()
+	--	obj.new:Hide()
 
 	return obj.scrollframe
 	end	

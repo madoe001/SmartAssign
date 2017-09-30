@@ -35,6 +35,7 @@ function BossSelectFrame:show(parent, width, height, anchor, xOffset, yOffset)
 	raidDD.boss = bossDD
 end
 
+
 function BossSelectFrame:hide()
 	ExpansionDropDown:Hide()
 	RaidDropDown:Hide()

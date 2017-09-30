@@ -91,10 +91,8 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	
 	SlashCommands:AddResetFunction(SA_GUI_LOCAL.ScrollFrameReset,"ScrollFrame") -- add the reset function of the scrollframe to slashcommands
 		
-	frame.bossSelect = BossSelectFrame:show(frame, 200, frame:GetHeight(), "LEFT", 0, 0)
-	
-	local assign = AssignmentFrame:new_scrollframe(frame, frame.bossSelect , 5, -100)
-	assign:Hide()
+	local boss = BossSelectFrame:show(frame, 200, frame:GetHeight(), "LEFT", 0, 0)
+	local assign = AssignmentFrame:new_scrollframe(frame, BossSelectFramus , 5, -100)
 	frame.assign = assign
 	table.insert(Assignments, assign)
 

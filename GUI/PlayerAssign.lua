@@ -64,6 +64,38 @@ do
 		self.offset:SetFrameStrata(priority)
 	end
 
+	local function GetPlayerAssignment(self)
+		local playerData = {}
+		
+		playerData["Player"] = self.dropDownPlayer:GetText()
+		if self.abilityCB:GetChecked() then
+			player["TextOrCoolDown"] = "ability"
+			playerData["Text"] = self.dropDownCooldown:GetText()
+		else
+			player["TextOrCoolDown"] = "text"
+			player["Text"] = self.extraText:GetText()
+		end
+		playerData["offset"] = self.offset:GetText()
+		return playerData
+	end
+
+
+	local function SetPlayerAssignment(self, playerData)
+		
+		self.dropDownPlayer:SetText(playerData["Player"])  
+		if player["TextOrCoolDown"] == "ability" then
+			self.abilityCB:SetChecked(true)
+			self.dropDownCooldown:SetText(playerData["Text"])	 
+			self.extraText:Hide()
+		else
+			self.textCB:SetChecked(true)
+			--player["TextOrCoolDown"] = "text"
+			self.extraText:SetText(player["Text"] )
+			self.dropDownCooldown:Hide()
+		end
+		self.offset:SetText(playerData["offset"])
+	end
+
 
 	function PlayerAssign:new_playerAssign(frame, relativeElement,lastElement, xVal, yVal)
 		
@@ -86,7 +118,9 @@ do
 			Show = show,
 			SetFrameStrata = strata,
 			SetPoint = setPoint,
-			Delete = delete
+			Delete = delete,
+			GetPlayerAssign = GetPlayerAssignment,
+			SetPlayerAssign = SetPlayerAssignment,
 		}
 		setmetatable(obj, self)
 		self.__index = self
@@ -117,11 +151,6 @@ do
 			obj.extraText:Show()
 		end)
 		
-
-
-
-		--obj.offset:SetMaxLetters(obj.offset, 6) 
-
 		obj.offset:SetWidth(60)
 		obj.dropDownPlayer:SetPoint("LEFT", relativeElement, "RIGHT", 0, obj.y)
 		

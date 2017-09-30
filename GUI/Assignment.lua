@@ -122,7 +122,38 @@ do
 		return self.mainFrame:GetHeight() + 10
 	end
 
+	local function GetAssignment(self)
+		local assignmentData = {}
+
+		assignmentData["Type"] = self.dropDownAssignType:GetText()
+		assignmentData["Timer"] = self.editTimer:GetText()
+
+		local index = 1
+		for k, v in pairs(self.playerAssigns) do
+			assignmentData["assigns"]["playerAssign"] = v:GetAssignment()
+			index = index + 1
+		end
+	end
+
+	local function SetAssignment(self, assign)
+		
+		self.dropDownAssignType:SetText(assign["Type"])
+		self.editTimer:SetText(assign["Timer"])
+
+		local counter = 1
+		for k, v in assign["assigns"] do
+			local playerAssign = pa:new_playerAssign(self.mainFrame, self.editTimer, self.index .. counter, 0, -80 * counter)
+			table.insert(self.playerAssigns, playerAssign)
+			
+		
+		end
+
+		self.new:SetPoint("LEFT", self.editTimer, "RIGHT", 5, -80 * #self.playerAssigns)
+
+	end
+
 	function Assignment:new_assignment(frame, relativeElement, number, x, y)
+		
 		local obj = {
 			xVal = x,
 			xVal = y,
@@ -136,22 +167,22 @@ do
 			counter = 1,
 			amountPlayer = 0,
 			index = number,
+
+			--Methoden der Klasse
+			SetAssign = SetAssignment,
+			GetAssign = GetAssignment,
 			SetPoint = setPoint,
 			Hide = hide,
 			Show = show,
-			GetHeight =getheight,
+			GetHeight = getheight,
 			SetFrameStrata = frameStrata
 		}
 		setmetatable(obj, self)
 		self.__index = self
-		--obj.mainFrame:SetPoint("TOPLEFT", frame ,"TOPLEFT", x, y)
+	
 		obj.editTimer = editBox:LoadEditBox(obj.mainFrame, "editTimer"..obj.index,  "number")
 		obj.new =  CreateFrame("Button", "newPlayerAssign"..obj.index, obj.mainFrame, "OptionsButtonTemplate")
 		obj.dropDownAssignType = createAbillityDropDown(obj.mainFrame, 0,0, 80, "smartB" .. obj.index)
-		
-		
-		--dropDownAssign:LoadDropDownList(obj.mainFrame ,"smartB" .. obj.index, dropDownAssign.data, function(self) 
-		--end)
 
 		obj.mainFrame:SetWidth(frame:GetWidth() - 20)
 		obj.mainFrame:SetHeight(120)
@@ -213,8 +244,7 @@ do
 			end)
 			table.insert(obj.deleteButtons, delete)		
 			playerAssign:Show()
-		end)
-				
+		end)				
 		obj.dropDownAssignType:Hide()
 		return obj
 	end

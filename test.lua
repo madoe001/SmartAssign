@@ -1,4 +1,4 @@
-ï»¿
+
 local startTime = 0
 local endTime = 0
 local totalTime = 0
@@ -41,7 +41,7 @@ function caric:Init(event, addon)
 	if(event == "ADDON_LOADED" and addon == "SmartAssign") then
 		--caric:CreateGUI(testFrame)
 		--NewAbillityWindow:show()
-		BossSelectFrame:show(UIParent)
+		--BossSelectFrame:show(UIParent)
 	end
 end
 
@@ -204,7 +204,7 @@ function SA_OnEvent(frame, event, encounterID, ...)
 	SA_WEAKAURA.combat = false
 	_,_,_,endStatus = ...
 	SA_WEAKAURA.bossKill = endStatus
-	if (endStatus == 1) then -- LÃ¶scht Assignment nach Bosskampf
+	if (endStatus == 1) then -- Löscht Assignment nach Bosskampf
 		eID = SA_WEAKAURA.encounterID .. ""
 		SA_WEAKAURA[eID] = nil
 	end
@@ -270,10 +270,10 @@ RegisterAddonMessagePrefix("<SMART_ASSIGN>");
 
 function caricWrite(functionname,playerName, assignmentName, spellID, timer) 
 	local msg = "";
-	msg = msg .. "FUNCTIONNAME~" .. functionname .. "Â§"
-	msg = msg .. "PLAYERNAME~" .. playerName .. "Â§"
-	msg = msg .. "ASSIGNMENTNAME~" .. assignmentName .. "Â§"
-	msg = msg .. "SPELLID~" .. spellID .. "Â§"
+	msg = msg .. "FUNCTIONNAME~" .. functionname .. "§"
+	msg = msg .. "PLAYERNAME~" .. playerName .. "§"
+	msg = msg .. "ASSIGNMENTNAME~" .. assignmentName .. "§"
+	msg = msg .. "SPELLID~" .. spellID .. "§"
 	msg = msg .. "TIMER~" .. timer
 	print (msg)
 	if ( IsInRaid() ) then
@@ -287,7 +287,7 @@ local function print_msg(...)
 	--
 	_,_,prefix, msg, channel, sender = ...;
 	if(prefix == "<SMART_ASSIGN>") then 
-		local argList = mysplit(msg, "Â§")
+		local argList = mysplit(msg, "§")
 		arguments = {}
 		for num,arg in pairs (argList) do
 			local a = mysplit(arg, "~")
@@ -473,7 +473,7 @@ end
 --[[
 	Justin Funktion. Mit der Funktion kann man alle RaidBosse aus allen Expansions 
 	in die Saved Variables speichern. Hierbei werden sogar die MapIDs und BossIDs 
-	mit gespeichert. Die Boss / EncounterIDs kÃ¶nnen spÃ¤ter zum filtern genutzt werden.
+	mit gespeichert. Die Boss / EncounterIDs können später zum filtern genutzt werden.
 ]]
 function fillRaidsAndBosses()
 	local t = 1
