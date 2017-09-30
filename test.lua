@@ -41,7 +41,7 @@ function caric:Init(event, addon)
 	if(event == "ADDON_LOADED" and addon == "SmartAssign") then
 		--caric:CreateGUI(testFrame)
 		--NewAbillityWindow:show()
-		--BossSelectFrame:show(UIParent)
+		BossSelectFrame:show(UIParent)
 	end
 end
 
@@ -488,7 +488,6 @@ function fillRaidsAndBosses()
 			SA_instanceId, SA_name = EJ_GetInstanceByIndex(i, true)
 			print(SA_instanceId, SA_name)
 			SA_BossList[tiername][SA_name] = {}
-			SA_BossList[tiername][SA_name].instanceID = SA_instanceId
 			EJ_SelectInstance(SA_instanceId)
 			i = i+1
     
