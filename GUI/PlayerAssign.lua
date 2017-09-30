@@ -76,10 +76,9 @@ do
 
 			abilityCB = CheckBox:LoadCheckBox(frame, "Ability"),
 			textCB = CheckBox:LoadCheckBox(frame, "Extra Text"),
-			dropDownPlayer = DropDownList:LoadDropDownList(frame,"mb1" .. lastElement,  {"p1", "p2", "p3"}),
-			dropDownCooldown = DropDownList:LoadDropDownList(frame,"mb2" .. lastElement, {"a1", "a2", "a3"}),
+			dropDownPlayer = createPlayerDropDown(frame, 0, 0, 80, "mb1"..lastElement), --DropDownList:LoadDropDownList(frame,"mb1" .. lastElement,  {"p1", "p2", "p3"}),
+			dropDownCooldown = {},
 			offset = EditBox:LoadEditBox(frame, "offs"..lastElement, "number"),	
-			
 			--Klasseamethoden bzw. referenzen drauf
 			Hide = hide,
 			Show = show,
@@ -89,7 +88,8 @@ do
 		}
 		setmetatable(obj, self)
 		self.__index = self
-		
+		print(obj.dropDownPlayer)
+		obj.dropDownCooldown = createCooldownDropDown(frame, 0,0, 80, "cooldown"..lastElement, obj.dropDownPlayer)
 		obj.abilityCB:SetScript("OnClick", function(self, button, down)
 			if obj.textCB:GetChecked() then
 				obj.textCB:SetChecked(false)
@@ -108,12 +108,10 @@ do
 
 		obj.offset:SetWidth(60)
 		obj.dropDownPlayer:SetPoint("LEFT", relativeElement, "RIGHT", 0, obj.y)
-		UIDropDownMenu_SetWidth(obj.dropDownPlayer, 50)
 		
 		obj.abilityCB:SetPoint("LEFT", obj.dropDownPlayer, "RIGHT", obj.x, 0)
 		obj.textCB:SetPoint("TOP", obj.abilityCB, "BOTTOM", 0,0)
 		obj.dropDownCooldown:SetPoint("LEFT", obj.abilityCB, "RIGHT", obj.x+30,0)
-		UIDropDownMenu_SetWidth(obj.dropDownCooldown, 50)
 		obj.offset:SetPoint("LEFT", obj.dropDownCooldown, "RIGHT", obj.x, 0)
 
 		obj.abilityCB:Hide()
