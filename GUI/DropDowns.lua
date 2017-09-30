@@ -144,6 +144,9 @@ function createBossDropDown (parentFrame, x, y, width, name)
 					info.func = function (self)
 									UIDropDownMenu_SetSelectedID(framus, self:GetID())
 									SA_LastSelected.boss = UIDropDownMenu_GetText(framus)
+									-- FÜR MAIK
+									
+									-- FÜR MAIK
 								end
 					UIDropDownMenu_AddButton(info, level)
 					
