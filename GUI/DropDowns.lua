@@ -3,30 +3,16 @@
 -- Die Dropdowns werden direkt an die passende Table mit ihrer Logik gekoppelt
 
 
-function createExpansionDropDown (parentFrame,x, y, width)
+function createExpansionDropDown (parentFrame,x, y, width, name)
 	
-	if not ExpansionDropDown then
-	 CreateFrame("Button", "ExpansionDropDown", parentFrame, "UIDropDownMenuTemplate")
-	end
+	local framus = CreateFrame("Button", name, parentFrame, "UIDropDownMenuTemplate")
 
-	ExpansionDropDown:ClearAllPoints()
-	ExpansionDropDown:SetPoint("CENTER", x, y)
-	ExpansionDropDown:Show()
+	framus:ClearAllPoints()
+	framus:SetPoint("CENTER", x, y)
+	framus:Show()
+	framus.raid = nil
+	framus.boss = nil
 
-	function OnClickExpansionDropDown(self)
-		UIDropDownMenu_SetSelectedID(ExpansionDropDown, self:GetID())
-		SA_LastSelected.expansion = UIDropDownMenu_GetText(ExpansionDropDown)
-		SA_LastSelected.raid = ""
-		SA_LastSelected.boss = ""
-		SA_LastSelected.abillity = ""
-
-		UIDropDownMenu_SetText(RaidDropDown, "Raid")
-		UIDropDownMenu_SetText(BossDropDown, "Boss")
-		if AbillityDropDown then 
-			UIDropDownMenu_SetText(AbillityDropDown, "Abillity")
-		end
-	end
-	
 	function initExpansionDropDown(self, level)
 		local info = UIDropDownMenu_CreateInfo()
 		local i = 0 -- laufvariable
@@ -35,7 +21,20 @@ function createExpansionDropDown (parentFrame,x, y, width)
 			info = UIDropDownMenu_CreateInfo()
 			info.text = k
 			info.value = v
-			info.func = OnClickExpansionDropDown
+			info.func = function (self) -----------------------------------------------------  FUNCTION --------
+							UIDropDownMenu_SetSelectedID(framus, self:GetID())
+							SA_LastSelected.expansion = UIDropDownMenu_GetText(framus)
+							SA_LastSelected.raid = ""
+							SA_LastSelected.boss = ""
+							
+							if ( framus.raid ) then
+								UIDropDownMenu_SetText(framus.raid, "Raid")
+							end
+							if ( framus.boss ) then
+								UIDropDownMenu_SetText(framus.boss, "Boss")
+							end							
+						end  ----------------------------------------------------------------  FUNCTION --------
+						
 			UIDropDownMenu_AddButton(info, level)
 			
 			-- Vorauswahl, des letzten eintrags
@@ -45,43 +44,32 @@ function createExpansionDropDown (parentFrame,x, y, width)
 			end
 		end	
 		if (j ~= 0) then
-			UIDropDownMenu_SetSelectedID(ExpansionDropDown, j)
+			UIDropDownMenu_SetSelectedID(framus, j)
 		end
 	end
 	
-	UIDropDownMenu_Initialize(ExpansionDropDown, initExpansionDropDown)
-	UIDropDownMenu_SetWidth(ExpansionDropDown, width);
-	UIDropDownMenu_SetButtonWidth(ExpansionDropDown, width +24)
+	UIDropDownMenu_Initialize(framus, initExpansionDropDown)
+	UIDropDownMenu_SetWidth(framus, width);
+	UIDropDownMenu_SetButtonWidth(framus, width +24)
 	if (SA_LastSelected.expansion == "") then
-		UIDropDownMenu_SetText(ExpansionDropDown, "Expansion")
+		UIDropDownMenu_SetText(framus, "Expansion")
 	else
-		UIDropDownMenu_SetText(ExpansionDropDown, SA_LastSelected.expansion)
-	end
+		UIDropDownMenu_SetText(framus, SA_LastSelected.expansion)
+	end	
+	UIDropDownMenu_JustifyText(framus, "LEFT")
 	
-	UIDropDownMenu_JustifyText(ExpansionDropDown, "LEFT")
+	return (framus)
 end
 
-function createRaidDropDown (parentFrame, x, y, width)
-	if not RaidDropDown then
-		CreateFrame("Button", "RaidDropDown", parentFrame, "UIDropDownMenuTemplate")
-	end
+function createRaidDropDown (parentFrame, x, y, width, name)
 
-	RaidDropDown:ClearAllPoints()
-	RaidDropDown:SetPoint("CENTER", x, y)
-	RaidDropDown:Show()
-
-	function OnClickRaidDropDown(self)
-		UIDropDownMenu_SetSelectedID(RaidDropDown, self:GetID())
-		
-		SA_LastSelected.raid = UIDropDownMenu_GetText(RaidDropDown)
-		SA_LastSelected.boss = ""
-		SA_LastSelected.abillity = ""
-
-		UIDropDownMenu_SetText(BossDropDown, "Boss")
-		if AbillityDropDown then 
-			UIDropDownMenu_SetText(AbillityDropDown, "Abillity")
-		end
-	end
+	local framus = CreateFrame("Button", name, parentFrame, "UIDropDownMenuTemplate")
+	
+	framus:ClearAllPoints()
+	framus:SetPoint("CENTER", x, y)
+	framus:Show()
+	
+	framus.boss = nil
 
 	function initRaidDropDown(self, level)
 		local info = UIDropDownMenu_CreateInfo()
@@ -92,7 +80,16 @@ function createRaidDropDown (parentFrame, x, y, width)
 				info = UIDropDownMenu_CreateInfo()
 				info.text = k
 				info.value = v
-				info.func = OnClickRaidDropDown
+				info.func = function (self) ----------------------------------------------- FUNCTION ------
+								UIDropDownMenu_SetSelectedID(framus, self:GetID())
+		
+								SA_LastSelected.raid = UIDropDownMenu_GetText(framus)
+								SA_LastSelected.boss = ""
+		
+								if ( framus.boss ) then
+									UIDropDownMenu_SetText(framus.boss, "Boss")
+								end
+							end ----------------------------------------------------------- FUNCTION -------
 				UIDropDownMenu_AddButton(info, level)
 				
 				-- Vorauswahl, des letzten eintrags
@@ -102,39 +99,35 @@ function createRaidDropDown (parentFrame, x, y, width)
 				end
 			end	
 			if(j ~= 0) then
-				UIDropDownMenu_SetSelectedID(RaidDropDown, j)
+				UIDropDownMenu_SetSelectedID(framus, j)
 			end
 		end
 	end
 
-	UIDropDownMenu_Initialize(RaidDropDown, initRaidDropDown)
-	UIDropDownMenu_SetWidth(RaidDropDown, width);
-	UIDropDownMenu_SetButtonWidth(RaidDropDown, width +24)
+	UIDropDownMenu_Initialize(framus, initRaidDropDown)
+	UIDropDownMenu_SetWidth(framus, width);
+	UIDropDownMenu_SetButtonWidth(framus, width +24)
 	if (SA_LastSelected.raid == "") then
-		UIDropDownMenu_SetText(RaidDropDown, "Raid")
+		UIDropDownMenu_SetText(framus, "Raid")
 	else
-		UIDropDownMenu_SetText(RaidDropDown, SA_LastSelected.raid)
+		UIDropDownMenu_SetText(framus, SA_LastSelected.raid)
 	end
-	UIDropDownMenu_JustifyText(RaidDropDown, "LEFT")
+	UIDropDownMenu_JustifyText(framus, "LEFT")
+	
+	return (framus)
 end
 
-function createBossDropDown (parentFrame, x, y, width)
-	if not BossDropDown then
-		CreateFrame("Button", "BossDropDown", parentFrame, "UIDropDownMenuTemplate")
-	end
+function createBossDropDown (parentFrame, x, y, width, name)
+	
+	local framus = CreateFrame("Button", name, parentFrame, "UIDropDownMenuTemplate")
 
-	BossDropDown:ClearAllPoints()
-	BossDropDown:SetPoint("CENTER", x, y)
-	BossDropDown:Show()
+	framus:ClearAllPoints()
+	framus:SetPoint("CENTER", x, y)
+	framus:Show()
 
 	function OnClickBossDropDown(self)
-		UIDropDownMenu_SetSelectedID(BossDropDown, self:GetID())
-		SA_LastSelected.boss = UIDropDownMenu_GetText(BossDropDown)
-		SA_LastSelected.abillity = ""
-
-		if AbillityDropDown then 
-			UIDropDownMenu_SetText(AbillityDropDown, "Abillity")
-		end
+		UIDropDownMenu_SetSelectedID(framus, self:GetID())
+		SA_LastSelected.boss = UIDropDownMenu_GetText(framus)
 	end
 
 	function initBossDropDown(self, level)
@@ -144,35 +137,42 @@ function createBossDropDown (parentFrame, x, y, width)
 		if(SA_BossList[SA_LastSelected.expansion] ~= nil) then
 			if(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid] ~= nil) then
 				for k,v in pairs(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid]) do
-					if k ~= "instanceID" then
-						info = UIDropDownMenu_CreateInfo()
-						info.text = k
-						info.value = v
-						info.func = OnClickBossDropDown
-						UIDropDownMenu_AddButton(info, level)
 					
-						-- Vorauswahl, des letzten eintrags
-						i = i+1
-						if(k == SA_LastSelected.boss) then				
-							j = i
-						end
+					info = UIDropDownMenu_CreateInfo()
+					info.text = k
+					info.value = v
+					info.func = function (self)
+									UIDropDownMenu_SetSelectedID(framus, self:GetID())
+									SA_LastSelected.boss = UIDropDownMenu_GetText(framus)
+									-- FÜR MAIK
+									
+									-- FÜR MAIK
+								end
+					UIDropDownMenu_AddButton(info, level)
+					
+					-- Vorauswahl, des letzten eintrags
+					i = i+1
+					if(k == SA_LastSelected.boss) then				
+						j = i
 					end
 				end
 				if(j ~= 0) then
-					UIDropDownMenu_SetSelectedID(BossDropDown, j)
+					UIDropDownMenu_SetSelectedID(framus, j)
 				end
 			end	
 		end
 	end
-	UIDropDownMenu_Initialize(BossDropDown, initBossDropDown)
-	UIDropDownMenu_SetWidth(BossDropDown, width);
-	UIDropDownMenu_SetButtonWidth(BossDropDown, width +24)
+	UIDropDownMenu_Initialize(framus, initBossDropDown)
+	UIDropDownMenu_SetWidth(framus, width);
+	UIDropDownMenu_SetButtonWidth(framus, width +24)
 	if (SA_LastSelected.boss == "") then
-		UIDropDownMenu_SetText(BossDropDown, "Boss")
+		UIDropDownMenu_SetText(framus, "Boss")
 	else
-		UIDropDownMenu_SetText(BossDropDown, SA_LastSelected.boss)
+		UIDropDownMenu_SetText(framus, SA_LastSelected.boss)
 	end
-	UIDropDownMenu_JustifyText(BossDropDown, "LEFT")
+	UIDropDownMenu_JustifyText(framus, "LEFT")
+	
+	return (framus)
 end
 
 function createPhaseDropDown (parentFrame, x, y, width)
