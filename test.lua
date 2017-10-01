@@ -53,7 +53,7 @@ testFrame:RegisterEvent("ADDON_LOADED")
 function caric:CreateGUI(frame)
 	--Fenster
 	local window = caric:CreateWindow(frame)
-	caric:CreateButton(frame, "closeButton", nil, 240,240,30,30, "UIPanelCloseBUtton")
+	caric:CreateButton(frame, "closeButton", nil, 240,240,30,30, "UIPanelCloseButton")
 	caric:CreateButton(frame, "menu", "MENU", 0,0,30,30)
 	menu:SetScript("OnClick", function() BossSelectFrame:hide()
 								BossSelectFrame:show()
