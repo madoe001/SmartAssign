@@ -23,6 +23,11 @@ do
 		self.textCB:Hide()
 		self.dropDownPlayer:Hide()
 		self.dropDownCooldown:Hide()
+		if self.textCB:GetChecked() then
+			self.extraText:Hide()
+		else
+			self.dropDownCooldown:Hide()
+		end
 		self.offset:Hide()
 	end
 	
@@ -30,7 +35,11 @@ do
 		self.abilityCB:Show()
 		self.textCB:Show()
 		self.dropDownPlayer:Show()
-		self.dropDownCooldown:Show()
+		if self.textCB:GetChecked() then
+			self.extraText:Show()
+		else
+			self.dropDownCooldown:Show()
+		end
 		self.offset:Show()
 	end
 

@@ -182,6 +182,7 @@ do
 			counter = counter + 1
 		
 		end
+		obj.amountPlayer = counter
 
 		self.new:SetPoint("LEFT", self.editTimer, "RIGHT", 5, -80 * #self.playerAssigns)
 
