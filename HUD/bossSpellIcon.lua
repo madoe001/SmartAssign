@@ -9,6 +9,7 @@ local bossSpellIcon = _G.HUD.BossSpellIcon
 local TimeSinceLastUpdate = 0.0 -- needed for OnUpdate Event
 local name
 local channeling = false -- needed to check if unit channels a spell
+local iconFrame
 
 -- bossSpellIcon:CreatebossSpellIcon(): function to create the bossSpellIcon
 --
@@ -280,11 +281,12 @@ end
 --
 -- isGUID: if is a unitGUID
 function bossSpellIcon:Show(isGUID)
-	if isGUID then
-		iconFrame:SetScript("OnEvent", bossSpellIcon.OnEvent)
-		RegisterAllEvents()
-	else
-		iconFrame:SetScript("OnEvent", nil)
-		UnRegisterAllEvents()
+	if iconFrame then
+		if isGUID then
+			iconFrame:SetScript("OnEvent", bossSpellIcon.OnEvent)
+			RegisterAllEvents()
+		else
+			UnRegisterAllEvents()
+		end
 	end
 end

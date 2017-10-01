@@ -578,8 +578,12 @@ end
 --
 -- isGUID: if have a GUID of boss
 function bossPlate:Show(isGUID) -- isGUID --> UnitExists
-	if isGUID then
-		SA_BossNamePlate:Show()
+	if SA_BossNamePlate then
+		if isGUID then
+			SA_BossNamePlate:Show()
+		else
+			bossPlate:UnRegisterAllEvents()
+		end
 	end
 end
 

@@ -72,9 +72,6 @@ function mainHUD:OnEnteringEvent_TestInstance(event)
 		if name == boss1 or name == boss2 or name == boss3 or name == boss4 or name == boss5 then
 			bossPlate:Show(true)
 			bossSpellIcon:Show(true)
-		else
-			bossPlate:Show(false)
-			bossSpellIcon:Show(false)
 		end
 	end
 end
