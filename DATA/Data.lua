@@ -24,24 +24,18 @@ SA_Dungeons =  SA_Dungeons or {
 								    SAL["Lord Serpentis"],
 								    SAL["Verdan the Everliving"],
 								    SAL["Mutanus the Devourer"],
-								    "TEST",
-								    "TEST1",
-								    "TEST2",
-								    "TEST3",
-								    "TEST4",
-								    "TEST5",
-								    "TEST6",
-								    "TEST7",
-								    "TEST8",
-								    "TEST9",
-								    "TEST0",
 								    },
 		[SAL["Shadowfang Keep"]] = {SAL["Baron Ashbury"],
 									SAL["Baron Silverlaine"],
 									SAL["Commander Springvale"],
 									SAL["Lord Walden"],
 									SAL["Lord Godfrey"],}},
-	[SAL["WOTLK"]] = {}
+	[SAL["The Burning Crusade"]] = {},
+	[SAL["Wrath of the Lich King"]] = {},
+	[SAL["Cataclysm"]] = {},
+	[SAL["Mists of Pandaria"]] = {},
+	[SAL["Warlords of Draenor"]] = {},
+	[SAL["Legion"]] = {},
 }
 
 -- Cooldown.lua
@@ -228,7 +222,7 @@ _G.GUI.SA_DropDownMenu.data = {
 _G.SmartAssign.minimap = {
 		shown = true,
 		locked = false,
-		minimapPos = 218,
+		minimapPos = 210,
 		clicked = false,
 	}
 

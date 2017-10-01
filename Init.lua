@@ -194,6 +194,8 @@ _G.GUI.SA_ScrollFrame = {}
 _G.GUI.SA_CheckBox = {}
  
 _G.GUI.SA_EditBox = {}
+
+_G.GUI.SA_CreateAbilityFrame = {}
  
 _G.HUD = {}
 

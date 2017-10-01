@@ -3,7 +3,7 @@
 
 BossSelectFrame = {}
 
-function BossSelectFrame:show(parent, width, height, anchor, xOffset, yOffset)
+function BossSelectFrame:show(parent, width, height, anchor, xOffset, yOffset, name) --> name deswegen da weil sonst namensprobleme
 	--Default Parameters
 	parent = parent or UIParent
 	width = width or 200
@@ -27,12 +27,14 @@ function BossSelectFrame:show(parent, width, height, anchor, xOffset, yOffset)
 	
 	-- DropDownMenus einfügen
 	-- Expansion
-	local expDD = createExpansionDropDown(BossSelectFrame.frame, 0, 50, width * 0.8, "BossSelectFrame_ExpansionDropDrown")
-	local raidDD = createRaidDropDown(BossSelectFrame.frame, 0, 0, width * 0.8, "BossSelectFrame_RaidDropDrown")								 
-	local bossDD = createBossDropDown(BossSelectFrame.frame, 0, -50, width * 0.8, "BossSelectFrame_BossDropDrown")
+	local expDD = createExpansionDropDown(BossSelectFrame.frame, 0, 50, width * 0.8, name.."_BossSelectFrame_ExpansionDropDrown")
+	local raidDD = createRaidDropDown(BossSelectFrame.frame, 0, 0, width * 0.8, name.."_BossSelectFrame_RaidDropDrown")								 
+	local bossDD = createBossDropDown(BossSelectFrame.frame, 0, -50, width * 0.8, name.."_BossSelectFrame_BossDropDrown")
 	expDD.raid = raidDD
 	expDD.boss = bossDD
 	raidDD.boss = bossDD
+	
+	return BossSelectFrame.frame
 end
 
 

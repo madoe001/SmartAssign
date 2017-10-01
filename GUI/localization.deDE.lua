@@ -88,7 +88,17 @@ L["Lord Walden"] = "Lord Walden"
 
 L["Lord Godfrey"] = "Lord Godfrey"
 
-L["WOTLK"] = "WOTLK"
+L["Wrath of the Lich King"] = "Wrath of the Lich King"
+
+L["The Burning Crusade"] = "The Burning Crusade"
+
+L["Cataclysm"] = "Cataclysm"
+
+L["Mists of Pandaria"] = "Mists of Pandaria"
+
+L["Warlords of Draenor"] = "Warlords of Draenor"
+
+L["Legion"] = "Legion"
 
 -- SlashCommands
 L["'func' must be a function."] = "'func' muss eine Funktion sein." 
@@ -113,6 +123,12 @@ L["Time in sec"] = "Zeit in s"
 
 L["[SpellID] text"] = "[SpellID] Text"
 
+L["name"] = "Name"
+
+L["cooldown(s) in sec"] = "Abklingzeit/en in s"
+
+L["phasename(s)"] = "Phasenname/n"
+
 -- ScrollFrame
 
 L[" has no childs!"] = " hat keine Kinder!"
@@ -122,6 +138,27 @@ L[" has no childs!"] = " hat keine Kinder!"
 L["Player is in Instance."] = "Der Spieler ist in einer Instanz."
 
 L["Player is not in Instance."] = "Der Spieler ist in keiner Instanz."
+
+-- CreateAbilityFrame
+
+L["Apply"] = "Anlegen"
+
+L["Delete"] = "L\195\182schen"
+
+L["For more than one cooldown or phasename use a semicolon as delimiter"] = "F\195\188r mehr als eine Abklingzeit oder einen Phasennamen,\n benutze ein Semikolon zum trennen"
+
+L["loop"] = "Schleife"
+
+L["phasebound"] = "Phasengebunden"
+
+L["reset timer on phase"] = "Timer bei Phase zur\195\188cksetzen"
+
+L["mythic"] = "Mytisch"
+
+L["heroic"] = "Heroisch"
+
+L["normal"] = "Normal"
+
 
 -- ASSERTS
 L["'func' in 'DropDownMenu SetOnClick' must be a function."] = "'func' in 'DropDownMenu SetOnClick' muss eine Funktion sein."
