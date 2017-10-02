@@ -7,11 +7,8 @@ local SmartAssign = _G.SmartAssign
 local GUI = _G.GUI
 
 -- components
-local DropDownMenu = GUI.SA_DropDownMenu
-local ScrollFrame = GUI.SA_ScrollFrame
-local CheckBox = GUI.SA_CheckBox
-local EditBox = GUI.SA_EditBox
 local AssignmentFrame = _G.GUI.AssignmentFrame
+local CreateAbilityFrame = GUI.SA_CreateAbilityFrame
 local flag = true
 -- hud
 local mainHUD = _G.HUD.mainHUD
@@ -46,7 +43,6 @@ end
 -- event: on which it was called
 -- addon: name of addon
 function SA_GUI_LOCAL:Init(event, addon)
---print("addon: "..addon)
 	if (event == "ADDON_LOADED" and addon == "SmartAssign") then
 		SA_GUI_LOCAL:CreateGUI(SA_GUI.frame)
 		-- color the text |cffHEXCOLOR STRING |r << EndTag
@@ -71,12 +67,11 @@ end
 -- SA_GUI_LOCAL:CreateGUI(): create content of the mainFrame
 --
 -- frame: Parent frame
--- ######################## NEXT Container für Frames und Hide über eine func welche im container sucht und Hide ausführt und ein HideAll
 function SA_GUI_LOCAL:CreateGUI(frame)
 	frame = SA_GUI_LOCAL:CreateWindow(frame)
 	
 	-- close Button
-	frame.closeButton = SA_GUI_LOCAL:CreateButton(frame, "closeButton", nil, 0, 0, "TOPRIGHT", 0, 0, "UIPanelCloseButton")
+	frame.closeButton = SA_GUI_LOCAL:CreateButton(frame, "closeButton", nil, 0, 0, "TOPRIGHT", -4, -4, "UIPanelCloseButton")
 	
 	-- create TitleBar
 	SA_GUI_LOCAL:CreateTitleBar(frame)
@@ -89,15 +84,15 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	--frame.dropDownMenu = SA_GUI_LOCAL:CreateDropDownMenu(frame, DropDownMenu.data)
 	--frame.dropDownMenu:Hide()
 	
-	SlashCommands:AddResetFunction(SA_GUI_LOCAL.ScrollFrameReset,"ScrollFrame") -- add the reset function of the scrollframe to slashcommands
+	--SlashCommands:AddResetFunction(SA_GUI_LOCAL.ScrollFrameReset,"ScrollFrame") -- add the reset function of the scrollframe to slashcommands
 		
-	local boss = BossSelectFrame:show(frame, 200, frame:GetHeight(), "LEFT", 0, 0)
+	local boss = BossSelectFrame:show(frame, 200, frame:GetHeight(), "LEFT", 0, 0, "main")
 	local assign = AssignmentFrame:new_scrollframe(frame, BossSelectFramus , 5, -100)
 	frame.assign = assign
 	table.insert(Assignments, assign)
 
 
-
+	CreateAbilityFrame:CreateGUI(UIParent)
 
 	-- make main frame movable
 	SA_GUI_LOCAL:MakeMovable(frame)
@@ -122,7 +117,7 @@ function SA_GUI_LOCAL:CreateWindow(frame)
 	insets = {left = 4, right = 4, top = 4, bottom = 4}
 	})
 	
-	frame:SetToplevel(true) -- set to top level
+	frame:SetToplevel(false) -- set to top level
 	
 	frame:Hide() -- hide at beginning, show by slashcommand or clicking on minimapbutton
 	
@@ -163,7 +158,7 @@ function SA_GUI_LOCAL:CreateButton(frame, name, text, width, height, position, x
 	-- create CloseButton
 	if template == "UIPanelCloseButton" then -- close button
 		local button = CreateFrame("Button", name, frame, template)
-		button:SetPoint(position, frame, position)
+		button:SetPoint(position, frame, position, x, y)
 		-- when click on Button Hide frame
 		button:SetScript("OnClick", function (self, button)
 			if button == "LeftButton" then
@@ -172,7 +167,7 @@ function SA_GUI_LOCAL:CreateButton(frame, name, text, width, height, position, x
 		end)
 	else -- create another button
 		local button = CreateFrame("Button", name, frame, template)
-		button:SetPoint(positon, x, y)
+		button:SetPoint(position, x, y)
 		button:SetWidth(width)
 		button:SetHeight(height)
 		button:SetText(text)
@@ -222,7 +217,7 @@ function SA_GUI_LOCAL:ResetFrames()
 	if SA_GUI.frame then
 		SA_GUI.frame:ClearAllPoints()
 		SA_GUI.frame:SetPoint("CENTER", SA_GUI.frame.x, SA_GUI.frame.y)
-		ScrollFrame:Reset(mainFrame)
+		--ScrollFrame:Reset(mainFrame)
 	end
 end
 

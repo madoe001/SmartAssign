@@ -33,11 +33,11 @@ local function CreateCheckBox(frame, checkboxText, name)
 	local CheckBoxFrame = CreateFrame("CheckButton", name, frame, "UICheckButtonTemplate")
 
 	CheckBoxFrame:ClearAllPoints()
-	CheckBoxFrame:SetText(checkboxText)
+	CheckBoxFrame:SetText(GUIL[checkboxText])
 	
 	CheckBoxFrame.label = CheckBoxFrame:CreateFontString("CheckBoxFrame-label", "ARTWORK", "GameFontNormalSmall")
 	CheckBoxFrame.label:SetHeight(25)
-	CheckBoxFrame.label:SetText(checkboxText)
+	CheckBoxFrame.label:SetText(GUIL[checkboxText])
 	CheckBoxFrame.label:SetPoint("LEFT", CheckBoxFrame, "RIGHT", 0,0)
 	
 	return CheckBoxFrame

@@ -256,7 +256,7 @@ function createAbillityDropDown (parentFrame, x, y, width, name)
 				end
 			end
 		end
-		local list = {"Timer"}
+		local list = {"Ability"}
 		if (eID) then
 			if ( SA_AbilityList[eID] ) then
 				for dif, num in pairs( SA_AbilityList[eID] ) do
@@ -289,7 +289,9 @@ function createAbillityDropDown (parentFrame, x, y, width, name)
 	UIDropDownMenu_SetWidth(framus, width);
 	UIDropDownMenu_SetButtonWidth(framus, width +24)
 	UIDropDownMenu_SetText(framus, "Abillity")
-	UIDropDownMenu_SetText(framus, SA_LastSelected.abillity)
+	if SA_LastSelected.abillity ~= "" then
+		UIDropDownMenu_SetText(framus, SA_LastSelected.abillity)
+	end
 	UIDropDownMenu_JustifyText(framus, "LEFT")
 	
 	return (framus) 

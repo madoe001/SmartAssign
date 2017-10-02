@@ -23,6 +23,11 @@ do
 		self.textCB:Hide()
 		self.dropDownPlayer:Hide()
 		self.dropDownCooldown:Hide()
+		if self.textCB:GetChecked() then
+			self.extraText:Hide()
+		else
+			self.dropDownCooldown:Hide()
+		end
 		self.offset:Hide()
 	end
 	
@@ -30,7 +35,11 @@ do
 		self.abilityCB:Show()
 		self.textCB:Show()
 		self.dropDownPlayer:Show()
-		self.dropDownCooldown:Show()
+		if self.textCB:GetChecked() then
+			self.extraText:Show()
+		else
+			self.dropDownCooldown:Show()
+		end
 		self.offset:Show()
 	end
 
@@ -67,13 +76,13 @@ do
 	local function GetPlayerAssignment(self)
 		local playerData = {}
 		
-		playerData["Player"] = self.dropDownPlayer:GetText()
+		playerData["Player"] = UIDropDownMenu_GetText(self.dropDownPlayer)
 		if self.abilityCB:GetChecked() then
-			player["TextOrCoolDown"] = "ability"
-			playerData["Text"] = self.dropDownCooldown:GetText()
+			playerData["TextOrCoolDown"] = "ability"
+			playerData["Text"] = UIDropDownMenu_GetText(self.dropDownCooldown)
 		else
-			player["TextOrCoolDown"] = "text"
-			player["Text"] = self.extraText:GetText()
+			playerData["TextOrCoolDown"] = "text"
+			playerData["Text"] = self.extraText:GetText()
 		end
 		playerData["offset"] = self.offset:GetText()
 		return playerData
@@ -82,17 +91,22 @@ do
 
 	local function SetPlayerAssignment(self, playerData)
 		
-		self.dropDownPlayer:SetText(playerData["Player"])  
-		if player["TextOrCoolDown"] == "ability" then
+		print(playerData["Player"])
+		UIDropDownMenu_SetText(self.dropDownPlayer, playerData["Player"])
+		if playerData["TextOrCoolDown"] == "ability" then
 			self.abilityCB:SetChecked(true)
-			self.dropDownCooldown:SetText(playerData["Text"])	 
+			self.textCB:SetChecked(false)
+			UIDropDownMenu_SetText(self.dropDownCooldown, playerData["Text"])
 			self.extraText:Hide()
-		else
+			self.dropDownCooldown:Show()
+		elseif playerData["TextOrCoolDown"] == "text" then
 			self.textCB:SetChecked(true)
-			--player["TextOrCoolDown"] = "text"
-			self.extraText:SetText(player["Text"] )
+			self.abilityCB:SetChecked(false)
+			self.extraText:SetText(playerData["Text"] )
+			self.extraText:Show()
 			self.dropDownCooldown:Hide()
 		end
+		self.offset.label:SetText("")
 		self.offset:SetText(playerData["offset"])
 	end
 
@@ -110,7 +124,7 @@ do
 			textCB = CheckBox:LoadCheckBox(frame, "Extra Text"),
 			dropDownPlayer = createPlayerDropDown(frame, 0, 0, 80, "mb1"..lastElement), 
 			dropDownCooldown = {},
-			offset = EditBox:LoadEditBox(frame, "offs"..lastElement, "number"),	
+			offset = EditBox:LoadEditBox(frame, "offs"..lastElement, "number", "timer"),	
 			extraText = CreateFrame("EditBox", "extraText"..lastElement, frame,"InputBoxTemplate"), 
 			
 			--Klasseamethoden bzw. referenzen drauf
@@ -131,7 +145,7 @@ do
 		obj.extraText:SetAutoFocus(false)
 		obj.extraText.inputType = "String"
 		obj.extraText:Hide()
-		
+		obj.dropDownCooldown:Hide()
 		
 		
 		obj.abilityCB:SetScript("OnClick", function(self, button, down)

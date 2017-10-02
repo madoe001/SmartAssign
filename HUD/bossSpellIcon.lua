@@ -8,19 +8,20 @@ local HL = _G.HUD.Locales
 local bossSpellIcon = _G.HUD.BossSpellIcon
 local TimeSinceLastUpdate = 0.0 -- needed for OnUpdate Event
 local name
-local unit
 local channeling = false -- needed to check if unit channels a spell
+local iconFrame
 
 -- bossSpellIcon:CreatebossSpellIcon(): function to create the bossSpellIcon
-function bossSpellIcon:CreatebossSpellIcon(frame)
+--
+-- frame: parent
+-- unit: the unit --> e.g target
+function bossSpellIcon:CreatebossSpellIcon(frame, unit)
 	iconFrame = CreateFrame("Frame", "iconFrame", frame)
 	iconFrame.label = iconFrame:CreateFontString("SpellIcon-label", "ARTWORK", "GameFontNormalSmall")
 	iconFrame.icon = iconFrame:CreateTexture("iconFrameTexture","BACKGROUND")
 	iconFrame.updateIntervall = 1.0 -- needed for OnUpdate Event, how much call the inner construct of OnUpdate function
 	
-	iconFrame:SetScript("OnEvent", bossSpellIcon.OnEvent)
-	
-	RegisterAllEvents()
+	iconFrame.unit = unit
 end
 
 -- bossSpellIcon:OnEvent(): OnEvent function for the bossSpellIcon
@@ -32,41 +33,38 @@ end
 -- UNIT_SPELLCAST_CHANNEL_STOP: when a unit stops to channel a spell
 -- UNIT_SPELLCAST_SUCCEEDED: caused a failure, cause of that not in use
 -- 
---
 -- event: event, which call´s the function
 function bossSpellIcon:OnEvent(event, ...)
-	unit = ...
-	name = UnitName("target")
-	if unit == "target" then -- only target --> ersetzen durch boss1 bis boss5
-		local canAttack = UnitCanAttack("target", "player") -- if the target can attack the player, than true
-		if event == "UNIT_SPELLCAST_START" then
-			if bossSpellIcon:PreCheck(canAttack) then
-				bossSpellIcon:BossCastingInfo("target")
-				bossSpellIcon:CreateSpellIcon()
-				iconFrame:Show()
-				iconFrame:SetScript("OnUpdate", bossSpellIcon.IconTextUpdate)
-			end
+	name = UnitName(iconFrame.unit)
+	local canAttack = UnitCanAttack(iconFrame.unit, "player") -- if the target can attack the player, than true
+	if event == "UNIT_SPELLCAST_START" then
+		if bossSpellIcon:PreCheck(canAttack) then
+			bossSpellIcon:BossCastingInfo(iconFrame.unit)
+			bossSpellIcon:CreateSpellIcon()
+			iconFrame:Show()
+			iconFrame:SetScript("OnUpdate", bossSpellIcon.IconTextUpdate)
 		end
-		if event == "UNIT_SPELLCAST_CHANNEL_START" then
-			if bossSpellIcon:PreCheck(canAttack) then
-				bossSpellIcon:BossChannelingInfo("target")
-				bossSpellIcon:CreateSpellIcon()
-				iconFrame:Show()
-			end
+	end
+	if event == "UNIT_SPELLCAST_CHANNEL_START" then
+		if bossSpellIcon:PreCheck(canAttack) then
+			bossSpellIcon:BossChannelingInfo(iconFrame.unit)
+			bossSpellIcon:CreateSpellIcon()
+			iconFrame:Show()
 		end
-		if event == "UNIT_SPELLCAST_STOP" then
-			if bossSpellIcon:PreCheck(canAttack) then
-				iconFrame:Hide()
-				iconFrame:SetScript("OnUpdate", nil)
-				iconFrame.SpellStartsIn = 0.0
-			end
+	end
+	if event == "UNIT_SPELLCAST_STOP" then
+		if bossSpellIcon:PreCheck(canAttack) then
+			iconFrame:Hide()
+			iconFrame:SetScript("OnUpdate", nil)
+			iconFrame.SpellStartsIn = 0.0
 		end
-		if event == "UNIT_SPELLCAST_CHANNEL_STOP" then
-			if bossSpellIcon:PreCheck(canAttack) then
-				iconFrame:Hide()
-				iconFrame:SetScript("OnUpdate", nil)
-			end
+	end
+	if event == "UNIT_SPELLCAST_CHANNEL_STOP" then
+		if bossSpellIcon:PreCheck(canAttack) then
+			iconFrame:Hide()
+			iconFrame:SetScript("OnUpdate", nil)
 		end
+	end
 	--[[if event == "UNIT_SPELLCAST_SUCCEEDED" then
 		if bossSpellIcon:PreCheck(canAttack) then
 			iconFrame:Hide()
@@ -74,16 +72,24 @@ function bossSpellIcon:OnEvent(event, ...)
 			print("SUCC")
 		end
 	end]] -- makes problems
-	end
 end
 
 -- RegisterAllEvents(): registers all events at one time 
 function RegisterAllEvents()
-	iconFrame:RegisterEvent("UNIT_SPELLCAST_START", "target")
-	iconFrame:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START", "target")
-	iconFrame:RegisterEvent("UNIT_SPELLCAST_CHANNEL_STOP", "target")
-	iconFrame:RegisterEvent("UNIT_SPELLCAST_STOP", "target")
-	--iconFrame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED", "target")
+	iconFrame:RegisterEvent("UNIT_SPELLCAST_START", iconFrame.unit)
+	iconFrame:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START", iconFrame.unit)
+	iconFrame:RegisterEvent("UNIT_SPELLCAST_CHANNEL_STOP", iconFrame.unit)
+	iconFrame:RegisterEvent("UNIT_SPELLCAST_STOP", iconFrame.unit)
+	--iconFrame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED", unit)
+end
+
+-- UnRegisterAllEvents(): unregisters all events at one time 
+function UnRegisterAllEvents()
+	iconFrame:UnregisterEvent("UNIT_SPELLCAST_START", iconFrame.unit)
+	iconFrame:UnregisterEvent("UNIT_SPELLCAST_CHANNEL_START", iconFrame.unit)
+	iconFrame:UnregisterEvent("UNIT_SPELLCAST_CHANNEL_STOP", iconFrame.unit)
+	iconFrame:UnregisterEvent("UNIT_SPELLCAST_STOP", iconFrame.unit)
+	--iconFrame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED", unit)
 end
 
 -- bossSpellIcon:PreCheck(): checks if unit exists, is dead or ghost and if is player
@@ -92,9 +98,9 @@ end
 -- canAttack: if the unit can attack the player(boolean)
 function bossSpellIcon:PreCheck(canAttack)
 	local check = false
-	if  UnitExists("target") then
-		if not UnitIsDeadOrGhost("target") then
-			if not UnitIsPlayer("target") then
+	if  UnitExists(iconFrame.icon) then
+		if not UnitIsDeadOrGhost(iconFrame.unit) then
+			if not UnitIsPlayer(iconFrame.unit) then
 				if canAttack then
 					check = true
 				end
@@ -242,6 +248,8 @@ function bossSpellIcon:CreateSpellIcon()
 end
 
 -- bossSpellIcon:IconTextUpdate(): function for OnUpdate Event
+--
+-- elapsed: time which is elapsed
 function bossSpellIcon:IconTextUpdate(elapsed)
 	if elapsed == nil then -- check if elapsed have a value
 		elapsed = 0.0
@@ -265,6 +273,20 @@ function bossSpellIcon:IconTextUpdate(elapsed)
 				end
 			end
 			TimeSinceLastUpdate = TimeSinceLastUpdate - iconFrame.updateIntervall
+		end
+	end
+end
+
+-- bossSpellIcon:Show(): shows the bossSpellIcon
+--
+-- isGUID: if is a unitGUID
+function bossSpellIcon:Show(isGUID)
+	if iconFrame then
+		if isGUID then
+			iconFrame:SetScript("OnEvent", bossSpellIcon.OnEvent)
+			RegisterAllEvents()
+		else
+			UnRegisterAllEvents()
 		end
 	end
 end

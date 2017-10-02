@@ -57,7 +57,7 @@ end
 
 -- MiniMapButton.ResetFrames(): reset the minimap position and refresh the position of the button
 function MiniMapButton.ResetFrames()
-	minimap.minimapPos = 218;
+	minimap.minimapPos = 210;
 	SAButton:Refresh("SmartAssign");
 end
 

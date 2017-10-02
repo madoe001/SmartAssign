@@ -34,10 +34,10 @@ function mainHUD:CreateMainHUD()
 	hudFrame:Show()
 	
 	hudFrame:RegisterEvent("PLAYER_ENTERING_WORLD");
+	hudFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+	hudFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 	hudFrame:SetScript("OnEvent", mainHUD.OnEnteringEvent_TestInstance)
 	--hudFrame:Hide()
-	CreateBossPlate(hudFrame)
-	CreateBossSpellIcon(hudFrame)
 end
 
 -- mainHUD:Show(): function to show mainHUD, at moment not needed
@@ -46,19 +46,32 @@ function mainHUD:Show()
 end
 
 -- mainHUD:OnEnteringEvent_TestInstance(): function which is called when the event fires
+-- where we setup a nameplate and spellicons, when target is one of the bosses
 --
 -- event: which fires
 function mainHUD:OnEnteringEvent_TestInstance(event)
 	if (event == "PLAYER_ENTERING_WORLD" ) then -- when player enter world or instance
 		local isInstance, instanceType = IsInInstance() -- get information about instance
 		if isInstance then -- when player is in a instance ## later here we set the bosscontainer of the instance and overgive it to the components which check if is targeted
-			--print(SAL["Player is in Instance."])
 			isInstance = isInstance
 			if instanceType == "party" or instanceType == "raid" then
 				instanceType = instanceType
+				print("create boss plate")
+				bossPlate:CreateBossPlate(hudFrame, "target")
+				bossSpellIcon:CreatebossSpellIcon(hudFrame, "target")
 			end
-		else
-			--print("|cFFFF0000"..SAL["Player is not in Instance."].."|r")
+		end
+	elseif "PLAYER_TARGET_CHANGED" or "PLAYER_REGEN_DISABLED" then		
+		local name = UnitName("target")
+		local boss1 = UnitName("boss1")
+		local boss2 = UnitName("boss2")
+		local boss3 = UnitName("boss3")
+		local boss4 = UnitName("boss4")
+		local boss5 = UnitName("boss5")
+		
+		if name == boss1 or name == boss2 or name == boss3 or name == boss4 or name == boss5 then
+			bossPlate:Show(true)
+			bossSpellIcon:Show(true)
 		end
 	end
 end

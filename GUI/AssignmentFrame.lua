@@ -57,8 +57,50 @@ do
 		
 	end
 
+
+	local function init(self, relativeElement, assigns)
+		
+		local obj = self
+		local counter = 0
+		if assigns ~= nil then
+		for k,v  in pairs(assigns) do
+			print("Last Element: ", obj.lastElement)
+			local assignment = Assignment:new_assignment(obj.content, relativeElement, obj.index, 0, 0)
+			table.insert(obj.assignments, assignment)
+			assignment:Show()
+			assignment:SetFrameStrata("HIGH")
+			if obj.amountAssigns == 0 then
+				assignment.mainFrame:SetPoint("TOP", obj.content, 0, -10)
+				obj.lastElement = assignment.mainFrame
+			else
+				assignment.mainFrame:SetPoint("TOPLEFT", obj.lastElement, "BOTTOMLEFT")
+				obj.lastElement = assignment.mainFrame
+			end
+
+			obj.index = obj.index + 1
+			obj.scrollframe:SetScrollChild(obj.content)
+			local delete = CreateFrame("Button", nil, assignment.mainFrame, "OptionsButtonTemplate")
+			delete:SetPoint("BOTTOMLEFT", assignment.mainFrame, "BOTTOMLEFT", 10, 10)
+			delete:SetWidth(25)
+			delete:SetHeight(25)
+			delete:SetText("-")
+			delete:SetFrameStrata("HIGH")
+			obj.amountAssigns = obj.amountAssigns + 1	
+			assignment:SetAssign(v)
+			delete:SetScript("OnClick", function(self, button, down)
+				assignment:Hide()
+				self:Hide()
+				updateAssignmentFrame(obj, assignment)
+			end)
+			table.insert(obj.deleteButtons, delete)
+			obj.scrollframe:SetScrollChild(obj.content)
+		end
+	end
+	end
+
 	function AssignmentFrame:new_scrollframe(frame, relativeElement, x, y)
-	local obj = {
+	
+		local obj = {
 			scrollframe = CreateFrame("Scrollframe", nil, frame),   
 			scrollbar = CreateFrame("Slider", nil, scrollframe, "UIPanelScrollBarTemplate"),		
 			new = CreateFrame("Button", nil, frame, "OptionsButtonTemplate"),
@@ -71,9 +113,27 @@ do
 			Show = show,
 			Hide = hide,
 			amountAssigns = 0,
-			
+			initAssigns = init,
+			save = CreateFrame("Button", nil, frame, "OptionsButtonTemplate"),
 		}
+		
+		obj.save:SetScript("OnClick", function(self, button, down)
+			local counter = 0
+			for k, v in pairs(obj.assignments) do
+				print(SA_LastSelected.boss)
+				SA_Assignments[SA_LastSelected.boss] = {}
+				SA_Assignments[SA_LastSelected.boss]["assignment"..counter] = v:GetAssign()
+			end
+		end)
+		obj.save:SetPoint("LEFT", obj.new, "RIGHT", 5 ,0)
+		obj.save:SetText("Save")
+		obj.save:SetFrameStrata("HIGH")		
 
+		
+		
+		
+		
+		
 		obj.content:SetParent(obj.scrollframe)
 
 		obj.new:SetPoint("BOTTOMLEFT", obj.scrollframe, "BOTTOMLEfT", 10, 10)
@@ -103,7 +163,9 @@ do
 		obj.content:SetWidth(obj.scrollframe:GetWidth())
 		obj.content:SetHeight(200)
 		obj.content:SetPoint("TOPLEFT", obj.scrollframe, "TOPLEFT")
-
+		
+		obj.initAssigns(obj, relativeElement, SA_Assignments[SA_LastSelected.boss])
+		
 		-- Scroll Bar
 		obj.scrollbar = CreateFrame("Slider","sb",obj.scrollframe,"UIPanelScrollBarTemplate") 
 		obj.scrollbar:SetPoint("TOPLEFT",obj.scrollframe,"TOPRIGHT",5,-20) 

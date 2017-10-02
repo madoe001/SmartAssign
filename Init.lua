@@ -16,6 +16,8 @@ if(SA_LastSelected == nil) then
 	SA_LastSelected.abillity = ""
 end
 
+SA_Assignments = SA_Assignments or {}
+
 SA_Cooldowns = SA_Cooldowns or {
    ["Warrior"] = {
 		["97462"] = { -- Shout
@@ -194,6 +196,8 @@ _G.GUI.SA_ScrollFrame = {}
 _G.GUI.SA_CheckBox = {}
  
 _G.GUI.SA_EditBox = {}
+
+_G.GUI.SA_CreateAbilityFrame = {}
  
 _G.HUD = {}
 

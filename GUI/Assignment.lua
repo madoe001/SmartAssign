@@ -125,28 +125,64 @@ do
 	local function GetAssignment(self)
 		local assignmentData = {}
 
-		assignmentData["Type"] = self.dropDownAssignType:GetText()
+		assignmentData["Type"] = UIDropDownMenu_GetText(self.dropDownAssignType)
 		assignmentData["Timer"] = self.editTimer:GetText()
 
 		local index = 1
+		assignmentData["assigns"] = {}
 		for k, v in pairs(self.playerAssigns) do
-			assignmentData["assigns"]["playerAssign"] = v:GetAssignment()
+			assignmentData["assigns"]["playerAssign" .. index] = v:GetPlayerAssign()
 			index = index + 1
 		end
+
+		return assignmentData
 	end
 
 	local function SetAssignment(self, assign)
 		
-		self.dropDownAssignType:SetText(assign["Type"])
+		UIDropDownMenu_SetText(self.dropDownAssignType, assign["Type"])
+		self.editTimer.label:SetText("")
 		self.editTimer:SetText(assign["Timer"])
 
-		local counter = 1
-		for k, v in assign["assigns"] do
-			local playerAssign = pa:new_playerAssign(self.mainFrame, self.editTimer, self.index .. counter, 0, -80 * counter)
-			table.insert(self.playerAssigns, playerAssign)
+		local obj = self
+		local counter = 0
+		for k, v in pairs(assign["assigns"]) do
+			local playerAssign = pa:new_playerAssign(obj.mainFrame, obj.editTimer, obj.index .. counter, 0, -80 * counter)
+			table.insert(obj.playerAssigns, playerAssign)
 			
+			obj.new:SetPoint("LEFT", obj.editTimer, "RIGHT", 5, -80 * obj.amountPlayer)
+			local delete = CreateFrame("Button", "deletePlayerAssign"..#obj.playerAssigns, obj.mainFrame, "OptionsButtonTemplate")
+			delete:SetWidth(25)
+			delete:SetHeight(25)
+			delete:SetText("-")
+			local index = obj.counter
+			print("index:"..index)
+			delete:SetPoint("LEFT", playerAssign.offset, "RIGHT", 10, 0)
+			local height = obj.mainFrame:GetHeight()
+			obj.mainFrame:SetHeight(height + 80)
+			playerAssign:SetPlayerAssign(v)
+			delete:SetScript("OnClick", function(self, button, down)
+				
+				updatePlayerAssignPosition(self, playerAssign)
+				print(self.amountPlayer)
+				playerAssign:Hide()
+				playerAssign:Delete()
+				
+				playerAssign = nil
+				
+				local height = self.mainFrame:GetHeight()
+				
+				obj.mainFrame:SetHeight(height - 80)
+				obj:Hide()
+				
+				obj.new:SetPoint("LEFT", obj.editTimer, "RIGHT", 5, -80 * obj.amountPlayer)
+			end)
+			table.insert(obj.deleteButtons, delete)		
+			playerAssign:Show()
+			counter = counter + 1
 		
 		end
+		obj.amountPlayer = counter
 
 		self.new:SetPoint("LEFT", self.editTimer, "RIGHT", 5, -80 * #self.playerAssigns)
 
@@ -180,7 +216,7 @@ do
 		setmetatable(obj, self)
 		self.__index = self
 	
-		obj.editTimer = editBox:LoadEditBox(obj.mainFrame, "editTimer"..obj.index,  "number")
+		obj.editTimer = editBox:LoadEditBox(obj.mainFrame, "editTimer"..obj.index,  "number", "timer")
 		obj.new =  CreateFrame("Button", "newPlayerAssign"..obj.index, obj.mainFrame, "OptionsButtonTemplate")
 		obj.dropDownAssignType = createAbillityDropDown(obj.mainFrame, 0,0, 80, "smartB" .. obj.index)
 

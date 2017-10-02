@@ -90,7 +90,7 @@ function CreateScrollBar(frame)
 	-- show scrollbar only if too much buttons inside ScrollFrame
 	ScrollBar:SetScript("OnAttributeChanged", function(self, name, value)
 		if name == "buttoncount" then
-			if(value > ((ScrollFrame:GetHeight()-20)/25)) then
+			if(value > ((ScrollFrame:GetHeight()-20)/15)) then
 				self:Show()
 			else
 				self:Hide()
@@ -123,16 +123,17 @@ function CreateContent(frame, data)
 	
 	SA_ScrollFrame:CreateButtons(data, frame)
 	local i = 1
+	local lastContent = 1
 	for k, v in pairs(data) do
 		if type(k) == "string" then
 			local btn1 = ConfigMainButton(ScrollFrame.buttons[i], k) -- configurate the main button
-
 			if i == 1 then -- set position of first button
 				btn1:SetPoint("TOPLEFT", ScrollFrame, "TOPLEFT", 0, 0)
 			else
-				btn1:SetPoint("TOPLEFT", ScrollFrame.buttons[i -(i-1)], "BOTTOMLEFT", 0, 0)
+				btn1:SetPoint("TOPLEFT", ScrollFrame.buttons[(lastContent-1)], "BOTTOMLEFT", 0, 0)
 			end
-			btn1:Show() -- only main buttons shown
+			lastContent = i
+			i = i + 1
 			if type(v) == "table" then -- if the value is a table
 				if GetDepth(v) >= 2 then -- if the Depth is 2 or higher, we have a second table in the table
 					for k, v in pairs(v) do -- loop through the instance buttons
