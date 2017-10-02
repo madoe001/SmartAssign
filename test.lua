@@ -196,7 +196,7 @@ function SA_OnEvent(frame, event, encounterID, ...)
 		end
 		if( SA_AbilityList[eID][difficulty] ) then
 			for k,v in pairs ( SA_AbilityList[eID][difficulty] ) do
-				SA_AbilityList[eID][difficulty][k].counter = 0
+				SA_AbilityList[eID][difficulty][k].counter = 1
 			end
 		end
 	end 
@@ -368,12 +368,11 @@ end
 --/script createPhase("1837", "P2", "P1", 90, "HP", true, nil, true)
 --/script createPhase("1837", "P3", "P2", 80, "HP", true, nil, true)
 --/script createPhase("1837", "P4", "P3", 30, "Time", true, nil, true)
-function createAbility(encounterID, abilityName, cooldown, mythicFlag, heroicFlag, normalFlag)
+function createAbility(encounterID, abilityName, cooldown,boundedPhases, mythicFlag, heroicFlag, normalFlag, loopingListFlag, resetTimerOnPhaseStartFlag)
 	encounterID = encounterID .. ""
 	if ( not mythicFlag and not heroicFlag and not normalFlag ) then
 		return false
 	end
-	print ("1")
 	if (not SA_AbilityList[encounterID] ) then
 		SA_AbilityList[encounterID] = {}
 	end
@@ -387,7 +386,6 @@ function createAbility(encounterID, abilityName, cooldown, mythicFlag, heroicFla
 	if ( normalFlag ) then
 		table.insert(difficulties, "Normal")
 	end
-	print ("2")
 	for number,difficulty in ipairs ( difficulties ) do
 		if (not SA_AbilityList[encounterID][difficulty] ) then
 			SA_AbilityList[encounterID][difficulty] = {}
@@ -395,28 +393,97 @@ function createAbility(encounterID, abilityName, cooldown, mythicFlag, heroicFla
 		if (not SA_AbilityList[encounterID][difficulty][abilityName] ) then
 			SA_AbilityList[encounterID][difficulty][abilityName] = {}
 		end
-		SA_AbilityList[encounterID][difficulty][abilityName].cooldown = cooldown
+		if ( resetTimerOnPhaseStartFlag ) then
+			SA_AbilityList[encounterID][difficulty][abilityName].resetTimerOnPhaseStart = true
+		end		
+		if ( loopingListFlag ) then
+			SA_AbilityList[encounterID][difficulty][abilityName].iterateMethod = "Looping"
+		else
+			SA_AbilityList[encounterID][difficulty][abilityName].iterateMethod = "Iterating"
+		end
+		if( boundedPhases ) then
+			local phases = mysplit(boundedPhases, ";")
+			SA_AbilityList[encounterID][difficulty][abilityName].boundToPhase = true
+			SA_AbilityList[encounterID][difficulty][abilityName].boundedPhases = {}
+			SA_AbilityList[encounterID][difficulty][abilityName].boundedPhases = phases;
+		end
+			local cooldowns = mysplit(cooldown, ";")
+			SA_AbilityList[encounterID][difficulty][abilityName].cooldown = {}
+			SA_AbilityList[encounterID][difficulty][abilityName].cooldown = cooldowns
+			SA_AbilityList[encounterID][difficulty][abilityName].start = 0
+			SA_AbilityList[encounterID][difficulty][abilityName].nextStart = true
+			SA_AbilityList[encounterID][difficulty][abilityName].SA_lastPhase = ""
 	end
 end
 
 function abilityHandler()
 	local eID = SA_WEAKAURA.encounterID .. ""
 	local difficulty = getDifficulty()
-	if(not SA_AbilityList[eID] or not SA_PhaseList[eID]) then
+	if(not SA_AbilityList[eID]) then
 		return false
 	end
-	if(not SA_AbilityList[eID][difficulty] or not SA_PhaseList[eID][difficulty]) then
+	if(not SA_AbilityList[eID][difficulty]) then
 		return false
 	end
+	local totalDuruation = SA_WEAKAURA.duration
+	
 	for k,v in pairs(SA_AbilityList[eID][difficulty]) do
-		local phase = SA_PhaseList[eID][difficulty].SA_currentPhase
-		local duration = SA_PhaseList[eID][difficulty][phase].duration
-		local oldCounter = SA_AbilityList[eID][difficulty][k].counter
-		SA_AbilityList[eID][difficulty][k].counter = tonumber(string.format("%i", (duration / SA_AbilityList[eID][difficulty][k].cooldown))) -- Trennen der Nachkommastellen
-		if(oldCounter < SA_AbilityList[eID][difficulty][k].counter) then
-			SendChatMessage(k .. " ".. SA_AbilityList[eID][difficulty][k].counter, "SAY", "Common");
+		local iterateMethod = SA_AbilityList[eID][difficulty][k].iterateMethod
+		local listIndex = SA_AbilityList[eID][difficulty][k].counter
+		local t = SA_AbilityList[eID][difficulty][k].cooldown
+		local amountCooldowns = #t
+		if ( iterateMethod == "Looping" ) then
+			if ( amountCooldowns > 0 ) then
+				listIndex = listIndex % amountCooldowns
+				listIndex = listIndex + 1
+			end
+		elseif ( iterateMethod == "Iterating" ) then
+			if ( listIndex > amountCooldowns ) then
+				listIndex = amountCooldowns
+			end 
 		end
-	end
+		
+		local isTriggerable = false
+		
+		if (not SA_AbilityList[eID][difficulty][k].boundToPhase) then
+			if ( not SA_PhaseList[eID] ) then
+				return false
+			end
+			if( not SA_PhaseList[eID][difficulty] ) then
+				return false
+			end
+			
+			for num, phaseName in ipairs ( SA_AbilityList[eID][difficulty][k].boundedPhases ) do
+				if ( SA_PhaseList[eID][difficulty].SA_currentPhase == phaseName ) then
+					isTriggerable = true
+				end
+			end
+		else
+			isTriggerable = true
+		end
+		
+		if ( isTriggerable ) then
+			if ( SA_AbilityList[eID][difficulty][abilityName].resetTimerOnPhaseStart ) then
+				if ( SA_PhaseList[eID] ) then
+					if ( SA_PhaseList[eID][difficulty] ) then			
+						if ( SA_AbilityList[eID][difficulty][abilityName].SA_lastPhase ~= SA_PhaseList[eID][difficulty].SA_currentPhase) then
+							SA_AbilityList[eID][difficulty][abilityName].SA_lastPhase = SA_PhaseList[eID][difficulty].SA_currentPhase
+							SA_PhaseList[eID][difficulty][k].nextStart = true
+						end
+					end
+				end
+			end
+			if ( SA_PhaseList[eID][difficulty][k].nextStart ) then
+				SA_PhaseList[eID][difficulty][k].nextStart = false
+				SA_PhaseList[eID][difficulty][k].start = GetTime()
+			end
+			if ( SA_PhaseList[eID][difficulty][k].start + SA_PhaseList[eID][difficulty][k].cooldown[listIndex] < GetTime() ) then
+				SA_PhaseList[eID][difficulty][k].counter = SA_PhaseList[eID][difficulty][k].counter + 1
+				SA_PhaseList[eID][difficulty][k].nextStart = true
+			end
+			
+		end
+	end	
 end
 
 function phaseHandler()
