@@ -177,31 +177,68 @@ function ConfigComponents(frame)
 	frame.mythicCB:SetPoint("BOTTOMLEFT", delimiterLine, "BOTTOMLEFT", 20, 10)
 	frame.heroicCB:SetPoint("LEFT", frame.mythicCB, "LEFT", 90, 0)
 	frame.normalCB:SetPoint("LEFT", frame.heroicCB, "LEFT", 90, 0)
+	SetScripts()
+end
+
+-- SetScripts(): Sets all scripts for the components
+--
+-- author: Bartlomiej Grabelus (10044563)
+function SetScripts()
+	abilityFrame.mythicCB:SetScript("OnClick", function(self, button)
+		if button == "LeftButton" then
+			if abilityFrame.normalCB:GetChecked() then
+				abilityFrame.normalCB:SetChecked(false)
+			end	
+			if abilityFrame.heroicCB:GetChecked() then
+				abilityFrame.heroicCB:SetChecked(false)
+			end
+		end
+	end)
+	abilityFrame.heroicCB:SetScript("OnClick", function(self, button)
+		if button == "LeftButton" then
+			if abilityFrame.mythicCB:GetChecked() then
+				abilityFrame.mythicCB:SetChecked(false)
+			end	
+			if abilityFrame.normalCB:GetChecked() then
+				abilityFrame.normalCB:SetChecked(false)
+			end
+		end
+	end)
+	abilityFrame.normalCB:SetScript("OnClick", function(self, button)
+		if button == "LeftButton" then
+			if abilityFrame.mythicCB:GetChecked() then
+				abilityFrame.mythicCB:SetChecked(false)
+			end	
+			if abilityFrame.heroicCB:GetChecked() then
+				abilityFrame.heroicCB:SetChecked(false)
+			end
+		end
+	end)
 	applyButton:SetScript("OnClick", function (self, button)
 		if button == "LeftButton" then
-			if ValidForCreateAbility() then
+			if ValidForCreateAbility() then -- check if all is valid
 				if IsOneDifficultyChecked() then -- check if a dificulty is checked
-					if IsOnlyOneDifficultyChecked() then
-						StaticPopup_Show("REALLY_APPLY", frame.abilityNameEB:GetText())
-					else
-						StaticPopup_Show("INFO", GUIL["You should tick only one difficulty!"])
-					end
+					--if IsOnlyOneDifficultyChecked() then
+						StaticPopup_Show("REALLY_APPLY", abilityFrame.abilityNameEB:GetText())
+					--else
+						--StaticPopup_Show("INFO", GUIL["You should tick only one difficulty!"])
+					--end
 				else
 					StaticPopup_Show("INFO", GUIL["You should tick a difficulty!"])
 				end
 			else
-				if frame.abilityNameEB:GetText() == "" then -- if empty
-					frame.abilityNameEB.label:SetTextColor(1, 0, 0, 1)
+				if abilityFrame.abilityNameEB:GetText() == "" then -- if empty
+					abilityFrame.abilityNameEB.label:SetTextColor(1, 0, 0, 1)
 				end
-				if frame.cooldownEB:GetText() == "" then -- if empty
-					frame.cooldownEB.label:SetTextColor(1, 0, 0, 1)
+				if abilityFrame.cooldownEB:GetText() == "" then -- if empty
+					abilityFrame.cooldownEB.label:SetTextColor(1, 0, 0, 1)
 				end
 				-- check if have checked phasebound and some input is in editbox
-				if frame.abilityPhaseNameEB:GetText() == "" and frame.boundCB:GetChecked() == true then 
-					frame.abilityPhaseNameEB.label:SetTextColor(1, 0, 0, 1)
+				if abilityFrame.abilityPhaseNameEB:GetText() == "" and abilityFrame.boundCB:GetChecked() == true then 
+					abilityFrame.abilityPhaseNameEB.label:SetTextColor(1, 0, 0, 1)
 				end
 				-- check if have not checked phasebound and no input is in editbox
-				if frame.abilityPhaseNameEB:GetText() ~= "" and frame.boundCB:GetChecked() == false then
+				if abilityFrame.abilityPhaseNameEB:GetText() ~= "" and abilityFrame.boundCB:GetChecked() == false then
 					StaticPopup_Show("INFO", GUIL["Do you have forgotten to check phasebounded?"])
 				end
 			end
@@ -287,18 +324,28 @@ function CreateFont(frame, name, text, position, x, y, size)
 	return (fontString)
 end
 
+-- ValidForCreateAbility(): Checks if the player has typed in a name, cooldown and if the player has checked phasebounded.
+--							If has checked phasebounded, than the player has to type in a phase
+--
+-- author: Bartlomiej Grabelus (10044563)
 function ValidForCreateAbility()
 	return(abilityFrame.abilityNameEB:GetText() ~= "" and abilityFrame.cooldownEB:GetText() ~= "" 
 		   and (abilityFrame.abilityPhaseNameEB:GetText() ~= "" and abilityFrame.boundCB:GetChecked() == true 
 		   or abilityFrame.abilityPhaseNameEB:GetText() == "" and abilityFrame.boundCB:GetChecked() == false))
 end
 
+-- IsOnlyOneDifficultyChecked(): Checks if the player has checked only one difficulty
+--
+-- author: Bartlomiej Grabelus (10044563)
 function IsOnlyOneDifficultyChecked()
 	return((not abilityFrame.heroicCB:GetChecked() and not abilityFrame.mythicCB:GetChecked() and abilityFrame.normalCB:GetChecked())
 		or (abilityFrame.heroicCB:GetChecked() and not abilityFrame.mythicCB:GetChecked() and not abilityFrame.normalCB:GetChecked())
 		or (not abilityFrame.heroicCB:GetChecked() and abilityFrame.mythicCB:GetChecked() and not abilityFrame.normalCB:GetChecked()))
 end
 
+-- IsOneDifficultyChecked(): Checks if the player has checked a difficulty or not
+--
+-- author: Bartlomiej Grabelus (10044563)
 function IsOneDifficultyChecked()
 	return (abilityFrame.heroicCB:GetChecked() or abilityFrame.mythicCB:GetChecked() or abilityFrame.normalCB:GetChecked())
 end
