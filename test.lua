@@ -356,12 +356,14 @@ function updateEnergy ()
 	end
 end
 
--- Registriert alle Events beim Server
-frame:RegisterEvent("ENCOUNTER_START")
-frame:RegisterEvent("ENCOUNTER_END")
+-- ??? NIL ???
 
-frame:SetScript("OnEvent", SA_OnEvent)
-frame:SetScript("OnUpdate", SA_Update)
+-- Registriert alle Events beim Server
+-- frame:RegisterEvent("ENCOUNTER_START")
+-- frame:RegisterEvent("ENCOUNTER_END")
+-- 
+-- frame:SetScript("OnEvent", SA_OnEvent)
+-- frame:SetScript("OnUpdate", SA_Update)
 
 
 -- Regestriert AddonChat und Events beim Server
