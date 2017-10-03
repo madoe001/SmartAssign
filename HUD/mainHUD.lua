@@ -61,6 +61,13 @@ end
 --
 -- author: Bartlomiej Grabelus (10044563)
 function mainHUD:OnEnteringEvent_TestInstance(event)
+	local name = UnitName("target") -- get name of target and of the bosses in instance
+	local boss1 = UnitName("boss1")
+	local boss2 = UnitName("boss2")
+	local boss3 = UnitName("boss3")
+	local boss4 = UnitName("boss4")
+	local boss5 = UnitName("boss5")
+	
 	if (event == "PLAYER_ENTERING_WORLD" ) then -- when player enter world or instance
 		local isInstance, instanceType = IsInInstance() -- get information about instance
 		if isInstance then -- when player is in a instance 
@@ -72,13 +79,6 @@ function mainHUD:OnEnteringEvent_TestInstance(event)
 			end
 		end
 	elseif "PLAYER_TARGET_CHANGED" or "PLAYER_REGEN_DISABLED" then -- if player is change the target or is attacked
-		local name = UnitName("target") -- get name of target and of the bosses in instance
-		local boss1 = UnitName("boss1")
-		local boss2 = UnitName("boss2")
-		local boss3 = UnitName("boss3")
-		local boss4 = UnitName("boss4")
-		local boss5 = UnitName("boss5")
-		
 		if name == boss1 or name == boss2 or name == boss3 or name == boss4 or name == boss5 then -- when target is a boss than show nameplate and spellicons
 			bossPlate:Show(true)
 			bossSpellIcon:Show(true)

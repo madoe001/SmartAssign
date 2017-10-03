@@ -61,7 +61,7 @@ function SA_GUI_LOCAL:Init(event, addon)
 		SlashCommands:Init() -- init slashcommands
 		SlashCommands:AddResetFunction(SA_GUI_LOCAL.ResetFrames, "frames")
 		MiniMapButton:Init() -- init minimapbutton
-		mainHUD:CreateMainHUD()
+		--mainHUD:CreateMainHUD()
 	end
 end
 	

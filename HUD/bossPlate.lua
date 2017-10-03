@@ -58,6 +58,23 @@ end
 -- author: Bartlomiej Grabelus (10044563)
 function bossPlate:OnEvent(event, ...)
 	if event ==  "PLAYER_TARGET_CHANGED" then
+		local name =  GetUnitName("target") -- get name of target and of the bosses in instance
+		local boss1 = GetUnitName("boss1")
+		local boss2 = GetUnitName("boss2")
+		local boss3 = GetUnitName("boss3")
+		local boss4 = GetUnitName("boss4")
+		local boss5 = GetUnitName("boss5")
+		if name == boss1 then
+			SetTarget("boss1")
+		elseif name == boss2 then
+			SetTarget("boss2")
+		elseif name == boss3 then
+			SetTarget("boss3")
+		elseif name == boss4 then
+			SetTarget("boss4")
+		elseif name == boss5 then
+			SetTarget("boss5")
+		end
 		bossPlate:ReorderAllDebuffs() -- reorder all debuffs
 		bossPlate:ResetAll() -- reset all debuffs
 		local canAttack = UnitCanAttack(SA_BossNamePlate.unit, "player") -- if the target can attack the player, than true
@@ -667,6 +684,10 @@ function bossPlate:Show(isGUID) -- isGUID --> UnitExists
 			bossPlate:UnRegisterAllEvents()
 		end
 	end
+end
+
+function SetTarget(unit)
+	SA_BossNamePlate.unit = unit
 end
 
 -- round(): lua function for round a number
