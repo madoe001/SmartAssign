@@ -11,6 +11,9 @@ local EditBox = GUI.SA_EditBox
 local CheckBox = GUI.SA_CheckBox
 local GUIL = GUI.Locales
 
+-- vars
+local boss
+
 -- set the buttonwidth dependent to the language of the player, which is set ingame
 local buttonWidth = 0
 if GetLocale() == "enUS" or GetLocale() == "enGB" then
@@ -66,7 +69,7 @@ end
 --
 -- author: Bartlomiej Grabelus (10044563)
 function CreateComponents(frame)
-local boss = BossSelectFrame:show(frame, 200, abilityFrame:GetHeight() - 45, "TOPLEFT", 10, 0, "Ability")
+	boss = BossSelectFrame:new_BossSelectFrame(frame, 200, abilityFrame:GetHeight() - 45, "TOPLEFT", 10, 0)
 	boss:SetBackdrop({
 		bgFile="",
 		edgeFile = "", tile = false, tileSize = 4, edgeSize = 32,

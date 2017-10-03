@@ -30,7 +30,7 @@ function BossSelectFrame:hide()
 end
 
 
-function BossSelectFrame:new_BossSelectFrame(parent, width, height, anchor, xOffset, yOffset)
+function BossSelectFrame:new_BossSelectFrame(parent, name, width, height, anchor, xOffset, yOffset)
 
 -- Erstellen von BossSelectFrame.
 
@@ -101,7 +101,7 @@ Description: Es wird abhänhig der Parameter (falls nicht angegeben, default) ei
 	obj.bossDD:SetScript("OnClick", function(self, button, down)
 		print("asdf")
 	end)
-
+	return obj.frame
 end
 
 --[[

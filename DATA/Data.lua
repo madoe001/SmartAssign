@@ -313,6 +313,7 @@ function addBoss(expansionName, raidName, bossName, encounterID)
 				print ("< addBoss > failed to remove: \"" .. bossName)
 				print ("< addBoss > Expansion: \"" .. raidName .. "\" does not exist")
 			end
+		end
 	else
 		if ( informUserAboutSuccesFullFunctionCall ) then 
 			print ("< addBoss > failed to remove: \"" .. bossName)
