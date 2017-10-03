@@ -103,7 +103,7 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	-- SA_GUI_LOCAL:ScrollFrameReset()
 		
 
-	local boss = BossSelectFrame:new_BossSelectFrame(frame, 200, frame:GetHeight(), "LEFT", 0, 0)
+	local boss = BossSelectFrame:new_BossSelectFrame(frame, "MainWindow", 200, frame:GetHeight(), "LEFT", 0, 0)
 	local assign = AssignmentFrame:new_scrollframe(frame, BossSelectFramus , 5, -100)
 	frame.assign = assign
 	table.insert(Assignments, assign)
