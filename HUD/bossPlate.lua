@@ -1,4 +1,8 @@
---Author: Bartlomiej Grabelus (10044563)
+-- Author: Bartlomiej Grabelus (10044563)
+-- Description: This Class is needed to create a boss nameplate, which contains the healthpoints, manapoints
+--				and the debufficons of the boss.
+--				This Class doesn´t have a implemented part for Rage or Energy
+--              It is made global
 
 -- global vars
 local _G = _G
@@ -16,7 +20,7 @@ local SA_BossNamePlate -- parent for statusbars, name and debuffs
 local debuffs = {} -- debuff container
 
 -- bossPlate:CreateBossPlate(): creates the bossplate
--- At the beginning create SA_BossNamePlate and then the components
+--								At the beginning create SA_BossNamePlate and then the components
 --
 -- frame: parent frame
 --
@@ -41,6 +45,7 @@ function bossPlate:CreateBossPlate(frame, unit)
 end
 
 -- bossPlate:OnEvent(): Is needed for all events, like PLAYER_TARGET_CHANGED
+--						It is a event handler function.
 --
 -- Events:
 -- PLAYER_TARGET_CHANGED: when the player change the target
@@ -80,7 +85,7 @@ function bossPlate:OnEvent(event, ...)
 			manaBar:Hide() -- hide manabar
 		end
 	elseif event == "PLAYER_REGEN_DISABLED" then
-		manaBar:Hide() -- first hide if have mana show
+		manaBar:Hide() -- first hide if have mana shown, than show mana and health
 		bossPlate:ShowHealth()
 		bossPlate:ShowMana()
 		bossPlate:GetBossDebuffs() -- get debuffs
@@ -127,6 +132,7 @@ function bossPlate:UnRegisterAllEvents()
 end
 
 -- bossPlate:CreateNamePlateComp(): function to create the components of the bossnameplate
+--									Components are a healthbar, manabar and the name of the boss
 --
 -- frame: parent frame
 --
@@ -152,7 +158,7 @@ function bossPlate:CreateBossName()
 end
 
 -- bossPlate:SetNewValues(): function to set new values to the labels of the
--- statusBars(healthBar, manaBar)
+--							 statusBars(healthBar, manaBar)
 --
 -- health: the new health of the boss
 -- mana: the new mana of the boss
@@ -165,7 +171,7 @@ function bossPlate:SetNewValues(health, mana)
 	manaBar.label:SetText(UnitMana(SA_BossNamePlate.unit).."/"..UnitManaMax(SA_BossNamePlate.unit))
 end
 
--- bossPlate:ShowHealth(): function to create finally all components for the healthBar and show it
+-- bossPlate:ShowHealth(): function to create all components for the healthBar and show it
 --
 -- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ShowHealth()
@@ -212,7 +218,7 @@ function bossPlate:HealthLabel()
 end
 
 -- bossPlate:ShowMana(): checks at first if the unit have mana and
--- than configurate finally the manaBar and show it
+--						 than configurate the manaBar and show it
 --
 -- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ShowMana()
@@ -227,7 +233,7 @@ function bossPlate:ShowMana()
 	end
 end
 
--- bossPlate:ConfigManaBar(): configurate the manaBar, for example texture and color
+-- bossPlate:ConfigManaBar(): configurate the manaBar, like texture and color
 --
 -- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ConfigManaBar()
@@ -286,7 +292,7 @@ function bossPlate:GetSpellCooldown(spell, totalDuration)
 end
 
 -- bossPlate:ConfigBossDebuffIcons(): configurate the debuffs
--- by calling other functions
+--									  by calling other functions
 --
 -- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ConfigBossDebuffIcons()
@@ -343,7 +349,7 @@ function bossPlate:ConfigCountLabel(debuff)
 end
 
 -- bossPlate:ConfigExpireLabel(): an option to configure a label for the debuff,
--- to see the expire time
+--								  to see the expire time
 --
 -- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ConfigExpireLabel(debuff)
@@ -398,7 +404,7 @@ function bossPlate:AddBossDebuff(name, texture, count, duration, expirationTime)
 end
 
 -- bossPlate:UpdateBossDebuffs(): get debuff information of a target
--- needed for updating the debuffs of a boss
+--								  needed for updating the debuffs of a boss
 --
 -- author: Bartlomiej Grabelus (10044563)
 function bossPlate:UpdateBossDebuffs()
@@ -506,8 +512,8 @@ function bossPlate:DebuffOnAttributeChanged(name, value)
 end
 
 -- bossPlate:OnIconHide(): function for the OnHide event
--- set a nil texture for the debuff icon and remove it from
--- the container. Than reorder the debuffs
+--						   set a nil texture for the debuff icon and remove it from
+--						   the container. Than reorder the debuffs
 --
 -- author: Bartlomiej Grabelus (10044563)
 function bossPlate:OnIconHide()
@@ -590,7 +596,7 @@ function bossPlate:BossDebuffContains(spell)
 end
 
 -- bossPlate:HideAllBossDebuff(): hide all debuffs, by setting the attribute exptime to 0
--- and than hide all debuffs in the function bossPlate:DebuffOnAttributeChanged()
+--								  and than hide all debuffs in the function bossPlate:DebuffOnAttributeChanged()
 --
 -- author: Bartlomiej Grabelus (10044563)
 function bossPlate:HideAllBossDebuff()

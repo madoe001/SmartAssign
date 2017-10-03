@@ -1,4 +1,10 @@
---Author: Bartlomiej Grabelus (10044563)
+-- Author: Bartlomiej Grabelus (10044563)
+
+-- Description: This Class is needed to create a MiniMapButton near the MiniMap.
+--              It is made global and has a SAButton of type LibDBIcon, which is the Icon for the MiniMapButton.
+--              With LibDataBroker we create the data for the MiniMapButton.
+--				The MiniMapButton isn´t really a Button is only a icon
+--				We use the MiniMapButton for open the SmartAssign GUI, when the Player click on the icon
 
 -- global vars
 local _G = _G
@@ -15,7 +21,7 @@ local SAL = _G.GUI.Locales
 -- minimap data
 local minimap = SmartAssign.minimap
 
--- the minimap button
+-- the minimap icon
 local SAButton = LibStub("LibDBIcon-1.0")
 
 -- lua
@@ -25,8 +31,8 @@ local abs, sqrt = math.abs, math.sqrt
 -- check if the LibDataBroker-1.1 can be loaded and if not than return
 if not LibStub:GetLibrary("LibDataBroker-1.1", true) then return end
 
--- make an LDB object, with data of the button
--- which creates a minimapbutton
+-- make an LDB object, with data of the minimapbutton
+-- which is needed to the minimapbutton
 --
 -- author: Bartlomiej Grabelus (10044563)
 local MiniMapLDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("SmartAssign", {

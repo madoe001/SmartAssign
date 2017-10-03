@@ -1,4 +1,7 @@
---Author: Bartlomiej Grabelus (10044563)
+-- Author: Bartlomiej Grabelus (10044563)
+
+-- Description: This file is needed for initialize ShlashCommands for SmartAssign.
+--              This Class is made global and have three cotainers, one for the commands, one for helpText and one for reset functions.
 
 local _G = _G
 
@@ -102,10 +105,10 @@ end
 --
 -- author: Bartlomiej Grabelus (10044563)
 function SlashCommands:Reset(name)
-	for tabName,funcTab in pairs(resetFunctions) do
+	for tabName,funcTab in pairs(resetFunctions) do -- get name and function of container and check if name exists in function container
 		if not name or name == "all" or name == tabName then
 			for func in pairs(funcTab) do
-				func()
+				func() -- call function
 			end
 		end
 	end

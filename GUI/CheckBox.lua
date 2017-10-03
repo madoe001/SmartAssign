@@ -1,4 +1,6 @@
---Author: Bartlomiej Grabelus (10044563)
+-- Author: Bartlomiej Grabelus (10044563)
+-- Description: This Class creates a CheckBox with a label, which have his position on the left side of the checkbox.
+--				It is made global
 
 -- global var
 local _G = _G
@@ -69,6 +71,5 @@ end
 --
 -- author: Bartlomiej Grabelus (10044563)
 function SA_CheckBox:GetChecked()
-print("HH")
 	return self:GetChecked()
 end

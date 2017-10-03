@@ -1,4 +1,14 @@
---Author: Bartlomiej Grabelus (10044563)
+-- Author: Bartlomiej Grabelus (10044563)
+-- Description: This Class creates a scrollframe, with a scrollbar and a contentframe, which have the data.	
+--				The scrollbar only shows when the list is too large. So the player can scroll.
+--				The contentframe at first shows a list of content (which is a list of buttons), like Classic or Legion. 
+--				If the player clicks on a content like Legion, than the Legion button get hightlighted 
+--				and set at the top of the list. Now the player can select a instance, like Ragefire Chasm. Now the button
+--				at the top is set to the new selected button. Now the player can select a boss, which is than highlighted, 
+--				he also can change his selection of the boss.
+--				Backward we have the same functionallity like forward through the list.
+--				The player can get backward	(to the list before) by clicking on the headerbutton, the button which is highlighted
+--				at the top of the list.
 
 -- global vars
 local _G = _G

@@ -1,5 +1,7 @@
---Author: Bartlomiej Grabelus (10044563)
-
+-- Author: Bartlomiej Grabelus (10044563)
+-- Description: This Class creates a DropDownList, which we fill with the data of a table.
+--				It can be used for make a choice between ability and timer.
+--				It is global
 
 -- global vars
 local _G = _G

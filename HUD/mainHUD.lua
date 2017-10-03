@@ -1,4 +1,7 @@
---Author: Bartlomiej Grabelus (10044563)
+-- Author: Bartlomiej Grabelus (10044563)
+-- Description: This Class is needed for the HUD which the player can see, if something happens, like targeting a boss
+--				shows a nameplate.
+--				The HUD is a invisible Frame, in which the other components are placed.
 
 -- global vars
 local _G = _G

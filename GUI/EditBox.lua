@@ -1,4 +1,6 @@
---Author: Bartlomiej Grabelus (10044563)
+-- Author: Bartlomiej Grabelus (10044563)
+-- Components: This Class creates a editbox, which is also called textfield in other programming languages.
+--			   It is global
 
 local _G = _G
 local SA_EditBox = _G.GUI.SA_EditBox

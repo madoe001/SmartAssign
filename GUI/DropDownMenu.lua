@@ -1,5 +1,8 @@
---Author: Bartlomiej Grabelus (10044563)
-
+-- Author: Bartlomiej Grabelus (10044563)
+-- Description: This Class creates a dropdownmenu, which is made with the data of a table, whitin the table is another one.
+--				On the first click the user gets a list, when the user clicks on a listpoint, he gets another list.
+--				E.gat the first click on the button, we have a list like: Warlock, Druid, Hunter. When the player clicks on Warlock
+--				he gets all player, which are Warlocks
 
 -- global vars
 local _G = _G

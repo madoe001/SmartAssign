@@ -1,4 +1,5 @@
---Author: Bartlomiej Grabelus (10044563)
+-- Author: Bartlomiej Grabelus (10044563)
+-- Description: This Class creates the complett GUI of SmartAssign
 
 -- Global vars --
 local _G = _G
@@ -7,6 +8,10 @@ local SmartAssign = _G.SmartAssign
 local GUI = _G.GUI
 
 -- components
+--local DropDownMenu = GUI.SA_DropDownMenu
+--local ScrollFrame = GUI.SA_ScrollFrame
+--local CheckBox = GUI.SA_CheckBox
+--local EditBox = GUI.SA_EditBox
 local AssignmentFrame = _G.GUI.AssignmentFrame
 local CreateAbilityFrame = GUI.SA_CreateAbilityFrame
 local flag = true
@@ -93,7 +98,9 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	--frame.dropDownMenu = SA_GUI_LOCAL:CreateDropDownMenu(frame, DropDownMenu.data)
 	--frame.dropDownMenu:Hide()
 	
-	--SlashCommands:AddResetFunction(SA_GUI_LOCAL.ScrollFrameReset,"ScrollFrame") -- add the reset function of the scrollframe to slashcommands
+	-- frame.scrollFrame = SA_GUI_LOCAL:CreateScrollFrame(LeftSide, "InstanceScrollFrame")
+	-- SlashCommands:AddResetFunction(SA_GUI_LOCAL.ScrollFrameReset,"ScrollFrame") -- add the reset function of the scrollframe to slashcommands
+	-- SA_GUI_LOCAL:ScrollFrameReset()
 		
 	local boss = BossSelectFrame:show(frame, 200, frame:GetHeight(), "LEFT", 0, 0, "main")
 	local assign = AssignmentFrame:new_scrollframe(frame, BossSelectFramus , 5, -100)
@@ -218,7 +225,59 @@ function SA_GUI_LOCAL:CreateFont(frame, name, text, position, x, y, size)
 	return (fontString)
 end
 
+-- ALL COMMENTED NOT IN USE
+-- SA_GUI_LOCAL:CreateLeftSide(): create a empty frame for the scrollframe
+--
+-- frame: Parent frame
+--
+-- author: Bartlomiej Grabelus (10044563)
+-- function SA_GUI_LOCAL:CreateLeftSide(frame)
+	-- if not LeftSide then
+		-- LeftSide = CreateFrame("Frame", "LeftSide", frame)
+	-- end
+	-- LeftSide:SetBackdrop({
+	-- bgFile = "Interface/DialogFrame/UI-DialogBox-Background",
+	-- edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+	-- tile = true, tileSize = 32, edgeSize = 25,
+	-- insets = {left = 4, right = 4, top = 4, bottom = 4}
+	-- })
+	-- LeftSide:SetWidth(frame:GetWidth() * 0.3)
+	-- LeftSide:SetHeight(frame:GetHeight()-40)
+	-- LeftSide:SetPoint("TOPLEFT", frame, 20, -20)
+	
+	-- create a line
+	--SA_GUI_LOCAL:CreateLine(LeftSide ,1, frame:GetHeight()-40, "RIGHT", LeftSide, 10, 0)
+	-- 
+	-- return LeftSide
+-- end
 
+-- SA_GUI_LOCAL:CreateScrollFrame(): create a ScrollFrame
+--
+-- frame: Parent frame
+--
+-- author: Bartlomiej Grabelus (10044563)
+-- function SA_GUI_LOCAL:CreateScrollFrame(frame, name)
+	-- return (ScrollFrame:LoadScrollFrame(frame, name))
+-- end
+
+--- SA_GUI_LOCAL:CreateLine(): function to create a line
+-- if horizontal: height = 1 to 2
+-- if vertical: width = 1 to 2
+--
+-- region: where to position
+-- frame: relative to which frame
+-- x: x movement
+-- y: y movement
+--
+-- author: Bartlomiej Grabelus (10044563)
+-- function SA_GUI_LOCAL:CreateLine(parent ,width, height, region, frame, x, y)
+	-- local line = parent:CreateTexture()
+	-- line:SetTexture("Interface\\Tooltips\\UI-Tooltip-Background")
+    -- 
+	-- line:SetSize(width , height)
+	-- line:SetPoint(region, frame, x, y)
+-- end
+-- 
 
 -- SA_GUI:Toggle(): toggle the GUI
 --
@@ -243,9 +302,10 @@ function SA_GUI_LOCAL:ResetFrames()
 	end
 end
 
+-- NOT IN USE
 -- SA_GUI_LOCAL:ScrollFrameReset(): reset function for the scrollframe
 --
 -- author: Bartlomiej Grabelus (10044563)
-function SA_GUI_LOCAL:ScrollFrameReset()
-	ScrollFrame:Reset(mainFrame)
-end
+-- function SA_GUI_LOCAL:ScrollFrameReset()
+	-- ScrollFrame:Reset(mainFrame)
+-- end

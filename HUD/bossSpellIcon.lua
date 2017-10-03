@@ -1,4 +1,7 @@
---Author: Bartlomiej Grabelus (10044563)
+-- Author: Bartlomiej Grabelus (10044563)
+-- Description: This Class is needed to show a spell icon and the casting time of the boss, if the boss
+--				cast or channels a spell on the player
+--				It is made global
 
 -- global var
 local _G = _G
