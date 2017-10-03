@@ -69,7 +69,7 @@ end
 --
 -- author: Bartlomiej Grabelus (10044563)
 function CreateComponents(frame)
-	boss = BossSelectFrame:new_BossSelectFrame(frame, 200, abilityFrame:GetHeight() - 45, "TOPLEFT", 10, 0)
+	boss = BossSelectFrame:new_BossSelectFrame(frame, "Ability", 200, abilityFrame:GetHeight() - 45, "TOPLEFT", 10, 0)
 	boss:SetBackdrop({
 		bgFile="",
 		edgeFile = "", tile = false, tileSize = 4, edgeSize = 32,

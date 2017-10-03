@@ -76,7 +76,7 @@ Description: Es wird abhänhig der Parameter (falls nicht angegeben, default) ei
 
 	-- Background für BossSelectFrame erschaffen
 
-	obj.frame = CreateFrame("Frame","BossSelectFramus",parent)
+	obj.frame = CreateFrame("Frame",name.."_BossSelectFramus",parent)
 	obj.frame:SetWidth(width)
 	obj.frame:SetHeight(height)
 	obj.frame:SetPoint(anchor,xOffset,-yOffset)
@@ -91,9 +91,9 @@ Description: Es wird abhänhig der Parameter (falls nicht angegeben, default) ei
 	-- DropDownMenus einfügen
 	-- Expansion
 
-	obj.expDD = createExpansionDropDown(obj.frame, 0, 50, width * 0.8, "BossSelectFrame_ExpansionDropDrown")
-	obj.raidDD = createRaidDropDown(obj.frame, 0, 0, width * 0.8, "BossSelectFrame_RaidDropDrown")								 
-	obj.bossDD = createBossDropDown(obj.frame, 0, -50, width * 0.8, "BossSelectFrame_BossDropDrown")
+	obj.expDD = createExpansionDropDown(obj.frame, 0, 50, width * 0.8, name.."_BossSelectFrame_ExpansionDropDrown")
+	obj.raidDD = createRaidDropDown(obj.frame, 0, 0, width * 0.8, name.."_BossSelectFrame_RaidDropDrown")								 
+	obj.bossDD = createBossDropDown(obj.frame, 0, -50, width * 0.8, name.."_BossSelectFrame_BossDropDrown")
 	obj.expDD.raid = raidDD
 	obj.expDD.boss = bossDD
 	obj.raidDD.boss = bossDD
