@@ -1,5 +1,6 @@
---Author: Bartlomiej Grabelus
+--Author: Bartlomiej Grabelus (10044563)
 
+-- global var
 local _G = _G
 
 -- Localization
@@ -18,6 +19,8 @@ local assert, type = assert, type
 -- relativePos: relative to the Region of the Frame, to which want to position
 -- x: x movement of the Frame
 -- y: y movement of the Frame
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_CheckBox:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
@@ -29,6 +32,8 @@ end
 --
 -- frame: Parent frame
 -- checkboxText: Text which want to set on the right side
+--
+-- author: Bartlomiej Grabelus (10044563)
 local function CreateCheckBox(frame, checkboxText, name)
 	local CheckBoxFrame = CreateFrame("CheckButton", name, frame, "UICheckButtonTemplate")
 
@@ -49,6 +54,8 @@ end
 --
 -- frame: Parent frame
 -- checkboxText: the text which want to set
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_CheckBox:LoadCheckBox(frame, checkboxText, name)
 	assert(type(checkboxText) == "string", GUIL["'checkboxText' must be a string."])
 	return CreateCheckBox(frame, checkboxText, name)
@@ -59,6 +66,8 @@ function SA_CheckBox:SetChecked(value)
 end
 
 -- SA_CheckBox:GetChecked(): returns boolean, if the checkbox is checked
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_CheckBox:GetChecked()
 print("HH")
 	return self:GetChecked()

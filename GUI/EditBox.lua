@@ -1,4 +1,4 @@
---Author: Bartlomiej Grabelus
+--Author: Bartlomiej Grabelus (10044563)
 
 local _G = _G
 local SA_EditBox = _G.GUI.SA_EditBox
@@ -14,6 +14,8 @@ local assert, type = assert, type
 -- relativePos: relative to the Region of the Frame, to which want to position
 -- x: x movement of the Frame
 -- y: y movement of the Frame
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_EditBox:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
@@ -25,6 +27,8 @@ end
 -- g: green
 -- b: blue
 -- a: alpha
+--
+-- author: Bartlomiej Grabelus (10044563)
 local function ConfigLabel(self, text, r, g, b, a)
 	self.label = self:CreateFontString("EditBox-label", "ARTWORK", "GameFontNormalSmall")
 	self.label:SetHeight(25)
@@ -39,6 +43,8 @@ end
 -- clear all points of the frame.
 -- Set to one line editbox and no autofocus
 -- And set the Script for OnHide Event, where set a label
+--
+-- author: Bartlomiej Grabelus (10044563)
 local function ConfigEditBox(self)
 	self:ClearAllPoints()
 	self:SetMultiLine(false)
@@ -71,6 +77,8 @@ end
 --
 -- frame: Parent frame
 -- inputType: which type of editbox(number, string)
+--
+-- author: Bartlomiej Grabelus (10044563)
 local function CreateEditBox(frame, name, inputType, usedFor)
 	local EditBox = CreateFrame("EditBox", name, frame, "InputBoxTemplate")
 
@@ -138,6 +146,8 @@ end
 --
 -- self: on which want to set max
 -- max: the max value
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_EditBox:SetMaxLetters(self, max)
 	assert(max > 0, GUIL["'max' must be greater than 0."])
 	self:SetMaxLetters(max)
@@ -149,6 +159,8 @@ end
 --
 -- frame: Parent frame
 -- inputType: of the editbox 
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_EditBox:LoadEditBox(frame, name, inputType, usedFor)
 	assert((inputType == "string" or inputType == "number"), GUIL["'inputType' must be string or number."])
 	return CreateEditBox(frame, name, inputType, usedFor)

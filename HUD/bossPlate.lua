@@ -1,22 +1,26 @@
---Author: Bartlomiej Grabelus
+--Author: Bartlomiej Grabelus (10044563)
 
+-- global vars
 local _G = _G
 
 local bossPlate = _G.HUD.BossPlate
 
 local HL = _G.HUD.Locales
  
+ -- vars
 local name
 local health
 local mana
 
 local SA_BossNamePlate -- parent for statusbars, name and debuffs
-local debuffs = {}
+local debuffs = {} -- debuff container
 
 -- bossPlate:CreateBossPlate(): creates the bossplate
 -- At the beginning create SA_BossNamePlate and then the components
 --
 -- frame: parent frame
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:CreateBossPlate(frame, unit)
 	SA_BossNamePlate = CreateFrame("Frame", "BossNameplate", frame)
 	SA_BossNamePlate:SetWidth(160)
@@ -45,6 +49,8 @@ end
 -- UNIT_MANA: when the mana of a unit changes
 --
 -- event: the event, which was called this function
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:OnEvent(event, ...)
 	if event ==  "PLAYER_TARGET_CHANGED" then
 		bossPlate:ReorderAllDebuffs() -- reorder all debuffs
@@ -99,6 +105,8 @@ function bossPlate:OnEvent(event, ...)
 end
 
 -- bossPlate:RegisterAllEvents(): function to register all events at one time
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:RegisterAllEvents()
 	SA_BossNamePlate:RegisterEvent("PLAYER_TARGET_CHANGED")
 	SA_BossNamePlate:RegisterEvent("PLAYER_REGEN_DISABLED")
@@ -108,6 +116,8 @@ function bossPlate:RegisterAllEvents()
 end
 
 -- bossPlate:UnRegisterAllEvents(): function to unregister all events at one time
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:UnRegisterAllEvents()
 	SA_BossNamePlate:UnregisterEvent("PLAYER_TARGET_CHANGED")
 	SA_BossNamePlate:UnregisterEvent("PLAYER_REGEN_DISABLED")
@@ -119,6 +129,8 @@ end
 -- bossPlate:CreateNamePlateComp(): function to create the components of the bossnameplate
 --
 -- frame: parent frame
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:CreateNamePlateComp(frame)
 	SA_BossNamePlate.name = SA_BossNamePlate:CreateFontString("name-label", "ARTWORK", "GameFontNormalSmall") -- name of boss
 	
@@ -130,6 +142,8 @@ function bossPlate:CreateNamePlateComp(frame)
 end
 
 -- bossPlate:CreateBossName(): function to finally create the bossName label
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:CreateBossName()
 	SA_BossNamePlate.name:SetHeight(SA_BossNamePlate:GetHeight() * 0.5)
 	SA_BossNamePlate.name:SetText(name)
@@ -142,6 +156,8 @@ end
 --
 -- health: the new health of the boss
 -- mana: the new mana of the boss
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:SetNewValues(health, mana)
 	healthBar:SetValue(health)
 	healthBar.label:SetText(UnitHealth(SA_BossNamePlate.unit).."/"..UnitHealthMax(SA_BossNamePlate.unit))
@@ -150,6 +166,8 @@ function bossPlate:SetNewValues(health, mana)
 end
 
 -- bossPlate:ShowHealth(): function to create finally all components for the healthBar and show it
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ShowHealth()
 	bossPlate:ConfigHealthBar()
 	bossPlate:HealthBackground()
@@ -160,6 +178,8 @@ function bossPlate:ShowHealth()
 end
 
 -- bossPlate:ConfigHealthBar(): configuration of the healthBar, like width, texture or color
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ConfigHealthBar()
 	healthBar:ClearAllPoints()
 	healthBar:SetStatusBarTexture("Interface\\TargetingFrame\\UI-StatusBar")
@@ -170,6 +190,8 @@ function bossPlate:ConfigHealthBar()
 end
 
 -- bossPlate:HealthBackground(): creates a background for the healthBar
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:HealthBackground()
 	healthBar.bg = healthBar:CreateTexture("healthBarBorderTexture", "BORDER")
 	healthBar.bg:SetTexture(0,0,0)
@@ -180,6 +202,8 @@ function bossPlate:HealthBackground()
 end
 
 -- bossPlate:HealthLabel(): creates a label for the healthBar
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:HealthLabel()
 	healthBar.label:SetHeight(healthBar:GetHeight() - 1)
 	healthBar.label:SetText(UnitHealth(SA_BossNamePlate.unit).."/"..UnitHealthMax(SA_BossNamePlate.unit))
@@ -189,6 +213,8 @@ end
 
 -- bossPlate:ShowMana(): checks at first if the unit have mana and
 -- than configurate finally the manaBar and show it
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ShowMana()
 	if UnitMana(SA_BossNamePlate.unit) ~= 0 then
 		bossPlate:ConfigManaBar()
@@ -202,6 +228,8 @@ function bossPlate:ShowMana()
 end
 
 -- bossPlate:ConfigManaBar(): configurate the manaBar, for example texture and color
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ConfigManaBar()
 	manaBar:ClearAllPoints()
 	manaBar:SetStatusBarTexture("Interface\\TargetingFrame\\UI-StatusBar")
@@ -212,6 +240,8 @@ function bossPlate:ConfigManaBar()
 end
 
 -- bossPlate:ManaBackground(): create a background for the manaBar
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ManaBackground()
 	manaBar.bg = manaBar:CreateTexture("manaBarBorderTexture", "BORDER")
 	manaBar.bg:SetTexture(0,0,0)
@@ -222,6 +252,8 @@ function bossPlate:ManaBackground()
 end
 
 -- bossPlate:ManaLabel(): creates a label for the manaBar
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ManaLabel()
 	manaBar.label:SetHeight(manaBar:GetHeight() - 1)
 	manaBar.label:SetText(UnitMana(SA_BossNamePlate.unit).."/"..UnitManaMax(SA_BossNamePlate.unit))
@@ -234,6 +266,8 @@ end
 -- spell: the spell
 -- totalDuration: if want total duration, then true.
 --				  if want current duration, then false
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:GetSpellCooldown(spell, totalDuration)
 	if not spell then 
 		return
@@ -253,6 +287,8 @@ end
 
 -- bossPlate:ConfigBossDebuffIcons(): configurate the debuffs
 -- by calling other functions
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ConfigBossDebuffIcons()
 	for i = 1, #debuffs do
 		local debuff = debuffs[i]
@@ -271,6 +307,8 @@ end
 --
 -- debuff: the debuff, which want to configure
 -- placeInTable: at which place the debuff is in the debuff container
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ConfigDebuffIconTexture(debuff, placeInTable)
 	debuff.icon:SetSize(25, 25)
 	debuff.icon:ClearAllPoints()
@@ -295,6 +333,8 @@ end
 -- bossPlate:ConfigDebuffIconTexture(): configure the count label for a debuff
 --
 -- debuff: for which want to configure the count label
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ConfigCountLabel(debuff)
 	debuff.countLabel:ClearAllPoints()
 	debuff.countLabel:SetPoint("BOTTOMRIGHT", debuff, -1, 1)
@@ -304,6 +344,8 @@ end
 
 -- bossPlate:ConfigExpireLabel(): an option to configure a label for the debuff,
 -- to see the expire time
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ConfigExpireLabel(debuff)
 	debuff.expireLabel:ClearAllPoints()
 	debuff.expireLabel:SetPoint("CENTER", debuff, 0, 0)
@@ -313,6 +355,8 @@ function bossPlate:ConfigExpireLabel(debuff)
 end
 
 -- bossPlate:GetBossDebuffs(): for retrieve all debuffs of target
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:GetBossDebuffs()
 	for i=1,40 do
 		local name, _, icon, count, _, duration, expirationTime,
@@ -330,6 +374,8 @@ end
 -- count: how many debuffs are stacked
 -- duration: how long the debuff durate
 -- expirationTime: expirationtime of the debuff
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:AddBossDebuff(name, texture, count, duration, expirationTime)
 	if not bossPlate:BossDebuffContains(name) then -- if debuff contains
 		local debuffIconFrame = CreateFrame("StatusBar", name.."debuffIconFrame", SA_BossNamePlate)
@@ -353,6 +399,8 @@ end
 
 -- bossPlate:UpdateBossDebuffs(): get debuff information of a target
 -- needed for updating the debuffs of a boss
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:UpdateBossDebuffs()
 	for i=1,40 do
 		local name, _, _, count, _, _, expirationTime,
@@ -371,6 +419,8 @@ end
 -- name: spellname
 -- count: how many debuffs are stacked
 -- expirationTime: update the expiration time
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:UpdateDebuff(name, count, expirationTime)
 	if expirationTime > 1 then
 		local debuff = bossPlate:GetBossDebuff(name)
@@ -395,6 +445,8 @@ end
 --
 -- debuffIconFrame: the debuff for which create comps
 -- count: number of stacked debuffs
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:CreateDebuffIconComp(debuffIconFrame, count)
 	if count ~= 0 then
 		debuffIconFrame.countLabel = debuffIconFrame:CreateFontString(debuffIconFrame.name.."debuffIconFrameCount-label", "OVERLAY", "GameFontNormal") -- on top OVERLAY
@@ -406,6 +458,8 @@ end
 -- bossPlate:ConfigDebuffExpireStatusBar():  configurate the debuff statusbar
 --
 -- debuff: the debuff(statusbar)
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ConfigDebuffExpireStatusBar(debuff)
 	debuff:SetOrientation("VERTICAL")
 	debuff:ClearAllPoints()
@@ -422,6 +476,8 @@ end
 --
 -- name: name of the attribute
 -- value: new value of the attribute
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:DebuffOnAttributeChanged(name, value)
 	if name == "exptime" then
 		if value == 0 then
@@ -452,6 +508,8 @@ end
 -- bossPlate:OnIconHide(): function for the OnHide event
 -- set a nil texture for the debuff icon and remove it from
 -- the container. Than reorder the debuffs
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:OnIconHide()
 	self.icon:SetTexture(nil)
 	tremove(debuffs, self.place)
@@ -463,6 +521,8 @@ function bossPlate:OnIconHide()
 end
 
 -- bossPlate:ReorderAllDebuffs(): reorder all debuffs of the container
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ReorderAllDebuffs()
 	for i = 1, #debuffs do
 		if #debuffs > 0 then
@@ -475,6 +535,8 @@ end
 --
 -- debuff: the debuff which want to reorder
 -- placeInTable: at which place in the container
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ReorderDebuffIcon(debuff, placeInTable)
 	if debuff then
 		if debuff.icon then
@@ -501,6 +563,8 @@ end
 -- bossPlate:GetBossDebuff(): get a debuff of the debuffs container
 --
 -- spell: the name of a spell, which want to get
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:GetBossDebuff(spell)
 	local debuff = nil
 	for i = 1, #debuffs do
@@ -514,6 +578,8 @@ end
 -- bossPlate:BossDebuffContains(): for checking if the container contains a debuff
 --
 -- spell: name of the spell, which want to check
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:BossDebuffContains(spell)
 	for i = 1, #debuffs do
 		if debuffs[i].name == spell then
@@ -525,6 +591,8 @@ end
 
 -- bossPlate:HideAllBossDebuff(): hide all debuffs, by setting the attribute exptime to 0
 -- and than hide all debuffs in the function bossPlate:DebuffOnAttributeChanged()
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:HideAllBossDebuff()
 	for i = 1, #debuffs do
 		if(debuffs[i]) then
@@ -534,6 +602,8 @@ function bossPlate:HideAllBossDebuff()
 end
 
 -- bossPlate:ResetAll(): reset all debuffs by calling ResetDebuff
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ResetAll()
 	for i = 1, #debuffs do
 		if debuffs[i] then
@@ -544,6 +614,8 @@ function bossPlate:ResetAll()
 end
 
 -- bossPlate:ResetExpiredDebuff(): reset all expired debuffs
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ResetExpiredDebuff()
 	for i = 1, #debuffs do
 		if debuffs[i] and debuffs[i].expTime == 0 then
@@ -556,6 +628,8 @@ end
 -- bossPlate:ResetDebuff(): reset a debuff
 --
 -- self: the debuff which want to reset
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:ResetDebuff(self)
 		self.tex = nil
 		self.icon = self:CreateTexture(nil)
@@ -577,6 +651,8 @@ end
 -- bossPlate:Show(): shows the bossplate
 --
 -- isGUID: if have a GUID of boss
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossPlate:Show(isGUID) -- isGUID --> UnitExists
 	if SA_BossNamePlate then
 		if isGUID then
@@ -591,6 +667,8 @@ end
 --
 -- num: the number want to round
 -- numDecimalPlaces: how much decimal places
+--
+-- author: Bartlomiej Grabelus (10044563)
 function round(num, numDecimalPlaces)
   if numDecimalPlaces and numDecimalPlaces>0 then
     local mult = 10^numDecimalPlaces

@@ -1,5 +1,7 @@
---Author: Bartlomiej Grabelus
+--Author: Bartlomiej Grabelus (10044563)
 
+
+-- global vars
 local _G = _G
 
 local SA_DropDownList = _G.GUI.SA_DropDownList
@@ -19,6 +21,8 @@ local BUTTON_HEIGHT = 25
 --
 -- frame: For which want to set the EventHandling
 -- func: The function which want to set for the event
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_DropDownList:SetOnClick(frame, func)
     assert(type(func) == "function", SAL["'func' in 'DropDownList SetOnClick' must be a function."])
 	if func then
@@ -35,6 +39,8 @@ end
 -- relativePos: relative to the Region of the Frame, to which want to position
 -- x: x movement of the Frame
 -- y: y movement of the Frame
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_DropDownList:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
@@ -46,6 +52,8 @@ end
 -- UIDropDownMenu_SetSelectedID
 --
 -- self: The frame on which was clicked
+--
+-- author: Bartlomiej Grabelus (10044563)
 local function OnClick(self)
 	if self:GetID() == 1 then
 		self.selectedId = SAL["Timer"]
@@ -64,6 +72,8 @@ end
 --
 -- frame: the frame on which want to set data and selectedID
 -- data: the data which want to set in the DropDownList
+--
+-- author: Bartlomiej Grabelus (10044563)
 local function SetData(frame, data, startValue)
 	if not data then
 		frame:ClearAllPoints()
@@ -87,7 +97,8 @@ end
 -- UIDropDownMenu_SetButtonWidth(): for setting the width of the Button
 -- UIDropDownMenu_SetWidth(): for setting the width of the place for the text
 -- UIDropDownMenu_JustifyText(): for justifing the text
-
+--
+-- author: Bartlomiej Grabelus (10044563)
 local function CreateDropDownList(frame, name, data, init)
 	local DropDownListButton = CreateFrame("Button", name, frame,"UIDropDownMenuTemplate")	
 	SetData(DropDownListButton, data, nil)
@@ -118,6 +129,8 @@ end
 --
 -- self: the frame which init
 -- level: at which want to set
+--
+-- author: Bartlomiej Grabelus (10044563)
 function InitDDL(self, level)
    local info = UIDropDownMenu_CreateInfo()
    for key,value in pairs(self.data) do
@@ -132,6 +145,8 @@ end
 -- SA_DropDownList:GetSelectedID(): Getter for the selectedID
 --
 -- frame: of which want to get the selected ID
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_DropDownList:GetSelectedID(frame)
 	return frame.selectedID
 end
@@ -139,6 +154,8 @@ end
 -- SA_DropDownList:SetSelectedID(): Setter for the selectedID
 --
 -- value: which want to set
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_DropDownList:SetSelectedID(value)
 	DropDownListButton.selectedID = value
 	UIDropDownMenu_SetSelectedID(DropDownListButton, value)
@@ -150,7 +167,8 @@ end
 --
 -- frame: Parent frame
 -- data: which want to set in the DropDownList
-
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_DropDownList:LoadDropDownList(frame, name, data, init)
 	assert(type(data) == "table", SAL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownList.data for infos."])
 	return CreateDropDownList(frame, name, data, init)

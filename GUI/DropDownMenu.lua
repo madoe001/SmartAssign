@@ -1,5 +1,7 @@
---Author: Bartlomiej Grabelus
+--Author: Bartlomiej Grabelus (10044563)
 
+
+-- global vars
 local _G = _G
 
 local SA_DropDownMenu = _G.GUI.SA_DropDownMenu
@@ -18,6 +20,8 @@ local BUTTON_HEIGHT = 25
 -- GetArraySize(): lua function to get table size
 -- 
 -- T: the table
+--
+-- author: Bartlomiej Grabelus (10044563)
 function GetArraySize(T)
 	local lengthNum = 0
 	for k,v in pairs(T) do -- for every key in the table with a corresponding non-nil value 
@@ -32,6 +36,8 @@ end
 --
 -- frame: For which want to set the EventHandling
 -- func: The function which want to set for the event
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_DropDownMenu:SetOnClick(frame, func)
     assert(type(func) == "function", SAL["'func' in 'DropDownMenu SetOnClick' must be a function."])
 	if func then
@@ -57,6 +63,8 @@ end
 -- DropDownData could be changed to frame.data
 --
 -- self: of which want to get the selected Item
+--
+-- author: Bartlomiej Grabelus (10044563)
 local function GetSelectedItem(self)
 	return DropDownData[UIDROPDOWNMENU_MENU_VALUE["Category"]][self:GetID()]["name"]
 end
@@ -66,6 +74,8 @@ end
 -- Set the Text of the Button to the selected item
 --
 -- self: on which do eventhandling
+--
+-- author: Bartlomiej Grabelus (10044563)
 function OnClick(self)
 	--print(">> DropDownMenu OnClick << called "..DropDownData[UIDROPDOWNMENU_MENU_VALUE["Category"]][self:GetID()]["name"])  
 	UIDropDownMenu_SetText(DropDownMenuButton, DropDownData[UIDROPDOWNMENU_MENU_VALUE["Category"]][self:GetID()]["name"]); -- geht immer noch nicht
@@ -79,6 +89,8 @@ end
 --
 -- frame: the frame on which want to set data and selectedID
 -- data: the data which want to set in the DropDownList
+--
+-- author: Bartlomiej Grabelus (10044563)
 local function SetData(frame, data, startValue)
 	if not data then
 		frame:ClearAllPoints()
@@ -103,6 +115,8 @@ end
 -- UIDropDownMenu_SetButtonWidth(): for setting the width of the Button
 -- UIDropDownMenu_SetWidth(): for setting the width of the place for the text
 -- UIDropDownMenu_JustifyText(): for justifing the text
+--
+-- author: Bartlomiej Grabelus (10044563)
 local function CreateDropDownButton(frame, buttonName, menuName, data)
 	local DropDownMenuButton = CreateFrame("Button", buttonName, frame,"UIDropDownMenuTemplate")
 	local DropDownMenu = CreateFrame('Frame', menuName, DropDownMenuButton)
@@ -142,6 +156,8 @@ end
 --
 -- self: the frame which init
 -- level: at which want to set (only 2 levels)
+--
+-- author: Bartlomiej Grabelus (10044563)
 function InitDDM(frame, level) 
 frame.selectedName = SAL["Player"];
 UIDropDownMenu_SetText(frame, frame.selectedName);
@@ -186,6 +202,8 @@ end
 --
 -- frame: Parent frame
 -- data: which want to set in the DropDownMenu
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_DropDownMenu:LoadDropDownMenu(frame, buttonName, menuName, data)
 	assert(type(data) == "table", SAL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownMenu.data for infos."])
 	return CreateDropDownButton(frame, buttonName, menuName, data)

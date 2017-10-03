@@ -1,6 +1,6 @@
 --[[
 File Name: Data.lua
-Author: Grabelus, Bartlomiej	&	Veith, Marvin Justin (10043555)
+Author: Grabelus, Bartlomiej (10044563)	&	Veith, Marvin Justin (10043555)
 Description: Diese Datei dient zur Initialisierung der im Projekt verwendeten Variablen. Bei erstmaligen Start
 			 werden die Saved Variables auf einen Defaultwert gesetzt. 
 			 Die Saved Variables werden in "...\World of Warcraft\WTF\<AccountName>\SAVED_VARIABLES\SmartAssign"

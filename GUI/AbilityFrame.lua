@@ -1,4 +1,4 @@
---Author: Bartlomiej Grabelus
+--Author: Bartlomiej Grabelus (10044563)
 
 -- Global vars --
 local _G = _G

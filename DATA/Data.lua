@@ -1,6 +1,6 @@
 --[[
 File Name: Data.lua
-Author: Grabelus, Bartlomiej	&	Veith, Marvin Justin (10043555)
+Author: Grabelus, Bartlomiej (10044563)	&	Veith, Marvin Justin (10043555)
 Description: In dieser Datei werden alle Funktionen für die Bearbeitung der SavedVariables geschrieben.
 ]]
 local _G = _G

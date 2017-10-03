@@ -1,11 +1,14 @@
---Author: Bartlomiej Grabelus
+--Author: Bartlomiej Grabelus (10044563)
 
+-- global var
 local _G = _G
 
 -- localization
 local HL = _G.HUD.Locales
 
 local bossSpellIcon = _G.HUD.BossSpellIcon
+
+-- vars
 local TimeSinceLastUpdate = 0.0 -- needed for OnUpdate Event
 local name
 local channeling = false -- needed to check if unit channels a spell
@@ -15,6 +18,8 @@ local iconFrame
 --
 -- frame: parent
 -- unit: the unit --> e.g target
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossSpellIcon:CreatebossSpellIcon(frame, unit)
 	iconFrame = CreateFrame("Frame", "iconFrame", frame)
 	iconFrame.label = iconFrame:CreateFontString("SpellIcon-label", "ARTWORK", "GameFontNormalSmall")
@@ -34,6 +39,8 @@ end
 -- UNIT_SPELLCAST_SUCCEEDED: caused a failure, cause of that not in use
 -- 
 -- event: event, which call´s the function
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossSpellIcon:OnEvent(event, ...)
 	name = UnitName(iconFrame.unit)
 	local canAttack = UnitCanAttack(iconFrame.unit, "player") -- if the target can attack the player, than true
@@ -75,6 +82,8 @@ function bossSpellIcon:OnEvent(event, ...)
 end
 
 -- RegisterAllEvents(): registers all events at one time 
+--
+-- author: Bartlomiej Grabelus (10044563)
 function RegisterAllEvents()
 	iconFrame:RegisterEvent("UNIT_SPELLCAST_START", iconFrame.unit)
 	iconFrame:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START", iconFrame.unit)
@@ -84,6 +93,8 @@ function RegisterAllEvents()
 end
 
 -- UnRegisterAllEvents(): unregisters all events at one time 
+--
+-- author: Bartlomiej Grabelus (10044563)
 function UnRegisterAllEvents()
 	iconFrame:UnregisterEvent("UNIT_SPELLCAST_START", iconFrame.unit)
 	iconFrame:UnregisterEvent("UNIT_SPELLCAST_CHANNEL_START", iconFrame.unit)
@@ -96,6 +107,8 @@ end
 -- later a new value is added (boss1 - boss5)
 --
 -- canAttack: if the unit can attack the player(boolean)
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossSpellIcon:PreCheck(canAttack)
 	local check = false
 	if  UnitExists(iconFrame.icon) then
@@ -113,6 +126,8 @@ end
 -- bossSpellIcon:BossCastingInfo(): get all needed informationabout the spell which a unit casts
 --
 -- unit: the unit which is casting a spell
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossSpellIcon:BossCastingInfo(unit)
 	local name, _, _, texture, _, _, _, _, notInterruptible, spellID = UnitCastingInfo(unit)
 	iconFrame.spell = name
@@ -129,6 +144,8 @@ end
 -- unit: e.g "boss1"
 -- 
 -- returns the spellname, the start time of the spell end the end time
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossSpellIcon:BossIsCasting(spell, unit)
 	unit = unit or not 'player'
 	if not UnitExists(unit) then 
@@ -158,6 +175,8 @@ end
 -- spell: the spellname
 -- unit: e.g "boss1"
 -- remaining: if want remaining casting time --> true else false
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossSpellIcon:BossCastingTime(spell, unit, remaining)
 	local _, startTime, endTime = bossSpellIcon:BossIsCasting(spell, unit)
 	if startTime and endTime then
@@ -172,6 +191,8 @@ end
 -- bossSpellIcon:BossChannelingInfo(): get all needed information about the spell which is channeling by a unit
 --
 -- unit: the unit which channels a spell
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossSpellIcon:BossChannelingInfo(unit)
 	local name, _, text, texture, startTime, endTime, _, notInterruptible = UnitChannelInfo(unit)
 	iconFrame.spell = name
@@ -186,6 +207,8 @@ end
 -- unit: e.g "boss1"
 -- 
 -- returns the spellname, the start time of the spell end the end time
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossSpellIcon:BossIsChanneling(spell, unit)
 	unit = unit or 'player'
 	if not UnitExists(unit) then
@@ -211,6 +234,8 @@ end
 -- spell: the spellname
 -- unit: e.g "boss1"
 -- remaining: if want remaining channeling time --> true else false
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossSpellIcon:BossChannelingTime(spell, unit, remaining)
 local _, startTime, endTime = bossSpellIcon:BossIsChanneling(spell, unit)
 	if startTime and endTime then
@@ -223,6 +248,8 @@ local _, startTime, endTime = bossSpellIcon:BossIsChanneling(spell, unit)
 end
 
 -- bossSpellIcon:CreateSpellIcon(): createt all needed components for the spell icon
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossSpellIcon:CreateSpellIcon()
 	iconFrame:SetSize(80, 80)
 	
@@ -250,6 +277,8 @@ end
 -- bossSpellIcon:IconTextUpdate(): function for OnUpdate Event
 --
 -- elapsed: time which is elapsed
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossSpellIcon:IconTextUpdate(elapsed)
 	if elapsed == nil then -- check if elapsed have a value
 		elapsed = 0.0
@@ -280,6 +309,8 @@ end
 -- bossSpellIcon:Show(): shows the bossSpellIcon
 --
 -- isGUID: if is a unitGUID
+--
+-- author: Bartlomiej Grabelus (10044563)
 function bossSpellIcon:Show(isGUID)
 	if iconFrame then
 		if isGUID then

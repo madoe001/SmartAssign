@@ -1,4 +1,4 @@
---Author: Bartlomiej Grabelus, Maik Dömmecke
+--Author: Bartlomiej Grabelus (10044563), Maik Dömmecke
 
 local _G = _G
 

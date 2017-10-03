@@ -1,4 +1,4 @@
---Author: Bartlomiej Grabelus
+--Author: Bartlomiej Grabelus (10044563)
 
 -- Global vars --
 local _G = _G
@@ -10,6 +10,7 @@ local GUI = _G.GUI
 local AssignmentFrame = _G.GUI.AssignmentFrame
 local CreateAbilityFrame = GUI.SA_CreateAbilityFrame
 local flag = true
+
 -- hud
 local mainHUD = _G.HUD.mainHUD
 
@@ -29,6 +30,8 @@ local Assignments = {}
 _G.SmartAssign.SA_GUI = SA_GUI
 
 -- SA_GUI:LoadFrame(): Load the whole Frame where want to put the content
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_GUI:LoadFrame()
 	if not mainFrame then
 		CreateFrame("Frame","mainFrame",UIParent)
@@ -42,6 +45,8 @@ end
 --
 -- event: on which it was called
 -- addon: name of addon
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_GUI_LOCAL:Init(event, addon)
 	if (event == "ADDON_LOADED" and addon == "SmartAssign") then
 		SA_GUI_LOCAL:CreateGUI(SA_GUI.frame)
@@ -56,6 +61,8 @@ function SA_GUI_LOCAL:Init(event, addon)
 end
 	
 -- SA_GUI_LOCAL:MakeMovable(): for making a frame movable
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_GUI_LOCAL:MakeMovable(frame)
     frame:EnableMouse(true)
 	frame:SetMovable(true)
@@ -67,6 +74,8 @@ end
 -- SA_GUI_LOCAL:CreateGUI(): create content of the mainFrame
 --
 -- frame: Parent frame
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_GUI_LOCAL:CreateGUI(frame)
 	frame = SA_GUI_LOCAL:CreateWindow(frame)
 	
@@ -102,6 +111,8 @@ end
 -- SA_GUI_LOCAL:CreateWindow(): create Window(the mainFrame)
 -- 
 -- frame: the mainFrame
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_GUI_LOCAL:CreateWindow(frame)
 	frame:ClearAllPoints()
 	frame:SetWidth(1000) --Breite in px
@@ -128,6 +139,8 @@ end
 -- SA_GUI_LOCAL:CreateTitleBar(): create a TitleBar(title header)
 --
 -- frame: Parent frame
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_GUI_LOCAL:CreateTitleBar(frame)
 	local titleBG = frame:CreateTexture(nil,"ARTWORK");
 	titleBG:SetTexture("Interface/DialogFrame/UI-DialogBox-Header");
@@ -148,6 +161,8 @@ end
 -- x: x movement
 -- y: y movement
 -- template: of the button
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_GUI_LOCAL:CreateButton(frame, name, text, width, height, position, x, y, template)
 	if template == nil then
 		template = "OptionsButtonTemplate"
@@ -176,7 +191,7 @@ function SA_GUI_LOCAL:CreateButton(frame, name, text, width, height, position, x
 	return (button)
 end
 
--- SA_GUI_LOCAL:CreateFont(): create a Font
+-- SA_GUI_LOCAL:CreateFont(): create a FontString (Text)
 --
 -- frame: Parent frame
 -- name: name of font
@@ -185,6 +200,8 @@ end
 -- x: x movement
 -- y: y movement
 -- size: size of font
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_GUI_LOCAL:CreateFont(frame, name, text, position, x, y, size)
 	if size == nil then
 		size = 15
@@ -204,6 +221,8 @@ end
 
 
 -- SA_GUI:Toggle(): toggle the GUI
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_GUI:Toggle()
 	if mainFrame:IsShown() then
 		mainFrame:Hide()
@@ -213,6 +232,9 @@ function SA_GUI:Toggle()
 end
 
 -- SA_GUI_LOCAL:ResetFrames(): reset function for the frames
+-- ## IN DEVELOPMENT
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_GUI_LOCAL:ResetFrames()
 	if SA_GUI.frame then
 		SA_GUI.frame:ClearAllPoints()
@@ -222,6 +244,8 @@ function SA_GUI_LOCAL:ResetFrames()
 end
 
 -- SA_GUI_LOCAL:ScrollFrameReset(): reset function for the scrollframe
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_GUI_LOCAL:ScrollFrameReset()
 	ScrollFrame:Reset(mainFrame)
 end

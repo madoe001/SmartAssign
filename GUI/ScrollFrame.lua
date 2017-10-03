@@ -1,5 +1,6 @@
---Author: Bartlomiej Grabelus
+--Author: Bartlomiej Grabelus (10044563)
 
+-- global vars
 local _G = _G
 
 local SA_ScrollFrame =  _G.GUI.SA_ScrollFrame
@@ -9,6 +10,8 @@ local ScrollFrame
 -- localization
 local SAL = _G.GUI.Locales
 
+local BUTTON_HEIGHT = 25
+
 -- CreateScrollFrame(): Creation of the ScrollFrame
 --
 -- creates the scrollframe and create a table for the buttons of the scrollframe.
@@ -16,6 +19,8 @@ local SAL = _G.GUI.Locales
 -- than create the scrollbar and content of the scrollframe
 --
 -- frame: Parent frame
+--
+-- author: Bartlomiej Grabelus (10044563)
 local function CreateScrollFrame(frame, name)
 	ScrollFrame = CreateFrame("ScrollFrame", name, frame)
 
@@ -39,6 +44,8 @@ end
 -- CreateScrollBar(): Create the ScrollBar for the ScrollFrame
 --
 -- frame: Parent frame
+--
+-- author: Bartlomiej Grabelus (10044563)
 function CreateScrollBar(frame)
 	if not ScrollBar then
 		ScrollBar = CreateFrame("Slider", "ScrollBar", frame, "UIPanelScrollBarTemplate")
@@ -62,27 +69,27 @@ function CreateScrollBar(frame)
 			local mainButtons = GetMainButtons(Content.data)
 			for i=1, #mainButtons, 1 do
 			    mainButtons[i]:ClearAllPoints()
-				mainButtons[i]:SetPoint("LEFT", ScrollFrame, "LEFT", 0, value-25) -- scroll value - buttonheight
+				mainButtons[i]:SetPoint("LEFT", ScrollFrame, "LEFT", 0, value - BUTTON_HEIGHT) 
 			end
 		elseif ScrollFrame.mainBTN ~= nil and ScrollFrame.lvlClicked == 1 then -- when Instance Buttons
 			local instanceButtons = GetInstanceButtons(Content.data)
 			for i=1, #instanceButtons, 1 do
 				instanceButtons[i]:ClearAllPoints()
-				instanceButtons[i]:SetPoint("LEFT", ScrollFrame, "LEFT", 0, value-25) -- scroll value - buttonheight
+				instanceButtons[i]:SetPoint("LEFT", ScrollFrame, "LEFT", 0, value - BUTTON_HEIGHT) 
 			end
 		elseif ScrollFrame.instanceButton ~= nil and ScrollFrame.lvlClicked == 2 then -- when instance Buttons
 			local bossData = GetBossData(ScrollFrame.mainBTN, ScrollFrame.instanceButton:GetText(), Content.data)
 			local bossButtons = GetBossButtons(bossData)
 			bossButtons[1]:ClearAllPoints()
-			bossButtons[1]:SetPoint("LEFT", ScrollFrame.instanceButton, "LEFT", 0, value-25) -- scroll value - buttonheight
+			bossButtons[1]:SetPoint("LEFT", ScrollFrame.instanceButton, "LEFT", 0, value - BUTTON_HEIGHT) 
 			for i=2, #bossButtons, 1 do
 				bossButtons[i]:ClearAllPoints()
-				bossButtons[i]:SetPoint("LEFT", bossButtons[i-1], "LEFT", 0, -25) -- scroll value - buttonheight
+				bossButtons[i]:SetPoint("LEFT", bossButtons[i-1], "LEFT", 0, -BUTTON_HEIGHT) 
 			end
 		end
 	end)
 	
-	local ScrollBG = ScrollBar:CreateTexture("ScrollBar_Tex", "BACKGROUND") -- tex for ScrollBar
+	local ScrollBG = ScrollBar:CreateTexture("ScrollBar_Tex", "BACKGROUND") -- texture for ScrollBar
 	ScrollBG:SetAllPoints(ScrollBar)
 	ScrollBG:SetTexture(0, 0, 0, 0.4)
 	ScrollBar:Hide()
@@ -107,6 +114,8 @@ end
 --
 -- frame: Parent frame
 -- data: the buttons
+--
+-- author: Bartlomiej Grabelus (10044563)
 function CreateContent(frame, data)
 	-- if empty nothing to show
 	if next(data) == nil then
@@ -121,7 +130,7 @@ function CreateContent(frame, data)
 	
 	Content:SetSize(frame:GetWidth(), frame:GetHeight())
 	
-	SA_ScrollFrame:CreateButtons(data, frame)
+	SA_ScrollFrame:CreateButtons(data, frame) -- create all needed buttons
 	local i = 1
 	local lastContent = 1
 	for k, v in pairs(data) do
@@ -245,6 +254,8 @@ end
 -- relativePos: relative to the Region of the Frame, to which want to position
 -- x: x movement of the Frame
 -- y: y movement of the Frame
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_ScrollFrame:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
@@ -252,6 +263,8 @@ end
 -- SA_ScrollFrame:LoadScrollFrame(): Loader for the ScrollFrame
 --
 -- frame: Parent frame
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_ScrollFrame:LoadScrollFrame(frame, name)
 	return CreateScrollFrame(frame, name)
 end
@@ -259,6 +272,8 @@ end
 -- SA_ScrollFrame:Reset(): reset function for the ScrollFrame
 -- 
 -- set all to start
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_ScrollFrame:Reset(frame)
 	ScrollFrame.mainBTN = nil
 	ScrollFrame.instanceButton = nil
@@ -279,6 +294,8 @@ end
 --
 -- data: which are neede to create the buttons text and how much buttons
 -- frame: Parent frame
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_ScrollFrame:CreateButtons(data, frame)
 	for i=1,GetArraySize(data, GetDepth(data), 0) do
 		frame.buttons[i] = CreateFrame("Button","button"..i,Content)
@@ -295,6 +312,8 @@ end
 --
 -- table: data for buttons
 -- i: needed for the buttons container
+--
+-- author: Bartlomiej Grabelus (10044563)
 function CreateBossButton(table, i)
 	if type(table) == "table" then
 		for k, v in pairs(table) do
@@ -313,6 +332,8 @@ end
 -- 
 -- button: which button want to configure
 -- key: the text want to set in the button
+--
+-- author: Bartlomiej Grabelus (10044563)
 function ConfigMainButton(button, key)
 	fontstring = button:CreateFontString()
 	fontstring:SetFontObject(GameFontNormal)
@@ -332,6 +353,8 @@ end
 -- raise buttoncount and mainButtonCount by 1
 --
 -- button: which want to configure
+--
+-- author: Bartlomiej Grabelus (10044563)
 function ConfigMainButtons(button)
 	fontstring = button:CreateFontString()
 	fontstring:SetFontObject(GameFontNormal)
@@ -361,6 +384,8 @@ end
 --
 -- button: which want to configure
 -- key: text which want to set in button
+--
+-- author: Bartlomiej Grabelus (10044563)
 function ConfigInstanceButton(button, key)
 	fontstring = button:CreateFontString()
 	fontstring:SetFontObject(GameFontNormal)
@@ -393,6 +418,8 @@ end
 --
 -- button: which want to configure
 -- key: text which want to set in button
+--
+-- author: Bartlomiej Grabelus (10044563)
 function ConfigBossButtons(button, key)
 	fontstring = button:CreateFontString()
 	fontstring:SetFontObject(GameFontNormal)
@@ -421,7 +448,7 @@ function ConfigBossButtons(button, key)
 				self.clicked = true
 				ScrollFrame.bossButton = self  -- set to actual clicked boss button
 				
-				-- set highlight
+				-- set highlight texture
 				SetListHightlightTex(self)
 			else
 				ScrollFrame.lvlClicked = 2
@@ -436,6 +463,8 @@ function ConfigBossButtons(button, key)
 end
 
 -- ConfigAllButtons(): needed for reset, to set all buttons to start configuration
+--
+-- author: Bartlomiej Grabelus (10044563)
 function ConfigAllButtons()
 	for i=1, #ScrollFrame.buttons, 1 do
 		if ScrollFrame.buttons[i].level == 1 then
@@ -451,6 +480,8 @@ end
 -- SetAllClicked(): Setter for buttons, if all are clicked or not
 --
 -- clicked: boolean value to which want to set, if clicked or not
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SetAllClicked(clicked)
 	for i=1,GetArraySize(Content.data, GetDepth(Content.data), 0) do
 		if ScrollFrame.lvlClicked == 1 and ScrollFrame.mainBTN ~= nil then
@@ -469,6 +500,8 @@ end
 
 -- SetAllPlusTex(): Setter for setting all buttons(only level 1 and 2) a plus texture
 -- if they have a child
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SetAllPlusTex()
 	for i=1,GetArraySize(Content.data, GetDepth(Content.data), 0) do
 		local button = ScrollFrame.buttons[i]
@@ -484,6 +517,8 @@ end
 -- SetPlusTexture(): set the plus texture in a button
 --
 -- button: on which want to set the plus texture
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SetPlusTexture(button)
 	local tex = button:CreateTexture(nil, "ARTWORK")
 	tex:SetAllPoints(true)
@@ -497,6 +532,8 @@ end
 -- SetMinusTexture(): set the minus texture in a button
 --
 -- button: on which want to set the minus texture
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SetMinusTexture(button)
 	local tex = button:CreateTexture(nil, "ARTWORK")
 	tex:SetAllPoints(true)
@@ -511,6 +548,8 @@ end
 -- needed if want to overwrite a texture
 --
 -- button: on which want to overwrite the texture
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SetNilTex(button)
 	local tex = button:CreateTexture(nil, "ARTWORK")
 	tex:SetAllPoints(true)
@@ -524,6 +563,8 @@ end
 -- SetListHightlightTex(): set a highlight texture on a button, e.g which was clicked
 --
 -- button: on which want to set the hightlight
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SetListHightlightTex(button)
 	local tex = button:CreateTexture(nil, "ARTWORK")
 	tex:SetAllPoints(true)
@@ -537,8 +578,10 @@ end
 -- NewHeader(): set a new header, needed if get a new level of buttons
 --
 -- button: which is the new header
+--
+-- author: Bartlomiej Grabelus (10044563)
 function NewHeader(button)
-	button:SetFrameLevel(255) -- to be a top of ui
+	button:SetFrameLevel(255) -- to be at the top of ui
 	button:SetPoint("TOPLEFT", ScrollFrame, "TOPLEFT", 0, 0)
 	fontstring = button:CreateFontString()
 	fontstring:SetFontObject(GameFontNormal)
@@ -559,6 +602,8 @@ function NewHeader(button)
 end
 
 -- ClearAllPoints(): Clear all points of the buttons, needed if set new Points
+--
+-- author: Bartlomiej Grabelus (10044563)
 function ClearAllPoints()
 	for i=1,GetArraySize(Content.data, GetDepth(Content.data), 0) do
 		ScrollFrame.buttons[i]:ClearAllPoints()
@@ -566,6 +611,8 @@ function ClearAllPoints()
 end
 
 -- SA_ScrollFrame:HideButtons(): Hide all buttons, needed if click on a button
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_ScrollFrame:HideButtons()
 	for i=1,GetArraySize(Content.data, GetDepth(Content.data), 0) do
 		ScrollFrame.buttons[i]:Hide()
@@ -574,6 +621,10 @@ end
 
 -- DisableBossButtons(): Disable all boss buttons expected the clicked boss button
 -- than the user can´t interact with the boss buttons
+--
+-- NOT USED
+--
+-- author: Bartlomiej Grabelus (10044563)
 function DisableBossButtons()
 	if ScrollFrame.bossButton ~= nil then
 		local bossButtons = SA_ScrollFrame:GetBossButtons()
@@ -593,6 +644,8 @@ end
 -- GetMainButton(): Get all main buttons of the button container dependent to data
 --
 -- data: filtered main data
+--
+-- author: Bartlomiej Grabelus (10044563)
 function GetMainButtons(data)
 	local score = {}
 	for k, v in pairs(data) do
@@ -610,6 +663,8 @@ end
 -- GetInstanceButtons(): Get all instance buttons(second level) of the button container
 --
 -- data: filtered instance data
+--
+-- author: Bartlomiej Grabelus (10044563)
 function GetInstanceButtons(data)
 	local instanceButtons = copyButtons(data)
 	local score = {}
@@ -630,6 +685,8 @@ end
 -- filter data with GetBossData()
 --
 -- data: filtered boss data
+--
+-- author: Bartlomiej Grabelus (10044563)
 function GetBossButtons(data)
 	local bossButtons = data
 	local score = {}
@@ -649,12 +706,16 @@ end
 -- mainBTN: main Button which was clicked
 -- buttonText: instance name
 -- data: data of all buttons
+--
+-- author: Bartlomiej Grabelus (10044563)
 function GetBossData(mainBTN, buttonText, data)
 	local nextLvlData = data[mainBTN:GetText()]
 	return nextLvlData[buttonText]
 end
 
 -- SA_ScrollFrame:GetBossButtons(): Get all boss buttons of the button container 
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SA_ScrollFrame:GetBossButtons()
 	local score = {}
 	for i=1, #ScrollFrame.buttons, 1 do
@@ -667,6 +728,8 @@ end
 
 -- SetMainButtons(): set all Buttons which where shown at start to main buttons
 -- neede when get back to main buttons
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SetMainButtons()
 	SA_ScrollFrame:HideButtons()
 	ClearAllPoints()
@@ -688,10 +751,12 @@ end
 
 -- SetInstanceButtons(): set all instanceButton(second level) under the Header
 -- dependent to the main Button(header)
--- neede when clicked on a main button
+-- needed when clicked on a main button
 --
 -- self: the main Button
 -- data: with the button data(text)
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SetInstanceButtons(self, data)
 	local instanceButtons = GetInstanceButtons(data) -- get filtered buttons, only instance buttons
 	ConfigInstanceButton(instanceButtons[1], instanceButtons[1]:GetText())
@@ -716,6 +781,8 @@ end
 -- table: of which want the size
 -- depth: how depth want to go
 -- len: needed for recursive function
+--
+-- author: Bartlomiej Grabelus (10044563)
 function GetArraySize(table, depth, len)
 	local lengthNum = len
 	for k,v in pairs(table) do -- for every key in the table with a corresponding non-nil value 
@@ -730,6 +797,8 @@ function GetArraySize(table, depth, len)
 end
 
 -- GetDepth(): lua function to get depth of a table
+--
+-- author: Bartlomiej Grabelus (10044563)
 function GetDepth(table)
 	local depth = 1
 	if next(table) == nil then
@@ -749,6 +818,8 @@ end
 -- needed for copy all second level buttons in new table
 --
 -- orig: original button container
+--
+-- author: Bartlomiej Grabelus (10044563)
 function copyButtons(orig)
     local copy = {}
     for k, v in pairs(orig) do

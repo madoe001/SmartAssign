@@ -1,4 +1,4 @@
---Author: Bartlomiej Grabelus
+--Author: Bartlomiej Grabelus (10044563)
 
 local _G = _G
 
@@ -11,7 +11,7 @@ local SAL = _G.GUI.Locales
 local assert, type = assert, type
 
 -- string functions
-local str_lower = string.lowerlocal str_lower, str_format, str_split = string.lower, string.format, string.split
+local str_lower, str_format, str_split = string.lower, string.format, string.split
 
 -- table functions
 local tbl_remove, unpack, pairs = table.remove, unpack, pairs
@@ -39,6 +39,9 @@ local HelpList = {
 local resetFunctions = {} -- container for reset functions
 
 -- SlashCommands:Init(): init function.
+-- Initialize the slashcommands "/smartassign" and "/smart"
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SlashCommands:Init()
 	SLASH_SMARTASSIGN1 = "/smartassign"
 	SLASH_SMARTASSIGN2 = "/smart"
@@ -53,6 +56,9 @@ function SlashCommands:Init()
 end
 
 -- SlashCommands:Run(): function to run a slashcommand
+-- called when the player type in a slashcommand in the chat
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SlashCommands:Run(exec, ...)
 	if exec and type(exec) == "string" then -- exec not nil  and string
 		if CommandList[exec] and type(CommandList[exec]) == "function" then -- if the exec exists in the command list and is a function
@@ -65,7 +71,10 @@ function SlashCommands:Run(exec, ...)
 	end
 end
 
--- SlashCommands:PrintSlash(): print all slashcommands, which are available
+-- SlashCommands:PrintSlash(): print all available slashcommands
+-- called when the player type "/smart slash" into chat
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SlashCommands:PrintSlash()
 	print(SAL["Slash commands:"])
 	for k in pairs(CommandList) do -- lopp through the command list
@@ -87,9 +96,11 @@ function SlashCommands:PrintSlash()
 end
 
 -- SlashCommands:Reset(): Reset a Frame
--- needed if want to call reset a frame over slashcommand
+-- needed if want to call reset a frame over a slashcommand
 --
 -- name: of frame
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SlashCommands:Reset(name)
 	for tabName,funcTab in pairs(resetFunctions) do
 		if not name or name == "all" or name == tabName then
@@ -101,12 +112,14 @@ function SlashCommands:Reset(name)
 end
 
 -- SlashCommands:AddResetFunction(): Add a ResetFunction of a Frame
--- if want to reset over slashcommands
+-- if want to reset the frame over slashcommands
 --
 -- assertion: if func no function
 --
 -- func: reset function
 -- ...: name for frame
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SlashCommands:AddResetFunction(func, ...)
 	assert(type(func) == "function", SAL["'func' must be a function."])
 	local name
@@ -126,6 +139,8 @@ end
 -- exec: the string under which want to exec
 -- func: the function
 -- helpText: helpText for the helpList
+--
+-- author: Bartlomiej Grabelus (10044563)
 function SlashCommands:Add(exec, func, helpText)
 	assert(type(exec) == "string", SAL["'exec' must be a string."])
 	assert(type(func) == "function", SAL["'func' must be a function."])
