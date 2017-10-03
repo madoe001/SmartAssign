@@ -1,8 +1,8 @@
---Author: Bartlomiej Grabelus, Maik Dömmecke
+--Author: Bartlomiej Grabelus (10044563), Maik Dömmecke
 
 local _G = _G
 
-if GetLocale() ~= "enUS" then return end
+if GetLocale() ~= "enGB" then return end
 
 if not _G.GUI.Locales then _G.GUI.Locales = {} end
 
@@ -86,7 +86,17 @@ L["Lord Walden"] = "Lord Walden"
 
 L["Lord Godfrey"] = "Lord Godfrey"
 
-L["WOTLK"] = "WOTLK"
+L["Wrath of the Lich King"] = "Wrath of the Lich King"
+
+L["The Burning Crusade"] = "The Burning Crusade"
+
+L["Cataclysm"] = "Cataclysm"
+
+L["Mists of Pandaria"] = "Mists of Pandaria"
+
+L["Warlords of Draenor"] = "Warlords of Draenor"
+
+L["Legion"] = "Legion"
 
 -- SlashCommands
 L["'func' must be a function."] = "'func' must be a function."
@@ -111,6 +121,12 @@ L["Time in sec"] = "Time in sec"
 
 L["[SpellID] text"] = "[SpellID] text"
 
+L["name"] = "name"
+
+L["cooldown(s) in sec"] = "cooldown(s) in sec"
+
+L["phasename(s)"] = "phasename(s)"
+
 -- ScrollFrame
 
 L[" has no childs!"] = " has no childs!"
@@ -119,6 +135,26 @@ L[" has no childs!"] = " has no childs!"
 L["Player is in Instance."] = "Player is in Instance."
 
 L["Player is not in Instance."] = "Player is not in Instance."
+
+-- CreateAbilityFrame
+
+L["Apply"] = "Apply"
+
+L["Delete"] = "Delete"
+
+L["For more than one cooldown or phasename use a semicolon as delimiter"] = "For more than one cooldown or phasename use a semicolon as delimiter"
+
+L["loop"] = "loop"
+
+L["phasebound"] = "phasebound"
+
+L["reset timer on phase"] = "reset timer on phase"
+
+L["mythic"] = "mythic"
+
+L["heroic"] = "heroic"
+
+L["normal"] = "normal"
 
 -- ASSERTS
 L["'func' in 'DropDownMenu SetOnClick' must be a function."] = "'func' in 'DropDownMenu SetOnClick' must be a function."

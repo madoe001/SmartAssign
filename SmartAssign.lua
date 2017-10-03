@@ -13,21 +13,13 @@ function SmartAssign:printHashTable(table)
       end
    else
       print("Undefined reference")
-      
    end
-   
 end
 
 
-
-
 function SmartAssign:getAllMembers()
-   
-   print (">> getAllMembers() << called\n");
-   
-   
+  
    local raidSize = GetNumGroupMembers() or 0;
-   
    
    if(raidSize > 0) then
       -- global machen um in der DropDownListe zugreifen zu können!!!

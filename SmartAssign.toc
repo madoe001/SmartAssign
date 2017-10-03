@@ -38,6 +38,7 @@ GUI\EditBox.lua
 GUI\PlayerAssign.lua
 GUI\Assignment.lua
 GUI\AssignmentFrame.lua
+GUI\AbilityFrame.lua
 
 GUI\SmartAssignGUI.lua
 GUI\BossSelectFrame.lua
