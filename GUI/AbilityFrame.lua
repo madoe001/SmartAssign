@@ -123,7 +123,9 @@ function ConfigComponents(frame)
 	frame.normalCB:SetPoint("LEFT", frame.heroicCB, "LEFT", 90, 0)
 	applyButton:SetScript("OnClick", function (self, button)
 		if button == "LeftButton" then
-			 createAbility(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID, frame.abilityNameEB:GetText(), frame.cooldownEB:GetText(), frame.boundCB:GetChecked(), frame.mythicCB:GetChecked(), frame.heroicCB:GetChecked(), frame.normalCB:GetChecked(), frame.loopCB:GetChecked(), frame.resetCB:GetChecked())
+			if frame.abilityNameEB:GetText() or frame.cooldownEB:GetText() or frame.boundCB:GetChecked() or frame.mythicCB:GetChecked() or  frame.heroicCB:GetChecked() or frame.normalCB:GetChecked() or frame.loopCB:GetChecked() or frame.resetCB:GetChecked() then
+				--createAbility(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID, frame.abilityNameEB:GetText(), frame.cooldownEB:GetText(), frame.boundCB:GetChecked(), frame.mythicCB:GetChecked(), frame.heroicCB:GetChecked(), frame.normalCB:GetChecked(), frame.loopCB:GetChecked(), frame.resetCB:GetChecked())
+			end
 		end
 	end)
 	deleteButton:SetScript("OnClick", function (self, button)
