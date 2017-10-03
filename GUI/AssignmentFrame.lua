@@ -7,7 +7,7 @@ do
 	
 	local Assignment = _G.GUI.Assignment
 	
-	local function show(self)
+	function AssignmentFrame:Show()
 		--print("Show wurde aufgerufen")
 		self.scrollframe:Show()
 		self.scrollbar:Show()
@@ -18,7 +18,7 @@ do
 		end
 	end
 	
-	local function hide(self)
+	function AssignmentFrame:Hide()
 		--print("Hide wurde aufgerufen")
 		self.scrollframe:Hide()
 		self.scrollbar:Hide()
@@ -104,14 +104,11 @@ do
 			scrollframe = CreateFrame("Scrollframe", nil, frame),   
 			scrollbar = CreateFrame("Slider", nil, scrollframe, "UIPanelScrollBarTemplate"),		
 			new = CreateFrame("Button", nil, frame, "OptionsButtonTemplate"),
-
 			content = CreateFrame("Frame", nil),
 			assignments = {},
 			deleteButtons = {},
 			index = 1,
 			lastElement = {},
-			Show = show,
-			Hide = hide,
 			amountAssigns = 0,
 			initAssigns = init,
 			save = CreateFrame("Button", nil, frame, "OptionsButtonTemplate"),
@@ -129,11 +126,6 @@ do
 		obj.save:SetText("Save")
 		obj.save:SetFrameStrata("HIGH")		
 
-		
-		
-		
-		
-		
 		obj.content:SetParent(obj.scrollframe)
 
 		obj.new:SetPoint("BOTTOMLEFT", obj.scrollframe, "BOTTOMLEfT", 10, 10)

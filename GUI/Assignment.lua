@@ -16,7 +16,7 @@ do
 			
 	local Assignment = _G.GUI.Assignment
 
-	local function show(self)
+	function Assignment:Show()
 		--print("show wurde aufgerufen")
 		self.dropDownAssignType:Show()
 		self.editTimer:Show()
@@ -31,7 +31,7 @@ do
 		end
 	end
 
-	local function hide(self)
+	function Assignment:Hide()
 		self.dropDownAssignType:Hide()
 		self.editTimer:Hide()
 		self.new:Hide()
@@ -46,33 +46,7 @@ do
 		--print("Hide wurde aufgerufen")
 	end
 
-	local function OnClick(self)
-		if self:GetID() == 1 then
-			self.selectedId = SAL["Timer"]
-		elseif self:GetID() == 2 then
-			 self.selectedId = SAL["Ability"]
-		end	
-		UIDropDownMenu_SetSelectedID(dropDownAssign, self:GetID())
-	end
-
-	local function createTimerAssign(self)
-		self.editTimer:SetScript("OnUpdate", function(self, elapsed)
-			if(self:GetText() ~= "" or self:GetText() ~= 0) then
-				--print("Text edited")
-			end
-		end)
-		--Positionierung der grafischen Elemente
-		--am linken Rand ausgerichtet, 
-		--rechts von dem angegebenen Element zum Beispiel das EditField	
-		self.editTimer:SetPoint("Left", self.dropDownAssignType, "RIGHT", xVal, yVal )
-		editBox:SetMaxLetters(self.editTimer, 6)	
-		self.editTimer:Show()	
-		if #self.playerAssigns == 0 then
-			table.insert(self.playerAssigns, pa:new_playerAssign(self.mainFrame, self.editTimer, 0, 0,0))
-		end			
-	end
-	
-	local function updatePlayerAssignPosition(self, toBeDeletedItem)
+	local function updatePlayerAssignPosition(toBeDeletedItem)
 		local counter = 0
 		local cacheList = {}
 
@@ -94,14 +68,14 @@ do
 	end
 	
 
-	local function setPoint(self, relativeElement, offsetx, offsety)
+	function Assignment:SetPoint(relativeElement, offsetx, offsety)
 		self.x = offsetx
 		self.y = offsety
 		self.dropDownAssignType:SetPoint("TOPLEFT", self.mainFrame, "TOPLEFT", 10, offsety - 30)
 
 	end
 
-	local function frameStrata(self,priority )
+	function Assignment:SetFrameStrata(priority )
 		
 		
 		self.dropDownAssignType:SetFrameStrata(priority)
@@ -118,11 +92,11 @@ do
 
 	end
 
-	local function getheight(self)
+	function Assignment:GetHeight()
 		return self.mainFrame:GetHeight() + 10
 	end
 
-	local function GetAssignment(self)
+	function Assignment:GetAssign()
 		local assignmentData = {}
 
 		assignmentData["Type"] = UIDropDownMenu_GetText(self.dropDownAssignType)
@@ -138,7 +112,7 @@ do
 		return assignmentData
 	end
 
-	local function SetAssignment(self, assign)
+	function Assignment:SetAssign(assign)
 		
 		UIDropDownMenu_SetText(self.dropDownAssignType, assign["Type"])
 		self.editTimer.label:SetText("")

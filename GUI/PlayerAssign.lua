@@ -18,7 +18,7 @@ do
 	
 	local EditBox = _G.GUI.SA_EditBox
 	
-	local function hide(self)
+	function PlayerAssign:Hide()
 		self.abilityCB:Hide()
 		self.textCB:Hide()
 		self.dropDownPlayer:Hide()
@@ -31,7 +31,7 @@ do
 		self.offset:Hide()
 	end
 	
-	local function show(self)
+	function PlayerAssign:Show()
 		self.abilityCB:Show()
 		self.textCB:Show()
 		self.dropDownPlayer:Show()
@@ -43,7 +43,7 @@ do
 		self.offset:Show()
 	end
 
-	local function setPoint(self, relativeElement, x, y)
+	function PlayerAssign:SetPoint(relativeElement, x, y)
 		self.x = x
 		self.y = y
 		
@@ -54,7 +54,7 @@ do
 		self.dropDownCooldown:SetPoint("LEFT", self.abilityCB, "RIGHT", self.x+30,0)
 	end
 
-	local function delete(self)
+	function PlayerAssign:Delete()
 		x = nil
 		y = nil
 		abilityCB = nil
@@ -65,7 +65,7 @@ do
 		_G["mb2"..self.index] = nil
 	end
 
-	local function strata(self, priority)
+	function PlayerAssign:SetFrameStrata(priority)
 		self.abilityCB:SetFrameStrata(priority)
 		self.textCB:SetFrameStrata(priority)
 		self.dropDownPlayer:SetFrameStrata(priority)
@@ -73,7 +73,7 @@ do
 		self.offset:SetFrameStrata(priority)
 	end
 
-	local function GetPlayerAssignment(self)
+	function PlayerAssign:GetPlayerAssign()
 		local playerData = {}
 		
 		playerData["Player"] = UIDropDownMenu_GetText(self.dropDownPlayer)
@@ -89,7 +89,7 @@ do
 	end
 
 
-	local function SetPlayerAssignment(self, playerData)
+	function PlayerAssign:SetPlayerAssign(playerData)
 		
 		print(playerData["Player"])
 		UIDropDownMenu_SetText(self.dropDownPlayer, playerData["Player"])
@@ -128,17 +128,10 @@ do
 			extraText = CreateFrame("EditBox", "extraText"..lastElement, frame,"InputBoxTemplate"), 
 			
 			--Klasseamethoden bzw. referenzen drauf
-			Hide = hide,
-			Show = show,
-			SetFrameStrata = strata,
-			SetPoint = setPoint,
-			Delete = delete,
-			GetPlayerAssign = GetPlayerAssignment,
-			SetPlayerAssign = SetPlayerAssignment,
 		}
 		setmetatable(obj, self)
 		self.__index = self
-		print(obj.dropDownPlayer)
+		
 		obj.dropDownCooldown = createCooldownDropDown(frame, 0,0, 80, "cooldown"..lastElement, obj.dropDownPlayer)
 		obj.extraText:SetWidth(80)
 		obj.extraText:SetHeight(50)
