@@ -1,13 +1,27 @@
---Author: Bartlomiej Grabelus
--- this lua file init all global tables
+--[[
+File Name: Data.lua
+Author: Grabelus, Bartlomiej	&	Veith, Marvin Justin (10043555)
+Description: Diese Datei dient zur Initialisierung der im Projekt verwendeten Variablen. Bei erstmaligen Start
+			 werden die Saved Variables auf einen Defaultwert gesetzt. 
+			 Die Saved Variables werden in "...\World of Warcraft\WTF\<AccountName>\SAVED_VARIABLES\SmartAssign"
+			 gespeichert. Blizzard bietet die Möglichkeit komplette Tabellen inklusive Untertabellen zu speichern.
+			 Allerdings können keine Funktionen gespeichert werden. Der Speichervorgang erfolgt beim Ausloggen, 
+			 Aufruf des "/reload" Befehls oder einem Verlust der Internetverbindung. Bei einem Absturz der 
+			 WorldOfWarcraft.exe gehen die nicht gespeicherten Daten der Saved Variables verloren.
+]]
 
 -- Global vars --
 local _G = _G
 
 -- INIT DEFAULT SAVED_VARIABLES
+if (not SA_WEAKAURA) then
+	SA_WEAKAURA = {}
+	SA_WEAKAURA.duration = 0
+	SA_WEAKAURA.offset = 5
+end
 SA_AbilityList = SA_AbilityList or {}
 SA_PhaseList = SA_PhaseList or {}
-if(SA_LastSelected == nil) then
+if ( not SA_LastSelected ) then
 	SA_LastSelected = {}
 	SA_LastSelected.expansion = ""
 	SA_LastSelected.raid = ""

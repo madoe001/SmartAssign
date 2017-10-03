@@ -1,8 +1,15 @@
---Author: Bartlomiej Grabelus
--- this lua holds all data for smartassign
+--[[
+File Name: Data.lua
+Author: Grabelus, Bartlomiej	&	Veith, Marvin Justin (10043555)
+Description: In dieser Datei werden alle Funktionen für die Bearbeitung der SavedVariables geschrieben.
+]]
 local _G = _G
 
 local SAL = _G.GUI.Locales
+
+-- FLAG: Bestimmt ob der Benutzer im Chat eine Rückmeldung über erfolgreiche Funktionsabläufe bekommt.
+informUserAboutSuccesFullFunctionCall = true
+
 
 SA_Dungeons =  SA_Dungeons or {
 	[SAL["Classic"]] = {
@@ -227,49 +234,115 @@ _G.SmartAssign.minimap = {
 	}
 
 SA_BossList = SA_BossList or {};
-		
+	
+--[[
+Function Name: addExpansion
+Author: Veith, Marvin Justin (10043555)
+Parameters: expansionName - Der Name der Expansion.
+Description: Der Expansionname wird als Key in der SA_BossList verwendet, muss also eindeutig sein.
+			 Es wird eine neue Table unter der Verwendung von dem Key erstellt.
+]]	
 function addExpansion(expansionName)
 	SA_BossList[expansionName] = {};
+	if ( informUserAboutSuccesFullFunctionCall ) then print ("< addExpansion > \"" .. expansionName .. "\" succesfull added") end
 end
+--[[
+Function Name: removeExpansion
+Author: Veith, Marvin Justin (10043555)
+Parameters: expansionName - Der Name der Expansion.
+Description: Der Wert des übergebenen Schlüssels ("expansionName"), wird gelöscht.
+]]	
 function removeExpansion(expansionName)
 	SA_BossList[expansionName] = nil;
+	if ( informUserAboutSuccesFullFunctionCall ) then print ("< removeExpansion > \"" .. expansionName .. "\" succesfull added") end
 end
 
+--[[
+Function Name: addRaid
+Author: Veith, Marvin Justin (10043555)
+Parameters: expansionName - Der Name der Expansion.
+			raidName - Der Name des Raids.
+Description: Der RaidName wird als Key in der SA_BossList[expansionName] verwendet, muss also eindeutig und vorhanden sein.
+]]	
 function addRaid(expansionName, raidName)
-	SA_BossList[expansionName][raidName] = {};
+	if(SA_BossList[expansionName]) then
+		SA_BossList[expansionName][raidName] = {};
+		if ( informUserAboutSuccesFullFunctionCall ) then print ("< addRaid > \"" .. raidName .. "\" succesfull added") end 
+	else
+		if ( informUserAboutSuccesFullFunctionCall ) then 
+			print ("< addRaid > failed to add : \"" .. raidName .. "\"")
+			print ("< addRaid > Expansion: \"" .. expansionName .. "\" does not exist")
+		end
+	end	
 end
+--[[
+Function Name: removeRaid
+Author: Veith, Marvin Justin (10043555)
+Parameters: expansionName - Der Name der Expansion.
+	        raidName - Der Name des Raids.
+Description: Die Tabelle des übergebenen Schlüssels [expansionName]("raidName"), wird gelöscht.
+]]	
 function removeRaid(expansionName, raidName)
-	SA_BossList[expansionName][raidName] = nil;
-end
-
-function addBoss(expansionName, raidName, bossName)
-	SA_BossList[expansionName][raidName][bossName] = {};
-end
-function removeBoss(expansionName, raidName, bossName)
-	SA_BossList[expansionName][raidName][bossName] = nil;
-end
-
-function addPhase(expansionName, raidName, bossName, phaseName)
-	SA_BossList[expansionName][raidName][bossName][phaseName] = {};
-end
-function removePhase(expansionName, raidName, bossName, phaseName)
-	SA_BossList[expansionName][raidName][bossName][phaseName] = nil;
-end
-
-function addAbillity(expansionName, raidName, bossName, phaseName, abillityName, cooldown)
-	SA_BossList[expansionName][raidName][bossName][phaseName][abillityName] = {AbillityName = abillityName,
-															Cooldown = cooldown};
-end
-function removeAbillity(expansionName, raidName, bossName, phaseName, abillityName)
-	SA_BossList[expansionName][raidName][bossName][phaseName][abillityName] = nil;
-end
-
-function getAbillities(expansionName, raidName, bossName)
-	local abillities = {}
-	for key, value in pairs(SA_BossList[expansionName][raidName][bossName]) do
-		if key ~= "BossName" then
-			table.insert(abillities, key)
+	if ( SA_BossList[expansionName] ) then
+		SA_BossList[expansionName][raidName] = nil;
+	else
+		if ( informUserAboutSuccesFullFunctionCall ) then 
+			print ("< removeRaid > failed to remove: \"" .. raidName)
+			print ("< removeRaid > Expansion: \"" .. expansionName .. "\" does not exist")
 		end
 	end
-	return abillities
+end
+
+--[[
+Function Name: addBoss
+Author: Veith, Marvin Justin (10043555)
+Parameters: expansionName - Der Name der Expansion.
+			raidName - Der Name des Raids.
+			bossName - Der Name des Bosses.
+			encounterID - Eindeutige ID des Bosses
+Description: Der bossName wird als Key in der SA_BossList[expansionName][raidName] verwendet, muss also eindeutig und vorhanden sein.
+]]	
+function addBoss(expansionName, raidName, bossName, encounterID)
+	if ( SA_BossList[expansionName] ) then
+		if ( SA_BossList[expansionName][raidName] ) then
+			SA_BossList[expansionName][raidName][bossName] = {};
+			SA_BossList[expansionName][raidName][bossName].encounterID = encounterID
+			if ( informUserAboutSuccesFullFunctionCall ) then print ("< addBoss > \"" .. bossName .. "\"-\"" .. encounterID .. "\"succesfull added") end
+		else
+			if ( informUserAboutSuccesFullFunctionCall ) then 
+				print ("< addBoss > failed to remove: \"" .. bossName)
+				print ("< addBoss > Expansion: \"" .. raidName .. "\" does not exist")
+			end
+	else
+		if ( informUserAboutSuccesFullFunctionCall ) then 
+			print ("< addBoss > failed to remove: \"" .. bossName)
+			print ("< addBoss > Expansion: \"" .. expansionName .. "\" does not exist")
+		end
+	end	
+end
+--[[
+Function Name: removeBoss
+Author: Veith, Marvin Justin (10043555)
+Parameters: expansionName - Der Name der Expansion.
+			raidName - Der Name des Raids.
+			bossName - Der Name des Bosses.
+Description: Entfernt Boss und den dazugehörigen Schlüssel.
+]]	
+function removeBoss(expansionName, raidName, bossName)
+	if ( SA_BossList[expansionName] ) then
+		if ( SA_BossList[expansionName][raidName] ) then
+			SA_BossList[expansionName][raidName][bossName] = nil;
+			if ( informUserAboutSuccesFullFunctionCall ) then print ("< removeBoss > \"" .. bossName .. "\"succesfull added") end
+		else
+			if ( informUserAboutSuccesFullFunctionCall ) then 
+				print ("< removeBoss > failed to remove: \"" .. bossName)
+				print ("< removeBoss > Expansion: \"" .. raidName .. "\" does not exist")
+			end
+		end
+	else
+		if ( informUserAboutSuccesFullFunctionCall ) then 
+			print ("< removeBoss > failed to remove: \"" .. bossName)
+			print ("< removeBoss > Expansion: \"" .. expansionName .. "\" does not exist")
+		end
+	end
 end
