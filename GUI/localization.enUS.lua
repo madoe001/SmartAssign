@@ -156,6 +156,24 @@ L["heroic"] = "heroic"
 
 L["normal"] = "normal"
 
+L["Do you really want to create this ability: %s ?"] = "Do you really want to create this ability: %s ?"
+
+L["Do you really want to delete this ability: %s ?"] = "Do you really want to delete this ability: %s ?"
+
+L["Yes"] = "Yes"
+
+L["No"] = "No"
+
+L["Ok"] = "Ok"
+
+L["Do you have forgotten to check phasebounded?"] = "Do you have forgotten to check phasebounded?"
+
+L["Do you have forgotten the phase?"] = "Do you have forgotten the phase?"
+
+L["You should tick a difficulty!"] = "You should tick a difficulty!"
+
+L["You should tick only one difficulty!"] = "You should tick only one difficulty!"
+
 -- ASSERTS
 L["'func' in 'DropDownMenu SetOnClick' must be a function."] = "'func' in 'DropDownMenu SetOnClick' must be a function."
 

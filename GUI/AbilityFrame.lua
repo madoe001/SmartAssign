@@ -24,6 +24,62 @@ else
 	buttonWidth = 100
 end
 
+-- Popup for asking if want to apply
+StaticPopupDialogs["REALLY_APPLY"] = {
+  text = GUIL["Do you really want to create this ability: %s ?"],
+  button1 = GUIL["Yes"],
+  button2 = GUIL["No"],
+  OnAccept = function()
+	if frame.boundCB:GetChecked() == false then
+		createAbility(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID, frame.abilityNameEB:GetText(), frame.cooldownEB:GetText(), nil, frame.mythicCB:GetChecked(), frame.heroicCB:GetChecked(), frame.normalCB:GetChecked(), frame.loopCB:GetChecked(), frame.resetCB:GetChecked())
+	else
+		createAbility(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID, frame.abilityNameEB:GetText(), frame.cooldownEB:GetText(), frame.abilityPhaseNameEB:GetText(), frame.mythicCB:GetChecked(), frame.heroicCB:GetChecked(), frame.normalCB:GetChecked(), frame.loopCB:GetChecked(), frame.resetCB:GetChecked())
+	end
+  end,
+  OnCancel = function (_,reason)
+      if reason == "clicked" then
+          StaticPopup_Hide("REALLY_APPLY")
+      end;
+  end,
+  whileDead = true,
+  hideOnEscape = true,
+}
+
+-- Popup for asking if want to delete
+StaticPopupDialogs["REALLY_DELETE"] = {
+  text = GUIL["Do you really want to delete this ability: %s ?"],
+  button1 = GUIL["Yes"],
+  button2 = GUIL["No"],
+  OnAccept = function()
+      
+  end,
+  OnCancel = function (_,reason)
+      if reason == "clicked" then
+          StaticPopup_Hide("REALLY_APPLY")
+      end;
+  end,
+  whileDead = true,
+  hideOnEscape = true,
+}
+
+-- Popup for asking if want to delete
+StaticPopupDialogs["INFO"] = {
+  text = "%s",
+  button1 = GUIL["Ok"],
+  OnAccept = function(_,reason)
+      StaticPopup_Hide("INFO")
+  end,
+  OnCancel = function (_,reason)
+      if reason == "timeout" then
+          StaticPopup_Hide("INFO")
+      end;
+  end,
+  timeout = 20,
+  whileDead = true,
+  hideOnEscape = true,
+}
+
+
 -- SA_CreateAbilityFrame:CreateGUI(): creates the frame to create and delete abilities
 --
 -- frame: parent frame
@@ -123,8 +179,31 @@ function ConfigComponents(frame)
 	frame.normalCB:SetPoint("LEFT", frame.heroicCB, "LEFT", 90, 0)
 	applyButton:SetScript("OnClick", function (self, button)
 		if button == "LeftButton" then
-			if frame.abilityNameEB:GetText() or frame.cooldownEB:GetText() or frame.boundCB:GetChecked() or frame.mythicCB:GetChecked() or  frame.heroicCB:GetChecked() or frame.normalCB:GetChecked() or frame.loopCB:GetChecked() or frame.resetCB:GetChecked() then
-				--createAbility(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID, frame.abilityNameEB:GetText(), frame.cooldownEB:GetText(), frame.boundCB:GetChecked(), frame.mythicCB:GetChecked(), frame.heroicCB:GetChecked(), frame.normalCB:GetChecked(), frame.loopCB:GetChecked(), frame.resetCB:GetChecked())
+			if ValidForCreateAbility() then
+				if IsOneDifficultyChecked() then -- check if a dificulty is checked
+					if IsOnlyOneDifficultyChecked() then
+						StaticPopup_Show("REALLY_APPLY", frame.abilityNameEB:GetText())
+					else
+						StaticPopup_Show("INFO", GUIL["You should tick only one difficulty!"])
+					end
+				else
+					StaticPopup_Show("INFO", GUIL["You should tick a difficulty!"])
+				end
+			else
+				if frame.abilityNameEB:GetText() == "" then -- if empty
+					frame.abilityNameEB.label:SetTextColor(1, 0, 0, 1)
+				end
+				if frame.cooldownEB:GetText() == "" then -- if empty
+					frame.cooldownEB.label:SetTextColor(1, 0, 0, 1)
+				end
+				-- check if have checked phasebound and some input is in editbox
+				if frame.abilityPhaseNameEB:GetText() == "" and frame.boundCB:GetChecked() == true then 
+					frame.abilityPhaseNameEB.label:SetTextColor(1, 0, 0, 1)
+				end
+				-- check if have not checked phasebound and no input is in editbox
+				if frame.abilityPhaseNameEB:GetText() ~= "" and frame.boundCB:GetChecked() == false then
+					StaticPopup_Show("INFO", GUIL["Do you have forgotten to check phasebounded?"])
+				end
 			end
 		end
 	end)
@@ -206,4 +285,20 @@ function CreateFont(frame, name, text, position, x, y, size)
 	fontString:SetText(text)
 	
 	return (fontString)
+end
+
+function ValidForCreateAbility()
+	return(abilityFrame.abilityNameEB:GetText() ~= "" and abilityFrame.cooldownEB:GetText() ~= "" 
+		   and (abilityFrame.abilityPhaseNameEB:GetText() ~= "" and abilityFrame.boundCB:GetChecked() == true 
+		   or abilityFrame.abilityPhaseNameEB:GetText() == "" and abilityFrame.boundCB:GetChecked() == false))
+end
+
+function IsOnlyOneDifficultyChecked()
+	return((not abilityFrame.heroicCB:GetChecked() and not abilityFrame.mythicCB:GetChecked() and abilityFrame.normalCB:GetChecked())
+		or (abilityFrame.heroicCB:GetChecked() and not abilityFrame.mythicCB:GetChecked() and not abilityFrame.normalCB:GetChecked())
+		or (not abilityFrame.heroicCB:GetChecked() and abilityFrame.mythicCB:GetChecked() and not abilityFrame.normalCB:GetChecked()))
+end
+
+function IsOneDifficultyChecked()
+	return (abilityFrame.heroicCB:GetChecked() or abilityFrame.mythicCB:GetChecked() or abilityFrame.normalCB:GetChecked())
 end
