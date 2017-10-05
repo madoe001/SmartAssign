@@ -113,7 +113,7 @@ do
 	end
 
 	function Assignment:SetAssign(assign)
-		print(assign)
+		print("SetAssign", assign)
 		UIDropDownMenu_SetText(self.dropDownAssignType, assign["Type"])
 		self.editTimer.label:SetText("")
 		self.editTimer:SetText(assign["Timer"])

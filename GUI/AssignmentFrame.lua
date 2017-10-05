@@ -59,12 +59,10 @@ do
 
 
 	local function init(self, relativeElement, assigns)
-		
 		local obj = self
 		local counter = 0
 		if assigns ~= nil then
 		for k,v  in pairs(assigns) do
-			print("Last Element: ", obj.lastElement)
 			local assignment = Assignment:new_assignment(obj.content, relativeElement, obj.index, 0, 0)
 			table.insert(obj.assignments, assignment)
 			assignment:Show()
@@ -85,7 +83,7 @@ do
 			delete:SetHeight(25)
 			delete:SetText("-")
 			delete:SetFrameStrata("HIGH")
-			obj.amountAssigns = obj.amountAssigns + 1	
+			obj.amountAssigns = obj.amountAssigns + 1
 			assignment:SetAssign(v)
 			delete:SetScript("OnClick", function(self, button, down)
 				assignment:Hide()
@@ -119,14 +117,25 @@ do
 			for k, v in pairs(obj.assignments) do
 				print(SA_LastSelected.boss)
 				local encounterID = SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID 
+				local assign = v:GetAssign()
 				SA_Assignments[encounterID] = {}
-				SA_Assignments[encounterID] = v:GetAssign()
+				SA_Assignments[encounterID]["assignment"..counter] = assign
+				--print(assign["Timer"])
 
+				for pk, pv in pairs(assign["assigns"]) do
+					local classCooldowns = SA_Cooldowns[UnitClass(pv["Player"])]
+					local spellid = 0
 
-				--for pk, pv in v:GetAssign().playerAssigns do
-				--	SA_WA:addAssign(pv:
+					for ck, cv in pairs(classCooldowns) do
+						if cv["Name"] == pv["Text"] then
+							cooldown = cv["SpellID"]
+						end
+					end
+					SA_WA:addAssign(spellid, assign["Timer"], "assignment_" .. SA_LastSelected.boss .. counter, encounterID)
+				end
 			end
 		end)
+
 		obj.save:SetPoint("LEFT", obj.new, "RIGHT", 5 ,0)
 		obj.save:SetText("Save")
 		obj.save:SetFrameStrata("HIGH")		
@@ -161,8 +170,7 @@ do
 		obj.content:SetHeight(200)
 		obj.content:SetPoint("TOPLEFT", obj.scrollframe, "TOPLEFT")
 		
-		print(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID)
-		--obj.initAssigns(obj, relativeElement, SA_Assignments[SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID])
+		obj.initAssigns(obj, relativeElement, SA_Assignments[SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID])
 		
 		-- Scroll Bar
 		obj.scrollbar = CreateFrame("Slider","sb",obj.scrollframe,"UIPanelScrollBarTemplate") 
