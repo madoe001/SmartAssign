@@ -190,7 +190,9 @@ Description: Diese Funktion  erstellt ein Assignment. Das Assignment wird in ein
 			 assignmentName gespeichert. Die EncounterID bestimmt hierbei den zu bekämpfenden Boss. Es können also mehrere
 			 Assignments erstellt werden und später zu den Bossen geladen.
 ]]	
+
 function SA_WA:addAssign(spellid, timer , assignmentName, encounterid)  -- TODO Ability basierte Assignments hinzufügen
+	encounterid = encounterid .. ""
 	if (not SA_WEAKAURA[encounterid]) then
 		SA_WEAKAURA[encounterid] = {}
 	end
@@ -289,7 +291,7 @@ Description: Diese Funktion wird jeden Frame aufgerufen. Falls der Spieler sich 
 			 wird die Kampfdauer neu berechnet und die Auswertung an verschiedene Handler delegiert.
 ]]
 function SA_Update()
-	if SA_WEAKAURA.combat then
+	if SA_WEAKAURA.combat then		
 		SA_WEAKAURA.duration = GetTime() - SA_WEAKAURA.start
 		updateHP()
 		updateEnergy()
@@ -357,13 +359,13 @@ function updateEnergy ()
 end
 
 -- ??? NIL ???
-
+local frame = CreateFrame("Frame")
 -- Registriert alle Events beim Server
--- frame:RegisterEvent("ENCOUNTER_START")
--- frame:RegisterEvent("ENCOUNTER_END")
+frame:RegisterEvent("ENCOUNTER_START")
+frame:RegisterEvent("ENCOUNTER_END")
 -- 
--- frame:SetScript("OnEvent", SA_OnEvent)
--- frame:SetScript("OnUpdate", SA_Update)
+frame:SetScript("OnEvent", SA_OnEvent)
+frame:SetScript("OnUpdate", SA_Update)
 
 
 -- Regestriert AddonChat und Events beim Server
