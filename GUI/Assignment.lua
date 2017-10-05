@@ -100,7 +100,7 @@ do
 		local assignmentData = {}
 
 		assignmentData["Type"] = UIDropDownMenu_GetText(self.dropDownAssignType)
-		assignmentData["Timer"] = self.editTimer:GetText()
+		assignmentData["Timer"] = tonumber(self.editTimer:GetText())
 
 		local index = 1
 		assignmentData["assigns"] = {}
@@ -113,7 +113,7 @@ do
 	end
 
 	function Assignment:SetAssign(assign)
-		
+		print(assign)
 		UIDropDownMenu_SetText(self.dropDownAssignType, assign["Type"])
 		self.editTimer.label:SetText("")
 		self.editTimer:SetText(assign["Timer"])

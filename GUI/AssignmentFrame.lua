@@ -118,8 +118,13 @@ do
 			local counter = 0
 			for k, v in pairs(obj.assignments) do
 				print(SA_LastSelected.boss)
-				SA_Assignments[SA_LastSelected.boss] = {}
-				SA_Assignments[SA_LastSelected.boss]["assignment"..counter] = v:GetAssign()
+				local encounterID = SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID 
+				SA_Assignments[encounterID] = {}
+				SA_Assignments[encounterID] = v:GetAssign()
+
+
+				--for pk, pv in v:GetAssign().playerAssigns do
+				--	SA_WA:addAssign(pv:
 			end
 		end)
 		obj.save:SetPoint("LEFT", obj.new, "RIGHT", 5 ,0)
@@ -156,7 +161,8 @@ do
 		obj.content:SetHeight(200)
 		obj.content:SetPoint("TOPLEFT", obj.scrollframe, "TOPLEFT")
 		
-		obj.initAssigns(obj, relativeElement, SA_Assignments[SA_LastSelected.boss])
+		print(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID)
+		--obj.initAssigns(obj, relativeElement, SA_Assignments[SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID])
 		
 		-- Scroll Bar
 		obj.scrollbar = CreateFrame("Slider","sb",obj.scrollframe,"UIPanelScrollBarTemplate") 
