@@ -76,7 +76,7 @@ Description: Es wird abhänhig der Parameter (falls nicht angegeben, default) ei
 
 	-- Background für BossSelectFrame erschaffen
 
-	obj.frame = CreateFrame("Frame",name.."_BossSelectFramus",parent)
+	obj.frame = CreateFrame("Frame", name.."_BossSelectFramus",parent)
 	obj.frame:SetWidth(width)
 	obj.frame:SetHeight(height)
 	obj.frame:SetPoint(anchor,xOffset,-yOffset)
