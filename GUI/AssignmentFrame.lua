@@ -52,7 +52,6 @@ do
 		if #cacheList > 0 then
 			self.lastElement = cacheList[#cacheList].mainFrame
 		end
-		print("New last element ", cacheList[#cacheList])
 		self.amountAssigns = #cacheList
 		
 	end
@@ -90,12 +89,14 @@ do
 				assignment:Hide()
 				self:Hide()
 				updateAssignmentFrame(obj, assignment)
-				SA_Assignments[encounterID]["assignment"..assignment.index] = nil
-				for k, v in assignment.playerAssigns do 
-					SA_WEAKAURA[encounterID]["assignment_"..SA_LastSelected.boss .. "_" .. assignment.index .. v.index] = nil
+				for pk, pv in pairs(obj.assignment.playerAssigns) do 
+					print("assignment_"..SA_LastSelected.boss .. "_" .. assignment.index .. pv.index)
+
+					SA_WEAKAURA[encounterID]["assignment_"..SA_LastSelected.boss .. "_" .. assignment.index .. pv.index] = nil
 				end
 					assignment = nil
 			end)
+				SA_Assignments[encounterID]["assignment"..assignment.index] = nil
 			table.insert(obj.deleteButtons, delete)
 			obj.scrollframe:SetScrollChild(obj.content)
 		end
@@ -122,7 +123,6 @@ do
 			local counter = 0
 			local encounterID = SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID 			
 			for k, v in pairs(obj.assignments) do
-				print(SA_LastSelected.boss)
 				local assign = v:GetAssign()
 				local name = "assignment" .. v.index
 				if not SA_Assignments[encounterID] then
@@ -133,22 +133,18 @@ do
 				end
 				SA_Assignments[encounterID][name] = assign
 				
-				local assigncounter = 0
-				for pk, pv in pairs(assign["assigns"]) do
-					local class = UnitClass(pv.Player)
-					print(class)
+				for plk, plv in pairs(v.playerAssigns) do
+					local class = UnitClass(UIDropDownMenu_GetText(plv.dropDownPlayer))
 					local classCooldowns = SA_Cooldowns[class]
 					local spellid = 0
 					for ck, cv in pairs(classCooldowns) do
-						if cv["Name"] == pv["Text"] then
+						if cv["Name"] == UIDropDownMenu_GetText(plv.dropDownCooldown) then
 							spellid = cv["SpellID"]
 						end
 					end
+					print(plv.index)
 					
-					for plk, plv in pairs(v.playerAssigns) do
 						SA_WA:addAssign(spellid, assign["Timer"], "assignment_" .. SA_LastSelected.boss .. "_" .. v.index .. plv.index, encounterID)
-					end
-						assigncounter = assigncounter + 1
 				end
 				counter = counter + 1
 			end
