@@ -59,12 +59,11 @@ do
 
 
 	local function init(self, relativeElement, assigns)
-		
 		local obj = self
 		local counter = 0
+		local encounterID = SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID 			
 		if assigns ~= nil then
 		for k,v  in pairs(assigns) do
-			print("Last Element: ", obj.lastElement)
 			local assignment = Assignment:new_assignment(obj.content, relativeElement, obj.index, 0, 0)
 			table.insert(obj.assignments, assignment)
 			assignment:Show()
@@ -85,12 +84,17 @@ do
 			delete:SetHeight(25)
 			delete:SetText("-")
 			delete:SetFrameStrata("HIGH")
-			obj.amountAssigns = obj.amountAssigns + 1	
+			obj.amountAssigns = obj.amountAssigns + 1
 			assignment:SetAssign(v)
 			delete:SetScript("OnClick", function(self, button, down)
 				assignment:Hide()
 				self:Hide()
 				updateAssignmentFrame(obj, assignment)
+				SA_Assignments[encounterID]["assignment"..assignment.index] = nil
+				for k, v in assignment.playerAssigns do 
+					SA_WEAKAURA[encounterID]["assignment_"..SA_LastSelected.boss .. "_" .. assignment.index .. v.index] = nil
+				end
+					assignment = nil
 			end)
 			table.insert(obj.deleteButtons, delete)
 			obj.scrollframe:SetScrollChild(obj.content)
@@ -116,12 +120,41 @@ do
 		
 		obj.save:SetScript("OnClick", function(self, button, down)
 			local counter = 0
+			local encounterID = SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID 			
 			for k, v in pairs(obj.assignments) do
 				print(SA_LastSelected.boss)
-				SA_Assignments[SA_LastSelected.boss] = {}
-				SA_Assignments[SA_LastSelected.boss]["assignment"..counter] = v:GetAssign()
+				local assign = v:GetAssign()
+				local name = "assignment" .. v.index
+				if not SA_Assignments[encounterID] then
+					SA_Assignments[encounterID] = {}
+				end
+				if not SA_Assignments[encounterID][name] then
+					SA_Assignments[encounterID][name] = {}
+				end
+				SA_Assignments[encounterID][name] = assign
+				
+				local assigncounter = 0
+				for pk, pv in pairs(assign["assigns"]) do
+					local class = UnitClass(pv.Player)
+					print(class)
+					local classCooldowns = SA_Cooldowns[class]
+					local spellid = 0
+					for ck, cv in pairs(classCooldowns) do
+						if cv["Name"] == pv["Text"] then
+							spellid = cv["SpellID"]
+						end
+					end
+					
+					for plk, plv in pairs(v.playerAssigns) do
+						SA_WA:addAssign(spellid, assign["Timer"], "assignment_" .. SA_LastSelected.boss .. "_" .. v.index .. plv.index, encounterID)
+					end
+						assigncounter = assigncounter + 1
+				end
+				counter = counter + 1
 			end
+
 		end)
+
 		obj.save:SetPoint("LEFT", obj.new, "RIGHT", 5 ,0)
 		obj.save:SetText("Save")
 		obj.save:SetFrameStrata("HIGH")		
@@ -156,7 +189,7 @@ do
 		obj.content:SetHeight(200)
 		obj.content:SetPoint("TOPLEFT", obj.scrollframe, "TOPLEFT")
 		
-		obj.initAssigns(obj, relativeElement, SA_Assignments[SA_LastSelected.boss])
+		obj.initAssigns(obj, relativeElement, SA_Assignments[SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID])
 		
 		-- Scroll Bar
 		obj.scrollbar = CreateFrame("Slider","sb",obj.scrollframe,"UIPanelScrollBarTemplate") 
