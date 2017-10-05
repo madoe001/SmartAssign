@@ -184,7 +184,7 @@ end
 --
 -- author: Bartlomiej Grabelus (10044563)
 function SetScripts()
-	abilityFrame.mythicCB:SetScript("OnClick", function(self, button)
+	--[[abilityFrame.mythicCB:SetScript("OnClick", function(self, button)
 		if button == "LeftButton" then
 			if abilityFrame.normalCB:GetChecked() then
 				abilityFrame.normalCB:SetChecked(false)
@@ -193,8 +193,8 @@ function SetScripts()
 				abilityFrame.heroicCB:SetChecked(false)
 			end
 		end
-	end)
-	abilityFrame.heroicCB:SetScript("OnClick", function(self, button)
+	end)]]
+	--[[abilityFrame.heroicCB:SetScript("OnClick", function(self, button)
 		if button == "LeftButton" then
 			if abilityFrame.mythicCB:GetChecked() then
 				abilityFrame.mythicCB:SetChecked(false)
@@ -203,8 +203,8 @@ function SetScripts()
 				abilityFrame.normalCB:SetChecked(false)
 			end
 		end
-	end)
-	abilityFrame.normalCB:SetScript("OnClick", function(self, button)
+	end)]]
+	--[[abilityFrame.normalCB:SetScript("OnClick", function(self, button)
 		if button == "LeftButton" then
 			if abilityFrame.mythicCB:GetChecked() then
 				abilityFrame.mythicCB:SetChecked(false)
@@ -213,16 +213,16 @@ function SetScripts()
 				abilityFrame.heroicCB:SetChecked(false)
 			end
 		end
-	end)
+	end)]]
 	applyButton:SetScript("OnClick", function (self, button)
 		if button == "LeftButton" then
 			if ValidForCreateAbility() then -- check if all is valid
 				if IsOneDifficultyChecked() then -- check if a dificulty is checked
-					--if IsOnlyOneDifficultyChecked() then
+					if IsOnlyOneDifficultyChecked() then
 						StaticPopup_Show("REALLY_APPLY", abilityFrame.abilityNameEB:GetText())
-					--else
-						--StaticPopup_Show("INFO", GUIL["You should tick only one difficulty!"])
-					--end
+					else
+						StaticPopup_Show("INFO", GUIL["You should tick only one difficulty!"])
+					end
 				else
 					StaticPopup_Show("INFO", GUIL["You should tick a difficulty!"])
 				end
