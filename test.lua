@@ -373,7 +373,7 @@ local framus = CreateFrame("Frame")
 local SA_prefix = "<SMART_ASSIGN>"
 framus:RegisterEvent("CHAT_MSG_ADDON");
 RegisterAddonMessagePrefix("<SMART_ASSIGN>"); --TODO auf SA_prefix ändern.
-framus:SetScript("OnEvent", print_msg);
+
 
 --[[
 Function Name: caricWrite
@@ -395,14 +395,17 @@ Description: Diese Funktion sendet über den Addonchatchannel eine Nachricht an a
 			 Es können sogar Phasen und Abilities über diese Funktion gesendet werden. Dadurch erhalten die Raidmitglieder
 			 alle passenden Informationen.
 ]]
+
 function caricWrite(functionname, playerName, assignmentName, spellID, timer, encounterID)  -- TODO Name ändern und weiter ausbauen
 	local msg = "";
 	msg = msg .. "FUNCTIONNAME~" .. functionname .. "§"
 	msg = msg .. "PLAYERNAME~" .. playerName .. "§"
 	msg = msg .. "ASSIGNMENTNAME~" .. assignmentName .. "§"
 	msg = msg .. "SPELLID~" .. spellID .. "§"
-	msg = msg .. "TIMER~" .. timer
+	msg = msg .. "TIMER~" .. timer .. "§"
+	msg = msg .. "ENCOUNTERID~" .. encounterID
 	print (msg)
+	print (string.len(msg))
 	if ( IsInRaid() ) then
 		SendAddonMessage(SA_prefix,msg,"RAID");
 	elseif ( IsInGroup() ) then
@@ -423,9 +426,10 @@ Description: Der Chathandler liest alle Nachrichten mit, die im Addonchatchannel
 			 wird geprüft für welchen Spieler die Nachricht adressiert wurde.
 			 Abhängig von der übergebenen Funktion und Parameter werden diese weiter delegiert.
 ]]
-local function print_msg(...) -- TODO umbenennen
-	--
+function print_msg(...) -- TODO umbenennen
+	
 	_,_,prefix, msg, channel, sender = ...;
+	
 	if(prefix == "<SMART_ASSIGN>") then 
 		local argList = mysplit(msg, "§")
 		arguments = {}
@@ -439,11 +443,13 @@ local function print_msg(...) -- TODO umbenennen
 		if ( arguments.PLAYERNAME == ownName or arguments.PLAYERNAME == (ownName .. "-" .. ownRealm)) then
 			local spellID = tonumber(arguments.SPELLID)
 			local timer = tonumber(arguments.TIMER)
-			SA_WA:addAssign(spellID, timer , arguments.ASSIGNMENTNAME)
+			print ("test")
+			SA_WA:addAssign(spellID, timer , arguments.ASSIGNMENTNAME, arguments.ENCOUNTERID)
 		end
 	end		
 end
 
+framus:SetScript("OnEvent", print_msg);
 --[[
 Function Name: mysplit
 Author: Veith, Marvin Justin (10043555)
