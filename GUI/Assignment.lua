@@ -46,7 +46,7 @@ do
 		--print("Hide wurde aufgerufen")
 	end
 
-	local function updatePlayerAssignPosition(toBeDeletedItem)
+	local function updatePlayerAssignPosition(self, toBeDeletedItem)
 		local counter = 0
 		local cacheList = {}
 
@@ -99,8 +99,8 @@ do
 	function Assignment:GetAssign()
 		local assignmentData = {}
 
-		assignmentData["Type"] = UIDropDownMenu_GetText(self.dropDownAssignType)
-		assignmentData["Timer"] = tonumber(self.editTimer:GetText())
+		assignmentData["Type"] = UIDropDownMenu_GetText(self.dropDownAssignType) or ""
+		assignmentData["Timer"] = tonumber(self.editTimer:GetText()) or 0
 
 		local index = 1
 		assignmentData["assigns"] = {}
@@ -243,6 +243,7 @@ do
 				playerAssign:Hide()
 				playerAssign:Delete()
 				
+				table.remove(obj.playerAssigns, playerAssign)
 				playerAssign = nil
 				
 				local height = obj.mainFrame:GetHeight()
@@ -258,7 +259,6 @@ do
 		obj.dropDownAssignType:Hide()
 		return obj
 	end
-	
 		
 end
 

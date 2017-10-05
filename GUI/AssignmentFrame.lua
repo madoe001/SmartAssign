@@ -61,6 +61,7 @@ do
 	local function init(self, relativeElement, assigns)
 		local obj = self
 		local counter = 0
+		local encounterID = SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID 			
 		if assigns ~= nil then
 		for k,v  in pairs(assigns) do
 			local assignment = Assignment:new_assignment(obj.content, relativeElement, obj.index, 0, 0)
@@ -89,6 +90,11 @@ do
 				assignment:Hide()
 				self:Hide()
 				updateAssignmentFrame(obj, assignment)
+				SA_Assignments[encounterID]["assignment"..assignment.index] = nil
+				for k, v in assignment.playerAssigns do 
+					SA_WEAKAURA[encounterID]["assignment_"..SA_LastSelected.boss .. "_" .. assignment.index .. v.index] = nil
+				end
+					assignment = nil
 			end)
 			table.insert(obj.deleteButtons, delete)
 			obj.scrollframe:SetScrollChild(obj.content)
@@ -114,26 +120,39 @@ do
 		
 		obj.save:SetScript("OnClick", function(self, button, down)
 			local counter = 0
+			local encounterID = SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID 			
 			for k, v in pairs(obj.assignments) do
 				print(SA_LastSelected.boss)
-				local encounterID = SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID 
 				local assign = v:GetAssign()
-				SA_Assignments[encounterID] = {}
-				SA_Assignments[encounterID]["assignment"..counter] = assign
-				--print(assign["Timer"])
-
+				local name = "assignment" .. v.index
+				if not SA_Assignments[encounterID] then
+					SA_Assignments[encounterID] = {}
+				end
+				if not SA_Assignments[encounterID][name] then
+					SA_Assignments[encounterID][name] = {}
+				end
+				SA_Assignments[encounterID][name] = assign
+				
+				local assigncounter = 0
 				for pk, pv in pairs(assign["assigns"]) do
-					local classCooldowns = SA_Cooldowns[UnitClass(pv["Player"])]
+					local class = UnitClass(pv.Player)
+					print(class)
+					local classCooldowns = SA_Cooldowns[class]
 					local spellid = 0
-
 					for ck, cv in pairs(classCooldowns) do
 						if cv["Name"] == pv["Text"] then
-							cooldown = cv["SpellID"]
+							spellid = cv["SpellID"]
 						end
 					end
-					SA_WA:addAssign(spellid, assign["Timer"], "assignment_" .. SA_LastSelected.boss .. counter, encounterID)
+					
+					for plk, plv in pairs(v.playerAssigns) do
+						SA_WA:addAssign(spellid, assign["Timer"], "assignment_" .. SA_LastSelected.boss .. "_" .. v.index .. plv.index, encounterID)
+					end
+						assigncounter = assigncounter + 1
 				end
+				counter = counter + 1
 			end
+
 		end)
 
 		obj.save:SetPoint("LEFT", obj.new, "RIGHT", 5 ,0)
