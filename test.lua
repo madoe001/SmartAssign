@@ -263,13 +263,19 @@ function SA_OnEvent(frame, event, encounterID, ...)
 		SA_WEAKAURA.encounterID = encounterID	
 		local eID = encounterID .. ""
 		local difficulty = getDifficulty()
-		if ( SA_PhaseList[eID][difficulty] ) then
-			SA_PhaseList[eID][difficulty].SA_currentPhase = SA_PhaseList[eID][difficulty].SA_firstPhase
-			SA_PhaseList[eID][difficulty][SA_PhaseList[eID][difficulty].SA_currentPhase].start = GetTime()
+		if ( SA_PhaseList[eID] ) then
+			if ( SA_PhaseList[eID][difficulty] ) then
+				SA_PhaseList[eID][difficulty].SA_currentPhase = SA_PhaseList[eID][difficulty].SA_firstPhase
+				SA_PhaseList[eID][difficulty][SA_PhaseList[eID][difficulty].SA_currentPhase].start = GetTime()
+			end
 		end
-		if( SA_AbilityList[eID][difficulty] ) then
-			for k,v in pairs ( SA_AbilityList[eID][difficulty] ) do
-				SA_AbilityList[eID][difficulty][k].counter = 1
+		if( SA_AbilityList[eID]) then
+			if( SA_AbilityList[eID][difficulty] ) then
+				for k,v in pairs ( SA_AbilityList[eID][difficulty] ) do
+					SA_AbilityList[eID][difficulty][k].counter = 1
+					SA_AbilityList[eID][difficulty][k].start = GetTime()
+					SA_AbilityList[eID][difficulty][k].nextStart = false
+				end
 			end
 		end
 	end 
@@ -404,8 +410,6 @@ function caricWrite(functionname, playerName, assignmentName, spellID, timer, en
 	msg = msg .. "SPELLID~" .. spellID .. "§"
 	msg = msg .. "TIMER~" .. timer .. "§"
 	msg = msg .. "ENCOUNTERID~" .. encounterID
-	print (msg)
-	print (string.len(msg))
 	if ( IsInRaid() ) then
 		SendAddonMessage(SA_prefix,msg,"RAID");
 	elseif ( IsInGroup() ) then
@@ -443,7 +447,6 @@ function print_msg(...) -- TODO umbenennen
 		if ( arguments.PLAYERNAME == ownName or arguments.PLAYERNAME == (ownName .. "-" .. ownRealm)) then
 			local spellID = tonumber(arguments.SPELLID)
 			local timer = tonumber(arguments.TIMER)
-			print ("test")
 			SA_WA:addAssign(spellID, timer , arguments.ASSIGNMENTNAME, arguments.ENCOUNTERID)
 		end
 	end		
@@ -661,7 +664,9 @@ function abilityHandler()
 		if ( iterateMethod == "Looping" ) then
 			if ( amountCooldowns > 0 ) then
 				listIndex = listIndex % amountCooldowns
-				listIndex = listIndex + 1
+				if ( listIndex == 0 ) then
+					listIndex = amountCooldowns
+				end
 			end
 		elseif ( iterateMethod == "Iterating" ) then
 			if ( listIndex > amountCooldowns ) then
@@ -673,45 +678,41 @@ function abilityHandler()
 		
 		-- Bestimmt ob die Ability ausgelöst werden kann, abhängig ob die dazugehörige Phase aktiv ist bzw. ob 
 		-- Ability phasenunabhängig ist.
-		if (not SA_AbilityList[eID][difficulty][k].boundToPhase) then
-			if ( not SA_PhaseList[eID] ) then
-				return false
-			end
-			if( not SA_PhaseList[eID][difficulty] ) then
-				return false
-			end
-			
-			for num, phaseName in ipairs ( SA_AbilityList[eID][difficulty][k].boundedPhases ) do
-				if ( SA_PhaseList[eID][difficulty].SA_currentPhase == phaseName ) then
-					isTriggerable = true
+		if ( SA_AbilityList[eID][difficulty][k].boundToPhase) then
+			if ( SA_PhaseList[eID] ) then
+				if(SA_PhaseList[eID][difficulty] ) then
+					for num, phaseName in ipairs ( SA_AbilityList[eID][difficulty][k].boundedPhases ) do
+						if ( SA_PhaseList[eID][difficulty].SA_currentPhase == phaseName ) then
+							isTriggerable = true
+						end
+					end
 				end
 			end
 		else
 			isTriggerable = true
 		end
-		
+		SA_AbilityList[eID][difficulty][k].active = isTriggerable
 		-- Legt die Zeitstempel zum triggern fest.
 		if ( isTriggerable ) then
-			if ( SA_AbilityList[eID][difficulty][abilityName].resetTimerOnPhaseStart ) then
+			if ( SA_AbilityList[eID][difficulty][k].resetTimerOnPhaseStart ) then
 				if ( SA_PhaseList[eID] ) then
 					if ( SA_PhaseList[eID][difficulty] ) then			
-						if ( SA_AbilityList[eID][difficulty][abilityName].SA_lastPhase ~= SA_PhaseList[eID][difficulty].SA_currentPhase) then
-							SA_AbilityList[eID][difficulty][abilityName].SA_lastPhase = SA_PhaseList[eID][difficulty].SA_currentPhase
-							SA_PhaseList[eID][difficulty][k].nextStart = true
+						if ( SA_AbilityList[eID][difficulty][k].SA_lastPhase ~= SA_PhaseList[eID][difficulty].SA_currentPhase) then
+							SA_AbilityList[eID][difficulty][k].SA_lastPhase = SA_PhaseList[eID][difficulty].SA_currentPhase
+							SA_AbilityList[eID][difficulty][k].nextStart = true
 						end
 					end
 				end
 			end
-			if ( SA_PhaseList[eID][difficulty][k].nextStart ) then
-				SA_PhaseList[eID][difficulty][k].nextStart = false
-				SA_PhaseList[eID][difficulty][k].start = GetTime()
+			if ( SA_AbilityList[eID][difficulty][k].nextStart ) then
+				SA_AbilityList[eID][difficulty][k].nextStart = false
+				SA_AbilityList[eID][difficulty][k].start = GetTime()
 			end
-			-- Erhöht Counter und setzt neuen Timer fest, falls der aktuelle Zeitstempel überschritten ist.
-			if ( SA_PhaseList[eID][difficulty][k].start + SA_PhaseList[eID][difficulty][k].cooldown[listIndex] < GetTime() ) then
-				SA_PhaseList[eID][difficulty][k].counter = SA_PhaseList[eID][difficulty][k].counter + 1
-				SA_PhaseList[eID][difficulty][k].nextStart = true
-			end
-			
+			--Erhöht Counter und setzt neuen Timer fest, falls der aktuelle Zeitstempel überschritten ist.
+			if ( SA_AbilityList[eID][difficulty][k].start + SA_AbilityList[eID][difficulty][k].cooldown[listIndex] < GetTime() ) then
+				SA_AbilityList[eID][difficulty][k].counter = SA_AbilityList[eID][difficulty][k].counter + 1
+				SA_AbilityList[eID][difficulty][k].nextStart = true
+			end			
 		end
 	end	
 end
@@ -822,7 +823,6 @@ function fillRaidsAndBosses()
 		local i = 1
 		while EJ_GetInstanceByIndex(i, true) do
 			SA_instanceId, SA_name = EJ_GetInstanceByIndex(i, true)
-			print(SA_instanceId, SA_name)
 			SA_BossList[tiername][SA_name] = {}
 			EJ_SelectInstance(SA_instanceId)
 			i = i+1
@@ -832,7 +832,6 @@ function fillRaidsAndBosses()
 				local name, _, encounterId = EJ_GetEncounterInfoByIndex(j, instanceId)
 				SA_BossList[tiername][SA_name][name] = {}
 				SA_BossList[tiername][SA_name][name].encounterID = encounterId
-				print("--> ",encounterId, name)
 				j = j+1
 			end
 		end
