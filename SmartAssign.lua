@@ -54,7 +54,7 @@ function SmartAssign:getAllMembers()
          else if IsInGroup() then
                local memberName, realm = UnitName("party"..i)
                local key
-               if(realm ~= "" ) then
+               if(realm ~= "" and realm ~= nil ) then
                   key = memberName.."-"..realm
                else
                   key = memberName

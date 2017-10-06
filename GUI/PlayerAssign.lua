@@ -78,13 +78,13 @@ do
 		
 		playerData["Player"] = UIDropDownMenu_GetText(self.dropDownPlayer)
 		if self.abilityCB:GetChecked() then
-			playerData["TextOrCoolDown"] = "ability"
-			playerData["Text"] = UIDropDownMenu_GetText(self.dropDownCooldown)
+			playerData["TextOrCoolDown"] = "ability" 
+			playerData["Text"] = UIDropDownMenu_GetText(self.dropDownCooldown) or ""
 		else
-			playerData["TextOrCoolDown"] = "text"
-			playerData["Text"] = self.extraText:GetText()
+			playerData["TextOrCoolDown"] = "text" or ""
+			playerData["Text"] = self.extraText:GetText() or ""
 		end
-		playerData["offset"] = self.offset:GetText()
+		playerData["offset"] = self.offset:GetText() or ""
 		return playerData
 	end
 
