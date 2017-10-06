@@ -14,6 +14,7 @@ local GUI = _G.GUI
 --local EditBox = GUI.SA_EditBox
 local AssignmentFrame = _G.GUI.AssignmentFrame
 local CreateAbilityFrame = GUI.SA_CreateAbilityFrame
+local PhaseFrame = GUI.SA_PhaseFrame
 local flag = true
 
 -- hud
@@ -109,7 +110,8 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	table.insert(Assignments, assign)
 
 
-	CreateAbilityFrame:CreateGUI(UIParent)
+	--CreateAbilityFrame:CreateGUI(UIParent)
+	PhaseFrame:CreateGUI(UIParent)
 
 	-- make main frame movable
 	SA_GUI_LOCAL:MakeMovable(frame)

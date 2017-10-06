@@ -129,6 +129,8 @@ L["cooldown(s) in sec"] = "Abklingzeit/en in s"
 
 L["phasename(s)"] = "Phasenname/n"
 
+L["trigger"] = "Trigger"
+
 -- ScrollFrame
 
 L[" has no childs!"] = " hat keine Kinder!"
@@ -139,7 +141,7 @@ L["Player is in Instance."] = "Der Spieler ist in einer Instanz."
 
 L["Player is not in Instance."] = "Der Spieler ist in keiner Instanz."
 
--- CreateAbilityFrame
+-- AbilityFrame/PhaseFrame
 
 L["Apply"] = "Anlegen"
 
@@ -153,6 +155,8 @@ L["phasebound"] = "Phasengebunden"
 
 L["reset timer on phase"] = "Timer bei Phase zur\195\188cksetzen"
 
+L["first Phase"] = "erste Phase"
+
 L["mythic"] = "Mytisch"
 
 L["heroic"] = "Heroisch"
@@ -162,6 +166,12 @@ L["normal"] = "Normal"
 L["Do you really want to create this ability: %s ?"] = "M\195\182chtest du wirklich die F\195\164higkeit \"%s\" erstellen?"
 
 L["Do you really want to delete this ability: %s ?"] = "M\195\182chtest du wirklich die F\195\164higkeit \"%s\" l\195\182schen?"
+
+L["Do you really want to delete this phase: %s ?"] = "M\195\182chtest du wirklich die Phase \"%s\" l\195\182schen?"
+
+L["Do you really want to create this phase: %s ?"] = "M\195\182chtest du wirklich die Phase \"%s\" erstellen?"
+
+L["Text/HP/Energy/Time"] = "Text/HP/Energie/Zeit" 
 
 L["Yes"] = "Ja"
 
@@ -176,6 +186,10 @@ L["Do you have forgotten the phase?"] = "Hast du die Phase vergessen?"
 L["You should tick a difficulty!"] = "Bitte w\195\164hle einen Schwierigkeitsgrad aus!"
 
 L["You should tick only one difficulty!"] = "Bitte w\195\164hle nur einen Schwierigkeitsgrad aus!"
+
+L["Is it the first Phase?"] = "Ist es die erste Phase?"
+
+L["You should check first phase?"] = "Du solltest erste Phase ankreuzen"
 
 -- ASSERTS
 L["'func' in 'DropDownMenu SetOnClick' must be a function."] = "'func' in 'DropDownMenu SetOnClick' muss eine Funktion sein."

@@ -26,7 +26,7 @@ end
 
 -- Popup for asking if want to apply
 StaticPopupDialogs["REALLY_APPLY"] = {
-  text = GUIL["Do you really want to create this ability: %s ?"],
+  text = GUIL["Do you really want to create this ability/ies: %s ?"],
   button1 = GUIL["Yes"],
   button2 = GUIL["No"],
   OnAccept = function()
@@ -66,7 +66,7 @@ StaticPopupDialogs["REALLY_DELETE"] = {
 StaticPopupDialogs["INFO"] = {
   text = "%s",
   button1 = GUIL["Ok"],
-  OnAccept = function(_,reason)
+  OnAccept = function()
       StaticPopup_Hide("INFO")
   end,
   OnCancel = function (_,reason)
@@ -152,10 +152,10 @@ function CreateComponents(frame)
 	frame.heroicCB = CheckBox:LoadCheckBox(frame, "heroic")
 	frame.normalCB = CheckBox:LoadCheckBox(frame, "normal")
 		
-	CreateButton(frame, "applyButton", GUIL["Apply"], buttonWidth, 25, "BOTTOMLEFT", 20, 20, nil)
-	CreateButton(applyButton, "deleteButton", GUIL["Delete"], buttonWidth, 25, "RIGHT", buttonWidth + 10, 0, nil)
+	CreateButton(frame, "applyAbilityButton", GUIL["Apply"], buttonWidth, 25, "BOTTOMLEFT", 20, 20, nil)
+	CreateButton(applyButton, "deleteAbilityButton", GUIL["Delete"], buttonWidth, 25, "RIGHT", buttonWidth + 10, 0, nil)
 	
-	CreateButton(frame, "closeButton", nil, 34, 34, "TOPRIGHT", -4, -4, "UIPanelCloseButton")
+	CreateButton(frame, "closeAbilityButton", nil, 34, 34, "TOPRIGHT", -4, -4, "UIPanelCloseButton")
 end
 
 -- ConfigComponents(): for configurate the components
@@ -214,15 +214,11 @@ function SetScripts()
 			end
 		end
 	end)]]
-	applyButton:SetScript("OnClick", function (self, button)
+	applyAbilityButton:SetScript("OnClick", function (self, button)
 		if button == "LeftButton" then
 			if ValidForCreateAbility() then -- check if all is valid
 				if IsOneDifficultyChecked() then -- check if a dificulty is checked
-					if IsOnlyOneDifficultyChecked() then
-						StaticPopup_Show("REALLY_APPLY", abilityFrame.abilityNameEB:GetText())
-					else
-						StaticPopup_Show("INFO", GUIL["You should tick only one difficulty!"])
-					end
+					StaticPopup_Show("REALLY_APPLY", abilityFrame.abilityNameEB:GetText())
 				else
 					StaticPopup_Show("INFO", GUIL["You should tick a difficulty!"])
 				end
@@ -244,7 +240,7 @@ function SetScripts()
 			end
 		end
 	end)
-	deleteButton:SetScript("OnClick", function (self, button)
+	deleteAbilityButton:SetScript("OnClick", function (self, button)
 		if button == "LeftButton" then
 		end
 	end)

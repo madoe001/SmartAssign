@@ -58,11 +58,15 @@ local function ConfigEditBox(self)
 	self:SetScript("OnHide", function(self)
 	self.label:SetText("")
 		if self.inputType == "string" and self.usedFor == "spell" then
-				ConfigLabel(self, "[SpellID] text", 0.5, 0.5, 0.5, 0.8)
-		elseif inputType == "string" and EditBox.usedFor == "name" then
+				ConfigLabel(self, "[SpellID] text", 0.5, 0.5, 0.5, 0.8) -- config the label for the editbox
+		elseif inputType == "string" and self.usedFor == "name" then
 				ConfigLabel(self, "name", 0.5, 0.5, 0.5, 0.8)
-		elseif inputType == "string" and EditBox.usedFor == "phasename" then
-				ConfigLabel(self, "phasename(s)", 0.5, 0.5, 0.5, 0.8) -- config the label for the editbox
+		elseif inputType == "string" and self.usedFor == "phaseText" then
+				ConfigLabel(self, "Text/HP/Energy/Time", 0.5, 0.5, 0.5, 0.8)
+		elseif inputType == "string" and self.usedFor == "phasename" then
+				ConfigLabel(self, "phasename(s)", 0.5, 0.5, 0.5, 0.8) 
+		elseif inputType == "string" and self.usedFor == "trigger" then
+				ConfigLabel(self, "trigger", 0.5, 0.5, 0.5, 0.8)
 		elseif self.inputType == "number" and self.usedFor == "timer" then
 				ConfigLabel(self, "Time in sec", 0.5, 0.5, 0.5, 0.8)
 		elseif self.inputType == "number" and self.usedFor == "cooldown" then
@@ -106,6 +110,12 @@ local function CreateEditBox(frame, name, inputType, usedFor)
 	elseif inputType == "string" and EditBox.usedFor == "phasename" then
 		EditBox:SetWidth(frame:GetWidth() * 0.3)
 		ConfigLabel(EditBox, "phasename(s)", 0.5, 0.5, 0.5, 0.8) -- config the label for the editbox
+	elseif inputType == "string" and EditBox.usedFor == "phaseText" then
+		EditBox:SetWidth(frame:GetWidth() * 0.3)
+		ConfigLabel(EditBox, "Text/HP/Energy/Time", 0.5, 0.5, 0.5, 0.8)
+	elseif inputType == "string" and EditBox.usedFor == "trigger" then
+		EditBox:SetWidth(frame:GetWidth() * 0.2)
+		ConfigLabel(EditBox, "trigger", 0.5, 0.5, 0.5, 0.8)
 	end
 	
 	-- when the text inside the editbox changes
@@ -126,10 +136,14 @@ local function CreateEditBox(frame, name, inputType, usedFor)
 			if string.len(self:GetText()) == 0 then -- when the editbox is empty set the configurated label
 				if self.inputType == "string" and self.usedFor == "spell" then
 					ConfigLabel(self, "[SpellID] text", 0.5, 0.5, 0.5, 0.8)
-				elseif inputType == "string" and EditBox.usedFor == "name" then
+				elseif inputType == "string" and self.usedFor == "name" then
 					ConfigLabel(self, "name", 0.5, 0.5, 0.5, 0.8)
-				elseif inputType == "string" and EditBox.usedFor == "phasename" then
+				elseif inputType == "string" and self.usedFor == "phasename" then
 					ConfigLabel(self, "phasename(s)", 0.5, 0.5, 0.5, 0.8) -- config the label for the editbox
+				elseif inputType == "string" and self.usedFor == "phaseText" then
+					ConfigLabel(self, "Text/HP/Energy/Time", 0.5, 0.5, 0.5, 0.8)
+				elseif inputType == "string" and self.usedFor == "trigger" then
+					ConfigLabel(self, "trigger", 0.5, 0.5, 0.5, 0.8)
 				elseif self.inputType == "number" and self.usedFor == "timer" then
 					ConfigLabel(self, "Time in sec", 0.5, 0.5, 0.5, 0.8)
 				elseif self.inputType == "number" and self.usedFor == "cooldown" then

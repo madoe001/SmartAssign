@@ -127,6 +127,8 @@ L["cooldown(s) in sec"] = "cooldown(s) in sec"
 
 L["phasename(s)"] = "phasename(s)"
 
+L["trigger"] = "trigger"
+
 -- ScrollFrame
 
 L[" has no childs!"] = " has no childs!"
@@ -136,7 +138,7 @@ L["Player is in Instance."] = "Player is in Instance."
 
 L["Player is not in Instance."] = "Player is not in Instance."
 
--- CreateAbilityFrame
+-- AbilityFrame/PhaseFrame
 
 L["Apply"] = "Apply"
 
@@ -150,6 +152,8 @@ L["phasebound"] = "phasebound"
 
 L["reset timer on phase"] = "reset timer on phase"
 
+L["first Phase"] = "first Phase"
+
 L["mythic"] = "mythic"
 
 L["heroic"] = "heroic"
@@ -159,6 +163,12 @@ L["normal"] = "normal"
 L["Do you really want to create this ability: %s ?"] = "Do you really want to create this ability: %s ?"
 
 L["Do you really want to delete this ability: %s ?"] = "Do you really want to delete this ability: %s ?"
+
+L["Do you really want to delete this phase: %s ?"] = "Do you really want to delete this phase: %s ?"
+
+L["Do you really want to create this phase: %s ?"] = "Do you really want to create this phase: %s ?"
+
+L["Text/HP/Energy/Time"] = "Text/HP/Energy/Time"
 
 L["Yes"] = "Yes"
 
@@ -173,6 +183,10 @@ L["Do you have forgotten the phase?"] = "Do you have forgotten the phase?"
 L["You should tick a difficulty!"] = "You should tick a difficulty!"
 
 L["You should tick only one difficulty!"] = "You should tick only one difficulty!"
+
+L["Is it the first Phase?"] = "Is it the first Phase?"
+
+L["You should check first phase?"] = "You should check first phase?"
 
 -- ASSERTS
 L["'func' in 'DropDownMenu SetOnClick' must be a function."] = "'func' in 'DropDownMenu SetOnClick' must be a function."

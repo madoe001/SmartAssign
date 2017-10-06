@@ -212,6 +212,8 @@ _G.GUI.SA_CheckBox = {}
 _G.GUI.SA_EditBox = {}
 
 _G.GUI.SA_CreateAbilityFrame = {}
+
+_G.GUI.SA_PhaseFrame = {}
  
 _G.HUD = {}
 
