@@ -50,7 +50,8 @@ do
 		local counter = 0
 		local cacheList = {}
 
-		print(toBeDeletedItem)
+		print("TO DELETE: " ,toBeDeletedItem)
+		print("PLAYERASSIGNS: ", self.playerAssigns)
 		for k, v in pairs(self.playerAssigns) do
 			if v ~= toBeDeletedItem then
 				table.insert(cacheList, v)
@@ -120,6 +121,8 @@ do
 
 		local obj = self
 		local counter = 0
+		obj.playerAssigns = {}
+		print("TABLE: ", obj.playerAssigns)
 		for k, v in pairs(assign["assigns"]) do
 			local playerAssign = pa:new_playerAssign(obj.mainFrame, obj.editTimer, obj.index .. counter, 0, -80 * counter)
 			table.insert(obj.playerAssigns, playerAssign)
@@ -137,27 +140,29 @@ do
 			playerAssign:SetPlayerAssign(v)
 			delete:SetScript("OnClick", function(self, button, down)
 				
-				updatePlayerAssignPosition(self, playerAssign)
+				updatePlayerAssignPosition(obj, playerAssign)
+				
 				print(self.amountPlayer)
 				playerAssign:Hide()
 				playerAssign:Delete()
 				
 				playerAssign = nil
 				
-				local height = self.mainFrame:GetHeight()
+				local height = obj.mainFrame:GetHeight()
+				
 				
 				obj.mainFrame:SetHeight(height - 80)
-				obj:Hide()
+				--obj:Hide()
 				
 				obj.new:SetPoint("LEFT", obj.editTimer, "RIGHT", 5, -80 * obj.amountPlayer)
 			end)
-			table.insert(obj.deleteButtons, delete)		
+			table.insert(obj.deleteButtons, delete)	
 			playerAssign:Show()
 			counter = counter + 1
 		
 		end
 		obj.amountPlayer = counter
-
+		print("TABLE: ", obj.playerAssigns)
 		self.new:SetPoint("LEFT", self.editTimer, "RIGHT", 5, -80 * #self.playerAssigns)
 
 	end
@@ -179,13 +184,13 @@ do
 			index = number,
 
 			--Methoden der Klasse
-			SetAssign = SetAssignment,
+			--[[SetAssign = SetAssignment,
 			GetAssign = GetAssignment,
 			SetPoint = setPoint,
 			Hide = hide,
 			Show = show,
 			GetHeight = getheight,
-			SetFrameStrata = frameStrata
+			SetFrameStrata = frameStrata]]
 		}
 		setmetatable(obj, self)
 		self.__index = self
@@ -238,12 +243,18 @@ do
 			obj.mainFrame:SetHeight(height + 80)
 			delete:SetScript("OnClick", function(self, button, down)
 				
+				print("TABLE: ", obj.playerAssigns)
 				updatePlayerAssignPosition(obj, playerAssign)
 				print(obj.amountPlayer)
 				playerAssign:Hide()
 				playerAssign:Delete()
 				
-				table.remove(obj.playerAssigns, playerAssign)
+				for k, v in pairs(obj.playerAssigns) do
+					if v == playerAssign then
+						obj.playerAssigns[k] = nil
+					end
+				end
+
 				playerAssign = nil
 				
 				local height = obj.mainFrame:GetHeight()

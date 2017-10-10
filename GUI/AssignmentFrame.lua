@@ -89,14 +89,9 @@ do
 				assignment:Hide()
 				self:Hide()
 				updateAssignmentFrame(obj, assignment)
-				for pk, pv in pairs(obj.assignment.playerAssigns) do 
-					print("assignment_"..SA_LastSelected.boss .. "_" .. assignment.index .. pv.index)
-
-					SA_WEAKAURA[encounterID]["assignment_"..SA_LastSelected.boss .. "_" .. assignment.index .. pv.index] = nil
-				end
-					assignment = nil
+				assignment = nil
 			end)
-				SA_Assignments[encounterID]["assignment"..assignment.index] = nil
+			--SA_Assignments[encounterID]["assignment"..assignment.index] = nil
 			table.insert(obj.deleteButtons, delete)
 			obj.scrollframe:SetScrollChild(obj.content)
 		end
@@ -122,6 +117,8 @@ do
 		obj.save:SetScript("OnClick", function(self, button, down)
 			local counter = 0
 			local encounterID = SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID 			
+			SA_Assignments = {}
+			SA_WEAKAURA[encounterID..""] = {}
 			for k, v in pairs(obj.assignments) do
 				local assign = v:GetAssign()
 				local name = "assignment" .. v.index
@@ -144,7 +141,7 @@ do
 					end
 					print(plv.index)
 					
-						SA_WA:addAssign(spellid, assign["Timer"], "assignment_" .. SA_LastSelected.boss .. "_" .. v.index .. plv.index, encounterID)
+					SA_WA:addAssign(spellid, assign["Timer"], "assignment_" .. SA_LastSelected.boss .. "_" .. v.index .. plv.index, encounterID)
 				end
 				counter = counter + 1
 			end
@@ -227,6 +224,11 @@ do
 				delete:SetScript("OnClick", function(self, button, down)
 					assignment:Hide()
 					self:Hide()
+					for k, v in obj.assignments do
+						if v == assignment then
+							obj.assignments[v] = nil
+						end
+					end
 					updateAssignmentFrame(obj, assignment)
 				end)
 				table.insert(obj.deleteButtons, delete)
