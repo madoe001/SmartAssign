@@ -218,6 +218,7 @@ function createBossDropDown (parentFrame, x, y, width, name)
 	framus:ClearAllPoints()
 	framus:SetPoint("CENTER", x, y)
 	framus:Show()
+	framus.assignmentFrame = nil
 
 	function OnClickBossDropDown(self)
 		UIDropDownMenu_SetSelectedID(framus, self:GetID())
@@ -236,12 +237,16 @@ function createBossDropDown (parentFrame, x, y, width, name)
 					info.text = k
 					info.value = v
 					info.func = function (self)
+
 									UIDropDownMenu_SetSelectedID(framus, self:GetID())
 									SA_LastSelected.boss = UIDropDownMenu_GetText(framus)
 									-- FÜR MAIK
-									
+									print("HURENSOHN", framus.assignmentFrame)
+									if framus.assignmentFrame then
+										framus.assignmentFrame:SetFrameData()		
 									-- FÜR MAIK
-								end
+									end
+							end
 					UIDropDownMenu_AddButton(info, level)
 					
 					-- Vorauswahl, des letzten eintrags
@@ -401,7 +406,7 @@ function createAbillityDropDown (parentFrame, x, y, width, name)
 				end
 			end
 		end
-		local list = {"Ability"}
+		local list = {"Timer"}
 		if (eID) then
 			if ( SA_AbilityList[eID] ) then
 				for dif, num in pairs( SA_AbilityList[eID] ) do

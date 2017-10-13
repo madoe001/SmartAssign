@@ -86,7 +86,7 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	frame = SA_GUI_LOCAL:CreateWindow(frame)
 	
 	-- close Button
-	frame.closeButton = SA_GUI_LOCAL:CreateButton(frame, "closeButton", nil, 0, 0, "TOPRIGHT", -4, -4, "UIPanelCloseButton")
+	frame.closeButton = SA_GUI_LOCAL:CreateButton(frame, "closeButton", nil, 0, 0, "TOPRIGHT", 0, 0, "UIPanelCloseButton")
 	
 	-- create TitleBar
 	SA_GUI_LOCAL:CreateTitleBar(frame)
@@ -103,15 +103,15 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	-- SlashCommands:AddResetFunction(SA_GUI_LOCAL.ScrollFrameReset,"ScrollFrame") -- add the reset function of the scrollframe to slashcommands
 	-- SA_GUI_LOCAL:ScrollFrameReset()
 		
-
 	local boss = BossSelectFrame:new_BossSelectFrame(frame, "MainWindow", 200, frame:GetHeight(), "LEFT", 0, 0)
-	local assign = AssignmentFrame:new_scrollframe(frame,  boss, 5, -100)
+	local assign = AssignmentFrame:new_scrollframe(frame, boss.frame, 5, -100)
+	
+	boss.bossDD.assignmentFrame = assign
+	print("BOSSFRAMUS ", boss.assignmentFrame)
 	frame.assign = assign
-	table.insert(Assignments, assign)
-
-
 	--CreateAbilityFrame:CreateGUI(UIParent)
-	PhaseFrame:CreateGUI(UIParent)
+	local testFrame = CreateFrame("Frame", "amk", UIParent)
+	PhaseFrame:CreateGUI(testFrame)
 
 	-- make main frame movable
 	SA_GUI_LOCAL:MakeMovable(frame)
@@ -134,8 +134,8 @@ function SA_GUI_LOCAL:CreateWindow(frame)
 	frame:SetBackdrop({
 	bgFile = "Interface/DialogFrame/UI-DialogBox-Background",
 	edgeFile = "Interface/DialogFrame/UI-DialogBox-Border",
-	tile = true, tileSize = 32, edgeSize = 32,
-	insets = {left = 4, right = 4, top = 4, bottom = 4}
+	tile = true, tileSize = 32, edgeSize = 20,
+	insets = {left = 2, right = 2, top = 2, bottom = 2}
 	})
 	
 	frame:SetToplevel(false) -- set to top level

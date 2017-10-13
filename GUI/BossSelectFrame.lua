@@ -29,6 +29,10 @@ function BossSelectFrame:hide()
 	tremove(BossSelectFramus)
 end
 
+function BossSelectFrame:SetAssignmentFrame(frame)
+	self.assignmentFrame = frame
+end
+
 
 function BossSelectFrame:new_BossSelectFrame(parent, name, width, height, anchor, xOffset, yOffset)
 
@@ -64,10 +68,11 @@ Description: Es wird abhänhig der Parameter (falls nicht angegeben, default) ei
 		anchor = anchor or "LEFT",
 		xOffset = xOffset or 10,
 		yOffset = yOffset or 0,
+		frame = {},
 		expDD = {},
 		raidDD = {},
 		bossDD = {},
-		assignmentFrames = {}
+		assignmentFrame = {}
 	}
 	setmetatable(obj, self)
 	self.__index = self
@@ -83,8 +88,8 @@ Description: Es wird abhänhig der Parameter (falls nicht angegeben, default) ei
 		
 	obj.frame:SetBackdrop({
 		bgFile="Interface/DialogFrame/UI-DialogBox-Background",
-		edgeFile = "Interface/DialogFrame/UI-DialogBox-Border", tile = false, tileSize = 4, edgeSize = 32,
-		insets = { left = 4, right = 4, top = 4, bottom = 4 }
+		edgeFile = "Interface/DialogFrame/UI-DialogBox-Border", tile = false, tileSize = 4, edgeSize = 20,
+		insets = { left = 2, right = 2, top = 2, bottom = 2 }
 		});
 	obj.frame:SetBackdropColor(0.0,0.0,0.0,1.0)
 	
@@ -94,19 +99,13 @@ Description: Es wird abhänhig der Parameter (falls nicht angegeben, default) ei
 	obj.expDD = createExpansionDropDown(obj.frame, 0, 50, width * 0.8, name.."_BossSelectFrame_ExpansionDropDrown")
 	obj.raidDD = createRaidDropDown(obj.frame, 0, 0, width * 0.8, name.."_BossSelectFrame_RaidDropDrown")								 
 	obj.bossDD = createBossDropDown(obj.frame, 0, -50, width * 0.8, name.."_BossSelectFrame_BossDropDrown")
-	obj.expDD.raid = raidDD
-	obj.expDD.boss = bossDD
-	obj.raidDD.boss = bossDD
+	obj.expDD.raid = obj.raidDD
+	obj.expDD.boss = obj.bossDD
+	obj.raidDD.boss = obj.bossDD
 
-	obj.bossDD:SetScript("OnClick", function(self, button, down)
-		print("asdf")
-	end)
-	return obj.frame
+	return obj
 end
 
---[[
-Function Name: BossSelectFrame:show
-Author: Veith, Marvin Justin (10043555)
-Description: Wird eventuell noch entfernt. Dient nur zu Testzwecken.
-]]
+
+
 end

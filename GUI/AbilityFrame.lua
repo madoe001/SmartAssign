@@ -88,6 +88,7 @@ StaticPopupDialogs["INFO"] = {
 function SA_CreateAbilityFrame:CreateGUI(frame)
 	if not abilityFrame then
 		CreateWindow(frame)
+		print("CreateFrame wurde aufgerufen")
 	end
 	
 	CreateComponents(abilityFrame)
@@ -126,15 +127,15 @@ end
 -- author: Bartlomiej Grabelus (10044563)
 function CreateComponents(frame)
 	boss = BossSelectFrame:new_BossSelectFrame(frame, "Ability", 200, abilityFrame:GetHeight() - 45, "TOPLEFT", 10, 0)
-	boss:SetBackdrop({
+	boss.frame:SetBackdrop({
 		bgFile="",
 		edgeFile = "", tile = false, tileSize = 4, edgeSize = 32,
 		insets = { left = 4, right = 4, top = 4, bottom = 4 }
 		});
-	createAbillityDropDown(boss,  0, -100, 200 * 0.8, "abilityFrameDropDown")
+	createAbillityDropDown(boss.frame,  0, -100, 200 * 0.8, "abilityFrameDropDown")
 	
 	CreateLine(frame, "bottomLine", frame:GetWidth()-28, 1, "BOTTOM", frame, 0, 50)
-	CreateLine(frame, "delimiterLine", 1, frame:GetHeight() * 0.7, "TOPRIGHT", boss, 5, -60)
+	CreateLine(frame, "delimiterLine", 1, frame:GetHeight() * 0.7, "TOPRIGHT", boss.frame, 5, -60)
 	CreateLine(frame, "TopLine", frame:GetWidth()-28, 1, "TOP", frame, 0, -55)
 	
 	frame.descText = CreateFont(frame, "descriptionFontString", GUIL["For more than one cooldown or phasename use a semicolon as delimiter"], "TOPLEFT", 20, -20, 14)

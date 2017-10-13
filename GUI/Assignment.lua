@@ -59,7 +59,7 @@ do
 		end
 
 		for k, v in pairs(cacheList) do
-			v:SetPoint(self.editTimer, 0, -80 * counter)
+			v:SetPoint(self.editTimer, 0, -100 * counter)
 			counter = counter + 1
 		end
 
@@ -124,10 +124,10 @@ do
 		obj.playerAssigns = {}
 		print("TABLE: ", obj.playerAssigns)
 		for k, v in pairs(assign["assigns"]) do
-			local playerAssign = pa:new_playerAssign(obj.mainFrame, obj.editTimer, obj.index .. counter, 0, -80 * counter)
+			local playerAssign = pa:new_playerAssign(obj.mainFrame, obj.editTimer, obj.index .. counter, 0, -100 * counter)
 			table.insert(obj.playerAssigns, playerAssign)
 			
-			obj.new:SetPoint("LEFT", obj.editTimer, "RIGHT", 5, -80 * obj.amountPlayer)
+			obj.new:SetPoint("LEFT", obj.editTimer, "RIGHT", 5, -100 * obj.amountPlayer)
 			local delete = CreateFrame("Button", "deletePlayerAssign"..#obj.playerAssigns, obj.mainFrame, "OptionsButtonTemplate")
 			delete:SetWidth(25)
 			delete:SetHeight(25)
@@ -136,13 +136,12 @@ do
 			print("index:"..index)
 			delete:SetPoint("LEFT", playerAssign.offset, "RIGHT", 10, 0)
 			local height = obj.mainFrame:GetHeight()
-			obj.mainFrame:SetHeight(height + 80)
+			obj.mainFrame:SetHeight(height + 100)
 			playerAssign:SetPlayerAssign(v)
 			delete:SetScript("OnClick", function(self, button, down)
 				
 				updatePlayerAssignPosition(obj, playerAssign)
-				
-				print(self.amountPlayer)
+				self:Hide()
 				playerAssign:Hide()
 				playerAssign:Delete()
 				
@@ -151,10 +150,10 @@ do
 				local height = obj.mainFrame:GetHeight()
 				
 				
-				obj.mainFrame:SetHeight(height - 80)
+				obj.mainFrame:SetHeight(height - 100)
 				--obj:Hide()
 				
-				obj.new:SetPoint("LEFT", obj.editTimer, "RIGHT", 5, -80 * obj.amountPlayer)
+				obj.new:SetPoint("LEFT", obj.editTimer, "RIGHT", 5, -100 * obj.amountPlayer)
 			end)
 			table.insert(obj.deleteButtons, delete)	
 			playerAssign:Show()
@@ -162,8 +161,7 @@ do
 		
 		end
 		obj.amountPlayer = counter
-		print("TABLE: ", obj.playerAssigns)
-		self.new:SetPoint("LEFT", self.editTimer, "RIGHT", 5, -80 * #self.playerAssigns)
+		self.new:SetPoint("LEFT", self.editTimer, "RIGHT", 5, -100 * #self.playerAssigns)
 
 	end
 
@@ -182,7 +180,6 @@ do
 			counter = 1,
 			amountPlayer = 0,
 			index = number,
-
 			--Methoden der Klasse
 			--[[SetAssign = SetAssignment,
 			GetAssign = GetAssignment,
@@ -197,7 +194,7 @@ do
 	
 		obj.editTimer = editBox:LoadEditBox(obj.mainFrame, "editTimer"..obj.index,  "number", "timer")
 		obj.new =  CreateFrame("Button", "newPlayerAssign"..obj.index, obj.mainFrame, "OptionsButtonTemplate")
-		obj.dropDownAssignType = createAbillityDropDown(obj.mainFrame, 0,0, 80, "smartB" .. obj.index)
+		obj.dropDownAssignType = createAbillityDropDown(obj.mainFrame, 0,0, 100, "smartB" .. obj.index)
 
 		obj.mainFrame:SetWidth(frame:GetWidth() - 20)
 		obj.mainFrame:SetHeight(120)
@@ -213,7 +210,7 @@ do
 		
 		-- DropDownMenu von Ability oder Timer 
 		--nur zum nachladen der GUI Elemente
-		obj.dropDownAssignType:SetPoint("TOPLEFT", obj.mainFrame, "TOPLEFT", 10, y - 30)
+		obj.dropDownAssignType:SetPoint("TOPLEFT", obj.mainFrame, "TOPLEFT", 10, y - 40)
 		obj.editTimer:SetPoint("TOPLEFT", obj.dropDownAssignType, "TOPRIGHT", 0, 0)
 		obj.editTimer:SetWidth(60)
 		obj.new:SetWidth(25)
@@ -225,13 +222,13 @@ do
 		obj.new:SetScript("OnClick", function(self, button, down)
 			obj.counter = obj.counter + 1 
 			
-			local playerAssign = pa:new_playerAssign(obj.mainFrame, obj.editTimer, obj.index .. obj.counter, 0, -80 * obj.amountPlayer)
+			local playerAssign = pa:new_playerAssign(obj.mainFrame, obj.editTimer, obj.index .. obj.counter, 0, -100 * obj.amountPlayer)
 			
 			table.insert(obj.playerAssigns, playerAssign)
 			
 			obj.amountPlayer = obj.amountPlayer + 1
 			
-			obj.new:SetPoint("LEFT", obj.editTimer, "RIGHT", 5, -80 * obj.amountPlayer)
+			obj.new:SetPoint("LEFT", obj.editTimer, "RIGHT", 5, -100 * obj.amountPlayer)
 			local delete = CreateFrame("Button", "deletePlayerAssign"..#obj.playerAssigns, obj.mainFrame, "OptionsButtonTemplate")
 			delete:SetWidth(25)
 			delete:SetHeight(25)
@@ -240,7 +237,7 @@ do
 			print("index:"..index)
 			delete:SetPoint("LEFT", playerAssign.offset, "RIGHT", 10, 0)
 			local height = obj.mainFrame:GetHeight()
-			obj.mainFrame:SetHeight(height + 80)
+			obj.mainFrame:SetHeight(height + 100)
 			delete:SetScript("OnClick", function(self, button, down)
 				
 				print("TABLE: ", obj.playerAssigns)
@@ -259,10 +256,10 @@ do
 				
 				local height = obj.mainFrame:GetHeight()
 				
-				obj.mainFrame:SetHeight(height - 80)
+				obj.mainFrame:SetHeight(height - 100)
 				self:Hide()
 				
-				obj.new:SetPoint("LEFT", obj.editTimer, "RIGHT", 5, -80 * obj.amountPlayer)
+				obj.new:SetPoint("LEFT", obj.editTimer, "RIGHT", 5, -100 * obj.amountPlayer)
 			end)
 			table.insert(obj.deleteButtons, delete)		
 			playerAssign:Show()

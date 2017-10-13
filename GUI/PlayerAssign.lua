@@ -110,6 +110,14 @@ do
 		self.offset:SetText(playerData["offset"])
 	end
 
+	local function createFont(frame, name, text, relativeElement, fontString, height)
+		local font = frame:CreateFontString(name)
+		font:SetPoint("BOTTOM", relativeElement, "TOP")
+		font:SetFont(fontString, height )
+		font:SetText(text)
+		return font
+	end
+
 
 	function PlayerAssign:new_playerAssign(frame, relativeElement,lastElement, xVal, yVal)
 		
@@ -122,18 +130,21 @@ do
 
 			abilityCB = CheckBox:LoadCheckBox(frame, "Ability"),
 			textCB = CheckBox:LoadCheckBox(frame, "Extra Text"),
-			dropDownPlayer = createPlayerDropDown(frame, 0, 0, 80, "mb1"..lastElement), 
+			dropDownPlayer = createPlayerDropDown(frame, 0, 0, 100, "mb1"..lastElement), 
 			dropDownCooldown = {},
 			offset = EditBox:LoadEditBox(frame, "offs"..lastElement, "number", "timer"),	
 			extraText = CreateFrame("EditBox", "extraText"..lastElement, frame,"InputBoxTemplate"), 
+			playerString = {},
+			offsetString = {},
+			actionString = {},
 			
 			--Klasseamethoden bzw. referenzen drauf
 		}
 		setmetatable(obj, self)
 		self.__index = self
 		
-		obj.dropDownCooldown = createCooldownDropDown(frame, 0,0, 80, "cooldown"..lastElement, obj.dropDownPlayer)
-		obj.extraText:SetWidth(80)
+		obj.dropDownCooldown = createCooldownDropDown(frame, 0,0, 100, "cooldown"..lastElement, obj.dropDownPlayer)
+		obj.extraText:SetWidth(100)
 		obj.extraText:SetHeight(50)
 		obj.extraText:SetAutoFocus(false)
 		obj.extraText.inputType = "String"
@@ -160,7 +171,11 @@ do
 		
 		obj.offset:SetWidth(60)
 		obj.dropDownPlayer:SetPoint("LEFT", relativeElement, "RIGHT", 0, obj.y)
-		
+
+		obj.playerString = createFont(obj.mainFrame, "player"..obj.index, "Player", obj.dropDownPlayer, "Fonts\\MORPHEUS.ttf", 15)
+		obj.actionString = createFont(obj.mainFrame, "action"..obj.index, "Action", obj.dropDownCooldown, "Fonts\\MORPHEUS.ttf", 15)
+		obj.playerString = createFont(obj.mainFrame, "offset"..obj.index, "Offset", obj.offset, "Fonts\\MORPHEUS.ttf", 15)
+
 		obj.abilityCB:SetPoint("LEFT", obj.dropDownPlayer, "RIGHT", obj.x, 0)
 		obj.textCB:SetPoint("TOP", obj.abilityCB, "BOTTOM", 0,0)
 		obj.abilityCB:SetChecked(true)

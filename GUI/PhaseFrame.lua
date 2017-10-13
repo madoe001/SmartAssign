@@ -126,15 +126,15 @@ end
 -- author: Bartlomiej Grabelus (10044563)
 function CreateComponents(frame)
 	boss = BossSelectFrame:new_BossSelectFrame(frame, "Phase", 200, phaseFrame:GetHeight() - 45, "TOPLEFT", 10, 0)
-	boss:SetBackdrop({
+	boss.frame:SetBackdrop({
 		bgFile="",
 		edgeFile = "", tile = false, tileSize = 4, edgeSize = 32,
 		insets = { left = 4, right = 4, top = 4, bottom = 4 }
 		});
-	createPhaseDropDown(boss,  0, -100, 200 * 0.8, "phaseFrameDropDown")
+	createPhaseDropDown(boss.frame,  0, -100, 200 * 0.8, "phaseFrameDropDown")
 	
 	CreateLine(frame, "bottomLine", frame:GetWidth()-28, 1, "BOTTOM", frame, 0, 50)
-	CreateLine(frame, "delimiterLine", 1, frame:GetHeight() * 0.7, "TOPRIGHT", boss, 5, -60)
+	CreateLine(frame, "delimiterLine", 1, frame:GetHeight() * 0.7, "TOPRIGHT", boss.frame, 5, -60)
 	
 	-- EditBoxes
 	frame.phaseNameEB = EditBox:LoadEditBox(frame, "phaseNameEditBox", "string", "name")
@@ -277,7 +277,7 @@ function CreateFont(frame, name, text, position, x, y, size)
 	if position == nil then
 		position = "TOP"
 	end
-	
+
 	local fontString = frame:CreateFontString(name)
 	fontString:SetPoint(position, x, y)
 	fontString:SetFont("Fonts\\MORPHEUS.ttf", size, "")
