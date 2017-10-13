@@ -232,7 +232,7 @@ do
 					end
 					print(plv.index)
 					
-					SA_WA:addAssign(spellid, assign["Timer"], "assignment_" .. SA_LastSelected.boss .. "_" .. v.index .. plv.index, encounterID)
+					--SA_WA:addAssign(spellid, assign["Timer"], "assignment_" .. SA_LastSelected.boss .. "_" .. v.index .. plv.index, encounterID)
 				end
 				counter = counter + 1
 			end

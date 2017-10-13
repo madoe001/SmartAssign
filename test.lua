@@ -443,10 +443,12 @@ function print_msg(...) -- TODO umbenennen
 		end	
 		local ownName = GetUnitName("PLAYER")
 		local ownRealm = GetRealmName()
+		print(arguments.PLAYERNAME)
 		ownRealm = ownRealm:gsub("%s+", "") -- Um aus "Tarren Mill" => "TarrenMill" zu machen
 		if ( arguments.PLAYERNAME == ownName or arguments.PLAYERNAME == (ownName .. "-" .. ownRealm)) then
 			local spellID = tonumber(arguments.SPELLID)
 			local timer = tonumber(arguments.TIMER)
+			print "deine mudda wird erstellt"
 			SA_WA:addAssign(spellID, timer , arguments.ASSIGNMENTNAME, arguments.ENCOUNTERID)
 		end
 	end		
