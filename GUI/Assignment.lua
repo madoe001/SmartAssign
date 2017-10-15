@@ -23,7 +23,7 @@ do
 		self.new:Show()
 
 		for k, v in pairs(self.deleteButtons) do
-				v:Show()
+			v:Show()
 		end
 
 		for k, v in pairs(self.playerAssigns) do
@@ -180,14 +180,6 @@ do
 			counter = 1,
 			amountPlayer = 0,
 			index = number,
-			--Methoden der Klasse
-			--[[SetAssign = SetAssignment,
-			GetAssign = GetAssignment,
-			SetPoint = setPoint,
-			Hide = hide,
-			Show = show,
-			GetHeight = getheight,
-			SetFrameStrata = frameStrata]]
 		}
 		setmetatable(obj, self)
 		self.__index = self

@@ -206,6 +206,7 @@ do
 		end) 	
 
 		obj.save:SetScript("OnClick", function(self, button, down)
+			if IsInRaid() or IsInGroup() then
 			local counter = 0
 			local encounterID = SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID 			
 			SA_Assignments[encounterID] = {}
@@ -234,9 +235,9 @@ do
 					
 					--SA_WA:addAssign(spellid, assign["Timer"], "assignment_" .. SA_LastSelected.boss .. "_" .. v.index .. plv.index, encounterID)
 				end
-				counter = counter + 1
+					counter = counter + 1
+				end
 			end
-
 		end)	
 		
 		obj.send:SetScript("OnClick", function(self, button, down)

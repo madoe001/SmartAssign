@@ -8,16 +8,19 @@
 
 
 do 
-	--Globale Speicherung der Klasse
+	-- Globale Speicherung der Klasse
 	local PlayerAssign = _G.GUI.PlayerAssignment	
 
-	--Benötigte Klasse lokal holen(nicht zwingend notwendig erspart aber Schreibarbeit) 
+	-- Benötigte Klassen lokal holen(nicht zwingend notwendig erspart aber Schreibarbeit) 
 	local CheckBox = _G.GUI.SA_CheckBox
 	
 	local DropDownList = _G.GUI.SA_DropDownList
 	
 	local EditBox = _G.GUI.SA_EditBox
 	
+	-- Die Funktion dient zum verschwinden lassen der Grafischen Elemente eines PlayerAssignment
+	-- @param subs The replacement pattern.
+	-- @param find The pattern to find.
 	function PlayerAssign:Hide()
 		self.abilityCB:Hide()
 		self.textCB:Hide()
@@ -31,6 +34,7 @@ do
 		self.offset:Hide()
 	end
 	
+	-- Die Funktion dient zum anzeigen lassen der Grafischen Elemente eines PlayerAssignment
 	function PlayerAssign:Show()
 		self.abilityCB:Show()
 		self.textCB:Show()
@@ -43,6 +47,10 @@ do
 		self.offset:Show()
 	end
 
+	-- Setzen der Grafischen Elemente eines PlayerAssignment an eine bestimmte Position
+	-- @param relativeElement Element zu dem das PlayerAssignment ausgerichtet werden soll
+	-- @param x Gibt den Abstand zum Relativen Element in X-Richtung an
+	-- @param y Gibt den Abstand zum Relativen Element in Y-Richtung an
 	function PlayerAssign:SetPoint(relativeElement, x, y)
 		self.x = x
 		self.y = y
@@ -54,6 +62,7 @@ do
 		self.dropDownCooldown:SetPoint("LEFT", self.abilityCB, "RIGHT", self.x+30,0)
 	end
 
+	--Löschen eines PlayerAssignment inklusive der grafischen Elemente. 
 	function PlayerAssign:Delete()
 		x = nil
 		y = nil
@@ -65,6 +74,8 @@ do
 		_G["mb2"..self.index] = nil
 	end
 
+	-- Setzt die Z-Stelligkeit der grafischen Elemente eines PlayerAssigns. 
+	-- @param priority Ist die Stelligkeit in Form eines Strings (z.B. "HIGH")
 	function PlayerAssign:SetFrameStrata(priority)
 		self.abilityCB:SetFrameStrata(priority)
 		self.textCB:SetFrameStrata(priority)
@@ -73,6 +84,8 @@ do
 		self.offset:SetFrameStrata(priority)
 	end
 
+	-- Verpackt die in der Grafischen Oberfläche eingetragenen Daten in eine Tabelle und gibt diese zurück
+	-- @return Daten des PlayerAssignment als Tabelle
 	function PlayerAssign:GetPlayerAssign()
 		local playerData = {}
 		
@@ -88,7 +101,8 @@ do
 		return playerData
 	end
 
-
+	-- Werte der Grafischen Elemente werden gesetzt
+	-- @param playerData Daten die in die grafischen Elemente eingetragen werden sollen
 	function PlayerAssign:SetPlayerAssign(playerData)
 		
 		print(playerData["Player"])
@@ -110,6 +124,8 @@ do
 		self.offset:SetText(playerData["offset"])
 	end
 
+	--Function zum Erstellen eines Schriftzug auf der grafischen Obberfläche
+	--lokale Funktion wird nicht weiter beschrieben
 	local function createFont(frame, name, text, relativeElement, fontString, height)
 		local font = frame:CreateFontString(name)
 		font:SetPoint("BOTTOM", relativeElement, "TOP")
@@ -118,7 +134,14 @@ do
 		return font
 	end
 
-
+	-- Konstruktor der Klasse PlayerAssign 
+	-- Es wird ein Objekt der Klasse erzeugt, initialisiert und zurückgegeben
+	-- @param frame ParentFrame des PlayerAssignment
+	-- @param relativeElement Wird zur Positionierung der PlayerAssignment genutzt
+	-- @param lastElement Index zum erstellen eines eindeutigen globalen Namen für das PlayerAssignment
+	-- @param xVal Abstand des PlayerAssignment zum relativen Element in X-Richtung
+	-- @param yVal Abstand des PlayerAssignment zum relativen Element in Y-Richtung
+	-- @return Referenz auf das erstellte PlayerAssignment 
 	function PlayerAssign:new_playerAssign(frame, relativeElement,lastElement, xVal, yVal)
 		
 		local obj = {
@@ -127,23 +150,40 @@ do
 			y = yVal,
 			mainFrame = frame,
 			index = lastElement,
-
+			
+			-- Erstellen einer Checkbox mit dem Text Ability 
+			-- Genaue Doku siehe CheckBox.lua
 			abilityCB = CheckBox:LoadCheckBox(frame, "Ability"),
+			
+			-- Erstellen einer Checkbox mit dem Text Extra Text
+			-- Genaue Doku siehe CheckBox.lua
 			textCB = CheckBox:LoadCheckBox(frame, "Extra Text"),
+			
+			-- Erstellen eines DropDownmenu zum Auswählen der sich in der Gruppe oder im Raid befindlichen spieler				      -- Genaue Doku siehe DropDowns.lua
 			dropDownPlayer = createPlayerDropDown(frame, 0, 0, 100, "mb1"..lastElement), 
 			dropDownCooldown = {},
+			
+			-- Erstellen einer EditBox in der nur Zahlen eintragbar sind
+			-- Genaue Doku siehe EditBox.lua
 			offset = EditBox:LoadEditBox(frame, "offs"..lastElement, "number", "timer"),	
+
+			-- Erstellen eines Textfelds in dem ein anzuzeigender Text eingetragen werden kann 
 			extraText = CreateFrame("EditBox", "extraText"..lastElement, frame,"InputBoxTemplate"), 
 			playerString = {},
 			offsetString = {},
 			actionString = {},
-			
-			--Klasseamethoden bzw. referenzen drauf
 		}
+
+		-- Setzen der Metatabelle des Objekts 
+		-- Durch den Aufruf wird erzeugt das dem Objekt die Funktionen der Tabelle PlayerAssign zugeordnet werden
 		setmetatable(obj, self)
 		self.__index = self
 		
+		-- Erzeugen eiens Dropdown menu
+		-- Siehe Oben oder DropDowns.lua
 		obj.dropDownCooldown = createCooldownDropDown(frame, 0,0, 100, "cooldown"..lastElement, obj.dropDownPlayer)
+
+		-- Konfigurieren des Textfelds
 		obj.extraText:SetWidth(100)
 		obj.extraText:SetHeight(50)
 		obj.extraText:SetAutoFocus(false)
@@ -151,7 +191,8 @@ do
 		obj.extraText:Hide()
 		obj.dropDownCooldown:Hide()
 		
-		
+		-- Skripte der Checkboxen setzen 
+		-- Es wird ein Comboxbox ähnliches Verhalten erzeugt
 		obj.abilityCB:SetScript("OnClick", function(self, button, down)
 			if obj.textCB:GetChecked() then
 				obj.textCB:SetChecked(false)
@@ -169,13 +210,16 @@ do
 			obj.extraText:Show()
 		end)
 		
+		--weitere Konfigurationen und Positionierungen
 		obj.offset:SetWidth(60)
 		obj.dropDownPlayer:SetPoint("LEFT", relativeElement, "RIGHT", 0, obj.y)
 
+		--Erzeugen von Texten auf der GUI
 		obj.playerString = createFont(obj.mainFrame, "player"..obj.index, "Player", obj.dropDownPlayer, "Fonts\\MORPHEUS.ttf", 15)
 		obj.actionString = createFont(obj.mainFrame, "action"..obj.index, "Action", obj.dropDownCooldown, "Fonts\\MORPHEUS.ttf", 15)
 		obj.playerString = createFont(obj.mainFrame, "offset"..obj.index, "Offset", obj.offset, "Fonts\\MORPHEUS.ttf", 15)
-
+	
+		--weitere Konfigurationen und Positionierungen
 		obj.abilityCB:SetPoint("LEFT", obj.dropDownPlayer, "RIGHT", obj.x, 0)
 		obj.textCB:SetPoint("TOP", obj.abilityCB, "BOTTOM", 0,0)
 		obj.abilityCB:SetChecked(true)
@@ -185,6 +229,7 @@ do
 		obj.extraText:SetPoint("LEFT", obj.abilityCB, "RIGHT", obj.x+50,0)
 		obj.offset:SetPoint("LEFT", obj.dropDownCooldown, "RIGHT", obj.x, 0)
 
+		-- Zu Beginn sollen die Grafischen Elemente versteckt
 		obj.abilityCB:Hide()
 		obj.textCB:Hide()
 		obj.dropDownPlayer:Hide()

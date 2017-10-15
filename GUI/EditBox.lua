@@ -55,8 +55,8 @@ local function ConfigEditBox(self)
 	self:EnableMouse(true)
 	self:SetHeight(25)
 	
-	self:SetScript("OnHide", function(self)
-	self.label:SetText("")
+	--[[self:SetScript("OnHide", function(self)
+	--self.label:SetText("")
 		if self.inputType == "string" and self.usedFor == "spell" then
 				ConfigLabel(self, "[SpellID] text", 0.5, 0.5, 0.5, 0.8) -- config the label for the editbox
 		elseif inputType == "string" and self.usedFor == "name" then
@@ -72,8 +72,8 @@ local function ConfigEditBox(self)
 		elseif self.inputType == "number" and self.usedFor == "cooldown" then
 				ConfigLabel(self, "cooldown(s) in sec", 0.5, 0.5, 0.5, 0.8)
 		end
-		self:SetText("")
-	end)
+		--self:SetText("")
+	end)]]
 end
 
 -- CreateEditBox(): Creation function for the editbox
