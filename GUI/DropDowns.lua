@@ -437,7 +437,7 @@ function createAbillityDropDown (parentFrame, x, y, width, name)
 	UIDropDownMenu_Initialize(framus, initAbillityDropDown)
 	UIDropDownMenu_SetWidth(framus, width);
 	UIDropDownMenu_SetButtonWidth(framus, width +24)
-	UIDropDownMenu_SetText(framus, "Abillity")
+	UIDropDownMenu_SetText(framus, Ability_String)
 	if SA_LastSelected.abillity ~= "" then
 		UIDropDownMenu_SetText(framus, SA_LastSelected.abillity)
 	end
@@ -494,7 +494,7 @@ function createPlayerDropDown (parentFrame, x, y, width, name)
 	UIDropDownMenu_Initialize(framus, initPlayerDropDown)
 	UIDropDownMenu_SetWidth(framus, width);
 	UIDropDownMenu_SetButtonWidth(framus, width +24)
-	UIDropDownMenu_SetText(framus, "Player")
+	UIDropDownMenu_SetText(framus, Player_String)
 	UIDropDownMenu_JustifyText(framus, "LEFT")
 	return framus
 end

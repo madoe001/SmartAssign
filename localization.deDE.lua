@@ -11,16 +11,41 @@ Send_String = "Senden"
 Save_String = "Speichern"
 
 --Spieler Klasse Lokalisierung
-Warrior_String = "Krieger"
-Deathknight_String = "Todesritter"
-Paladin_String = "Paladin"
-Shaman_String = "Schamane"
-Hunter_String = "Jäger"
-Demonhunter_String = "Demonenjäger"
-Rogue_String = "Schurke"
-Druid_String = "Druide"
-Monk_String = "Mönch"
-Priest_String = "Priester"
-Warlock_String = "Hexenmeister"
-Mage_String = "Magier"
+classes = {
+	Warrior = "Krieger",
+	Deathknight = "Todesritter",
+	Paladin = "Paladin",
+	Shaman = "Schamane",
+	Hunter = "Jäger",
+	Demonhunter = "Demonenjäger",
+	Rogue = "Schurke",
+	Druid = "Druide",
+	Monk = "Mönch",
+	Priest = "Priester",
+	Warlock = "Hexenmeister",
+	Mage = "Magier",
+}
+
+-- Liste der Faehigkeiten
+Commandingshout_String = "Befehlsruf"
+AuraMastery_String = "Aurenmeisterschaft"
+AegisofLight_String = "Aegis des Lichts"
+BlessingofSacrifice_String = "Segen der Aufopferung"
+BlessingofSpellwarding_String = "Segen des Zauberschutes"
+BlessingofPortection_String = "Segen des Schutzes"
+HealingTide_String = "Totem der Heilungsflut"
+AncestralProtection_String = "Totem des Schutzes der Ahnen"
+SpiritLink_String = "Totem der Geistverbindung"
+WindRush_String = "Totem des Windsturms"
+Darkness_String = "Dunkelheit"
+Tranquility_String = "Gelassenheit"
+IronBark_String = "Eisenborke"
+StampedingRoar_String = "Anstachelndes Gebrüll"
+Revival_String = "Belebung"
+LifeCocoon_String = "Lebenskokon"
+PowerWord_String = "Machtwort: Barriere"
+DrivineHymn_String = "Gotteshymne"
+VampiricEmbrace_String = "Vampirberührung"
+GuardianSpirit_String = "Schutzgeist"
+PainSuppression_String = "Schmerzunterdrückung"
 

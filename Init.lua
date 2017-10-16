@@ -36,41 +36,41 @@ SA_Cooldowns = SA_Cooldowns or {
    ["Warrior"] = {
 		["97462"] = { -- Shout
 			["SpellID"] = "97462",
-			["Name"] = "Commanding Shout",
+			["Name"] = Commandingshout_String,
 			["Duration"] = "12",
 			["Cooldown"] = "180"
 		}
 	}, 
 	["Death Knight"] = {
 	}, 
-	[Paladin_String] = {
+	["Paladin"] = {
 		["31821"] = { -- Aura Mastery
 			["SpellID"] = "31821",
-			["Name"] = "Aura Mastery",
+			["Name"] = AuraMastery_String,
 			["Duration"] = "6",
 			["Cooldown"] = "180"
 		},
 		["204150"] = { -- Aegis of Light
 			["SpellID"] = "204150",
-			["Name"] = "Aegis of Light",
+			["Name"] = AegisofLight_String,
 			["Duration"] = "6",
 			["Cooldown"] = "180"
 		},
 		["6940"] = { -- Blessing of Sacrifice
 			["SpellID"] = "6940",
-			["Name"] = "Blessing of Sacrifice",
+			["Name"] = BlessingofSacrifice_String,
 			["Duration"] = "12",
 			["Cooldown"] = "150"
 		},
 		["204018"] = { -- Blessing of Spellwarding
 			["SpellID"] = "196718",
-			["Name"] = "Blessing of Spellwarding",
+			["Name"] = BlessingofSpellwarding_String,
 			["Duration"] = "10",
 			["Cooldown"] = "180"
 		},
 		["1022"] = { -- Blessing of Protection
 			["SpellID"] = "1022",
-			["Name"] = "Blessing of Protection",
+			["Name"] = BlessingofPortection_String,
 			["Duration"] = "10",
 			["Cooldown"] = "300"
 		}
@@ -78,25 +78,25 @@ SA_Cooldowns = SA_Cooldowns or {
 	["Shaman"] = {
 		["108280"] = { -- Healing Tide Totem
 			["SpellID"] = "108280",
-			["Name"] = "Healing Tide Totem",
+			["Name"] = HealingTide_String ,
 			["Duration"] = "8",
 			["Cooldown"] = "180"
 		},
 		["207399"] = { -- Ancestral Protection Totem
 			["SpellID"] = "207399",
-			["Name"] = "Ancestral Protection Totem",
+			["Name"] = AncestralProtection_String,
 			["Duration"] = "30",
 			["Cooldown"] = "300"
 		},
 		["98008"] = { -- Spirit Link Totem
 			["SpellID"] = "98008",
-			["Name"] = "Spirit Link Totem",
+			["Name"] = SpiritLink_String,
 			["Duration"] = "6",
 			["Cooldown"] = "180"
 		},
 		["192077"] = { -- Wind Rush Totem
 			["SpellID"] = "192077",
-			["Name"] = "Wind Rush Totem",
+			["Name"] = WindRush_String,
 			["Duration"] = "15",
 			["Cooldown"] = "120"
 		}
@@ -106,7 +106,7 @@ SA_Cooldowns = SA_Cooldowns or {
 	["Demon Hunter"] = {
 		["196718"] = { -- Darkness
 			["SpellID"] = "196718",
-			["Name"] = "Darkness",
+			["Name"] = Darkness_String,
 			["Duration"] = "8",
 			["Cooldown"] = "180"
 		}
@@ -116,19 +116,19 @@ SA_Cooldowns = SA_Cooldowns or {
 	["Druid"] = {
 		["740"] = { -- Tranquility
 			["SpellID"] = "740",
-			["Name"] = "Tranquility",
+			["Name"] = Tranquility_String,
 			["Duration"] = "8",
 			["Cooldown"] = "180"
 		},
 		["102342"] = { -- Iron Bark
 			["SpellID"] = "102342",
-			["Name"] = "Iron Bark",
+			["Name"] = IronBark_String,
 			["Duration"] = "12",
 			["Cooldown"] = "90"
 		},
 		["106898"] = { -- Stampeding Roar
 			["SpellID"] = "106898",
-			["Name"] = "Stampeding Roar",
+			["Name"] = StampedingRoar_String,
 			["Duration"] = "15",
 			["Cooldown"] = "120"
 		}
@@ -136,13 +136,13 @@ SA_Cooldowns = SA_Cooldowns or {
 	["Monk"] = {
 		["115310"] = { -- Revival
 			["SpellID"] = "115310",
-			["Name"] = "Revival",
+			["Name"] = Revival_String,
 			["Duration"] = "1",
 			["Cooldown"] = "180"
 		},
 		["116849"] = { -- Life Cocoon
 			["SpellID"] = "116849",
-			["Name"] = "Life Cocoon",
+			["Name"] = LifeCocoon_String,
 			["Duration"] = "12",
 			["Cooldown"] = "180"
 		}
@@ -150,31 +150,31 @@ SA_Cooldowns = SA_Cooldowns or {
 	["Priest"] = {
 		["62618"] = { -- Power Word: Barrier
 			["SpellID"] = "62618",
-			["Name"] = "Power Word: Barrier",
+			["Name"] = PowerWord_String,
 			["Duration"] = "10",
 			["Cooldown"] = "180"
 		},
 		["64843"] = { -- Divine Hymn
 			["SpellID"] = "64843",
-			["Name"] = "Divine Hymn",
+			["Name"] = DrivineHymn_String,
 			["Duration"] = "8",
 			["Cooldown"] = "180"
 		},
 		["15268"] = { -- Vampiric Embrace
 			["SpellID"] = "15268",
-			["Name"] = "Vampiric Embrace",
+			["Name"] = VampiricEmbrace_String,
 			["Duration"] = "15",
 			["Cooldown"] = "180"
 		},
 		["47788"] = { -- Guardian Spirit
 			["SpellID"] = "47788",
-			["Name"] = "Guardian Spirit",
+			["Name"] = GuardianSpirit_String,
 			["Duration"] = "10",
 			["Cooldown"] = "240"
 		},
 		["33206"] = { -- Pain Suppression
 			["SpellID"] = "33206",
-			["Name"] = "Pain Suppression",
+			["Name"] = PainSuppression_String,
 			["Duration"] = "8",
 			["Cooldown"] = "240"
 		}
