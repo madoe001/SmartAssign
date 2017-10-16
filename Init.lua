@@ -1,4 +1,4 @@
---[[
+﻿--[[
 File Name: Init.lua
 Author: Grabelus, Bartlomiej (10044563)	&	Veith, Marvin Justin (10043555)
 Description: Diese Datei dient zur Initialisierung der im Projekt verwendeten Variablen. Bei erstmaligen Start
@@ -19,6 +19,7 @@ if (not SA_WEAKAURA) then
 	SA_WEAKAURA.duration = 0
 	SA_WEAKAURA.offset = 5
 end
+SA_local = SA_local or ""
 SA_AbilityList = SA_AbilityList or {}
 SA_PhaseList = SA_PhaseList or {}
 if ( not SA_LastSelected ) then
