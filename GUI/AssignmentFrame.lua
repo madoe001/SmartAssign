@@ -167,14 +167,14 @@ do
 
 		obj.send:SetPoint("TOPLEFT", obj.scrollframe, "BOTTOMLEFT", 5 , -5)
 		obj.send:SetWidth(75)
-		obj.send:SetText("Send")
+		obj.send:SetText(Send_String)
 		obj.send:SetHeight(25)
 		obj.send:SetFrameStrata("HIGH")		
 
 
 		obj.save:SetPoint("TOPRIGHT", obj.scrollframe, "BOTTOMRIGHT", -5 , -5)
 		obj.save:SetWidth(75)
-		obj.save:SetText("Save")
+		obj.save:SetText(Save_String)
 		obj.save:SetHeight(25)
 		obj.save:SetFrameStrata("HIGH")		
 
@@ -183,7 +183,7 @@ do
 		obj.new:SetPoint("RIGHT", obj.save, "LEFT", -5, 0)
 		obj.new:SetWidth(75)
 		obj.new:SetHeight(25)
-		obj.new:SetText("New")
+		obj.new:SetText(New_String)
 		obj.new:SetFrameStrata("HIGH")
 		
 		-- Main Test Frame

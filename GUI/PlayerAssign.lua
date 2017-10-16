@@ -215,9 +215,9 @@ do
 		obj.dropDownPlayer:SetPoint("LEFT", relativeElement, "RIGHT", 0, obj.y)
 
 		--Erzeugen von Texten auf der GUI
-		obj.playerString = createFont(obj.mainFrame, "player"..obj.index, "Player", obj.dropDownPlayer, "Fonts\\MORPHEUS.ttf", 15)
-		obj.actionString = createFont(obj.mainFrame, "action"..obj.index, "Action", obj.dropDownCooldown, "Fonts\\MORPHEUS.ttf", 15)
-		obj.playerString = createFont(obj.mainFrame, "offset"..obj.index, "Offset", obj.offset, "Fonts\\MORPHEUS.ttf", 15)
+		obj.playerString = createFont(obj.mainFrame, "player"..obj.index, Player_String, obj.dropDownPlayer, "Fonts\\MORPHEUS.ttf", 15)
+		obj.actionString = createFont(obj.mainFrame, "action"..obj.index, Action_String, obj.dropDownCooldown, "Fonts\\MORPHEUS.ttf", 15)
+		obj.playerString = createFont(obj.mainFrame, "offset"..obj.index, Offset_String , obj.offset, "Fonts\\MORPHEUS.ttf", 15)
 	
 		--weitere Konfigurationen und Positionierungen
 		obj.abilityCB:SetPoint("LEFT", obj.dropDownPlayer, "RIGHT", obj.x, 0)

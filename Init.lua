@@ -33,7 +33,7 @@ end
 SA_Assignments = SA_Assignments or {}
 
 SA_Cooldowns = SA_Cooldowns or {
-   ["Warrior"] = {
+   [Warrior_String] = {
 		["97462"] = { -- Shout
 			["SpellID"] = "97462",
 			["Name"] = "Commanding Shout",
@@ -41,9 +41,9 @@ SA_Cooldowns = SA_Cooldowns or {
 			["Cooldown"] = "180"
 		}
 	}, 
-	["Death Knight"] = {
+	[Deathknight_String] = {
 	}, 
-	["Paladin"] = {
+	[Paladin_String] = {
 		["31821"] = { -- Aura Mastery
 			["SpellID"] = "31821",
 			["Name"] = "Aura Mastery",
@@ -75,7 +75,7 @@ SA_Cooldowns = SA_Cooldowns or {
 			["Cooldown"] = "300"
 		}
 	},
-	["Shaman"] = {
+	[Shaman_String] = {
 		["108280"] = { -- Healing Tide Totem
 			["SpellID"] = "108280",
 			["Name"] = "Healing Tide Totem",
@@ -101,9 +101,9 @@ SA_Cooldowns = SA_Cooldowns or {
 			["Cooldown"] = "120"
 		}
 	}, 
-	["Hunter"] = {
+	[Hunter_String] = {
 	}, 
-	["Demon Hunter"] = {
+	[Demonhunter_String] = {
 		["196718"] = { -- Darkness
 			["SpellID"] = "196718",
 			["Name"] = "Darkness",
@@ -111,9 +111,9 @@ SA_Cooldowns = SA_Cooldowns or {
 			["Cooldown"] = "180"
 		}
 	},
-	["Rogue"] = {
+	[Rogue_String] = {
 	}, 
-	["Druid"] = {
+	[Druid_String] = {
 		["740"] = { -- Tranquility
 			["SpellID"] = "740",
 			["Name"] = "Tranquility",
@@ -133,7 +133,7 @@ SA_Cooldowns = SA_Cooldowns or {
 			["Cooldown"] = "120"
 		}
 	}, 
-	["Monk"] = {
+	[Monk_String] = {
 		["115310"] = { -- Revival
 			["SpellID"] = "115310",
 			["Name"] = "Revival",
@@ -147,7 +147,7 @@ SA_Cooldowns = SA_Cooldowns or {
 			["Cooldown"] = "180"
 		}
 	}, 
-	["Priest"] = {
+	[Priest_String] = {
 		["62618"] = { -- Power Word: Barrier
 			["SpellID"] = "62618",
 			["Name"] = "Power Word: Barrier",
@@ -179,9 +179,9 @@ SA_Cooldowns = SA_Cooldowns or {
 			["Cooldown"] = "240"
 		}
 	}, 
-	["Warlock"] = {
+	[Warlock_String] = {
 	}, 
-	["Mage"] = {
+	[Mage_String] = {
 	}, 
 }
 -- GUI

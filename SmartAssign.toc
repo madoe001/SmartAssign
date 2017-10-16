@@ -9,7 +9,12 @@
 
 ## SavedVariables: SA_BossList, SA_Cooldowns, SA_Players, SA_LastSelected, SA_Dungeons, SA_WEAKAURA, SA_AbilityList, SA_PhaseList, SA_Assignments
 
+localization.deDe.lua
+localization.enUS.lua
+localization.enGB.lua
+
 Init.lua
+
 
 GUI\localization.deDe.lua
 GUI\localization.enUS.lua
