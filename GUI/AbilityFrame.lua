@@ -88,7 +88,6 @@ StaticPopupDialogs["INFO"] = {
 function SA_CreateAbilityFrame:CreateGUI(frame)
 	if not abilityFrame then
 		CreateWindow(frame)
-		print("CreateFrame wurde aufgerufen")
 	end
 	
 	CreateComponents(abilityFrame)
@@ -113,7 +112,7 @@ function CreateWindow(frame)
 		abilityFrame:SetBackdropColor(0.0,0.0,0.0,1.0)
 		abilityFrame:SetToplevel(true) -- set to top level
 		
-		--abilityFrame:Hide()
+	
 end
 
 -- CreateComponents(): creates the components for the main frame.
@@ -185,36 +184,7 @@ end
 --
 -- author: Bartlomiej Grabelus (10044563)
 function SetScripts()
-	--[[abilityFrame.mythicCB:SetScript("OnClick", function(self, button)
-		if button == "LeftButton" then
-			if abilityFrame.normalCB:GetChecked() then
-				abilityFrame.normalCB:SetChecked(false)
-			end	
-			if abilityFrame.heroicCB:GetChecked() then
-				abilityFrame.heroicCB:SetChecked(false)
-			end
-		end
-	end)]]
-	--[[abilityFrame.heroicCB:SetScript("OnClick", function(self, button)
-		if button == "LeftButton" then
-			if abilityFrame.mythicCB:GetChecked() then
-				abilityFrame.mythicCB:SetChecked(false)
-			end	
-			if abilityFrame.normalCB:GetChecked() then
-				abilityFrame.normalCB:SetChecked(false)
-			end
-		end
-	end)]]
-	--[[abilityFrame.normalCB:SetScript("OnClick", function(self, button)
-		if button == "LeftButton" then
-			if abilityFrame.mythicCB:GetChecked() then
-				abilityFrame.mythicCB:SetChecked(false)
-			end	
-			if abilityFrame.heroicCB:GetChecked() then
-				abilityFrame.heroicCB:SetChecked(false)
-			end
-		end
-	end)]]
+
 	applyAbilityButton:SetScript("OnClick", function (self, button)
 		if button == "LeftButton" then
 			if ValidForCreateAbility() then -- check if all is valid
