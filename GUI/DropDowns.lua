@@ -241,7 +241,6 @@ function createBossDropDown (parentFrame, x, y, width, name)
 									UIDropDownMenu_SetSelectedID(framus, self:GetID())
 									SA_LastSelected.boss = UIDropDownMenu_GetText(framus)
 									-- FÜR MAIK
-									print("HURENSOHN", framus.assignmentFrame)
 									if framus.assignmentFrame then
 										framus.assignmentFrame:SetFrameData()		
 									-- FÜR MAIK

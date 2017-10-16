@@ -1,13 +1,16 @@
-
-
-
+-- @author Maik Doemmecke
+-- Mit Hilfe dieser Klasse wird ein Fenster erzeugt, das zum Erstellen von Assignments dient.
+-- Die Assignments werden in einer Liste dargestellt.
+-- In der Liste besteht die Möglichkeit zu Scrollen
 do
+	-- Globale Klasse zuweisen
 	local AssignmentFrame = _G.GUI.AssignmentFrame
 	
+	-- Weitere Klassen lokal holen(ersparrt Schreibarbeit)
 	local Assignment = _G.GUI.Assignment
 	
+	-- Anzeigen der grafischen Elemente sowie der Assignments
 	function AssignmentFrame:Show()
-		--print("Show wurde aufgerufen")
 		self.scrollframe:Show()
 		self.scrollbar:Show()
 		self.new:Show()
@@ -17,8 +20,8 @@ do
 		end
 	end
 	
+	-- Verstecken der grafischen Elemente sowie der Assignments
 	function AssignmentFrame:Hide()
-		--print("Hide wurde aufgerufen")
 		self.scrollframe:Hide()
 		self.scrollbar:Hide()
 		self.new:Hide()
@@ -28,6 +31,8 @@ do
 		end
 	end	
 	
+	-- lokale Funktion zum bereinigen des Frames. 
+	-- Nach Aufruf der Funktion enthält der Frame keine Daten mehr und der Frame muss mit neuen Daten gefuellt werden
 	local function clearFrame(obj)
 			for k, v in pairs(obj.assignments) do
 				v:Hide()
@@ -42,6 +47,8 @@ do
 			obj.amountAssigns = 0
 	end
 
+	-- Wenn ein neuer Boss in dem Menü ausgewaehlt wird, muss der Frame bereinigt werden und die Daten fuer den 
+	-- ausgewaehlten Boss muessen geladen werden 
 	function AssignmentFrame:SetFrameData()
 		
 		clearFrame(self)
@@ -50,6 +57,10 @@ do
 		self.initAssigns(self, relativeElement, SA_Assignments[SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID])
 	end
 
+	-- lokale Funktionen zum Aktualisieren der grafischen Oberflaeche
+	-- Nach jedem Loeschen eines Assignments wird diese Funktion aufgerufen um die grafische
+	-- Positionierung dynamisch zu gestalten
+	-- Druch die Funktione bleiben die Eintraege der Liste zusammenhaengend. 
 	local function updateAssignmentFrame(self, toBeDeleted)
 		local foundElement = false
 		local cacheList = {}
@@ -60,6 +71,7 @@ do
 				table.insert(cacheList, v)
 			end
 		end
+
 		for k, v in pairs(cacheList) do
 			if ctr == 1 then
 				v.mainFrame:SetPoint("TOPLEFT", self.content, "TOPLEFT", 10, -10)
@@ -77,7 +89,10 @@ do
 		
 	end
 
-
+	-- Lokale Funktion zum Initialisieren des Frames
+	-- @param self Das Objekt das initialisiert werden soll, in diesem Fall der AssignmentFrame
+	-- @param relativeElement Element zu dem das Fenster positioniert werden soll
+	-- @param assigns Tabelle in der sich die Daten der darzustellenden Assignments befinden 
 	local function init(self, relativeElement, assigns)
 		local obj = self
 		local counter = 0
@@ -109,6 +124,7 @@ do
 			delete:SetScript("OnClick", function(self, button, down)	
 				assignment:Hide()
 				self:Hide()
+				updateAssignmentFrame(obj, assignment)
 				for k, v in pairs(obj.assignments) do
 					if v == assignment then
 						obj.assignments[v] = nil
@@ -117,13 +133,19 @@ do
 
 			
 			end)
-			--SA_Assignments[encounterID]["assignment"..assignment.index] = nil
 			table.insert(obj.deleteButtons, delete)
 			obj.scrollframe:SetScrollChild(obj.content)
 		end
 	end
 	end
 
+
+	-- Konstruktor zum Erstellen des Listenfenster
+	-- @param frame ParentFrame des AsssignmentFrame (normalerweise UIParent oder selbst erstellter Frame)
+	-- @param relativeElement Grafisches Element zu dem der Frame positioniert weden soll
+	-- @param x Abstand in X-Richtung zum relativen Element
+	-- @param y Abstand in Y-Richtung zum relativen Element
+	-- @return Referenz auf den AssignmentFrame
 	function AssignmentFrame:new_scrollframe(frame, relativeElement, x, y)
 	
 		local obj = {
@@ -173,7 +195,6 @@ do
 		})
 		obj.scrollframe:SetBackdropColor(0.0,0.0,0.0,0.4)
 		
-		--obj.scrollframe:SetSize(300,400)
 		obj.scrollframe:ClearAllPoints()
 		obj.scrollframe:SetPoint("TOPLEFT",relativeElement, "TOPRIGHT" , 0, -30)
 		obj.scrollframe:SetPoint( "BOTTOMRIGHT" , -10, 50)
@@ -231,9 +252,6 @@ do
 							spellid = cv["SpellID"]
 						end
 					end
-					print(plv.index)
-					
-					--SA_WA:addAssign(spellid, assign["Timer"], "assignment_" .. SA_LastSelected.boss .. "_" .. v.index .. plv.index, encounterID)
 				end
 					counter = counter + 1
 				end
@@ -267,7 +285,6 @@ do
 
 
 		obj.new:SetScript("OnClick", function(self, button, down)
-				print("Last Element: ", obj.lastElement)
 				local assignment = Assignment:new_assignment(obj.content, relativeElement, obj.index, 0, 0)
 				table.insert(obj.assignments, assignment)
 				assignment:Show()
@@ -293,17 +310,16 @@ do
 				delete:SetScript("OnClick", function(self, button, down)
 					assignment:Hide()
 					self:Hide()
-					for k, v in obj.assignments do
+					updateAssignmentFrame(obj, assignment)
+					for k, v in pairs(obj.assignments) do
 						if v == assignment then
 							obj.assignments[v] = nil
 						end
 					end
-					updateAssignmentFrame(obj, assignment)
 				end)
 				table.insert(obj.deleteButtons, delete)
 				obj.scrollframe:SetScrollChild(obj.content)
 		end)
-	--	obj.new:Hide()
 
 	return obj
 	end	

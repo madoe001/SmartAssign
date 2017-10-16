@@ -1,10 +1,11 @@
-﻿--Klasse, zum einteilen eines Spielers. 
---Mit Hilfe dieser Klasse soll es Möglich sein eine Liste von Spielern in einem Dropdownmenu angezeigt zu bekommen
---im Anschluss soll ausgewählt werden können was der Spieler bei einer Bossfähigkeit oder bei einem bestimmtetn Timer machen soll
+﻿-- @author Maik Dömmecke
+-- Klasse, zum einteilen eines Spielers. 
+-- Mit Hilfe dieser Klasse soll es Möglich sein eine Liste von Spielern in einem Dropdownmenu angezeigt zu bekommen
+-- im Anschluss soll ausgewählt werden können was der Spieler bei einer Bossfähigkeit oder bei einem bestimmtetn Timer machen soll
 	--entweder eine ability benutzen oder dem Spieler wird ein extra Text angezeigt um zum Beispiel den Spieler dazu zu bewegen sich
 	--an eine bestimmte Stelle zu bewegen
 -- Zuletzt soll ein Offset eingestellt werden können um zum Beispiel bei einem Timer genügend Zeit zur Verfügung gestellt zu bekommen eine Fähigkeit zu Nutzen
---Siehe GUI-Bilder
+-- Siehe GUI-Bilder
 
 
 do 
@@ -105,7 +106,6 @@ do
 	-- @param playerData Daten die in die grafischen Elemente eingetragen werden sollen
 	function PlayerAssign:SetPlayerAssign(playerData)
 		
-		print(playerData["Player"])
 		UIDropDownMenu_SetText(self.dropDownPlayer, playerData["Player"])
 		if playerData["TextOrCoolDown"] == "ability" then
 			self.abilityCB:SetChecked(true)

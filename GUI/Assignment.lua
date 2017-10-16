@@ -1,11 +1,13 @@
---Author: Maik Dömmecke
+-- @author Maik Dömmecke
 --
---Lua Datei, die die Graphischen Elemente für eine Assignment für einen Timer repräsentiert
+--Lua Datei, die die Graphischen Elemente für eine Assignment für einen Timer repraesentiert
 
---Neuer Scope damits private ist
+--Neuer Scope wird angelegt
 do
+	-- Globale Speicherung der Klasse
 	local dropDownAssign = _G.GUI.SA_DropDownList
 
+	-- Benoetigte Klassen lokal holen(nicht zwingend notwendig erspart aber Schreibarbeit) 
 	local pa = _G.GUI.PlayerAssignment
 	
 	local SAL = _G.GUI.Locales
@@ -16,8 +18,8 @@ do
 			
 	local Assignment = _G.GUI.Assignment
 
+	-- Die Funktion dient zum Anzeigen der grafischen Elemente
 	function Assignment:Show()
-		--print("show wurde aufgerufen")
 		self.dropDownAssignType:Show()
 		self.editTimer:Show()
 		self.new:Show()
@@ -31,6 +33,7 @@ do
 		end
 	end
 
+	-- Die Funktion dient zum Verstecken der grafischen Elemente
 	function Assignment:Hide()
 		self.dropDownAssignType:Hide()
 		self.editTimer:Hide()
@@ -43,42 +46,50 @@ do
 		for i = 1, #self.playerAssigns, 1 do
 			self.playerAssigns[i]:Hide()
 		end
-		--print("Hide wurde aufgerufen")
 	end
 
+	-- lokale Funktionen zum Aktualisieren der grafischen Oberflaeche
+	-- Nach jedem Loeschen eines PlayerAssignments wird diese Funktion aufgerufen um die grafische
+	-- Positionierung dynamisch zu gestalten
 	local function updatePlayerAssignPosition(self, toBeDeletedItem)
+		
+		-- Zählvariable für die Positionierung
 		local counter = 0
+
+		-- Tabelle die als Zwischentabelle genutzt wird.
+		-- In dieserm Liste werden alle PlayerAssignments eingetragen bis auf das zu loeschende
+		-- Element. Dadurch entsteht indexbasierte Tabelle. (Ermöglicht das Nutzen des Operators für größen von Tabellen (#))
 		local cacheList = {}
 
-		print("TO DELETE: " ,toBeDeletedItem)
-		print("PLAYERASSIGNS: ", self.playerAssigns)
+		-- Durch die Tabelle iterieren um zu schauen ob das Element in der Tabelle ist
+		-- Alle Elemente die nicht geloescht werden sollen werden zur Zwischentabelle hinzugefuegt
 		for k, v in pairs(self.playerAssigns) do
 			if v ~= toBeDeletedItem then
 				table.insert(cacheList, v)
 			end
 		end
 
+		-- Es wird durch die Zwischentabelle iteriert und die Position der noch vorhandenen PlayerAssignments wird
+		-- aktualisiert
 		for k, v in pairs(cacheList) do
 			v:SetPoint(self.editTimer, 0, -100 * counter)
 			counter = counter + 1
 		end
 
+		-- da in Lua jede Tabelle eine Referenz ist aktualisiere ich 
+		-- die PlayerAssigntabelle einfach mit meiner Zwischentabelle.
+		-- Durch das Setzen der Tabelle wird das zu loeschende Element nicht mehr referenziert und kann durch den
+		-- Garbagecollector von Lua entfernt werden
 		self.playerAssigns = cacheList
+
+		-- Die neue Groeße der Liste wird gespeichert
 		self.amountPlayer = #cacheList
 
 	end
 	
-
-	function Assignment:SetPoint(relativeElement, offsetx, offsety)
-		self.x = offsetx
-		self.y = offsety
-		self.dropDownAssignType:SetPoint("TOPLEFT", self.mainFrame, "TOPLEFT", 10, offsety - 30)
-
-	end
-
+	-- Setzen der Z-Position der grafischen Elemente
+	-- @param priority Gibt die Z-Zurdnung an (z.B. "HIGH")
 	function Assignment:SetFrameStrata(priority )
-		
-		
 		self.dropDownAssignType:SetFrameStrata(priority)
 		self.editTimer:SetFrameStrata(priority)
 		self.new:SetFrameStrata(priority)
@@ -93,10 +104,14 @@ do
 
 	end
 
+	-- Hoehe des Frames zurueckgeben
+	-- @return aktuelle Hoehe des Frames 
 	function Assignment:GetHeight()
 		return self.mainFrame:GetHeight() + 10
 	end
-
+	
+	-- Die in der grafischen Obeferflaeche eingetragenen Daten werden in eine Tabelle verpackt und zurueckgegeben
+	-- @return Tabelle ,die die Daten der grafischen Oberflaeche enthaelt 
 	function Assignment:GetAssign()
 		local assignmentData = {}
 
@@ -113,8 +128,9 @@ do
 		return assignmentData
 	end
 
+	-- Setzen des der Werte der grafischen Elemente eines Assignments.
+	-- @param assign Tabelle, die die Daten enthaelt fuer die grafische Elemente erzeugt werden sollen
 	function Assignment:SetAssign(assign)
-		print("SetAssign", assign)
 		UIDropDownMenu_SetText(self.dropDownAssignType, assign["Type"])
 		self.editTimer.label:SetText("")
 		self.editTimer:SetText(assign["Timer"])
@@ -122,7 +138,6 @@ do
 		local obj = self
 		local counter = 0
 		obj.playerAssigns = {}
-		print("TABLE: ", obj.playerAssigns)
 		for k, v in pairs(assign["assigns"]) do
 			local playerAssign = pa:new_playerAssign(obj.mainFrame, obj.editTimer, obj.index .. counter, 0, -100 * counter)
 			table.insert(obj.playerAssigns, playerAssign)
@@ -133,7 +148,6 @@ do
 			delete:SetHeight(25)
 			delete:SetText("-")
 			local index = obj.counter
-			print("index:"..index)
 			delete:SetPoint("LEFT", playerAssign.offset, "RIGHT", 10, 0)
 			local height = obj.mainFrame:GetHeight()
 			obj.mainFrame:SetHeight(height + 100)
@@ -145,13 +159,17 @@ do
 				playerAssign:Hide()
 				playerAssign:Delete()
 				
-				playerAssign = nil
+				for k, v in pairs(obj.playerAssigns) do
+					if v == playerAssign then
+						obj.playerAssigns[k] = nil
+					end
+				end
+				
 				
 				local height = obj.mainFrame:GetHeight()
 				
 				
 				obj.mainFrame:SetHeight(height - 100)
-				--obj:Hide()
 				
 				obj.new:SetPoint("LEFT", obj.editTimer, "RIGHT", 5, -100 * obj.amountPlayer)
 			end)
@@ -165,6 +183,13 @@ do
 
 	end
 
+	-- Konstruktor der Klasse
+	-- @param frame Parentframe fuer die grafischen Elemente des Assignment
+	-- @param relativeElement grafisches Element zu dem das Assignment positioniert werden soll
+	-- @param number Nummer des Assignment um einen eindeutigen Globalen Name zu generieren
+	-- @param x Abstand in X-Richtung zum relativen Element
+	-- @param y Abstand in Yx-Richtung zum relativen Element
+	-- @return Referenz auf das erstellte Assignment
 	function Assignment:new_assignment(frame, relativeElement, number, x, y)
 		
 		local obj = {
@@ -226,15 +251,12 @@ do
 			delete:SetHeight(25)
 			delete:SetText("-")
 			local index = obj.counter
-			print("index:"..index)
 			delete:SetPoint("LEFT", playerAssign.offset, "RIGHT", 10, 0)
 			local height = obj.mainFrame:GetHeight()
 			obj.mainFrame:SetHeight(height + 100)
 			delete:SetScript("OnClick", function(self, button, down)
 				
-				print("TABLE: ", obj.playerAssigns)
 				updatePlayerAssignPosition(obj, playerAssign)
-				print(obj.amountPlayer)
 				playerAssign:Hide()
 				playerAssign:Delete()
 				
