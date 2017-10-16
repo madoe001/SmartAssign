@@ -1,4 +1,4 @@
--- @author Maik Doemmecke
+﻿--- @author Maik Doemmecke
 -- Mit Hilfe dieser Klasse wird ein Fenster erzeugt, das zum Erstellen von Assignments dient.
 -- Die Assignments werden in einer Liste dargestellt.
 -- In der Liste besteht die Möglichkeit zu Scrollen
@@ -9,7 +9,7 @@ do
 	-- Weitere Klassen lokal holen(ersparrt Schreibarbeit)
 	local Assignment = _G.GUI.Assignment
 	
-	-- Anzeigen der grafischen Elemente sowie der Assignments
+	--- Anzeigen der grafischen Elemente sowie der Assignments
 	function AssignmentFrame:Show()
 		self.scrollframe:Show()
 		self.scrollbar:Show()
@@ -20,7 +20,7 @@ do
 		end
 	end
 	
-	-- Verstecken der grafischen Elemente sowie der Assignments
+	--- Verstecken der grafischen Elemente sowie der Assignments
 	function AssignmentFrame:Hide()
 		self.scrollframe:Hide()
 		self.scrollbar:Hide()
@@ -47,7 +47,7 @@ do
 			obj.amountAssigns = 0
 	end
 
-	-- Wenn ein neuer Boss in dem Menü ausgewaehlt wird, muss der Frame bereinigt werden und die Daten fuer den 
+	--- Wenn ein neuer Boss in dem Menü ausgewaehlt wird, muss der Frame bereinigt werden und die Daten fuer den 
 	-- ausgewaehlten Boss muessen geladen werden 
 	function AssignmentFrame:SetFrameData()
 		
@@ -140,7 +140,7 @@ do
 	end
 
 
-	-- Konstruktor zum Erstellen des Listenfenster
+	--- Konstruktor zum Erstellen des Listenfenster
 	-- @param frame ParentFrame des AsssignmentFrame (normalerweise UIParent oder selbst erstellter Frame)
 	-- @param relativeElement Grafisches Element zu dem der Frame positioniert weden soll
 	-- @param x Abstand in X-Richtung zum relativen Element

@@ -1,17 +1,13 @@
--- Author: Bartlomiej Grabelus (10044563)
--- Description: This Class creates the complett GUI of SmartAssign
+--- @author Bartlomiej Grabelus, Maik Doemmecke
+-- Klasse, welche zum Initialisieren und erstellen der grafischen Oberflaeche des Addon´s dient.
 
--- Global vars --
+-- Global Varieblen --
 local _G = _G
 local SmartAssign = _G.SmartAssign
 
 local GUI = _G.GUI
 
--- components
---local DropDownMenu = GUI.SA_DropDownMenu
---local ScrollFrame = GUI.SA_ScrollFrame
---local CheckBox = GUI.SA_CheckBox
---local EditBox = GUI.SA_EditBox
+-- genutzte Komponenten
 local AssignmentFrame = _G.GUI.AssignmentFrame
 local CreateAbilityFrame = GUI.SA_CreateAbilityFrame
 local PhaseFrame = GUI.SA_PhaseFrame
@@ -23,21 +19,19 @@ local mainHUD = _G.HUD.mainHUD
 local SlashCommands = _G.SmartAssign.SlashCommands
 local MiniMapButton = SmartAssign.MiniMapButton
 
--- for localization
+-- Lokalisierung holen
 local GUIL = _G.GUI.Locales
 
--- tables
+-- lokale Tabellen
 local SA_GUI = {}
 local SA_GUI_LOCAL = {}
 
 local Assignments = {}
 
--- make GUI global --
+-- Lokale GUI wird global gemacht
 _G.SmartAssign.SA_GUI = SA_GUI
 
--- SA_GUI:LoadFrame(): Load the whole Frame where want to put the content
---
--- author: Bartlomiej Grabelus (10044563)
+--- Erstellt den Frame in den der Gesamte Inhalt geladen werden soll 
 function SA_GUI:LoadFrame()
 	if not mainFrame then
 		CreateFrame("Frame","mainFrame",UIParent)
@@ -47,28 +41,22 @@ function SA_GUI:LoadFrame()
 	mainFrame:RegisterEvent("ADDON_LOADED")
 end
 
--- SA_GUI_LOCAL:Init(): function to init when addon has been loaded
+--- Funktion zum Initialisieren des Addon´s sobald das Addon geladen wird
 --
--- event: on which it was called
--- addon: name of addon
---
--- author: Bartlomiej Grabelus (10044563)
+-- @param event Event auf dass das Addon geladen werden soll
+-- @param addon Name des Addon´s
 function SA_GUI_LOCAL:Init(event, addon)
 	if (event == "ADDON_LOADED" and addon == "SmartAssign") then
 		SA_GUI_LOCAL:CreateGUI(SA_GUI.frame)
-		-- color the text |cffHEXCOLOR STRING |r << EndTag
-		print("|cff15c39a<|r|cff436eee"..GUIL["SmartAssign"].."|r|cff15c39a>|r"..
-		"|cffffa500"..GUIL["SmartAssign loaded. For more informartion about Slashcommands type in '/smart slash'."].."|r")
 		SlashCommands:Init() -- init slashcommands
 		SlashCommands:AddResetFunction(SA_GUI_LOCAL.ResetFrames, "frames")
 		MiniMapButton:Init() -- init minimapbutton
-		--mainHUD:CreateMainHUD()
 	end
 end
 	
--- SA_GUI_LOCAL:MakeMovable(): for making a frame movable
+--- Funktion mit der es moeglich ist einen Frame beweglich zu machen
 --
--- author: Bartlomiej Grabelus (10044563)
+-- @param frame Frame, der beweglich gemacht werden soll
 function SA_GUI_LOCAL:MakeMovable(frame)
     frame:EnableMouse(true)
 	frame:SetMovable(true)
@@ -77,11 +65,9 @@ function SA_GUI_LOCAL:MakeMovable(frame)
     frame:SetScript("OnDragStop", frame.StopMovingOrSizing)
 end
 
--- SA_GUI_LOCAL:CreateGUI(): create content of the mainFrame
+--- Erstellt den Inhalt des Hauptfenster´s 
 --
--- frame: Parent frame
---
--- author: Bartlomiej Grabelus (10044563)
+-- @param frame Parentframe in den der Inhalt geladen werden soll 
 function SA_GUI_LOCAL:CreateGUI(frame)
 	frame = SA_GUI_LOCAL:CreateWindow(frame)
 	
@@ -94,22 +80,12 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	-- Title
 	frame.title = SA_GUI_LOCAL:CreateFont(frame, "titleFont", GUIL["SmartAssign"], nil, 0, 5, 22)
 	
-	--frame.leftSide = SA_GUI_LOCAL:CreateLeftSide(frame) -- here put the scrollframe inside
-	
-	--frame.dropDownMenu = SA_GUI_LOCAL:CreateDropDownMenu(frame, DropDownMenu.data)
-	--frame.dropDownMenu:Hide()
-	
-	-- frame.scrollFrame = SA_GUI_LOCAL:CreateScrollFrame(LeftSide, "InstanceScrollFrame")
-	-- SlashCommands:AddResetFunction(SA_GUI_LOCAL.ScrollFrameReset,"ScrollFrame") -- add the reset function of the scrollframe to slashcommands
-	-- SA_GUI_LOCAL:ScrollFrameReset()
 		
 	local boss = BossSelectFrame:new_BossSelectFrame(frame, "MainWindow", 200, frame:GetHeight(), "LEFT", 0, 0)
 	local assign = AssignmentFrame:new_scrollframe(frame, boss.frame, 5, -100)
 	
 	boss.bossDD.assignmentFrame = assign
-	print("BOSSFRAMUS ", boss.assignmentFrame)
 	frame.assign = assign
-	--CreateAbilityFrame:CreateGUI(UIParent)
 	local testFrame = CreateFrame("Frame", "amk", UIParent)
 	PhaseFrame:CreateGUI(testFrame)
 
@@ -118,11 +94,10 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	
 end
 
--- SA_GUI_LOCAL:CreateWindow(): create Window(the mainFrame)
+--- Konfiguration des Hauptfensters. Es wird zum Beispiel die Breite, Hoehe und die Position des
+-- Fensters gesetzt.
 -- 
--- frame: the mainFrame
---
--- author: Bartlomiej Grabelus (10044563)
+-- @param frame Fenster, das konfiguriert werden soll
 function SA_GUI_LOCAL:CreateWindow(frame)
 	frame:ClearAllPoints()
 	frame:SetWidth(1000) --Breite in px
@@ -146,11 +121,9 @@ function SA_GUI_LOCAL:CreateWindow(frame)
 end
 
 
--- SA_GUI_LOCAL:CreateTitleBar(): create a TitleBar(title header)
+--- Erstellen des Schriftzugs am Hauptfenster
 --
--- frame: Parent frame
---
--- author: Bartlomiej Grabelus (10044563)
+-- @param frame Fenster fuer den der Schriftzug erstellt werden soll
 function SA_GUI_LOCAL:CreateTitleBar(frame)
 	local titleBG = frame:CreateTexture(nil,"ARTWORK");
 	titleBG:SetTexture("Interface/DialogFrame/UI-DialogBox-Header");
@@ -160,19 +133,18 @@ function SA_GUI_LOCAL:CreateTitleBar(frame)
     frame.texture = MF_titleBG;
 end
 
--- SA_GUI_LOCAL:CreateButton(): create a Button
+--- Die Funktion erstellt einen einen Button
 --
--- frame: Parent frame
--- name: name of button
--- text: which want to set in button
--- width: width of button
--- height: height of button
--- position: region, where want to position
--- x: x movement
--- y: y movement
--- template: of the button
---
--- author: Bartlomiej Grabelus (10044563)
+-- @param frame Fenster in dem der Button erstellt werden soll.
+-- @param name Name des Button´s (ACHTUNG! MUSS GLOBAL EINDEUTIG SEIN)
+-- @param text Text der auf dem Button angezeigt werden soll 
+-- @param width Breite des Button´s
+-- @param height: Hoehe des Button´s
+-- @param position Positionierung des Button´s auf dem Fenster
+-- @param x Verschieben der Position in X-Richtung
+-- @param y Verschieben der Position in Y-Richtung
+-- @param template Gibt den Typ des Button´s an
+-- @return Referenz auf den erzeugten Button
 function SA_GUI_LOCAL:CreateButton(frame, name, text, width, height, position, x, y, template)
 	if template == nil then
 		template = "OptionsButtonTemplate"
@@ -201,17 +173,16 @@ function SA_GUI_LOCAL:CreateButton(frame, name, text, width, height, position, x
 	return (button)
 end
 
--- SA_GUI_LOCAL:CreateFont(): create a FontString (Text)
+--- Erstellt einen Text auf einem uebergebenen Fenster
 --
--- frame: Parent frame
--- name: name of font
--- text: which want to set
--- position: region, where want to position
--- x: x movement
--- y: y movement
--- size: size of font
---
--- author: Bartlomiej Grabelus (10044563)
+-- @param frame Fenster auf dem der Text erstellt werden soll
+-- @param name Name der Schriftart die genutzt werden soll
+-- @param text Text der auf der grafischen Oberflaeche angezeigt werden soll
+-- @param position Position auf dem Fenster (bsp. "TOPLEFT", "LEFT" usw.) 
+-- @param x Verschieben des Texts von der Position ausgehend in X-Richtung 
+-- @param y Verschieben des Texts von der Position ausgehend in Y-Richtung 
+-- @param size Groesse der Schriftart
+-- @return Referenz auf den Schriftzug
 function SA_GUI_LOCAL:CreateFont(frame, name, text, position, x, y, size)
 	if size == nil then
 		size = 15
@@ -228,63 +199,7 @@ function SA_GUI_LOCAL:CreateFont(frame, name, text, position, x, y, size)
 	return (fontString)
 end
 
--- ALL COMMENTED NOT IN USE
--- SA_GUI_LOCAL:CreateLeftSide(): create a empty frame for the scrollframe
---
--- frame: Parent frame
---
--- author: Bartlomiej Grabelus (10044563)
--- function SA_GUI_LOCAL:CreateLeftSide(frame)
-	-- if not LeftSide then
-		-- LeftSide = CreateFrame("Frame", "LeftSide", frame)
-	-- end
-	-- LeftSide:SetBackdrop({
-	-- bgFile = "Interface/DialogFrame/UI-DialogBox-Background",
-	-- edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
-	-- tile = true, tileSize = 32, edgeSize = 25,
-	-- insets = {left = 4, right = 4, top = 4, bottom = 4}
-	-- })
-	-- LeftSide:SetWidth(frame:GetWidth() * 0.3)
-	-- LeftSide:SetHeight(frame:GetHeight()-40)
-	-- LeftSide:SetPoint("TOPLEFT", frame, 20, -20)
-	
-	-- create a line
-	--SA_GUI_LOCAL:CreateLine(LeftSide ,1, frame:GetHeight()-40, "RIGHT", LeftSide, 10, 0)
-	-- 
-	-- return LeftSide
--- end
-
--- SA_GUI_LOCAL:CreateScrollFrame(): create a ScrollFrame
---
--- frame: Parent frame
---
--- author: Bartlomiej Grabelus (10044563)
--- function SA_GUI_LOCAL:CreateScrollFrame(frame, name)
-	-- return (ScrollFrame:LoadScrollFrame(frame, name))
--- end
-
---- SA_GUI_LOCAL:CreateLine(): function to create a line
--- if horizontal: height = 1 to 2
--- if vertical: width = 1 to 2
---
--- region: where to position
--- frame: relative to which frame
--- x: x movement
--- y: y movement
---
--- author: Bartlomiej Grabelus (10044563)
--- function SA_GUI_LOCAL:CreateLine(parent ,width, height, region, frame, x, y)
-	-- local line = parent:CreateTexture()
-	-- line:SetTexture("Interface\\Tooltips\\UI-Tooltip-Background")
-    -- 
-	-- line:SetSize(width , height)
-	-- line:SetPoint(region, frame, x, y)
--- end
--- 
-
--- SA_GUI:Toggle(): toggle the GUI
---
--- author: Bartlomiej Grabelus (10044563)
+--- Versteckt bzw. Zeigt die Grafische Oberflaeche 
 function SA_GUI:Toggle()
 	if mainFrame:IsShown() then
 		mainFrame:Hide()
@@ -293,22 +208,11 @@ function SA_GUI:Toggle()
 	end
 end
 
--- SA_GUI_LOCAL:ResetFrames(): reset function for the frames
--- ## IN DEVELOPMENT
---
--- author: Bartlomiej Grabelus (10044563)
+--- Setzt den Frame auf den Ursprungszustand zurueck 
 function SA_GUI_LOCAL:ResetFrames()
 	if SA_GUI.frame then
 		SA_GUI.frame:ClearAllPoints()
 		SA_GUI.frame:SetPoint("CENTER", SA_GUI.frame.x, SA_GUI.frame.y)
-		--ScrollFrame:Reset(mainFrame)
 	end
 end
 
--- NOT IN USE
--- SA_GUI_LOCAL:ScrollFrameReset(): reset function for the scrollframe
---
--- author: Bartlomiej Grabelus (10044563)
--- function SA_GUI_LOCAL:ScrollFrameReset()
-	-- ScrollFrame:Reset(mainFrame)
--- end

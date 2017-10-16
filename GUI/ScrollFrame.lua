@@ -9,7 +9,7 @@
 --				Backward we have the same functionallity like forward through the list.
 --				The player can get backward	(to the list before) by clicking on the headerbutton, the button which is highlighted
 --				at the top of the list.
-
+-- NOT USED YET
 -- global vars
 local _G = _G
 

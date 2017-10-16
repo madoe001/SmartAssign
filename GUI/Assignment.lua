@@ -1,4 +1,4 @@
--- @author Maik Dömmecke
+﻿--- @author Maik Dömmecke
 --
 --Lua Datei, die die Graphischen Elemente für eine Assignment für einen Timer repraesentiert
 
@@ -18,7 +18,7 @@ do
 			
 	local Assignment = _G.GUI.Assignment
 
-	-- Die Funktion dient zum Anzeigen der grafischen Elemente
+	--- Die Funktion dient zum Anzeigen der grafischen Elemente
 	function Assignment:Show()
 		self.dropDownAssignType:Show()
 		self.editTimer:Show()
@@ -33,7 +33,7 @@ do
 		end
 	end
 
-	-- Die Funktion dient zum Verstecken der grafischen Elemente
+	--- Die Funktion dient zum Verstecken der grafischen Elemente
 	function Assignment:Hide()
 		self.dropDownAssignType:Hide()
 		self.editTimer:Hide()
@@ -87,7 +87,7 @@ do
 
 	end
 	
-	-- Setzen der Z-Position der grafischen Elemente
+	--- Setzen der Z-Position der grafischen Elemente
 	-- @param priority Gibt die Z-Zurdnung an (z.B. "HIGH")
 	function Assignment:SetFrameStrata(priority )
 		self.dropDownAssignType:SetFrameStrata(priority)
@@ -104,13 +104,13 @@ do
 
 	end
 
-	-- Hoehe des Frames zurueckgeben
+	--- Hoehe des Frames zurueckgeben
 	-- @return aktuelle Hoehe des Frames 
 	function Assignment:GetHeight()
 		return self.mainFrame:GetHeight() + 10
 	end
 	
-	-- Die in der grafischen Obeferflaeche eingetragenen Daten werden in eine Tabelle verpackt und zurueckgegeben
+	--- Die in der grafischen Obeferflaeche eingetragenen Daten werden in eine Tabelle verpackt und zurueckgegeben
 	-- @return Tabelle ,die die Daten der grafischen Oberflaeche enthaelt 
 	function Assignment:GetAssign()
 		local assignmentData = {}
@@ -128,7 +128,7 @@ do
 		return assignmentData
 	end
 
-	-- Setzen des der Werte der grafischen Elemente eines Assignments.
+	--- Setzen des der Werte der grafischen Elemente eines Assignments.
 	-- @param assign Tabelle, die die Daten enthaelt fuer die grafische Elemente erzeugt werden sollen
 	function Assignment:SetAssign(assign)
 		UIDropDownMenu_SetText(self.dropDownAssignType, assign["Type"])
@@ -183,7 +183,7 @@ do
 
 	end
 
-	-- Konstruktor der Klasse
+	--- Konstruktor der Klasse
 	-- @param frame Parentframe fuer die grafischen Elemente des Assignment
 	-- @param relativeElement grafisches Element zu dem das Assignment positioniert werden soll
 	-- @param number Nummer des Assignment um einen eindeutigen Globalen Name zu generieren

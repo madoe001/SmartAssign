@@ -1,4 +1,4 @@
-﻿-- @author Maik Dömmecke
+﻿--- @author Maik Dömmecke
 -- Klasse, zum einteilen eines Spielers. 
 -- Mit Hilfe dieser Klasse soll es Möglich sein eine Liste von Spielern in einem Dropdownmenu angezeigt zu bekommen
 -- im Anschluss soll ausgewählt werden können was der Spieler bei einer Bossfähigkeit oder bei einem bestimmtetn Timer machen soll
@@ -19,7 +19,7 @@ do
 	
 	local EditBox = _G.GUI.SA_EditBox
 	
-	-- Die Funktion dient zum verschwinden lassen der Grafischen Elemente eines PlayerAssignment
+	--- Die Funktion dient zum verschwinden lassen der Grafischen Elemente eines PlayerAssignment
 	-- @param subs The replacement pattern.
 	-- @param find The pattern to find.
 	function PlayerAssign:Hide()
@@ -35,7 +35,7 @@ do
 		self.offset:Hide()
 	end
 	
-	-- Die Funktion dient zum anzeigen lassen der Grafischen Elemente eines PlayerAssignment
+	--- Die Funktion dient zum anzeigen lassen der Grafischen Elemente eines PlayerAssignment
 	function PlayerAssign:Show()
 		self.abilityCB:Show()
 		self.textCB:Show()
@@ -48,7 +48,7 @@ do
 		self.offset:Show()
 	end
 
-	-- Setzen der Grafischen Elemente eines PlayerAssignment an eine bestimmte Position
+	--- Setzen der Grafischen Elemente eines PlayerAssignment an eine bestimmte Position
 	-- @param relativeElement Element zu dem das PlayerAssignment ausgerichtet werden soll
 	-- @param x Gibt den Abstand zum Relativen Element in X-Richtung an
 	-- @param y Gibt den Abstand zum Relativen Element in Y-Richtung an
@@ -63,7 +63,7 @@ do
 		self.dropDownCooldown:SetPoint("LEFT", self.abilityCB, "RIGHT", self.x+30,0)
 	end
 
-	--Löschen eines PlayerAssignment inklusive der grafischen Elemente. 
+	--- Löschen eines PlayerAssignment inklusive der grafischen Elemente. 
 	function PlayerAssign:Delete()
 		x = nil
 		y = nil
@@ -75,7 +75,7 @@ do
 		_G["mb2"..self.index] = nil
 	end
 
-	-- Setzt die Z-Stelligkeit der grafischen Elemente eines PlayerAssigns. 
+	--- Setzt die Z-Stelligkeit der grafischen Elemente eines PlayerAssigns. 
 	-- @param priority Ist die Stelligkeit in Form eines Strings (z.B. "HIGH")
 	function PlayerAssign:SetFrameStrata(priority)
 		self.abilityCB:SetFrameStrata(priority)
@@ -85,7 +85,7 @@ do
 		self.offset:SetFrameStrata(priority)
 	end
 
-	-- Verpackt die in der Grafischen Oberfläche eingetragenen Daten in eine Tabelle und gibt diese zurück
+	--- Verpackt die in der Grafischen Oberfläche eingetragenen Daten in eine Tabelle und gibt diese zurück
 	-- @return Daten des PlayerAssignment als Tabelle
 	function PlayerAssign:GetPlayerAssign()
 		local playerData = {}
@@ -102,7 +102,7 @@ do
 		return playerData
 	end
 
-	-- Werte der Grafischen Elemente werden gesetzt
+	--- Werte der Grafischen Elemente werden gesetzt
 	-- @param playerData Daten die in die grafischen Elemente eingetragen werden sollen
 	function PlayerAssign:SetPlayerAssign(playerData)
 		
@@ -124,8 +124,8 @@ do
 		self.offset:SetText(playerData["offset"])
 	end
 
-	--Function zum Erstellen eines Schriftzug auf der grafischen Obberfläche
-	--lokale Funktion wird nicht weiter beschrieben
+	-- Function zum Erstellen eines Schriftzug auf der grafischen Obberfläche
+	-- lokale Funktion wird nicht weiter beschrieben
 	local function createFont(frame, name, text, relativeElement, fontString, height)
 		local font = frame:CreateFontString(name)
 		font:SetPoint("BOTTOM", relativeElement, "TOP")
@@ -134,7 +134,7 @@ do
 		return font
 	end
 
-	-- Konstruktor der Klasse PlayerAssign 
+	--- Konstruktor der Klasse PlayerAssign 
 	-- Es wird ein Objekt der Klasse erzeugt, initialisiert und zurückgegeben
 	-- @param frame ParentFrame des PlayerAssignment
 	-- @param relativeElement Wird zur Positionierung der PlayerAssignment genutzt
