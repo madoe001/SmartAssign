@@ -30,7 +30,7 @@ function SmartAssign:getAllMembers()
          raidSize = raidSize -1;
          
          local name = UnitName("player")
-         local class = UnitClass(name)
+         local bla, class = UnitClass(name)
          playerList[name..""] =  class
       end
       
@@ -48,7 +48,7 @@ function SmartAssign:getAllMembers()
                key = name
             end
             print(key)
-            local class = UnitClass(key)
+            local one, class = UnitClass(key)
             playerList[key] =  class
             
          else if IsInGroup() then
@@ -59,8 +59,9 @@ function SmartAssign:getAllMembers()
                else
                   key = memberName
                end
-               local class = UnitClass(key)
-               playerList[key] =  class
+               local one, class = UnitClass(key)
+               print(key, " " ,class)
+		playerList[key] =  class
             end                       
          end
          
