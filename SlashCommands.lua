@@ -123,7 +123,7 @@ end
 -- Diese Funktion dient dazu eine Reset Funktion eines Frames hinzuzufügen.
 -- Wenn man ein Frame über einen Slash Kommando zurücksetzen möchte.
 --
--- @raise 'Wenn func keine Function ist.'
+-- Assertion: 'Wenn func keine Function ist.'
 --
 -- @tparam string func ist die Reset Funktion
 -- @param ... Name des Frames
@@ -140,9 +140,9 @@ end
 --- @function SlashCommands:Add
 -- Füge einen neuen Slash Kommando hinzu.
 --
--- @raise 'Wenn exec kein String ist'
--- @raise 'Wenn func keine Funktion ist'
--- @raise 'Wenn helfText kein string ist'
+-- Assertion: 'Wenn exec kein String ist'
+-- Assertion: 'Wenn func keine Funktion ist'
+-- Assertion: 'Wenn helfText kein string ist'
 --
 -- @tparam string exec Der Name unter welchen ausgeführt werden soll
 -- @tparam function func Die Funktion
