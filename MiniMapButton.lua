@@ -1,14 +1,15 @@
---- Beschreibung: This Class is needed to create a MiniMapButton near the MiniMap.
---                It is made global and has a SAButton of type LibDBIcon, which is the Icon for the MiniMapButton.
---                With LibDataBroker we create the data for the MiniMapButton.
---				  The MiniMapButton isn´t really a Button is only a icon
---				  We use the MiniMapButton for open the SmartAssign GUI, when the Player click on the icon
+--- Beschreibung: Diese Klasse wird benutzt, um für SmartAssign einen MiniMapButton an der Minimap von World of Warcraft zu erstellen.
+--                Diese Klasse wird über die globale WoW Tabelle _G global gemacht.
+--                Es wird ein SAButton des Typs LibDBIcon benutzt, welche das Icon ist.
+--                Mit LibDataBroker werden die Daten für den MiniMapButton erstellt und gespeichert.
+--				  Der MiniMapButton ist kein richtiger Button sondern ein Icon, mit welchen der Spieler interagieren kann.
+--				  Der MiniMapButton wird benutzt, um die grafische Oberfläche von SmartAssign, über einen Mausklick aufzurufen.
 --
 -- @module MiniMapButton
 -- @author Bartlomiej Grabelus (10044563)
 
 
--- global vars
+-- hole die Globale Tabelle
 local _G = _G
 
 local SmartAssign = _G.SmartAssign
@@ -17,26 +18,26 @@ local SlashCommands = SmartAssign.SlashCommands
 local MiniMapButton = {}
 SmartAssign.MiniMapButton = MiniMapButton
 
--- localization
+-- Lokalisierung
 local SAL = _G.GUI.Locales
 
--- minimap data
+-- Minimap Daten
 local minimap = SmartAssign.minimap
 
--- the minimap icon
+-- Der MiniMapButton Icon
 local SAButton = LibStub("LibDBIcon-1.0")
 
--- lua
+-- Lua Funktionen
 local type = type
 local abs, sqrt = math.abs, math.sqrt
 
--- check if the LibDataBroker-1.1 can be loaded and if not than return
-if not LibStub:GetLibrary("LibDataBroker-1.1", true) then return end
+-- Prüfe ob LibDataBroker-1.1 geladen werden kann, ansonsten return
+if not LibStub:GetLibrary("LibDataBroker-1.1", true) then 
+	return 
+end
 
--- make an LDB object, with data of the minimapbutton
--- which is needed to the minimapbutton
---
--- author: Bartlomiej Grabelus (10044563)
+--- Erstelle ein LDB Objekt, welche die Daten für den MiniMapButton enthält.
+-- Welche für den MiniMapButton benutzt werden.
 local MiniMapLDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("SmartAssign", {
 	type = "launcher",
 	text = SAL["SmartAssign"],
@@ -45,7 +46,7 @@ local MiniMapLDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("SmartA
 		tooltip:AddLine("|cff436eee"..SAL["SmartAssign"].."|r");
 		tooltip:AddLine(SAL["SmartAssign_Minimap_Clicks"]);
 	end,
-	-- when minimapbutton was clicked then reset all else show GUI
+	-- Wenn der MiniMapButton geklickt wurde, öffne das grafische Fenster, war das Fenster offen, dann setze alle Frames zurück
 	OnClick = function(self, button)
 		if button == "LeftButton" then
 			if minimap.clicked == true then
@@ -57,33 +58,27 @@ local MiniMapLDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("SmartA
 	end,
 })
 
--- MiniMapButton:Init(): init function for the minimapbutton
--- 
--- add a slashcommand to toggle the minimapbutton and add a reset function for the minimapbutton
---
--- author: Bartlomiej Grabelus (10044563)
+--- @function MiniMapButton:Init
+--  Wird zum initialisieren des MiniMapButtons benutzt.
+--  Es wird ein Slash Kommando für das Togglen des MiniMapButtons hinzugefügt, sowie eine Resetfunktion hinzugefügt.
 function MiniMapButton:Init()
 	SlashCommands:Add("mmb", MiniMapButton.Toggle, SAL["/smart mmb - Toggle MiniMapButton."])
 	SlashCommands:AddResetFunction(MiniMapButton.ResetFrames, "miniMapButton")
 
-	SAButton:Register("SmartAssign", MiniMapLDB, minimap); -- register the data to the button
+	SAButton:Register("SmartAssign", MiniMapLDB, minimap); -- Registriere die Daten für den Button(Binding)
 end
 
--- MiniMapButton.ResetFrames(): reset the minimap position and refresh the button
---
--- author: Bartlomiej Grabelus (10044563)
+--- @function MiniMapButton.ResetFrames
+-- Setze die position des Icons zurück and führe eine Aktualisierung aus.
 function MiniMapButton.ResetFrames()
 	minimap.minimapPos = 210;
 	SAButton:Refresh("SmartAssign");
 end
 
--- MiniMapButton.Toggle(): for toggle the minimapbutton
--- 
--- negate the variable shown and hide
--- and check if the minimapbutton is shown.
--- Then hide or show the minimapbutton
---
--- author: Bartlomiej Grabelus (10044563)
+--- @function MiniMapButton.Toggle
+-- Fürs Togglen des MiniMapButtons.
+-- Es werden die Variablen shown und hide negiert und dann wird gecheckt, ob der MiniMapButton angezeigt wird.
+-- Dementsprechend zeige oder verstecke den MiniMapButton.
 function MiniMapButton.Toggle()
 	minimap.shown = not minimap.shown
 	minimap.hide = not minimap.hide
@@ -94,10 +89,8 @@ function MiniMapButton.Toggle()
 	end
 end
 
--- MiniMapButton.Lock_Toggle(): for locking the minimapbutton,
--- if wanted
---
--- author: Bartlomiej Grabelus (10044563)
+--- @function MiniMapButton.Lock_Toggle
+-- Wird benutzt um das Togglen des MiniMapButtons zu sperren, wenn gewünscht.
 function MiniMapButton.Lock_Toggle()
 	if minimap.locked then
 		SAButton:Lock("SmartAssign");
