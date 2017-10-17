@@ -840,8 +840,9 @@ function fillRaidsAndBosses()
 	end
 end
 
---Funktion zum erstellen der Lokalisierungsvariablen
-function printRaidsAndBosses()
+--- Funktion zum Erstellen der Lokalisierungsvariablen
+-- @author Maik Doemmecke
+function printBosses()
    local t = 1
    SA_local = ""
   local ctr = 1
@@ -849,7 +850,7 @@ function printRaidsAndBosses()
       
       EJ_SelectTier(t)
       tiername,_ = EJ_GetTierInfo(t)
-      --print(tiername)
+      print(tiername)
       
       local i = 1
       while EJ_GetInstanceByIndex(i, true) do
@@ -881,6 +882,36 @@ function printRaidsAndBosses()
       end
    end
 end
+
+function printRaids()
+   local t = 1
+   SA_local = ""
+  local ctr = 1
+	 for t = 1, EJ_GetNumTiers(), 1 do
+      
+      EJ_SelectTier(t)
+      tiername,_ = EJ_GetTierInfo(t)
+      
+      local i = 1
+      while EJ_GetInstanceByIndex(i, true) do
+         SA_instanceId, SA_name = EJ_GetInstanceByIndex(i, true)
+	 local bossString = SA_name
+         EJ_SelectInstance(SA_instanceId)
+         local zwischen, _ = string.gsub(SA_name, " ", "" )
+         SA_name,_ = string.gsub(zwischen, "'","")
+         zwischen = string.gsub(SA_name, "-","")
+         SA_name = string.gsub(zwischen, ",","")
+	SA_local = SA_local .. "\n" .. SA_raidNames[ctr] .. "=" .. "\"" .. bossString .. "\"" 
+
+	 --table.insert(SA_local, SA_name .. "_string")
+	 ctr = ctr + 1
+         i = i+1
+         
+       end
+   end
+	
+end
+
 
 
 function createLocalizationNameList()
@@ -921,5 +952,46 @@ function createLocalizationNameList()
    end
 end
 
+
+function creatBossList()
+   local t = 1
+   SA_local = ""
+  local ctr = 1
+	 for t = 1, EJ_GetNumTiers(), 1 do
+      
+      EJ_SelectTier(t)
+      tiername,_ = EJ_GetTierInfo(t)
+      print(tiername)
+      SA_local = SA_local .. "[" .. tiername .. "] = {"  
+      local i = 1
+      while EJ_GetInstanceByIndex(i, true) do
+         SA_instanceId, SA_name = EJ_GetInstanceByIndex(i, true)
+         EJ_SelectInstance(SA_instanceId)
+         SA_local = SA_local .. "[" .. SA_name
+         local newName = ""
+         
+         for i in string.gmatch(SA_name, "%S+") do
+            newName = newName .. string.sub(i, 1, 1)
+         end
+         print(newName)
+         i = i+1
+         
+         local j = 1
+         while EJ_GetEncounterInfoByIndex(j, instanceId) do
+            local name, _, encounterId = EJ_GetEncounterInfoByIndex(j, instanceId)
+            local bossname = name
+            
+            local zwischen, _ = string.gsub(name, " ", "" )
+            name,_ = string.gsub(zwischen, "'","")
+            zwischen = string.gsub(name, "-","")
+            name = string.gsub(zwischen, ",","")
+            
+	    SA_local = SA_local .. "\n" .. SA_bossnameList[ctr] .. "=" .. "\"" .. bossname .. "\""
+            j = j+1
+	ctr = ctr + 1
+         end
+      end
+   end
+end
 
 
