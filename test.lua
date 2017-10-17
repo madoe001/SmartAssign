@@ -256,13 +256,14 @@ Description: Es handelt sich hierbei um einen Eventhandler. Der Eventhandler "SA
 							 Wenn der Boss erfolgreich besiegt worden ist, werden alle Assignments gelöscht. Damit 
 							 die Assignments nicht erneut mit einer anderen Gruppe geladen werden.
 ]]	
-function SA_OnEvent(frame, event, encounterID, ...)
+function SA_OnEvent(frame, event, encounterID, enc, dif,...)
 	if event == "ENCOUNTER_START" then
 		SA_WEAKAURA.start = GetTime()
 		SA_WEAKAURA.combat = true
 		SA_WEAKAURA.encounterID = encounterID	
 		local eID = encounterID .. ""
 		local difficulty = getDifficulty()
+		print(enc, dif)
 		if ( SA_PhaseList[eID] ) then
 			if ( SA_PhaseList[eID][difficulty] ) then
 				SA_PhaseList[eID][difficulty].SA_currentPhase = SA_PhaseList[eID][difficulty].SA_firstPhase
@@ -953,21 +954,22 @@ function createLocalizationNameList()
 end
 
 
-function creatBossList()
+function createBossList()
    local t = 1
    SA_local = ""
-  local ctr = 1
-	 for t = 1, EJ_GetNumTiers(), 1 do
-      
+  local bossctr = 1
+  local raidctr = 1
+
+  for t = 1, EJ_GetNumTiers(), 1 do
       EJ_SelectTier(t)
       tiername,_ = EJ_GetTierInfo(t)
       print(tiername)
-      SA_local = SA_local .. "[" .. tiername .. "] = {"  
+      SA_local = SA_local .. "[\"" .. tiername .. "\"] = { \r"  
       local i = 1
       while EJ_GetInstanceByIndex(i, true) do
          SA_instanceId, SA_name = EJ_GetInstanceByIndex(i, true)
          EJ_SelectInstance(SA_instanceId)
-         SA_local = SA_local .. "[" .. SA_name
+         SA_local = SA_local .. "\\t\\t[" .. SA_raidNames[raidctr] .. "] = { \r" 
          local newName = ""
          
          for i in string.gmatch(SA_name, "%S+") do
@@ -975,7 +977,7 @@ function creatBossList()
          end
          print(newName)
          i = i+1
-         
+         raidctr = raidctr + 1
          local j = 1
          while EJ_GetEncounterInfoByIndex(j, instanceId) do
             local name, _, encounterId = EJ_GetEncounterInfoByIndex(j, instanceId)
@@ -986,11 +988,14 @@ function creatBossList()
             zwischen = string.gsub(name, "-","")
             name = string.gsub(zwischen, ",","")
             
-	    SA_local = SA_local .. "\n" .. SA_bossnameList[ctr] .. "=" .. "\"" .. bossname .. "\""
+	    SA_local = SA_local .. "\\t\\t\\t[" .. SA_bossnameList[bossctr] .. "] = { \r \\t\\t\\t\\t [\"encounterID\"] = ,\r\\t\\t\\t},\r" 
             j = j+1
-	ctr = ctr + 1
+	    bossctr = bossctr + 1
          end
+	 SA_local  = SA_local .. "\\t\\t},\r"
       end
+	 SA_local  = SA_local .. "\\t},\r"
+
    end
 end
 

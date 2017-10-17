@@ -10,7 +10,8 @@ New_String = "Neu"
 Send_String = "Senden"
 Save_String = "Speichern"
 
---Spieler Klasse Lokalisierung
+--Spieler Klasse Lokalisierung (funktioniert nicht wie geplant wegen Genderwahnsinn und der Unterscheidung 
+--zwischen z.B. Dämonenjäger und Dämonenjägerin... -.-)
 classes = {
 	Warrior = "Krieger",
 	Deathknight = "Todesritter",
