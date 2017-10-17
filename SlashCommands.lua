@@ -1,4 +1,4 @@
---- Beschreibung: Diese Klasse ist nötig, um Slash Kommandos für SmartAssign zu initialisieren.
+﻿--- Beschreibung: Diese Klasse ist nötig, um Slash Kommandos für SmartAssign zu initialisieren.
 --				  Sie wird über _G global gemacht und besitzt 3 Container.
 --				  Einen Container für die Kommandos, einen für Hilfe informationen und einen für Reset Funktionen
 --
@@ -116,7 +116,7 @@ end
 --- Diese Funktion dient dazu eine Reset Funktion eines Frames hinzuzufügen.
 -- Wenn man ein Frame über einen Slash Kommando zurücksetzen möchte.
 --
--- @raise Wenn func keine Function ist.
+-- Assertion: 'Wenn func keine Function ist.'
 --
 -- @param func ist die Reset Funktion
 -- @param ... Name des Frames
@@ -132,7 +132,9 @@ end
 
 --- Füge einen neuen Slash Kommando hinzu.
 --
--- @raise Wenn exec kein String ist
+-- Assertion: 'Wenn exec kein String ist'
+-- Assertion: 'Wenn func keine Funktion ist'
+-- Assertion: 'Wenn helfText kein string ist'
 --
 -- @param exec Der Name unter welchen ausgeführt werden soll
 -- @param func Die Funktion
