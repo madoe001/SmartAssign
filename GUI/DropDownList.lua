@@ -54,7 +54,6 @@ local function OnClick(self)
 	elseif self:GetID() == 2 then
 		self.selectedId = SAL["Ability"]
 	end
-	print(self.selectedId)
        -- UIDropDownMenu_SetSelectedID(self, self:GetID())
 end
 
@@ -65,6 +64,7 @@ end
 --
 -- @tparam Frame frame Das Frame in welcher die Tabelle und selectedID gesetzt werden soll
 -- @tparam table data Die Tabelle welche in der DropDownListe dargestellt werden soll
+-- @tparam int startValue Das Item was zum start angezeigt werden soll
 local function SetData(frame, data, startValue)
 	if not data then
 		frame:ClearAllPoints()
@@ -120,7 +120,7 @@ end
 -- Dann füge alles plus den Level der DropDownListe hinzu.
 --
 -- @tparam Frame self Die DropDownList 
--- @tparam int level Das Level auf welches das Item gesetzt werden soll
+-- @tparam int level Das Level auf welches das Item gesetzt werden soll(1 Level möglich)
 function InitDDL(self, level)
    local info = UIDropDownMenu_CreateInfo()
    for key,value in pairs(self.data) do

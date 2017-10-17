@@ -1,46 +1,44 @@
--- Author: Bartlomiej Grabelus (10044563)
--- Description: This Class creates a dropdownmenu, which is made with the data of a table, whitin the table is another one.
---				On the first click the user gets a list, when the user clicks on a listpoint, he gets another list.
---				E.gat the first click on the button, we have a list like: Warlock, Druid, Hunter. When the player clicks on Warlock
---				he gets all player, which are Warlocks
+-- Beschreibung: Diese Klasse stellt ein DropDownMenu dar, welche mit den Daten aus einer Tabelle gefüllt wird, welche wiederrum eine Tabelle enthält.
+--				Wenn der Spieler auf den DropDownMenuButton klickt, zeigt sich ihm eine Liste mit Einträgen. Diese Einträge beinhalten wieder eine Liste mit Elementen.
+--				Zum Beispiel wird beim Klick auf den DropDownMenuButton eine Liste mit Einträge der Klassen angezeigt und dann wenn man eine Klasse auswählt, 
+--              wird eine Liste mit Spieler angezeigt, welche der Klasse entsprechen.
+--
+-- @modul DropDownMenu
+-- @author Bartlomiej Grabelus (10044563)
 
--- global vars
+-- Hole globale Tabelle _G
 local _G = _G
 
 local SA_DropDownMenu = _G.GUI.SA_DropDownMenu
 
--- localization
+-- Lokalisierung
 local SAL = _G.GUI.Locales
 
--- used in OnClick
+-- wird im OnClick benutzt
 local DropDownData = {}
 
--- for failurehandling
+-- Für Fehlerbehandlung
 local assert, type = assert, type
 
 local BUTTON_HEIGHT = 25
 
--- GetArraySize(): lua function to get table size
+--- Lua Funktion, um die größe einer Tabelle zu erfahren.
 -- 
--- T: the table
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam table T Die Tabelle von welcher man die größe haben möchte
 function GetArraySize(T)
 	local lengthNum = 0
-	for k,v in pairs(T) do -- for every key in the table with a corresponding non-nil value 
+	for k,v in pairs(T) do -- für jeden key, welcher nicht nil ist  lengthNum++
 		lengthNum = lengthNum + 1
 	end
 	return lengthNum
 end
 
--- SA_DropDownMenu:SetOnClick(): A setter for the OnClick Event
+--- Mithilfe dieser Funktion kann man dem OnClickEvent einen EventHandler zuordnen.
 --
--- assertion: When func isn´t a function
+-- Assertion: Wenn func keine Funktion ist
 --
--- frame: For which want to set the EventHandling
--- func: The function which want to set for the event
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame frame Für welchen man die EventHandlerFunktion setzen möchte
+-- @tparam function func Die Funktion welche für das OnClick Event gesetzt werden soll
 function SA_DropDownMenu:SetOnClick(frame, func)
     assert(type(func) == "function", SAL["'func' in 'DropDownMenu SetOnClick' must be a function."])
 	if func then
@@ -50,50 +48,41 @@ function SA_DropDownMenu:SetOnClick(frame, func)
 	end
 end
 
--- SA_DropDownMenu:SetPoint(): To set the Point of the DropDownMenu outside the Class
+--- Dient um die Position ausserhalb der Klasse zu verändern.
 --
--- framePosition: Region of the Frame
--- relativeToFrame: relative to which Frame want to position
--- relativePos: relative to the Region of the Frame, to which want to position
--- x: x movement of the Frame
--- y: y movement of the Frame
---function SA_DropDownMenu:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
---	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
---end
+-- @tparam string framePosition Region des Frames
+-- @tparam string relativeToFrame Relativ zu welchen Frame positioniert werden soll
+-- @tparam string relativePos Relativ zur Region des Frames, zu welchen positioniert werden soll
+-- @tparam int x Bewegung des Buttons in x-Richtung
+-- @tparam int y Bewegung des Buttons in y-Richtung
+function SA_DropDownMenu:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
+	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
+end
 
--- GetSelectedItem(): Getter for the selected item
+--- Getter für den ausgewählten Item
 --
--- DropDownData could be changed to frame.data
---
--- self: of which want to get the selected Item
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame self The DropDownMenu
 local function GetSelectedItem(self)
 	return DropDownData[UIDROPDOWNMENU_MENU_VALUE["Category"]][self:GetID()]["name"]
 end
 
--- OnClick(): OnClickEvent function
---
--- Set the Text of the Button to the selected item
+--- Die OnClickEventHandling-Funktion für den DropDownMenu.
+-- Setzt den Text des Buttons auf den, welcher vom Spieler ausgewählt wurde.
 --
 -- self: on which do eventhandling
---
--- author: Bartlomiej Grabelus (10044563)
 function OnClick(self)
 	--print(">> DropDownMenu OnClick << called "..DropDownData[UIDROPDOWNMENU_MENU_VALUE["Category"]][self:GetID()]["name"])  
-	UIDropDownMenu_SetText(DropDownMenuButton, DropDownData[UIDROPDOWNMENU_MENU_VALUE["Category"]][self:GetID()]["name"]); -- geht immer noch nicht
+	UIDropDownMenu_SetText(DropDownMenuButton, DropDownData[UIDROPDOWNMENU_MENU_VALUE["Category"]][self:GetID()]["name"]);
 end
 
--- SetData(): Setter for the data which want to set in the DropDownMenu
+--- Setterfunktion für data. Welche dann in der DropDownMenu dargestellt werden.
+-- Wenn data leer ist dann wird die Position gelöscht, sowie data und selectedID des Frames werden auf nil gesetzt.
+-- Ansonsten übergebe die Tabelle data an das Frame und setze selectedID auf startValue.
+-- Wenn startValue gesetzt ist, dann setzte das selectedID der DropDownListe mithilfe von UIDropDownMenu_SetSelectedID().
 --
--- if data is empty then clear all points of the frame and set selectedID, data to nil
--- else set data and the selectedID to the startValue and set the selected ID, which want
--- have as selected with UIDropDownMenu_SetSelectedID()
---
--- frame: the frame on which want to set data and selectedID
--- data: the data which want to set in the DropDownList
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame frame Das Frame in welcher die Tabelle und selectedID gesetzt werden soll
+-- @tparam table data Die Tabelle welche in der DropDownListe dargestellt werden soll
+-- @tparam int startValue Das Item was zum start angezeigt werden soll
 local function SetData(frame, data, startValue)
 	if not data then
 		frame:ClearAllPoints()
@@ -109,17 +98,20 @@ local function SetData(frame, data, startValue)
 	end
 end
 
--- CreateDropDownList(): Create a DropDownList
+--- Erstellt ein DropDownMenu.
+-- Erstellt einen DropDownMenuButton, welcher die DropDownListe darstellt.
+-- Hinzu kommt das DropDownMenu, welches das Menu dargestellt.
+-- Es werden dann die Daten für die DropDownListe gesetzt und ein Label erstellt.
 --
--- Create a DropDownMenuButton and the DropDownMenu Frame and set the data for the DropDownMenu.
--- Than create a custom label for the DropDownMenu
+-- UIDropDownMenu_Initialize(): Damit wird die Initialisierungfunktion gesetz
+-- UIDropDownMenu_SetButtonWidth(): Damit wird die Breite des Buttons gesetzt
+-- UIDropDownMenu_SetWidth(): Damit wird die Breite für das Label gesetzt(im Button)
+-- UIDropDownMenu_JustifyText(): Damit wird das Label justiert
 --
--- UIDropDownMenu_Initialize(): for setting a initialize function
--- UIDropDownMenu_SetButtonWidth(): for setting the width of the Button
--- UIDropDownMenu_SetWidth(): for setting the width of the place for the text
--- UIDropDownMenu_JustifyText(): for justifing the text
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame parent Ist das Elternframe.
+-- @tparam string name Name der DropDownMenu
+-- @tparam table data Die Daten für das DropDownMenu
+-- @tparam function init Die Initialisierungfunktion
 local function CreateDropDownButton(frame, buttonName, menuName, data)
 	local DropDownMenuButton = CreateFrame("Button", buttonName, frame,"UIDropDownMenuTemplate")
 	local DropDownMenu = CreateFrame('Frame', menuName, DropDownMenuButton)
@@ -133,7 +125,7 @@ local function CreateDropDownButton(frame, buttonName, menuName, data)
 	
 	--DropDownMenuButton:SetPoint("LEFT", 20, 0) -- 20 = x
 	DropDownMenuButton:SetHeight(BUTTON_HEIGHT)
-    	DropDownMenuButton:RegisterForClicks("LeftButtonDown", "RightButtonDown") -- only right and left click
+    	DropDownMenuButton:RegisterForClicks("LeftButtonDown", "RightButtonDown") -- links und rechts Klick
     
     	DropDownMenuButton.label = DropDownMenuButton:CreateFontString("DropDownMenu-label", "ARTWORK", "GameFontNormalSmall")
 	--DropDownMenuButton.label:SetPoint("LEFT", DropDownMenu, "LEFT")
@@ -150,43 +142,41 @@ local function CreateDropDownButton(frame, buttonName, menuName, data)
     return DropDownMenuButton
 end
 
--- InitDDL(): initialization function for the DropDownMenu
+--- Initialisierungfunktion für das DropDownMenu.
+-- Am Anfang wird "Player" für den DropDownMenuButton, als Text gesetzt, sowie für selectedName.
+-- Iteriere durch die Tabelle data und setzte die Daten: text, value und func.
+-- Erst wird durch die Klassen iteriert und dann im SubArray durh die Spieler.
+-- func enthält die Funktion OnClick.
+-- Dann füge alles plus den Level der DropDownListe hinzu.
 --
--- Sets at beginning "Player" for the Text of the Button
--- and for selectedName.
--- loop through the data and set the text, value and a function for the value, text
--- then add the info to the Button at level level.
---
--- self: the frame which init
--- level: at which want to set (only 2 levels)
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame self Die DropDownList 
+-- @tparam int level Das Level auf welches das Item gesetzt werden soll(2 Level möglich)
 function InitDDM(frame, level) 
 frame.selectedName = SAL["Player"];
 UIDropDownMenu_SetText(frame, frame.selectedName);
 
-level = level or 1; -- level 1 data (Classes)
+level = level or 1; -- Level 1 daten (Klassen)
    if (level == 1) then
      for cat, subarray in pairs(frame.data) do
        local info = UIDropDownMenu_CreateInfo();
-       info.hasArrow = true; -- creates submenu
+       info.hasArrow = true; -- hat ein SubArray
        info.notCheckable = true;
        info.text = SAL[cat];
        info.value = {
          ["Category"] = cat;
        };
        UIDropDownMenu_AddButton(info, level);
-     end -- for category, subarray
+     end
    end
 
-	-- level 2 of the DropDownMenu, names of the player
+	-- Level 2 vom DropDownMenu, wo die Spieler hinzugefügt werden
    if (level == 2) then
-     -- getting values of first menu
+     -- Hole das Value vom ersten Level
      local category = UIDROPDOWNMENU_MENU_VALUE["Category"];
      sub = frame.data[category];
      for key, subsub in pairs(sub) do
        local info = UIDropDownMenu_CreateInfo();
-       info.hasArrow = false; -- no submenues this time
+       info.hasArrow = false; -- das SubMenu hat kein SubArray
        info.notCheckable = true;
        info.text = subsub["name"];
        info.func = OnClick
@@ -195,18 +185,16 @@ level = level or 1; -- level 1 data (Classes)
          ["Sublevel_Key"] = key;
        };
        UIDropDownMenu_AddButton(info, level);
-     end -- for key,subsub
+     end
    end
 end
 
--- SA_DropDownMenu:LoadDropDownMenu(): Loader for the DropDownMenu
+--- Loader für die DropDownListe
 --
--- assertion: if the data is no table
+-- Assertion: Wenn data keine Tabelle ist
 --
--- frame: Parent frame
--- data: which want to set in the DropDownMenu
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame parent Ist das Elternframe.
+-- @tparam table data Die Tabelle welche in der DropDownMenu gesetzt werden soll
 function SA_DropDownMenu:LoadDropDownMenu(frame, buttonName, menuName, data)
 	assert(type(data) == "table", SAL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownMenu.data for infos."])
 	return CreateDropDownButton(frame, buttonName, menuName, data)
