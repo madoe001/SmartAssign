@@ -2,109 +2,109 @@
 ["Classic"] = { 
 		[MoltenCore_string] = { 
 			[MC_Lucifron] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[MC_Magmadar] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[MC_Gehennas] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[MC_Garr] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[MC_Shazzrah] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[MC_BaronGeddon] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[MC_SulfuronHarbinger] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[MC_GolemaggtheIncinerator] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[MC_MajordomoExecutus] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[MC_Ragnaros] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[BlackwingLair_string] = { 
 			[BL_RazorgoretheUntamed] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BL_VaelastrasztheCorrupt] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BL_BroodlordLashlayer] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BL_Firemaw] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BL_Ebonroc] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BL_Flamegor] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BL_Chromaggus] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BL_Nefarian] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[RuinsofAhnQiraj_string] = { 
 			[RoA_Kurinnaxx] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[RoA_GeneralRajaxx] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[RoA_Moam] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[RoA_BurutheGorger] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[RoA_AyamisstheHunter] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[RoA_OssiriantheUnscarred] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[TempleofAhnQiraj_string] = { 
 			[ToA_TheProphetSkeram] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToA_SilithidRoyalty] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToA_BattleguardSartura] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToA_FankrisstheUnyielding] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToA_Viscidus] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToA_PrincessHuhuran] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToA_TheTwinEmperors] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToA_Ouro] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToA_Cthun] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		},
@@ -393,7 +393,7 @@
 			},
 		[OnyxiasLair_string] = { 
 			[OL_Onyxia] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[IcecrownCitadel_string] = { 
@@ -443,582 +443,582 @@
 ["Cataclysm"] = { 
 		[BaradinHold_string] = { 
 			[BH_Argaloth] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BH_Occuthar] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BH_AlizabalMistressofHate] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[BlackwingDescent_string] = { 
 			[BD_OmnotronDefenseSystem] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BD_Magmaw] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BD_Atramedes] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BD_Chimaeron] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BD_Maloriak] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BD_NefariansEnd] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[TheBastionofTwilight_string] = { 
 			[TBoT_HalfusWyrmbreaker] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[TBoT_TheralionandValiona] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[TBoT_AscendantCouncil] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[TBoT_Chogall] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[ThroneoftheFourWinds_string] = { 
 			[TotFW_TheConclaveofWind] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[TotFW_AlAkir] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[Firelands_string] = { 
 			[F_Bethtilac] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[F_LordRhyolith] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[F_Alysrazor] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[F_Shannox] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[F_BaleroctheGatekeeper] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[F_MajordomoStaghelm] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[F_Ragnaros] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[DragonSoul_string] = { 
 			[DS_Morchok] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[DS_WarlordZonozz] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[DS_YorsahjtheUnsleeping] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[DS_HagaratheStormbinder] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[DS_Ultraxion] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[DS_WarmasterBlackhorn] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[DS_SpineofDeathwing] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[DS_MadnessofDeathwing] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		},
 ["Mists of Pandaria"] = { 
 		[Pandaria_string] = { 
 			[P_ShaofAnger] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[P_SalyissWarband] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[P_NalakTheStormLord] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[P_Oondasta] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[P_ChiJiTheRedCrane] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[P_YulonTheJadeSerpent] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[P_NiuzaoTheBlackOx] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[P_XuenTheWhiteTiger] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[P_OrdosFireGodoftheYaungol] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[MogushanVaults_string] = { 
 			[MV_TheStoneGuard] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[MV_FengtheAccursed] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[MV_GarajaltheSpiritbinder] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[MV_TheSpiritKings] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[MV_Elegon] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[MV_WilloftheEmperor] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[HeartofFear_string] = { 
 			[HoF_ImperialVizierZorlok] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[HoF_BladeLordTayak] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[HoF_Garalon] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[HoF_WindLordMeljarak] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[HoF_AmberShaperUnsok] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[HoF_GrandEmpressShekzeer] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[TerraceofEndlessSpring_string] = { 
 			[ToES_ProtectorsoftheEndless] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToES_Tsulong] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToES_LeiShi] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToES_ShaofFear] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[ThroneofThunder_string] = { 
 			[ToT_JinrokhtheBreaker] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToT_Horridon] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToT_CouncilofElders] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToT_Tortos] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToT_Megaera] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToT_JiKun] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToT_DurumutheForgotten] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToT_Primordius] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToT_DarkAnimus] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToT_IronQon] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToT_TwinConsorts] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToT_LeiShen] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[SiegeofOrgrimmar_string] = { 
 			[SoO_Immerseus] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[SoO_TheFallenProtectors] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[SoO_Norushen] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[SoO_ShaofPride] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[SoO_Galakras] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[SoO_IronJuggernaut] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[SoO_KorkronDarkShaman] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[SoO_GeneralNazgrim] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[SoO_Malkorok] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[SoO_SpoilsofPandaria] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[SoO_ThoktheBloodthirsty] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[SoO_SiegecrafterBlackfuse] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[SoO_ParagonsoftheKlaxxi] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[SoO_GarroshHellscream] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		},
 ["Warlords of Draenor"] = { 
 		[Draenor_string] = { 
 			[D_DrovtheRuiner] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[D_TarlnatheAgeless] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[D_Rukhmar] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[D_SupremeLordKazzak] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[Highmaul_string] = { 
 			[H_KargathBladefist] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[H_TheButcher] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[H_Tectus] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[H_Brackenspore] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[H_TwinOgron] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[H_Koragh] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[H_ImperatorMargok] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[BlackrockFoundry_string] = { 
 			[BF_Oregorger] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BF_HansgarandFranzok] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BF_BeastlordDarmac] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BF_Gruul] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BF_FlamebenderKagraz] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BF_OperatorThogar] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BF_TheBlastFurnace] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BF_Kromog] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BF_TheIronMaidens] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BF_Blackhand] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[HellfireCitadel_string] = { 
 			[HC_HellfireAssault] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[HC_IronReaver] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[HC_Kormrok] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[HC_HellfireHighCouncil] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[HC_KilroggDeadeye] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[HC_Gorefiend] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[HC_ShadowLordIskar] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[HC_SocrethartheEternal] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[HC_FelLordZakuun] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[HC_Xhulhorac] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[HC_TyrantVelhari] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[HC_Mannoroth] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[HC_Archimonde] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		},
 ["Legion"] = { 
 		[BrokenIsles_string] = { 
 			[BI_AnaMouz] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BI_Apocron] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BI_Brutallus] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BI_Calamir] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BI_DrugontheFrostblood] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BI_Flotsam] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BI_Humongris] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BI_Levantus] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BI_Malificus] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BI_NazaktheFiend] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BI_Nithogg] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BI_Sharthos] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BI_Sivash] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BI_TheSoultakers] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[BI_WitheredJim] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[TheEmeraldNightmare_string] = { 
 			[TEN_Nythendra] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[TEN_IlgynothHeartofCorruption] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[TEN_EleretheRenferal] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[TEN_Ursoc] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[TEN_DragonsofNightmare] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[TEN_Cenarius] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[TEN_Xavius] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[TrialofValor_string] = { 
 			[ToV_Odyn] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToV_Guarm] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToV_Helya] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[TheNighthold_string] = { 
 			[TN_Skorpyron] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[TN_ChronomaticAnomaly] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[TN_Trilliax] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[TN_SpellbladeAluriel] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[TN_Tichondrius] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[TN_Krosus] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[TN_HighBotanistTelarn] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[TN_StarAugurEtraeus] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[TN_GrandMagistrixElisande] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[TN_Guldan] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[TombofSargeras_string] = { 
 			[ToS_Goroth] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToS_DemonicInquisition] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToS_Harjatan] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToS_SistersoftheMoon] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToS_MistressSasszine] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToS_TheDesolateHost] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToS_MaidenofVigilance] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToS_FallenAvatar] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[ToS_Kiljaeden] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[AntorustheBurningThrone_string] = { 
 			[AtBT_GarothiWorldbreaker] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[AtBT_FelhoundsofSargeras] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[AtBT_AntoranHighCommand] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[AtBT_PortalKeeperHasabel] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[AtBT_EonartheLifeBinder] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[AtBT_ImonartheSoulhunter] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[AtBT_Kingaroth] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[AtBT_Varimathras] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[AtBT_TheCovenofShivarra] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[AtBT_Aggramar] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[AtBT_ArgustheUnmaker] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		[InvasionPoints_string] = { 
 			[IP_MatronFolnuna] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[IP_MistressAlluradel] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[IP_InquisitorMeto] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[IP_Occularus] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[IP_Sotanathor] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			[IP_PitLordVilemus] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 0,
 			},
 			},
 		},
