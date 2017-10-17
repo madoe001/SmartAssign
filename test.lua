@@ -843,8 +843,9 @@ end
 --Funktion zum erstellen der Lokalisierungsvariablen
 function printRaidsAndBosses()
    local t = 1
-   SA_local = {}
-   for t = 1, EJ_GetNumTiers(), 1 do
+   SA_local = ""
+  local ctr = 1
+	 for t = 1, EJ_GetNumTiers(), 1 do
       
       EJ_SelectTier(t)
       tiername,_ = EJ_GetTierInfo(t)
@@ -872,8 +873,10 @@ function printRaidsAndBosses()
             name,_ = string.gsub(zwischen, "'","")
             zwischen = string.gsub(name, "-","")
             name = string.gsub(zwischen, ",","")
-            table.insert(SA_local, (newName.."_"..name))
+            
+	    SA_local = SA_local .. "\n" .. SA_bossnameList[ctr] .. "=" .. "\"" .. bossname .. "\""
             j = j+1
+	ctr = ctr + 1
          end
       end
    end
@@ -883,7 +886,7 @@ end
 function createLocalizationNameList()
   local t = 1
    SA_local = {}
-   for t = 1, EJ_GetNumTiers(), 1 do
+  for t = 1, EJ_GetNumTiers(), 1 do
       
       EJ_SelectTier(t)
       tiername,_ = EJ_GetTierInfo(t)
@@ -919,5 +922,4 @@ function createLocalizationNameList()
 end
 
 
-end
 

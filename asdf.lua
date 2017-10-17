@@ -1,4 +1,4 @@
-SA_local = {
+SA_bossnameList = {
 	"MC_Lucifron", -- [1]
 	"MC_Magmadar", -- [2]
 	"MC_Gehennas", -- [3]

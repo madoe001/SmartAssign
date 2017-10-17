@@ -1,11 +1,11 @@
-ï»¿--[[
+--[[
 File Name: Init.lua
 Author: Grabelus, Bartlomiej (10044563)	&	Veith, Marvin Justin (10043555)
 Description: Diese Datei dient zur Initialisierung der im Projekt verwendeten Variablen. Bei erstmaligen Start
 			 werden die Saved Variables auf einen Defaultwert gesetzt. 
 			 Die Saved Variables werden in "...\World of Warcraft\WTF\<AccountName>\SAVED_VARIABLES\SmartAssign"
-			 gespeichert. Blizzard bietet die MÃ¶glichkeit komplette Tabellen inklusive Untertabellen zu speichern.
-			 Allerdings kÃ¶nnen keine Funktionen gespeichert werden. Der Speichervorgang erfolgt beim Ausloggen, 
+			 gespeichert. Blizzard bietet die Möglichkeit komplette Tabellen inklusive Untertabellen zu speichern.
+			 Allerdings können keine Funktionen gespeichert werden. Der Speichervorgang erfolgt beim Ausloggen, 
 			 Aufruf des "/reload" Befehls oder einem Verlust der Internetverbindung. Bei einem Absturz der 
 			 WorldOfWarcraft.exe gehen die nicht gespeicherten Daten der Saved Variables verloren.
 ]]
@@ -19,7 +19,9 @@ if (not SA_WEAKAURA) then
 	SA_WEAKAURA.duration = 0
 	SA_WEAKAURA.offset = 5
 end
+--variablen zur lokalisierung
 SA_local = SA_local or ""
+SA_local2 = SA_local or ""
 SA_AbilityList = SA_AbilityList or {}
 SA_PhaseList = SA_PhaseList or {}
 if ( not SA_LastSelected ) then
