@@ -1,26 +1,26 @@
 
---- Beschreibung: Diese Klasse ist nötig, um SlashKommandos für SmartAssign zu initialisieren.
+--- Beschreibung: Diese Klasse ist nötig, um Slash Kommandos für SmartAssign zu initialisieren.
 --				  Sie wird über _G global gemacht und besitzt 3 Container.
 --				  Einen Container für die Kommandos, einen für Hilfe informationen und einen für Reset Funktionen
 --
 -- @module SlashCommands
 -- @author Bartlomiej Grabelus (10044563)
 
---- hole die globale Tabelle
+-- hole die globale Tabelle
 local _G = _G
 
 local SlashCommands = _G.SmartAssign.SlashCommands
 
---- Lokalisierung
+-- Lokalisierung
 local SAL = _G.GUI.Locales
 
---- Assertion
+-- Assertion
 local assert, type = assert, type
 
---- String Funktionen
+-- String Funktionen
 local str_lower, str_format, str_split = string.lower, string.format, string.split
 
---- Tabellen Funktionen
+-- Tabellen Funktionen
 local tbl_remove, unpack, pairs = table.remove, unpack, pairs
 
 --- Container für die Kommandos
