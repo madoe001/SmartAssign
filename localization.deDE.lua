@@ -1,5 +1,8 @@
 if GetLocale() ~= "deDE" then return end
 
+
+-- Deutsch Lokalisierung 
+
 --GUI Lokalisierung
 Player_String = "Spieler"
 Ability_String = "Fähigkeit"
