@@ -843,7 +843,7 @@ end
 --Funktion zum erstellen der Lokalisierungsvariablen
 function printRaidsAndBosses()
    local t = 1
-   SA_local = ""
+   SA_local = {}
    for t = 1, EJ_GetNumTiers(), 1 do
       
       EJ_SelectTier(t)
@@ -872,9 +872,52 @@ function printRaidsAndBosses()
             name,_ = string.gsub(zwischen, "'","")
             zwischen = string.gsub(name, "-","")
             name = string.gsub(zwischen, ",","")
-            SA_local = (SA_local .. "\n" .. newName.."_"..name.." = \"" .. bossname .. "\"")
+            table.insert(SA_local, (newName.."_"..name))
             j = j+1
          end
       end
    end
 end
+
+
+function createLocalizationNameList()
+  local t = 1
+   SA_local = {}
+   for t = 1, EJ_GetNumTiers(), 1 do
+      
+      EJ_SelectTier(t)
+      tiername,_ = EJ_GetTierInfo(t)
+      --print(tiername)
+      
+      local i = 1
+      while EJ_GetInstanceByIndex(i, true) do
+         SA_instanceId, SA_name = EJ_GetInstanceByIndex(i, true)
+         EJ_SelectInstance(SA_instanceId)
+         
+         local newName = ""
+         
+         for i in string.gmatch(SA_name, "%S+") do
+            newName = newName .. string.sub(i, 1, 1)
+         end
+         print(newName)
+         i = i+1
+         
+         local j = 1
+         while EJ_GetEncounterInfoByIndex(j, instanceId) do
+            local name, _, encounterId = EJ_GetEncounterInfoByIndex(j, instanceId)
+            local bossname = name
+            
+            local zwischen, _ = string.gsub(name, " ", "" )
+            name,_ = string.gsub(zwischen, "'","")
+            zwischen = string.gsub(name, "-","")
+            name = string.gsub(zwischen, ",","")
+            table.insert(SA_local, (newName.."_"..name))
+            j = j+1
+         end
+      end
+   end
+end
+
+
+end
+
