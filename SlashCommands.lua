@@ -1,9 +1,7 @@
-
---- Beschreibung: Diese Klasse ist nötig, um Slash Kommandos für SmartAssign zu initialisieren.
+﻿--- Beschreibung: Diese Klasse ist nötig, um Slash Kommandos für SmartAssign zu initialisieren.
 --				  Sie wird über _G global gemacht und besitzt 3 Container.
 --				  Einen Container für die Kommandos, einen für Hilfe informationen und einen für Reset Funktionen
 --
--- @module SlashCommands
 -- @author Bartlomiej Grabelus (10044563)
 
 -- hole die globale Tabelle
@@ -48,8 +46,7 @@ local HelpList = {
 -- @table resetFunctions
 local resetFunctions = {} 
 
---- @function SlashCommands:Init
--- Zur initialisierung der Slash Kommandos "/smartassign" und "/smart"
+--- Zur initialisierung der Slash Kommandos "/smartassign" und "/smart"
 function SlashCommands:Init()
 	SLASH_SMARTASSIGN1 = "/smartassign"
 	SLASH_SMARTASSIGN2 = "/smart"
@@ -63,12 +60,11 @@ function SlashCommands:Init()
 	end
 end
 
---- @function SlashCommands:Run 
--- Zum ausführen eines Slash Kommandos
+--- Zum ausführen eines Slash Kommandos
 -- Wird aufgerufen, wenn der Spieler in WoW einen Slash Kommando im Chat eintippt und ausführt.
 --
--- @tparam string exec ist das Slash Kommando 
--- @tparam string ... alle weiteren informationen --> z.B. /smart slash --> slash ist dann in ... enthalten und smart ist exec
+-- @param exec ist das Slash Kommando 
+-- @param ... alle weiteren informationen --> z.B. /smart slash --> slash ist dann in ... enthalten und smart ist exec
 function SlashCommands:Run(exec, ...)
 	if exec and type(exec) == "string" then -- exec ist nicht nil und ein String
 		if CommandList[exec] and type(CommandList[exec]) == "function" then -- Wenn exec in CommandList existiert und eine Funktion ist (Ist eine Funktion)
@@ -81,8 +77,7 @@ function SlashCommands:Run(exec, ...)
 	end
 end
 
---- @function SlashCommands:PrintSlash
--- Gibt dem Spieler im Chat alle möglichen Slash Kommandos aus.
+--- Gibt dem Spieler im Chat alle möglichen Slash Kommandos aus.
 -- @usage Der Spieler gibt im Chat "/smart slash" ein.
 function SlashCommands:PrintSlash()
 	print(SAL["Slash commands:"])
@@ -104,11 +99,10 @@ function SlashCommands:PrintSlash()
 	end	
 end
 
---- @function SlashCommands:Reset
--- Führt die Reset Funktion eines Frames aus.
+--- Führt die Reset Funktion eines Frames aus.
 -- Wenn der Spieler diese über einen Slash Kommando aufruft.
 --
--- @tparam string name Der Name des Frames
+-- @param name Der Name des Frames
 function SlashCommands:Reset(name)
 	for tabName,funcTab in pairs(resetFunctions) do -- Hole den namen und die Funktione aus dem Container und prüfe, ob name im container enthalten ist.
 		if not name or name == "all" or name == tabName then
@@ -119,13 +113,12 @@ function SlashCommands:Reset(name)
 	end
 end
 
---- @function SlashCommands:AddResetFunction
--- Diese Funktion dient dazu eine Reset Funktion eines Frames hinzuzufügen.
+--- Diese Funktion dient dazu eine Reset Funktion eines Frames hinzuzufügen.
 -- Wenn man ein Frame über einen Slash Kommando zurücksetzen möchte.
 --
 -- Assertion: 'Wenn func keine Function ist.'
 --
--- @tparam string func ist die Reset Funktion
+-- @param func ist die Reset Funktion
 -- @param ... Name des Frames
 function SlashCommands:AddResetFunction(func, ...)
 	assert(type(func) == "function", SAL["'func' must be a function."])
@@ -137,16 +130,15 @@ function SlashCommands:AddResetFunction(func, ...)
 	end
 end
 
---- @function SlashCommands:Add
--- Füge einen neuen Slash Kommando hinzu.
+--- Füge einen neuen Slash Kommando hinzu.
 --
 -- Assertion: 'Wenn exec kein String ist'
 -- Assertion: 'Wenn func keine Funktion ist'
 -- Assertion: 'Wenn helfText kein string ist'
 --
--- @tparam string exec Der Name unter welchen ausgeführt werden soll
--- @tparam function func Die Funktion
--- @tparam string helpText Hilfe Text für den helpText Container
+-- @param exec Der Name unter welchen ausgeführt werden soll
+-- @param func Die Funktion
+-- @param helpText Hilfe Text für den helpText Container
 function SlashCommands:Add(exec, func, helpText)
 	assert(type(exec) == "string", SAL["'exec' must be a string."])
 	assert(type(func) == "function", SAL["'func' must be a function."])
