@@ -327,51 +327,51 @@
 			},
 		[TheEyeofEternity_string] = { 
 			[TEoE_Malygos] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 1094,
 			},
 			},
 		[Ulduar_string] = { 
 			[U_FlameLeviathan] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 1132,
 			},
 			[U_IgnistheFurnaceMaster] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 1136,
 			},
 			[U_Razorscale] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 1139,
 			},
 			[U_XT002Deconstructor] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 1142,
 			},
 			[U_TheAssemblyofIron] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 1140,
 			},
 			[U_Kologarn] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 1137,
 			},
 			[U_Auriaya] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 1131,
 			},
 			[U_Hodir] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 1135,
 			},
 			[U_Thorim] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 1141,
 			},
 			[U_Freya] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 1133,
 			},
 			[U_Mimiron] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 1138,
 			},
 			[U_GeneralVezax] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 1134,
 			},
 			[U_YoggSaron] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 1143,
 			},
 			[U_AlgalontheObserver] = { 
- 				 ["encounterID"] = ,
+ 				 ["encounterID"] = 1130,
 			},
 			},
 		[TrialoftheCrusader_string] = { 
