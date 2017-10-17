@@ -1,41 +1,38 @@
--- Author: Bartlomiej Grabelus (10044563)
--- Description: This Class creates a CheckBox with a label, which have his position on the left side of the checkbox.
---				It is made global
+-- Beschreibung: Diese Klasse stellt eine CheckBox dar.
+--				 Welche einen Text besitzt, welcher rechts von der CheckBox positioniert ist.
+--
+-- @modul CheckBox
+-- @author Bartlomiej Grabelus (10044563)
 
--- global var
+-- Hole globale Tabelle _G
 local _G = _G
 
--- Localization
+-- Lokalisierung
 local GUIL = _G.GUI.Locales
 
--- Get Global table for CheckBox
 local SA_CheckBox = _G.GUI.SA_CheckBox
 
--- for failurehandling
+-- Für Fehlerbehandlung
 local assert, type = assert, type
 
--- SA_CheckBox:SetPoint(): To set the Point of the CheckBox outside the Class
+--- Dient um die Position ausserhalb der Klasse zu verändern.
 --
--- framePosition: Region of the Frame
--- relativeToFrame: relative to which Frame want to position
--- relativePos: relative to the Region of the Frame, to which want to position
--- x: x movement of the Frame
--- y: y movement of the Frame
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam string framePosition Region des Frames
+-- @tparam string relativeToFrame Relativ zu welchen Frame positioniert werden soll
+-- @tparam string relativePos Relativ zur Region des Frames, zu welchen positioniert werden soll
+-- @tparam int x Bewegung des Buttons in x-Richtung
+-- @tparam int y Bewegung des Buttons in y-Richtung
 function SA_CheckBox:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
 
--- CreateCheckBox(): Creates a CheckBox
+--- Dient zum erstellen der CheckBox
+-- Erst wird das Frame erstellt, dann wird die Position des Frames gelöscht.
+-- Dann wird der Text erstellt.
 --
--- First creation of the frame, than clearing all points of the frame.
--- Than create a label with the text.
---
--- frame: Parent frame
--- checkboxText: Text which want to set on the right side
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame parent Ist das Elternframe.
+-- @tparam string checkboxText Text welcher rechts gesetzt werden soll.
+-- @return Die CheckBox
 local function CreateCheckBox(frame, checkboxText, name)
 	local CheckBoxFrame = CreateFrame("CheckButton", name, frame, "UICheckButtonTemplate")
 
@@ -50,14 +47,12 @@ local function CreateCheckBox(frame, checkboxText, name)
 	return CheckBoxFrame
 end
 
--- SA_CheckBox:LoadCheckBox(): load the CheckBox
+--- Führt CreateCheckBox aus.
 --
--- assertion: when the text isn´t a string
+-- Assertion: Wenn checkboxText kein String ist
 --
--- frame: Parent frame
--- checkboxText: the text which want to set
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame parent Ist das Elternframe.
+-- @tparam string checkboxText Text welcher rechts von der CheckBox dargestellt werden soll
 function SA_CheckBox:LoadCheckBox(frame, checkboxText, name)
 	assert(type(checkboxText) == "string", GUIL["'checkboxText' must be a string."])
 	return CreateCheckBox(frame, checkboxText, name)
@@ -67,9 +62,8 @@ function SA_CheckBox:SetChecked(value)
 	self:SetChecked(value)
 end
 
--- SA_CheckBox:GetChecked(): returns boolean, if the checkbox is checked
---
--- author: Bartlomiej Grabelus (10044563)
+--- Gibt zurück, ob die CheckBox angekreuzt ist.
+-- @treturn boolean Ob die CheckBox angekreuzt ist
 function SA_CheckBox:GetChecked()
 	return self:GetChecked()
 end

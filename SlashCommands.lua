@@ -12,7 +12,7 @@ local SlashCommands = _G.SmartAssign.SlashCommands
 -- Lokalisierung
 local SAL = _G.GUI.Locales
 
--- Assertion
+-- Für Fehlerbehandlung
 local assert, type = assert, type
 
 -- String Funktionen
