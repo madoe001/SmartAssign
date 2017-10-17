@@ -1,5 +1,5 @@
 
---- Beschreibung: Diese Klasse ist nötig, um SlashKommandos für SmartAssign zu initialisieren.
+--- Beschreibung: Diese Klasse ist nötig, um Slash Kommandos für SmartAssign zu initialisieren.
 --				  Sie wird über _G global gemacht und besitzt 3 Container.
 --				  Einen Container für die Kommandos, einen für Hilfe informationen und einen für Reset Funktionen
 --
