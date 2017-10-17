@@ -58,8 +58,7 @@ local MiniMapLDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("SmartA
 	end,
 })
 
---- @function MiniMapButton:Init
---  Wird zum initialisieren des MiniMapButtons benutzt.
+---  Wird zum initialisieren des MiniMapButtons benutzt.
 --  Es wird ein Slash Kommando für das Togglen des MiniMapButtons hinzugefügt, sowie eine Resetfunktion hinzugefügt.
 function MiniMapButton:Init()
 	SlashCommands:Add("mmb", MiniMapButton.Toggle, SAL["/smart mmb - Toggle MiniMapButton."])
@@ -68,15 +67,13 @@ function MiniMapButton:Init()
 	SAButton:Register("SmartAssign", MiniMapLDB, minimap); -- Registriere die Daten für den Button(Binding)
 end
 
---- @function MiniMapButton.ResetFrames
--- Setze die position des Icons zurück and führe eine Aktualisierung aus.
+--- Setze die position des Icons zurück and führe eine Aktualisierung aus.
 function MiniMapButton.ResetFrames()
 	minimap.minimapPos = 210;
 	SAButton:Refresh("SmartAssign");
 end
 
---- @function MiniMapButton.Toggle
--- Fürs Togglen des MiniMapButtons.
+--- Fürs Togglen des MiniMapButtons.
 -- Es werden die Variablen shown und hide negiert und dann wird gecheckt, ob der MiniMapButton angezeigt wird.
 -- Dementsprechend zeige oder verstecke den MiniMapButton.
 function MiniMapButton.Toggle()
@@ -89,8 +86,7 @@ function MiniMapButton.Toggle()
 	end
 end
 
---- @function MiniMapButton.Lock_Toggle
--- Wird benutzt um das Togglen des MiniMapButtons zu sperren, wenn gewünscht.
+--- Wird benutzt um das Togglen des MiniMapButtons zu sperren, wenn gewünscht.
 function MiniMapButton.Lock_Toggle()
 	if minimap.locked then
 		SAButton:Lock("SmartAssign");
