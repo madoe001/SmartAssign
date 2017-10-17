@@ -1,10 +1,12 @@
--- Author: Bartlomiej Grabelus (10044563)
+--- Beschreibung: This Class is needed to create a MiniMapButton near the MiniMap.
+--                It is made global and has a SAButton of type LibDBIcon, which is the Icon for the MiniMapButton.
+--                With LibDataBroker we create the data for the MiniMapButton.
+--				  The MiniMapButton isn´t really a Button is only a icon
+--				  We use the MiniMapButton for open the SmartAssign GUI, when the Player click on the icon
+--
+-- @module MiniMapButton
+-- @author Bartlomiej Grabelus (10044563)
 
--- Description: This Class is needed to create a MiniMapButton near the MiniMap.
---              It is made global and has a SAButton of type LibDBIcon, which is the Icon for the MiniMapButton.
---              With LibDataBroker we create the data for the MiniMapButton.
---				The MiniMapButton isn´t really a Button is only a icon
---				We use the MiniMapButton for open the SmartAssign GUI, when the Player click on the icon
 
 -- global vars
 local _G = _G

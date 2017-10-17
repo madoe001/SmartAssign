@@ -50,8 +50,6 @@ local resetFunctions = {}
 
 --- @function SlashCommands:Init
 -- Zur initialisierung der Slash Kommandos "/smartassign" und "/smart"
---
--- @author Bartlomiej Grabelus (10044563)
 function SlashCommands:Init()
 	SLASH_SMARTASSIGN1 = "/smartassign"
 	SLASH_SMARTASSIGN2 = "/smart"
@@ -71,7 +69,6 @@ end
 --
 -- @tparam string exec ist das Slash Kommando 
 -- @tparam string ... alle weiteren informationen --> z.B. /smart slash --> slash ist dann in ... enthalten und smart ist exec
--- @author Bartlomiej Grabelus (10044563)
 function SlashCommands:Run(exec, ...)
 	if exec and type(exec) == "string" then -- exec ist nicht nil und ein String
 		if CommandList[exec] and type(CommandList[exec]) == "function" then -- Wenn exec in CommandList existiert und eine Funktion ist (Ist eine Funktion)
@@ -87,8 +84,6 @@ end
 --- @function SlashCommands:PrintSlash
 -- Gibt dem Spieler im Chat alle möglichen Slash Kommandos aus.
 -- @usage Der Spieler gibt im Chat "/smart slash" ein.
---
--- @author Bartlomiej Grabelus (10044563)
 function SlashCommands:PrintSlash()
 	print(SAL["Slash commands:"])
 	for k in pairs(CommandList) do -- Iteriere durch die Kommando Liste
@@ -114,8 +109,6 @@ end
 -- Wenn der Spieler diese über einen Slash Kommando aufruft.
 --
 -- @tparam string name Der Name des Frames
---
--- @author Bartlomiej Grabelus (10044563)
 function SlashCommands:Reset(name)
 	for tabName,funcTab in pairs(resetFunctions) do -- Hole den namen und die Funktione aus dem Container und prüfe, ob name im container enthalten ist.
 		if not name or name == "all" or name == tabName then
@@ -134,8 +127,6 @@ end
 --
 -- @tparam string func ist die Reset Funktion
 -- @param ... Name des Frames
---
--- author: Bartlomiej Grabelus (10044563)
 function SlashCommands:AddResetFunction(func, ...)
 	assert(type(func) == "function", SAL["'func' must be a function."])
 	local name
@@ -156,8 +147,6 @@ end
 -- @tparam string exec Der Name unter welchen ausgeführt werden soll
 -- @tparam function func Die Funktion
 -- @tparam string helpText Hilfe Text für den helpText Container
---
--- author: Bartlomiej Grabelus (10044563)
 function SlashCommands:Add(exec, func, helpText)
 	assert(type(exec) == "string", SAL["'exec' must be a string."])
 	assert(type(func) == "function", SAL["'func' must be a function."])
