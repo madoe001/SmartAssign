@@ -1,5 +1,7 @@
 if GetLocale() ~= "enUS" then return end
 
+-- Englische Lokalisierung
+
 --GUI Lokalisierung
 Player_String = "Player"
 Ability_String = "Ability"
