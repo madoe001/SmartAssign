@@ -139,7 +139,7 @@ end
 function SlashCommands:AddResetFunction(func, ...)
 	assert(type(func) == "function", SAL["'func' must be a function."])
 	local name
-	for i=1,select("#",...) do -- get all from ...
+	for i=1,select("#",...) do -- Durchlaufe alle in ...
 		name = select(i,...)
 		if not resetFunctions[name] then resetFunctions[name] = {} end -- Wenn keins existiert dann erstelle eins
 		resetFunctions[name][func] = true
