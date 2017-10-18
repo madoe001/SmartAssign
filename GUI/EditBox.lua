@@ -167,7 +167,7 @@ function SA_EditBox:SetMaxLetters(self, max)
 	self:SetMaxLetters(max)
 end
 
---- Loader für die EditBox
+--- Loader für die EditBox.
 --
 -- Assertion: Wenn der inputType nicht gleich string oder number ist
 --
