@@ -1,5 +1,6 @@
 --- @author Bartlomiej Grabelus, Maik Doemmecke
 -- Klasse, welche zum Initialisieren und erstellen der grafischen Oberflaeche des Addon´s dient.
+-- @modul SmartAssignGUI
 
 -- Global Varieblen --
 local _G = _G
