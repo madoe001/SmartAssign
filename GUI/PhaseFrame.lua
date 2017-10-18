@@ -1,5 +1,4 @@
 --- Beschreibung: Diese Klasse stellt ein PhaseFrame dar, in welchen der Spieler eine Phase für einen Boss anlegen oder löschen kann.
---				of a instance.
 --
 -- @modul PhaseFrame
 -- @author Bartlomiej Grabelus (10044563)
@@ -172,24 +171,24 @@ end
 function SetScripts()
 	applyPhaseButton:SetScript("OnClick", function (self, button)
 		if button == "LeftButton" then
-			if ValidForCreateAbility() then -- check if all is valid
-				if IsOneDifficultyChecked() then -- check if a dificulty is checked
+			if ValidForCreateAbility() then -- Prüfe ob alles Vollständig ist
+				if IsOneDifficultyChecked() then -- Prüfe ob mindestens ein Schwierigkeitsgrad gewählt
 					StaticPopup_Show("REALLY_APPLY", phaseFrame.phaseNameEB:GetText())
 				else
 					StaticPopup_Show("INFO", GUIL["You should tick a difficulty!"])
 				end
 			else
-				if phaseFrame.phaseNameEB:GetText() == "" then -- if empty
+				if phaseFrame.phaseNameEB:GetText() == "" then -- Wenn leer
 					phaseFrame.phaseNameEB.label:SetTextColor(1, 0, 0, 1)
 				end
-				if phaseFrame.triggerTypeEB:GetText() == "" then -- if empty
+				if phaseFrame.triggerTypeEB:GetText() == "" then -- Wenn leer
 					phaseFrame.triggerTypeEB.label:SetTextColor(1, 0, 0, 1)
 				end
-				-- if empty
+				-- Wenn leer
 				if phaseFrame.triggerEB:GetText() == "" then 
 					phaseFrame.triggerEB.label:SetTextColor(1, 0, 0, 1)
 				end
-				-- check if have not checked first pahse and no selected phase
+				-- Prüfe ob es die erste Phase ist und die Eingabe entsprechend richtig ist
 				if UIDropDownMenu_GetSelectedID(prevPhaseFrameDropDown) and phaseFrame.firstPhaseCB:GetChecked() == true then
 					StaticPopup_Show("INFO", GUIL["Is it the first Phase?"])
 				end
@@ -205,9 +204,9 @@ function SetScripts()
 	end)
 end
 
---- Erstellt ein Button
+--- Erstellt ein Button.
 --
--- @tparam Frame parent Ist das Elternframe.
+-- @tparam Frame frame Ist das Elternframe
 -- @tparam string name Name des Buttons
 -- @tparam string text Text welcher im Button dargestellt wird
 -- @tparam int width Buttonbreite
@@ -233,8 +232,8 @@ function CreateButton(frame, name, text, width, height, position, x, y, template
 end
 
 --- Funktion um eine Linie mithilfe von einer Textur zu erstellen.
--- Wenn die Linie Horizontal dargestellt werden soll: height = 1 oder 2
--- Wenn die Linie Vertikal dargestellt werden soll: width = 1 oder 2
+-- Wenn die Linie Horizontal dargestellt werden soll: height = 1 oder 2.
+-- Wenn die Linie Vertikal dargestellt werden soll: width = 1 oder 2.
 --
 -- @tparam Frame parent Ist das Elternframe.
 -- @tparam string name Der Name der Texture
@@ -252,7 +251,7 @@ function CreateLine(parent, name,width, height, region, frame, x, y)
 	line:SetPoint(region, frame, x, y)
 end
 
---- Erstellt einen Text(FontString)
+--- Erstellt einen Text(FontString).
 --
 -- @tparam Frame frame Ist das Elternframe.
 -- @tparam string name Name des FontStrings
