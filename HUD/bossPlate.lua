@@ -1,30 +1,32 @@
--- Author: Bartlomiej Grabelus (10044563)
--- Description: This Class is needed to create a boss nameplate, which contains the healthpoints, manapoints
---				and the debufficons of the boss.
---				This Class doesn´t have a implemented part for Rage or Energy
---              It is made global
+--- Beschreibung: Diese Klasse stellt eine Namensplatte für einen Boss zur Verfügung.
+--                Welche die Lebenspunkte, sowie die Manapunkte enthält.
+--                Energie- oder Wutpunkte sind noch nicht implementiert.
+--				  Des Weiteren werden unter der Namensplatte die DebuffIcons des Bosses angezeigt.
+--
+-- @modul bossplate
+-- @author Bartlomiej Grabelus (10044563)
 
--- global vars
+-- Hole globale Tabelle _G
 local _G = _G
 
 local bossPlate = _G.HUD.BossPlate
 
+-- Lokalisierung
 local HL = _G.HUD.Locales
  
- -- vars
+-- Variablen
 local name
 local health
 local mana
 
-local SA_BossNamePlate -- parent for statusbars, name and debuffs
-local debuffs = {} -- debuff container
+local SA_BossNamePlate -- HauptFrame für alle Komponenten
+local debuffs = {} -- debuff Container
 
--- bossPlate:CreateBossPlate(): creates the bossplate
---								At the beginning create SA_BossNamePlate and then the components
+--- Mithilfe dieser Funktion wird die Namensplatte erstellt, wo dann alle Komponenten drin positioniert werden.
+-- Dann werden die Komponenten erstellt.
+-- Sowie für Events(OnEvent, OnUpdate) Eventhandlingfunktionen gesetzt.
 --
--- frame: parent frame
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame frame Ist das Elternframe
 function bossPlate:CreateBossPlate(frame, unit)
 	SA_BossNamePlate = CreateFrame("Frame", "BossNameplate", frame)
 	SA_BossNamePlate:SetWidth(160)
@@ -44,18 +46,16 @@ function bossPlate:CreateBossPlate(frame, unit)
 	SA_BossNamePlate.unit = unit
 end
 
--- bossPlate:OnEvent(): Is needed for all events, like PLAYER_TARGET_CHANGED
---						It is a event handler function.
+--- In dieser Funktion wird auf alle Events geprüft und dann dementsprechen reagiert.
 --
--- Events:
--- PLAYER_TARGET_CHANGED: when the player change the target
--- PLAYER_REGEN_DISABLED: when the regenaration of the player is disabled
--- UNIT_HEALTH: when the health of a unit changes
--- UNIT_MANA: when the mana of a unit changes
+-- Geprüfte Events:
+-- PLAYER_TARGET_CHANGED: Wenn der Spieler seinen Fokus wechselt.
+-- PLAYER_REGEN_DISABLED: Wird ausgelöst, wenn die Lebens- und Energieregeneration des Spielers unterbrochen wird.
+-- UNIT_HEALTH: Wenn sich die Lebenspunkte von jemanden ändern.
+-- UNIT_MANA: Wenn sich die Manapunkte von jemanden ändern.
 --
--- event: the event, which was called this function
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Event event Das Event der gefeuert wurde
+-- @param ... Restlichen Daten
 function bossPlate:OnEvent(event, ...)
 	if event ==  "PLAYER_TARGET_CHANGED" then
 		local name =  GetUnitName("target") -- get name of target and of the bosses in instance
@@ -75,60 +75,58 @@ function bossPlate:OnEvent(event, ...)
 		elseif name == boss5 then
 			SetTarget("boss5")
 		end
-		bossPlate:ReorderAllDebuffs() -- reorder all debuffs
+		bossPlate:ReorderAllDebuffs() -- Ordne alle debuffs neu
 		bossPlate:ResetAll() -- reset all debuffs
-		local canAttack = UnitCanAttack(SA_BossNamePlate.unit, "player") -- if the target can attack the player, than true
-		if  UnitExists(SA_BossNamePlate.unit) then -- checks if target exists
-			if not UnitIsDeadOrGhost(SA_BossNamePlate.unit) then -- check if target is not dead or ghost
-				if not UnitIsPlayer(SA_BossNamePlate.unit) then -- check if target is not a player
-					if canAttack then -- only when can attack
-						manaBar:Hide() -- first hide if have mana show
+		local canAttack = UnitCanAttack(SA_BossNamePlate.unit, "player") -- Wenn der Fokusierte den Spieler angreifen kann
+		if  UnitExists(SA_BossNamePlate.unit) then -- Prüfe ob der Fokusierte existiert
+			if not UnitIsDeadOrGhost(SA_BossNamePlate.unit) then -- Prüfe ob der Fokusierte tod oder ein Geist ist
+				if not UnitIsPlayer(SA_BossNamePlate.unit) then -- Prüfe ob der Fokusierte ein Spieler ist
+					if canAttack then -- Nur wenn der Fokusierte den Spieler angreifen kann
+						manaBar:Hide() -- Verberge erst einmal den Manabalken
 						bossPlate:CreateBossName()
 						bossPlate:ShowHealth()
 						bossPlate:ShowMana()
 						healthBar:Show()
-						bossPlate:GetBossDebuffs() -- get debuffs
-						bossPlate:ConfigBossDebuffIcons() -- config debuffs
-						SA_BossNamePlate:Show() -- show all
+						bossPlate:GetBossDebuffs() -- Hole debuffs
+						bossPlate:ConfigBossDebuffIcons() -- Konfiguriere debuffs
+						SA_BossNamePlate:Show() -- Zeige die Namensplatte
 					else
-						SA_BossNamePlate:Hide() -- hide all
+						SA_BossNamePlate:Hide() -- Verberge die Namensplatte
 					end
 				else
-					SA_BossNamePlate:Hide() -- hide all
+					SA_BossNamePlate:Hide() -- Verberge die Namensplatte
 				end
 			end
 		else
-			SA_BossNamePlate:Hide() -- hide all
-			manaBar:Hide() -- hide manabar
+			SA_BossNamePlate:Hide() -- Verberge die Namensplatte
+			manaBar:Hide() -- Verberge den Manabalken
 		end
 	elseif event == "PLAYER_REGEN_DISABLED" then
-		manaBar:Hide() -- first hide if have mana shown, than show mana and health
+		manaBar:Hide() -- Verberge Manabalken erst, wenn er angezeigt wird
 		bossPlate:ShowHealth()
 		bossPlate:ShowMana()
-		bossPlate:GetBossDebuffs() -- get debuffs
-		bossPlate:ConfigBossDebuffIcons() -- config debuffs
-	elseif event == "UNIT_HEALTH" then -- get new mana and health and set new values to the statusbars
+		bossPlate:GetBossDebuffs() -- Hole Debuffs
+		bossPlate:ConfigBossDebuffIcons() -- Konfiguriere debuffs
+	elseif event == "UNIT_HEALTH" then -- Erneuere die Lebens- und Manapunkte
 		health = UnitHealth(SA_BossNamePlate.unit)
 		mana = UnitMana(SA_BossNamePlate.unit)
-		bossPlate:GetBossDebuffs() -- get debuffs
-		bossPlate:ConfigBossDebuffIcons() -- config debuffs
+		bossPlate:GetBossDebuffs() -- Hole Debuffs
+		bossPlate:ConfigBossDebuffIcons() -- Konfiguriere debuffs
 		bossPlate:SetNewValues(health, mana)
-	elseif event == "UNIT_MANA" then -- get new mana and health and set new values to the statusbars
+	elseif event == "UNIT_MANA" then -- Erneuere die Lebens- und Manapunkte
 		mana = UnitMana(SA_BossNamePlate.unit)
 		health = UnitHealth(SA_BossNamePlate.unit)
 		bossPlate:SetNewValues(health, mana)
-		bossPlate:GetBossDebuffs() -- get debuffs
-		bossPlate:ConfigBossDebuffIcons() -- config debuffs
+		bossPlate:GetBossDebuffs() -- Hole Debuffs
+		bossPlate:ConfigBossDebuffIcons() -- Konfiguriere debuffs
 	elseif event == "UNIT_AURA" then
-		bossPlate:ResetExpiredDebuff() -- reset expired ones
-		bossPlate:GetBossDebuffs() -- get debuffs
-		bossPlate:ConfigBossDebuffIcons() -- config debuffs
+		bossPlate:ResetExpiredDebuff() -- Setze abgelaufende Debuffs zurück
+		bossPlate:GetBossDebuffs() -- Hole Debuffs
+		bossPlate:ConfigBossDebuffIcons() -- Konfiguriere debuffs
 	end
 end
 
--- bossPlate:RegisterAllEvents(): function to register all events at one time
---
--- author: Bartlomiej Grabelus (10044563)
+--- Eine Funktion um alle Events in einem Zug zu registrieren.
 function bossPlate:RegisterAllEvents()
 	SA_BossNamePlate:RegisterEvent("PLAYER_TARGET_CHANGED")
 	SA_BossNamePlate:RegisterEvent("PLAYER_REGEN_DISABLED")
@@ -137,9 +135,7 @@ function bossPlate:RegisterAllEvents()
 	SA_BossNamePlate:RegisterEvent("UNIT_AURA")
 end
 
--- bossPlate:UnRegisterAllEvents(): function to unregister all events at one time
---
--- author: Bartlomiej Grabelus (10044563)
+--- Eine Funktion um alle Events in einem Zug zu deregistrieren.
 function bossPlate:UnRegisterAllEvents()
 	SA_BossNamePlate:UnregisterEvent("PLAYER_TARGET_CHANGED")
 	SA_BossNamePlate:UnregisterEvent("PLAYER_REGEN_DISABLED")
@@ -148,12 +144,10 @@ function bossPlate:UnRegisterAllEvents()
 	SA_BossNamePlate:UnregisterEvent("UNIT_AURA")
 end
 
--- bossPlate:CreateNamePlateComp(): function to create the components of the bossnameplate
---									Components are a healthbar, manabar and the name of the boss
+--- Diese Funktion Konfiguriert die Komponenten der Namensplatte.
+-- Komponenten sind Name, ManaBar, HealthBar
 --
--- frame: parent frame
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame frame Ist das Elternframe
 function bossPlate:CreateNamePlateComp(frame)
 	SA_BossNamePlate.name = SA_BossNamePlate:CreateFontString("name-label", "ARTWORK", "GameFontNormalSmall") -- name of boss
 	
@@ -164,9 +158,7 @@ function bossPlate:CreateNamePlateComp(frame)
 	manaBar.label = manaBar:CreateFontString("ManaBar-label", "ARTWORK", "GameFontNormalSmall") -- label how much mana of max mana the boss have
 end
 
--- bossPlate:CreateBossName(): function to finally create the bossName label
---
--- author: Bartlomiej Grabelus (10044563)
+--- In dieser Funktion wird der Text für den Namen des Bosses Konfiguriert.
 function bossPlate:CreateBossName()
 	SA_BossNamePlate.name:SetHeight(SA_BossNamePlate:GetHeight() * 0.5)
 	SA_BossNamePlate.name:SetText(name)
@@ -174,13 +166,11 @@ function bossPlate:CreateBossName()
 	SA_BossNamePlate.name:SetPoint("TOP", SA_BossNamePlate, 0,0)
 end
 
--- bossPlate:SetNewValues(): function to set new values to the labels of the
---							 statusBars(healthBar, manaBar)
+--- Diese Funktion benutzt man, um der HealthBar und der ManaBar ein Value neu zuzuordnen.
+-- Damit kann man die ManaBar und HealthBar aktuallisieren.
 --
--- health: the new health of the boss
--- mana: the new mana of the boss
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam int health Die neuen Lebenspunkte
+-- @tparam int mana Die neuen Manapunkte
 function bossPlate:SetNewValues(health, mana)
 	healthBar:SetValue(health)
 	healthBar.label:SetText(UnitHealth(SA_BossNamePlate.unit).."/"..UnitHealthMax(SA_BossNamePlate.unit))
@@ -188,21 +178,18 @@ function bossPlate:SetNewValues(health, mana)
 	manaBar.label:SetText(UnitMana(SA_BossNamePlate.unit).."/"..UnitManaMax(SA_BossNamePlate.unit))
 end
 
--- bossPlate:ShowHealth(): function to create all components for the healthBar and show it
---
--- author: Bartlomiej Grabelus (10044563)
+--- Mit dieser Funktion wird die HealthBar und seine Komponenten erstellt, sowie konfiguriert.
+-- Am Ende wird die maximalen Lebenspunkte und die aktuellen Lebenspunkte gesetzt.
 function bossPlate:ShowHealth()
 	bossPlate:ConfigHealthBar()
 	bossPlate:HealthBackground()
 	bossPlate:HealthLabel()
 					
-	healthBar:SetMinMaxValues(0, UnitHealthMax(SA_BossNamePlate.unit)) -- UnitHealthMax(<SA_BossNamePlate.unit>) returns the max health of the unit
-	healthBar:SetValue( UnitHealth(SA_BossNamePlate.unit)) -- UnitHealth(<SA_BossNamePlate.unit>) returns current health of unit
+	healthBar:SetMinMaxValues(0, UnitHealthMax(SA_BossNamePlate.unit)) -- UnitHealthMax(<SA_BossNamePlate.unit>) gibt maximale Lebenspunkte zurück
+	healthBar:SetValue( UnitHealth(SA_BossNamePlate.unit)) -- UnitHealth(<SA_BossNamePlate.unit>) gibt aktuelle Lebenspunkte zurück
 end
 
--- bossPlate:ConfigHealthBar(): configuration of the healthBar, like width, texture or color
---
--- author: Bartlomiej Grabelus (10044563)
+--- Mit dieser Funktion kann man die HealthBar konfigurieren
 function bossPlate:ConfigHealthBar()
 	healthBar:ClearAllPoints()
 	healthBar:SetStatusBarTexture("Interface\\TargetingFrame\\UI-StatusBar")
@@ -212,9 +199,7 @@ function bossPlate:ConfigHealthBar()
 	healthBar:SetPoint("RIGHT", SA_BossNamePlate, -12, 0)
 end
 
--- bossPlate:HealthBackground(): creates a background for the healthBar
---
--- author: Bartlomiej Grabelus (10044563)
+--- Mit dieser Funktion wird der Hintergrund der HealthBar konfiguriert und gesetzt.
 function bossPlate:HealthBackground()
 	healthBar.bg = healthBar:CreateTexture("healthBarBorderTexture", "BORDER")
 	healthBar.bg:SetTexture(0,0,0)
@@ -224,9 +209,7 @@ function bossPlate:HealthBackground()
 	healthBar.bg:SetHeight(healthBar:GetHeight() + 1.5)
 end
 
--- bossPlate:HealthLabel(): creates a label for the healthBar
---
--- author: Bartlomiej Grabelus (10044563)
+--- Mit dieser Funktion wird der FontString für die HealthBar konfiguriert
 function bossPlate:HealthLabel()
 	healthBar.label:SetHeight(healthBar:GetHeight() - 1)
 	healthBar.label:SetText(UnitHealth(SA_BossNamePlate.unit).."/"..UnitHealthMax(SA_BossNamePlate.unit))
@@ -234,25 +217,21 @@ function bossPlate:HealthLabel()
 	healthBar.label:SetPoint("LEFT", healthBar, "LEFT", 0,0)
 end
 
--- bossPlate:ShowMana(): checks at first if the unit have mana and
---						 than configurate the manaBar and show it
---
--- author: Bartlomiej Grabelus (10044563)
+--- Mit dieser Funktion wird nach einer Prüfung, ob der Boss Mana besitzt die ManaBar und seine Komponenten erstellt, sowie konfiguriert.
+-- Am Ende wird die maximalen Manapunkte und die aktuellen Manapunkte gesetzt.
 function bossPlate:ShowMana()
 	if UnitMana(SA_BossNamePlate.unit) ~= 0 then
 		bossPlate:ConfigManaBar()
 		bossPlate:ManaBackground()
 		bossPlate:ManaLabel()
 						
-		manaBar:SetMinMaxValues(0, UnitManaMax(SA_BossNamePlate.unit)) -- UnitManaMax(<SA_BossNamePlate.unit>) returns the max mana of the unit
-		manaBar:SetValue( UnitMana(SA_BossNamePlate.unit)) -- UnitMana(<SA_BossNamePlate.unit>) returns current mana of SA_BossNamePlate.unit
+		manaBar:SetMinMaxValues(0, UnitManaMax(SA_BossNamePlate.unit)) -- UnitManaMax(<SA_BossNamePlate.unit>) gibt maximale Manapunkte zurück
+		manaBar:SetValue( UnitMana(SA_BossNamePlate.unit)) -- UnitMana(<SA_BossNamePlate.unit>) gibt aktuelle Manapunkte zurück
 		manaBar:Show()
 	end
 end
 
--- bossPlate:ConfigManaBar(): configurate the manaBar, like texture and color
---
--- author: Bartlomiej Grabelus (10044563)
+--- Mit dieser Funktion kann man die ManaBar konfigurieren
 function bossPlate:ConfigManaBar()
 	manaBar:ClearAllPoints()
 	manaBar:SetStatusBarTexture("Interface\\TargetingFrame\\UI-StatusBar")
@@ -262,9 +241,7 @@ function bossPlate:ConfigManaBar()
 	manaBar:SetPoint("TOP", healthBar, "BOTTOM", 0, 0)
 end
 
--- bossPlate:ManaBackground(): create a background for the manaBar
---
--- author: Bartlomiej Grabelus (10044563)
+--- Mit dieser Funktion wird der Hintergrund der ManaBar konfiguriert und gesetzt.
 function bossPlate:ManaBackground()
 	manaBar.bg = manaBar:CreateTexture("manaBarBorderTexture", "BORDER")
 	manaBar.bg:SetTexture(0,0,0)
@@ -274,9 +251,7 @@ function bossPlate:ManaBackground()
 	manaBar.bg:SetHeight(manaBar:GetHeight() + 1.5)
 end
 
--- bossPlate:ManaLabel(): creates a label for the manaBar
---
--- author: Bartlomiej Grabelus (10044563)
+--- Mit dieser Funktion wird der FontString für die ManaBar konfiguriert
 function bossPlate:ManaLabel()
 	manaBar.label:SetHeight(manaBar:GetHeight() - 1)
 	manaBar.label:SetText(UnitMana(SA_BossNamePlate.unit).."/"..UnitManaMax(SA_BossNamePlate.unit))
@@ -284,13 +259,11 @@ function bossPlate:ManaLabel()
 	manaBar.label:SetPoint("LEFT", manaBar, "LEFT", 0,0)
 end
 
--- bossPlate:GetSpellCooldown(): function to get the spell cooldown
+--- Mithilfe dieser Funktion erhält man den Cooldown des Debuffs.
 -- 
--- spell: the spell
--- totalDuration: if want total duration, then true.
---				  if want current duration, then false
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam string spell Der Debuffname
+-- @tparam float totalDuration Gibt bei True die ganze Zeit zurück, bei false die übrige Zeit
+-- @return einen float wert
 function bossPlate:GetSpellCooldown(spell, totalDuration)
 	if not spell then 
 		return
@@ -308,56 +281,49 @@ function bossPlate:GetSpellCooldown(spell, totalDuration)
     return (start + duration - GetTime())
 end
 
--- bossPlate:ConfigBossDebuffIcons(): configurate the debuffs
---									  by calling other functions
---
--- author: Bartlomiej Grabelus (10044563)
+--- Konfiguriert mithilfe von anderen Funktionen die Debuffs.
 function bossPlate:ConfigBossDebuffIcons()
 	for i = 1, #debuffs do
 		local debuff = debuffs[i]
 		if debuff.expTime then
 			 bossPlate:ConfigDebuffExpireStatusBar(debuff)
-			 --bossPlate:ConfigExpireLabel(debuff) -- nicht alle code teile implementiert
+			 --bossPlate:ConfigExpireLabel(debuff) -- nicht alle Codeteile implementiert
 		end
 		bossPlate:ConfigDebuffIconTexture(debuff, i)
-		if debuff.count ~= 0 then -- config a count only if a stacked debuff exists
+		if debuff.count ~= 0 then -- Nur wenn der Zauber gestapelt werden kann
 			bossPlate:ConfigCountLabel(debuff)
 		end
 	end
 end
 
--- bossPlate:ConfigDebuffIconTexture(): configure a debuff icon and position the debuff
+--- Konfiguriert einen Debufficon und positioniere ihn.
 --
--- debuff: the debuff, which want to configure
--- placeInTable: at which place the debuff is in the debuff container
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame debuff Der Debuff für welchen der Icon konfiguriert werden soll
+-- @tparam int placeInTable Platz des Debuffs im Container
 function bossPlate:ConfigDebuffIconTexture(debuff, placeInTable)
 	debuff.icon:SetSize(25, 25)
 	debuff.icon:ClearAllPoints()
 	debuff.icon:SetPoint("CENTER", debuff, 0, 0)
 	debuff.icon:SetAlpha(1)
 	
-	if placeInTable == 1 then -- only first debuff
+	if placeInTable == 1 then -- der erste Debuff
 		if UnitMana(SA_BossNamePlate.unit) ~= 0 then
 			debuff:SetPoint("TOPLEFT", manaBar, "BOTTOMLEFT", 0, 0)
 		else
 			debuff:SetPoint("TOPLEFT", healthBar, "BOTTOMLEFT", 0, 0)
 		end
-	elseif placeInTable % 6 == 0 then -- only six debufficons i a row
+	elseif placeInTable % 6 == 0 then -- Nur 6 Debuffs in einer Reihe
 		debuff:SetPoint("TOP", debuffs[placeInTable-5], "BOTTOM", 0, -1)
-	elseif placeInTable > 1 and debuffs[1] then -- all next debuffs place to the last debuff
+	elseif placeInTable > 1 and debuffs[1] then -- Sonst werden sie nebeneinander platziert
 		debuff:SetPoint("LEFT", debuffs[placeInTable-1], "RIGHT", 1, 0)
 	end
 	debuff.icon:SetTexture(debuff.tex)
 	
 end
 
--- bossPlate:ConfigDebuffIconTexture(): configure the count label for a debuff
+--- Mit dieser Function kann man im Debufficon einen FontString konfigurieren, anzeigt wie oft der Debuff gestapelt wurde.
 --
--- debuff: for which want to configure the count label
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame debuff In welchen der FontString konfiguriert werden soll
 function bossPlate:ConfigCountLabel(debuff)
 	debuff.countLabel:ClearAllPoints()
 	debuff.countLabel:SetPoint("BOTTOMRIGHT", debuff, -1, 1)
@@ -365,10 +331,10 @@ function bossPlate:ConfigCountLabel(debuff)
 	debuff.countLabel:SetText(debuff.count)
 end
 
--- bossPlate:ConfigExpireLabel(): an option to configure a label for the debuff,
---								  to see the expire time
+--- Mit dieser Function kann man im Debufficon einen FontString konfigurieren, welcher einen Countdown anzeigt.
+-- Wie lange der Debuff noch wirkt.
 --
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame debuff In welchen der FontString konfiguriert werden soll
 function bossPlate:ConfigExpireLabel(debuff)
 	debuff.expireLabel:ClearAllPoints()
 	debuff.expireLabel:SetPoint("CENTER", debuff, 0, 0)
@@ -377,9 +343,8 @@ function bossPlate:ConfigExpireLabel(debuff)
 	debuff.isExpireLabel = false
 end
 
--- bossPlate:GetBossDebuffs(): for retrieve all debuffs of target
---
--- author: Bartlomiej Grabelus (10044563)
+--- Mit dieser Funktion bekommt man alle Debuffs eines fokusierten Bosses.
+-- Jeder Debuff wird dann mit AddBossDebuff konfiguriert und in den Debuffcontainer gepackt.
 function bossPlate:GetBossDebuffs()
 	for i=1,40 do
 		local name, _, icon, count, _, duration, expirationTime,
@@ -390,15 +355,15 @@ function bossPlate:GetBossDebuffs()
 	end
 end
 
--- bossPlate:AddBossDebuff(): create a StatusBar for debufficon and add it to the debuffs container
+--- In dieser Funktion wird der Frame für den Debuff erstellt und alle nötigen Variablen gesetzt.
+-- Dann wird dieser und die Komponenten konfiguriert.
+-- Der Debuff ist eine StatusBar mit einem Icon als Hintergrund.
 --
--- name: spellname
--- texture: icon of the debuff
--- count: how many debuffs are stacked
--- duration: how long the debuff durate
--- expirationTime: expirationtime of the debuff
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam string name Debuffname
+-- @tparam string texture Der Texturname zu dem Debuff
+-- @tparam int count Wie oft der Debuff gestapelt ist
+-- @tparam float duration Wie lange der Debuff dauert(Komplette Dauer nicht Restdauer)
+-- @tparam float expirationTime Zeit wann der Debuff abläuft, man hat aber nicht imme eine Zeit
 function bossPlate:AddBossDebuff(name, texture, count, duration, expirationTime)
 	if not bossPlate:BossDebuffContains(name) then -- if debuff contains
 		local debuffIconFrame = CreateFrame("StatusBar", name.."debuffIconFrame", SA_BossNamePlate)
@@ -407,23 +372,20 @@ function bossPlate:AddBossDebuff(name, texture, count, duration, expirationTime)
 		debuffIconFrame.count = count
 		debuffIconFrame.duration = duration
 		debuffIconFrame.expTime = expirationTime
-		debuffIconFrame:SetAttribute("exptime", expirationTime) -- set a attributes for controlling later
+		debuffIconFrame:SetAttribute("exptime", expirationTime) -- Setze den Attribut, um später in OnAttributeChanged zu prüfen
 		debuffIconFrame:SetAttribute("count", count)
-		debuffIconFrame:SetScript("OnAttributeChanged", bossPlate.DebuffOnAttributeChanged) -- when a attribute changes, then call bossPlate.DebuffOnAttributeChanged
+		debuffIconFrame:SetScript("OnAttributeChanged", bossPlate.DebuffOnAttributeChanged) -- Wenn ein Attribut sich ändert, dann wird bossPlate.DebuffOnAttributeChanged aufgerufen
 		debuffIconFrame:SetScript("OnUpdate", bossPlate.UpdateBossDebuffs)
 		debuffIconFrame:SetScript("OnHide", bossPlate.OnIconHide)
 		
-		bossPlate:CreateDebuffIconComp(debuffIconFrame, count) -- create components
-		tinsert(debuffs, debuffIconFrame) -- insert in container
+		bossPlate:CreateDebuffIconComp(debuffIconFrame, count) -- Erstelle Komponenten
+		tinsert(debuffs, debuffIconFrame) -- Füge in den Container hinzu
 		debuffIconFrame.place = #debuffs
 	else
 	end
 end
 
--- bossPlate:UpdateBossDebuffs(): get debuff information of a target
---								  needed for updating the debuffs of a boss
---
--- author: Bartlomiej Grabelus (10044563)
+--- Diese Funktion aktuallisiert die Debufficons.
 function bossPlate:UpdateBossDebuffs()
 	for i=1,40 do
 		local name, _, _, count, _, _, expirationTime,
@@ -432,29 +394,27 @@ function bossPlate:UpdateBossDebuffs()
 			bossPlate:UpdateDebuff(name, count, round(-(GetTime() - expirationTime), 0))
 		end
 	end
-	for i = 1, #debuffs do -- reorder all
+	for i = 1, #debuffs do -- Ordne Debuffs neu
 		bossPlate:ReorderDebuffIcon(debuffs[i], i)
 	end
 end
 
--- bossPlate:UpdateDebuff(): updates a debuff icon
+--- Aktualisiere einen Debuff und seine Variablen, sowie Attribute.
 --
--- name: spellname
--- count: how many debuffs are stacked
--- expirationTime: update the expiration time
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam string name Der Debuffname
+-- @tparam int count Wie oft der Debuff gestapelt ist
+-- @tparam float expirationTime Zum aktuallisieren der Restzeit
 function bossPlate:UpdateDebuff(name, count, expirationTime)
 	if expirationTime > 1 then
 		local debuff = bossPlate:GetBossDebuff(name)
 		debuff:SetSize(28,28)
 		if debuff then
-			if count > 0 then -- only if have a stacked debuff
+			if count > 0 then -- Nur wenn Debuff gestapelt
 				debuff.count = count
 				debuff:SetAttribute("count", count)
 			end
 			debuff.expTime = expirationTime
-			debuff:SetAttribute("exptime", expirationTime) -- set a attributes for controlling later
+			debuff:SetAttribute("exptime", expirationTime) -- Setze den Attribut, um später in OnAttributeChanged zu prüfen
 		end
 	else
 		local debuff = bossPlate:GetBossDebuff(name)
@@ -464,25 +424,21 @@ function bossPlate:UpdateDebuff(name, count, expirationTime)
 	end
 end
 
--- bossPlate:CreateDebuffIconComp(): create debuff icon components
+--- Erstellt die Debuff Komponenten.
 --
--- debuffIconFrame: the debuff for which create comps
--- count: number of stacked debuffs
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame debuffIconFrame Der DebuffFrame für welchen die Komponenten erstellt werden.
+-- @tparam int count Wie oft der Debuff gestapelt ist
 function bossPlate:CreateDebuffIconComp(debuffIconFrame, count)
 	if count ~= 0 then
-		debuffIconFrame.countLabel = debuffIconFrame:CreateFontString(debuffIconFrame.name.."debuffIconFrameCount-label", "OVERLAY", "GameFontNormal") -- on top OVERLAY
+		debuffIconFrame.countLabel = debuffIconFrame:CreateFontString(debuffIconFrame.name.."debuffIconFrameCount-label", "OVERLAY", "GameFontNormal") -- Oben drauf deswegen OVERLAY
 	end
 	debuffIconFrame.expireLabel = debuffIconFrame:CreateFontString(debuffIconFrame.name.."debuffIconFrameExpire-label", "OVERLAY", "GameFontNormal")
-	debuffIconFrame.icon = debuffIconFrame:CreateTexture(debuffIconFrame.name.."debuffIcon","BACKGROUND") -- icon in background
+	debuffIconFrame.icon = debuffIconFrame:CreateTexture(debuffIconFrame.name.."debuffIcon","BACKGROUND") -- Icon im BACKGROUND
 end
 
--- bossPlate:ConfigDebuffExpireStatusBar():  configurate the debuff statusbar
+--- Konfiguriert den Debuff(StatusBar).
 --
--- debuff: the debuff(statusbar)
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame debuff Der Debuff
 function bossPlate:ConfigDebuffExpireStatusBar(debuff)
 	debuff:SetOrientation("VERTICAL")
 	debuff:ClearAllPoints()
@@ -495,12 +451,12 @@ function bossPlate:ConfigDebuffExpireStatusBar(debuff)
 end
 
 
--- bossPlate:DebuffOnAttributeChanged(): function for OnAttributeChanged event
+--- OnAttributeChanged Eventhandlingfunktion.
+-- In dieser Funktion wird geprüft welches Attribut sich geändert hat und dementsprechend wird ein FontString gesetzt.
+-- Oder auch verborgen, wenn der Count z.B. 0 wird.
 --
--- name: name of the attribute
--- value: new value of the attribute
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam string name Name des Attributes, welcher sich geändert hat
+-- @param value Der neue Wert des Attributes
 function bossPlate:DebuffOnAttributeChanged(name, value)
 	if name == "exptime" then
 		if value == 0 then
@@ -528,11 +484,9 @@ function bossPlate:DebuffOnAttributeChanged(name, value)
 	end
 end
 
--- bossPlate:OnIconHide(): function for the OnHide event
---						   set a nil texture for the debuff icon and remove it from
---						   the container. Than reorder the debuffs
---
--- author: Bartlomiej Grabelus (10044563)
+--- Eventhandlingfunktion für den Event OnHide.
+-- Es wird eine nil Textur gesetzt und der Debuff wird aus dem Container gelösct.
+-- Sowie die Debuffs werden neu geordnet.
 function bossPlate:OnIconHide()
 	self.icon:SetTexture(nil)
 	tremove(debuffs, self.place)
@@ -543,9 +497,8 @@ function bossPlate:OnIconHide()
 	end
 end
 
--- bossPlate:ReorderAllDebuffs(): reorder all debuffs of the container
---
--- author: Bartlomiej Grabelus (10044563)
+--- Diese Funktion ordnet alle Debuffs aus dem Container neu.
+-- Indem alle Debuffs durchlaufen werden und an die Funktion ReorderDebuffIcon übergeben werden.
 function bossPlate:ReorderAllDebuffs()
 	for i = 1, #debuffs do
 		if #debuffs > 0 then
@@ -554,12 +507,10 @@ function bossPlate:ReorderAllDebuffs()
 	end
 end
 
--- bossPlate:ReorderDebuffIcon(): reorder a debuff
+--- Mit dieser Funktion wird ein Debuff neu geordnet.
 --
--- debuff: the debuff which want to reorder
--- placeInTable: at which place in the container
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame debuff Der Debuff welcher neu geordnet werden soll
+-- @tparam int placeInTable Platz des Debuffs im Container
 function bossPlate:ReorderDebuffIcon(debuff, placeInTable)
 	if debuff then
 		if debuff.icon then
@@ -570,7 +521,7 @@ function bossPlate:ReorderDebuffIcon(debuff, placeInTable)
 				else
 					debuff:SetPoint("TOPLEFT", healthBar, "BOTTOMLEFT", 0, 0)
 				end
-			elseif placeInTable % 6 == 0 then -- only six debufficons i a row
+			elseif placeInTable % 6 == 0 then -- Nur 6 Debuffs in einer Reihe
 				debuff:SetPoint("TOP", debuffs[placeInTable - 5], "BOTTOM", 0, -1)
 			elseif placeInTable > 1 and debuffs[1] then
 				debuff:SetPoint("LEFT", debuffs[placeInTable - 1], "RIGHT", 1, 0)
@@ -583,11 +534,10 @@ function bossPlate:ReorderDebuffIcon(debuff, placeInTable)
 	end
 end
 
--- bossPlate:GetBossDebuff(): get a debuff of the debuffs container
+--- Zum holen eines Debuffs aus dem Debuffcontainer, mithilfe des Namens.
 --
--- spell: the name of a spell, which want to get
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam string spell Der Debuffname
+-- @return Der Debuff
 function bossPlate:GetBossDebuff(spell)
 	local debuff = nil
 	for i = 1, #debuffs do
@@ -598,11 +548,10 @@ function bossPlate:GetBossDebuff(spell)
 	return debuff
 end
 
--- bossPlate:BossDebuffContains(): for checking if the container contains a debuff
+--- Mit dieser Funktion kann man prüfen,ob ein Debuff bereits im Container enthalten ist.
 --
--- spell: name of the spell, which want to check
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam string spell Name des zu überprüfenden Debuffs
+-- @return Ob der Debuff im Container enthalten ist
 function bossPlate:BossDebuffContains(spell)
 	for i = 1, #debuffs do
 		if debuffs[i].name == spell then
@@ -612,10 +561,8 @@ function bossPlate:BossDebuffContains(spell)
 	return false
 end
 
--- bossPlate:HideAllBossDebuff(): hide all debuffs, by setting the attribute exptime to 0
---								  and than hide all debuffs in the function bossPlate:DebuffOnAttributeChanged()
---
--- author: Bartlomiej Grabelus (10044563)
+--- In dieser Funktion werden alle Debuffs mit Hilfe von bossPlate:DebuffOnAttributeChanged() verborgen.
+-- Es wird dem Attribut exttime 0 zugewiesen.
 function bossPlate:HideAllBossDebuff()
 	for i = 1, #debuffs do
 		if(debuffs[i]) then
@@ -624,9 +571,7 @@ function bossPlate:HideAllBossDebuff()
 	end
 end
 
--- bossPlate:ResetAll(): reset all debuffs by calling ResetDebuff
---
--- author: Bartlomiej Grabelus (10044563)
+--- Die Funktion setzt alle Debuffs zurück, indem ein Debuff in die Funktion ResetDebuff übergeben wird.
 function bossPlate:ResetAll()
 	for i = 1, #debuffs do
 		if debuffs[i] then
@@ -636,9 +581,8 @@ function bossPlate:ResetAll()
 	debuffs = table.wipe(debuffs)
 end
 
--- bossPlate:ResetExpiredDebuff(): reset all expired debuffs
---
--- author: Bartlomiej Grabelus (10044563)
+--- Setzt alle abgelaufenen Debuffs zurück und ordnet die restlichen neu.
+-- Ein Debuff ist abgelaufen, wenn exttime == 0 ist.
 function bossPlate:ResetExpiredDebuff()
 	for i = 1, #debuffs do
 		if debuffs[i] and debuffs[i].expTime == 0 then
@@ -648,11 +592,9 @@ function bossPlate:ResetExpiredDebuff()
 	end
 end
 
--- bossPlate:ResetDebuff(): reset a debuff
+--- Setzt einen Debuff zurück.
 --
--- self: the debuff which want to reset
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame self Der Debuff selbst
 function bossPlate:ResetDebuff(self)
 		self.tex = nil
 		self.icon = self:CreateTexture(nil)
@@ -671,11 +613,9 @@ function bossPlate:ResetDebuff(self)
 		self = nil
 end
 
--- bossPlate:Show(): shows the bossplate
+--- Diese Funktion dient um die Namensplatte von aussen anzeigen zu lassen.
 --
--- isGUID: if have a GUID of boss
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam boolean isGUID Ob eine GUID da ist(Eines Bosses)
 function bossPlate:Show(isGUID) -- isGUID --> UnitExists
 	if SA_BossNamePlate then
 		if isGUID then
@@ -686,16 +626,16 @@ function bossPlate:Show(isGUID) -- isGUID --> UnitExists
 	end
 end
 
+--- Eine Setter Funktion, um die Variable unit zu setzen.
 function SetTarget(unit)
 	SA_BossNamePlate.unit = unit
 end
 
--- round(): lua function for round a number
+--- Dies ist eine reine LUA Funktion, mit welcher man eine Dezimalzahl,
+-- auf bestimmte Nachkommastellen runden kann.
 --
--- num: the number want to round
--- numDecimalPlaces: how much decimal places
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam float num Die zu rundende Zahl
+-- @tparam int numDecimalPlaces Anzahl der Nachkommastellen
 function round(num, numDecimalPlaces)
   if numDecimalPlaces and numDecimalPlaces>0 then
     local mult = 10^numDecimalPlaces
