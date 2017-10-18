@@ -1,8 +1,10 @@
--- Author: Bartlomiej Grabelus (10044563)
--- Description: This Class creates a frame for the player, in which the player can delete or create a new phase for a boss
+--- Beschreibung: Diese Klasse stellt ein PhaseFrame dar, in welchen der Spieler eine Phase für einen Boss anlegen oder löschen kann.
 --				of a instance.
+--
+-- @modul PhaseFrame
+-- @author Bartlomiej Grabelus (10044563)
 
--- Global vars --
+-- Hole globale Tabelle _G
 local _G = _G
 
 local GUI = _G.GUI
@@ -11,10 +13,10 @@ local EditBox = GUI.SA_EditBox
 local CheckBox = GUI.SA_CheckBox
 local GUIL = GUI.Locales
 
--- vars
+--  Variable
 local boss
 
--- set the buttonwidth dependent to the language of the player, which is set ingame
+--- Setze die buttonwidth abhängig zu der Sprach, da sich die Länge eines Wortes unterscheidet
 local buttonWidth = 0
 if GetLocale() == "enUS" or GetLocale() == "enGB" then
 	buttonWidth = 60
@@ -24,13 +26,13 @@ else
 	buttonWidth = 100
 end
 
--- Popup for asking if want to apply
+--- Ein Popup, um zu Fragen ob der Spieler wirklich eine Phase anlegen möchte.
 StaticPopupDialogs["REALLY_APPLY"] = {
   text = GUIL["Do you really want to create this phase: %s ?"],
   button1 = GUIL["Yes"],
   button2 = GUIL["No"],
   OnAccept = function()
-	if phaseFrame.firstPhaseCB:GetChecked() == false then
+	if phaseFrame.firstPhaseCB:GetChecked() == false then -- Prüfe ob es die erste Phase ist
 		createPhase(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID, phaseFrame.phaseNameEB:GetText(), UIDropDownMenu_GetText(prevPhaseFrameDropDown), phaseFrame.triggerEB:GetText(), phaseFrame.triggerTypeEB:GetText(), phaseFrame.mythicCB:GetChecked(), phaseFrame.heroicCB:GetChecked(), phaseFrame.normalCB:GetChecked())
 	else
 		createPhase(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID, phaseFrame.phaseNameEB:GetText(), nil, phaseFrame.triggerEB:GetText(), phaseFrame.triggerTypeEB:GetText(), phaseFrame.heroicCB:GetChecked(), phaseFrame.normalCB:GetChecked())
@@ -45,7 +47,7 @@ StaticPopupDialogs["REALLY_APPLY"] = {
   hideOnEscape = true,
 }
 
--- Popup for asking if want to delete
+--- Ein Popup, um zu Fragen ob der Spieler wirklich die Phase löschen möchte
 StaticPopupDialogs["REALLY_DELETE"] = {
   text = GUIL["Do you really want to delete this phase: %s ?"],
   button1 = GUIL["Yes"],
@@ -62,7 +64,7 @@ StaticPopupDialogs["REALLY_DELETE"] = {
   hideOnEscape = true,
 }
 
--- Popup for asking if want to delete
+--- Ein Popup, um Informationen zu zeigen. Beispielsweise, wenn der Spieler keinen Namen für eine Phase eingegeben hat.
 StaticPopupDialogs["INFO"] = {
   text = "%s",
   button1 = GUIL["Ok"],
@@ -80,11 +82,9 @@ StaticPopupDialogs["INFO"] = {
 }
 
 
--- SA_Phase<Frame:CreateGUI(): creates the frame to create and delete phase
+--- Erstellt das Frame und dessen Komponenten, welche dann am Ende auch Konfiguriert werden.
 --
--- frame: parent frame
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame frame Ist das Elternframe.
 function SA_PhaseFrame:CreateGUI(frame)
 	if not phaseFrame then
 		CreateWindow(frame)
@@ -94,11 +94,9 @@ function SA_PhaseFrame:CreateGUI(frame)
 	ConfigComponents(phaseFrame)
 end
 
--- CreateWindow(): creates the main frame
+--- Erstellt das Hauptfenster für die AbilityFrame.
 --
--- frame: parent frame
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame frame Ist das Elternframe.
 function CreateWindow(frame)
 		CreateFrame("Frame", "phaseFrame", frame)
 		phaseFrame:SetWidth(600)
@@ -110,20 +108,19 @@ function CreateWindow(frame)
 			insets = { left = 4, right = 4, top = 4, bottom = 4 }
 			});
 		phaseFrame:SetBackdropColor(0.0,0.0,0.0,1.0)
-		phaseFrame:SetToplevel(true) -- set to top level
+		phaseFrame:SetToplevel(true) -- Setze top level
 		
 		--phaseFrame:Hide()
 end
 
--- CreateComponents(): creates the components for the main frame.
---					   e.g the dropdowns for the content, instance, boss and abilities
---					   also three lines, which seperate the components.
---					   at the top we have some editboxes and checkboxes, on the left side the dropdowns
---					   and at the bottom we have two button (apply and delete).
+--- Erstellt alle benötigten Komponenten, welche im Hauptfenster angezeigt werden.
+--	Es werden DropDowns für die Auswahl des Contents, der Instanz, sowie des Bosses, seiner Fähigkeiten und seinen Phasen erstellt.
+--	Sowie zwei Linien, welche in dem Frame eine räumliche Trennung bewirken.
+--	Auf der linken Seite sind die DropDowns positioniert.
+--	Und auf der rechten Seite haben wir ein paar EditBoxen und CheckBoxen.
+--  Unten gibt es zwei Buttons, um die Fähigkeit zu löschen oder zu erstellen.
 --
--- frame: parent frame
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame parent Ist das Elternframe.
 function CreateComponents(frame)
 	boss = BossSelectFrame:new_BossSelectFrame(frame, "Phase", 200, phaseFrame:GetHeight() - 45, "TOPLEFT", 10, 0)
 	boss.frame:SetBackdrop({
@@ -154,14 +151,12 @@ function CreateComponents(frame)
 	CreateButton(frame, "closePhaseButton", nil, 34, 34, "TOPRIGHT", -4, -4, "UIPanelCloseButton")
 end
 
--- ConfigComponents(): for configurate the components
---					   for the buttons we set event handler function.
---					   on apply we create a new ability
---					   on delete we delete the ability
+--- Mithilfe dieser Funktion werden die Komponenten konfiguriert.
+--	Es wird ein EventHandler für die Buttons gesetzt.
+--	Wenn der Benutzer auf Anlegen drückt, wird eine Phase angelegt.
+--  Wenn der Benutzer auf Löschen drückt, wird die Phase gelöscht.
 --
--- frame: parent frame
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame frame Ist das Elternframe.
 function ConfigComponents(frame)
 	frame.phaseNameEB:SetPoint("TOPLEFT", delimiterLine, "TOPRIGHT", 20, 0)
 	frame.triggerTypeEB:SetPoint("TOP", prevPhaseFrameDropDown, "BOTTOM", 0, -10)
@@ -173,9 +168,7 @@ function ConfigComponents(frame)
 	SetScripts()
 end
 
--- SetScripts(): Sets all scripts for the components
---
--- author: Bartlomiej Grabelus (10044563)
+--- Setzt alle benötigten EventHandlerfunktionen für die Events.
 function SetScripts()
 	applyPhaseButton:SetScript("OnClick", function (self, button)
 		if button == "LeftButton" then
@@ -212,19 +205,17 @@ function SetScripts()
 	end)
 end
 
--- CreateButton(): creates a button
+--- Erstellt ein Button
 --
--- frame: parent frame
--- name: name of button
--- text: text which is set in button
--- width: buttonwidth
--- height: buttonheight
--- position: where to position the button
--- x: x movement
--- y: y movement
--- template: template of buttons
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame parent Ist das Elternframe.
+-- @tparam string name Name des Buttons
+-- @tparam string text Text welcher im Button dargestellt wird
+-- @tparam int width Buttonbreite
+-- @tparam int height Buttonhöhe
+-- @tparam string position Wo der Button positioniert werden soll
+-- @tparam int x Bewegung des Buttons in x-Richtung
+-- @tparam int y Bewegung des Buttons in y-Richtung
+-- @tparam string template Name des Templates
 function CreateButton(frame, name, text, width, height, position, x, y, template)
 	if template == nil then
 		template = "OptionsButtonTemplate"
@@ -241,16 +232,18 @@ function CreateButton(frame, name, text, width, height, position, x, y, template
 	return (button)
 end
 
---- CreateLine(): function to create a line
--- if horizontal: height = 1 to 2
--- if vertical: width = 1 to 2
+--- Funktion um eine Linie mithilfe von einer Textur zu erstellen.
+-- Wenn die Linie Horizontal dargestellt werden soll: height = 1 oder 2
+-- Wenn die Linie Vertikal dargestellt werden soll: width = 1 oder 2
 --
--- region: where to position
--- frame: relative to which frame
--- x: x movement
--- y: y movement
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame parent Ist das Elternframe.
+-- @tparam string name Der Name der Texture
+-- @tparam int width Linienbreite
+-- @tparam int height Linienhöhe
+-- @tparam string region Region wo die Linie ausgerichtet werden soll
+-- @tparam string frame Frame an welchen relativ positioniert werden soll
+-- @tparam int x Bewegung der Linie in x-Richtung
+-- @tparam int y Bewegung der Linie in y-Richtung
 function CreateLine(parent, name,width, height, region, frame, x, y)
 	local line = parent:CreateTexture(name)
 	line:SetTexture("Interface\\Tooltips\\UI-Tooltip-Background")
@@ -259,17 +252,15 @@ function CreateLine(parent, name,width, height, region, frame, x, y)
 	line:SetPoint(region, frame, x, y)
 end
 
--- CreateFont(): create a Font
+--- Erstellt einen Text(FontString)
 --
--- frame: Parent frame
--- name: name of font
--- text: which want to set
--- position: region, where want to position
--- x: x movement
--- y: y movement
--- size: size of font
---
--- author: Bartlomiej Grabelus (10044563)
+-- @tparam Frame frame Ist das Elternframe.
+-- @tparam string name Name des FontStrings
+-- @tparam string text Text welcher über den FontString dargestellt werden soll
+-- @tparam string position Wo der Text positioniert werden soll
+-- @tparam int x Bewegung des Buttons in x-Richtung
+-- @tparam int y Bewegung des Buttons in y-Richtung
+-- @tparam int size Größe der Schrift
 function CreateFont(frame, name, text, position, x, y, size)
 	if size == nil then
 		size = 15
@@ -286,25 +277,19 @@ function CreateFont(frame, name, text, position, x, y, size)
 	return (fontString)
 end
 
--- ValidForCreateAbility(): Checks if the player has typed in a name, phaseText and trigger
---
--- author: Bartlomiej Grabelus (10044563)
+--- Prüfe ob der Spieler einen Namen, phaseText und trigger eingegeben hat.
 function ValidForCreateAbility()
 	return(phaseFrame.phaseNameEB:GetText() ~= "" and phaseFrame.triggerTypeEB:GetText() ~= "" and phaseFrame.triggerEB:GetText() ~= "") 
 end
 
--- IsOnlyOneDifficultyChecked(): Checks if the player has checked only one difficulty
---
--- author: Bartlomiej Grabelus (10044563)
+--- Prüft ob der Spieler nur einen Schwierigkeitsgrad ausgewählt hat.
 function IsOnlyOneDifficultyChecked()
 	return((not phaseFrame.heroicCB:GetChecked() and not phaseFrame.mythicCB:GetChecked() and phaseFrame.normalCB:GetChecked())
 		or (phaseFrame.heroicCB:GetChecked() and not phaseFrame.mythicCB:GetChecked() and not phaseFrame.normalCB:GetChecked())
 		or (not phaseFrame.heroicCB:GetChecked() and phaseFrame.mythicCB:GetChecked() and not phaseFrame.normalCB:GetChecked()))
 end
 
--- IsOneDifficultyChecked(): Checks if the player has checked a difficulty or not
---
--- author: Bartlomiej Grabelus (10044563)
+--- Prüft ob der Spieler mindestens einen Schwierigkeitsgrad ausgewählt hat.
 function IsOneDifficultyChecked()
 	return (phaseFrame.heroicCB:GetChecked() or phaseFrame.mythicCB:GetChecked() or phaseFrame.normalCB:GetChecked())
 end
