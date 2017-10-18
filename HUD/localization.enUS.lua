@@ -1,4 +1,4 @@
---Author: Bartlomiej Grabelus (10044563)
+--- @author: Bartlomiej Grabelus (10044563)
 
 local _G = _G
 
