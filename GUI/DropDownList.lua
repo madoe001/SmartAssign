@@ -79,16 +79,16 @@ local function SetData(frame, data, startValue)
 	end
 end
 
---- Dient zum erstellen der DropDownListe
+--- Dient zum erstellen der DropDownListe.
 -- Erstellt einen DropDownListButton, welcher die DropDownListe darstellt.
 -- Es werden dann die Daten für die DropDownListe gesetzt und ein Label erstellt.
 --
--- UIDropDownMenu_Initialize(): Damit wird die Initialisierungfunktion gesetz
--- UIDropDownMenu_SetButtonWidth(): Damit wird die Breite des Buttons gesetzt
--- UIDropDownMenu_SetWidth(): Damit wird die Breite für das Label gesetzt(im Button)
--- UIDropDownMenu_JustifyText(): Damit wird das Label justiert
+-- UIDropDownMenu_Initialize(): Damit wird die Initialisierungfunktion gesetz.
+-- UIDropDownMenu_SetButtonWidth(): Damit wird die Breite des Buttons gesetzt.
+-- UIDropDownMenu_SetWidth(): Damit wird die Breite für das Label gesetzt(im Button).
+-- UIDropDownMenu_JustifyText(): Damit wird das Label justiert.
 --
--- @tparam Frame parent Ist das Elternframe.
+-- @tparam Frame frame Ist das Elternframe
 -- @tparam string name Name der DropDownListe
 -- @tparam table data Die Daten für die DropDownListe
 -- @tparam function init Die Initialisierungfunktion
@@ -115,7 +115,7 @@ local function CreateDropDownList(frame, name, data, init)
 end
 
 --- Initialisierungfunktion für die DropDownListe.
--- Iteriere durch die Tabelle data und setzte die Daten: text, value und func.
+-- Iteriert durch die Tabelle data und setzt die Daten: text, value und func.
 -- func enthält die Funktion OnClick.
 -- Dann füge alles plus den Level der DropDownListe hinzu.
 --
@@ -132,14 +132,14 @@ function InitDDL(self, level)
    end
 end
 
---- Der Getter für die selectedID
+--- Ein Getter für die selectedID
 --
 -- @tparam Frame frame Die DropDownList
 function SA_DropDownList:GetSelectedID(frame)
 	return frame.selectedID
 end
 
---- Der Setter für die selectedID
+--- Ein Setter für die selectedID
 --
 -- @tparam int value Auf welche selectedID gesetzt werden soll
 function SA_DropDownList:SetSelectedID(value)
@@ -147,11 +147,11 @@ function SA_DropDownList:SetSelectedID(value)
 	UIDropDownMenu_SetSelectedID(DropDownListButton, value)
 end
 
---- Loader für die DropDownListe
+--- Loader für die DropDownListe.
 --
 -- Assertion: Wenn data keine Tabelle ist
 --
--- @tparam Frame parent Ist das Elternframe.
+-- @tparam Frame frame Ist das Elternframe.
 -- @tparam table data Die Tabelle welche in der DropDownListe gesetzt werden soll
 function SA_DropDownList:LoadDropDownList(frame, name, data, init)
 	assert(type(data) == "table", SAL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownList.data for infos."])

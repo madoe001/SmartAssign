@@ -1,6 +1,6 @@
 ﻿--- Beschreibung: Diese Klasse ist nötig, um Slash Kommandos für SmartAssign zu initialisieren.
 --				  Sie wird über _G global gemacht und besitzt 3 Container.
---				  Einen Container für die Kommandos, einen für Hilfe informationen und einen für Reset Funktionen
+--				  Einen Container für die Kommandos, einen für Hilfe informationen und einen für Reset Funktionen.
 --
 -- @author Bartlomiej Grabelus (10044563)
 
@@ -21,7 +21,7 @@ local str_lower, str_format, str_split = string.lower, string.format, string.spl
 -- Tabellen Funktionen
 local tbl_remove, unpack, pairs = table.remove, unpack, pairs
 
---- Container für die Kommandos
+--- Container für die Kommandos.
 -- @table CommandList
 local CommandList = {
 	[""] = function()
@@ -35,7 +35,7 @@ local CommandList = {
 	end,
 }
 
---- Container welche die Hilfe Texte beinhaltet
+--- Container welche die Hilfe Texte beinhaltet.
 -- @table HelpList
 local HelpList = {
 	[""] = SAL["/smart - Open the SmartAssign window."],
@@ -46,7 +46,7 @@ local HelpList = {
 -- @table resetFunctions
 local resetFunctions = {} 
 
---- Zur initialisierung der Slash Kommandos "/smartassign" und "/smart"
+--- Zur initialisierung der Slash Kommandos "/smartassign" und "/smart".
 function SlashCommands:Init()
 	SLASH_SMARTASSIGN1 = "/smartassign"
 	SLASH_SMARTASSIGN2 = "/smart"
@@ -60,7 +60,7 @@ function SlashCommands:Init()
 	end
 end
 
---- Zum ausführen eines Slash Kommandos
+--- Zum ausführen eines Slash Kommandos.
 -- Wird aufgerufen, wenn der Spieler in WoW einen Slash Kommando im Chat eintippt und ausführt.
 --
 -- @param exec ist das Slash Kommando 

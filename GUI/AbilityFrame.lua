@@ -1,4 +1,4 @@
---- Beschreibung: Diese Klasse stellt ein Frame dar, im welchen der Spieler eine Fähigkeit für eine Boss löschen oder erstellen kann.
+--- Beschreibung: Diese Klasse stellt ein Frame dar, im welchem der Spieler eine Fähigkeit für eine Boss löschen oder erstellen kann.
 --
 -- @modul AbilityFrame
 -- @author Bartlomiej Grabelus (10044563)
@@ -15,7 +15,7 @@ local GUIL = GUI.Locales
 --  Variable
 local boss
 
---- Setze die buttonwidth abhängig zu der Sprach, da sich die Länge eines Wortes unterscheidet
+--- Setze die buttonwidth abhängig zu der Sprache, da sich die Länge eines Wortes unterscheidet
 local buttonWidth = 0
 if GetLocale() == "enUS" or GetLocale() == "enGB" then
 	buttonWidth = 60
@@ -46,7 +46,7 @@ StaticPopupDialogs["REALLY_APPLY"] = {
   hideOnEscape = true,
 }
 
---- Ein Popup, um zu Fragen ob der Spieler wirklich die Fähigkeit löschen möchte
+--- Ein Popup, um zu Fragen ob der Spieler wirklich die Fähigkeit löschen möchte.
 StaticPopupDialogs["REALLY_DELETE"] = {
   text = GUIL["Do you really want to delete this ability: %s ?"],
   button1 = GUIL["Yes"],
@@ -81,9 +81,9 @@ StaticPopupDialogs["INFO"] = {
 }
 
 
---- Erstellt das Frame und dessen Komponenten, welche dann am Ende auch Konfiguriert werden.
+--- Erstellt das Frame und dessen Komponenten, welche dann am Ende Konfiguriert werden.
 --
--- @tparam Frame parent Ist das Elternframe.
+-- @tparam Frame frame Ist das Elternframe.
 function SA_CreateAbilityFrame:CreateGUI(frame)
 	if not abilityFrame then
 		CreateWindow(frame)
@@ -95,7 +95,7 @@ end
 
 --- Erstellt das Hauptfenster für die AbilityFrame.
 --
--- @tparam Frame parent Ist das Elternframe.
+-- @tparam Frame frame Ist das Elternframe.
 function CreateWindow(frame)
 		CreateFrame("Frame", "abilityFrame", frame)
 		abilityFrame:SetWidth(600)
@@ -119,7 +119,7 @@ end
 --	Und auf der rechten Seite haben wir ein paar EditBoxen und CheckBoxen.
 --  Unten gibt es zwei Buttons, um die Fähigkeit zu löschen oder zu erstellen.
 --
--- @tparam Frame parent Ist das Elternframe.
+-- @tparam Frame frame Ist das Elternframe.
 function CreateComponents(frame)
 	boss = BossSelectFrame:new_BossSelectFrame(frame, "Ability", 200, abilityFrame:GetHeight() - 45, "TOPLEFT", 10, 0)
 	boss.frame:SetBackdrop({
@@ -159,7 +159,7 @@ end
 --	Wenn der Benutzer auf Anlegen drückt, wird eine Fähigkeit angelegt.
 --  Wenn der Benutzer auf Löschen drückt, wird die Fähigkeit gelöscht.
 --
--- @tparam Frame parent Ist das Elternframe.
+-- @tparam Frame frame Ist das Elternframe.
 function ConfigComponents(frame)
 	frame.descText:SetJustifyH("LEFT")
 	frame.abilityNameEB:SetPoint("TOPLEFT", delimiterLine, "TOPRIGHT", 20, -36)
@@ -179,24 +179,24 @@ function SetScripts()
 
 	applyAbilityButton:SetScript("OnClick", function (self, button)
 		if button == "LeftButton" then
-			if ValidForCreateAbility() then -- check if all is valid
-				if IsOneDifficultyChecked() then -- check if a dificulty is checked
+			if ValidForCreateAbility() then -- Prüfe ob Eingabe gültig
+				if IsOneDifficultyChecked() then -- Prüfe ob mindestens ein Schwierigkeitsgrad gewählt wurde
 					StaticPopup_Show("REALLY_APPLY", abilityFrame.abilityNameEB:GetText())
 				else
 					StaticPopup_Show("INFO", GUIL["You should tick a difficulty!"])
 				end
 			else
-				if abilityFrame.abilityNameEB:GetText() == "" then -- if empty
+				if abilityFrame.abilityNameEB:GetText() == "" then -- Wenn leer
 					abilityFrame.abilityNameEB.label:SetTextColor(1, 0, 0, 1)
 				end
-				if abilityFrame.cooldownEB:GetText() == "" then -- if empty
+				if abilityFrame.cooldownEB:GetText() == "" then -- Wenn leer
 					abilityFrame.cooldownEB.label:SetTextColor(1, 0, 0, 1)
 				end
-				-- check if have checked phasebound and some input is in editbox
+				-- Prüfe ob Phasengebunden und Eingabe getätigt wurde
 				if abilityFrame.abilityPhaseNameEB:GetText() == "" and abilityFrame.boundCB:GetChecked() == true then 
 					abilityFrame.abilityPhaseNameEB.label:SetTextColor(1, 0, 0, 1)
 				end
-				-- check if have not checked phasebound and no input is in editbox
+				-- Und ob nicht Phasengebunden
 				if abilityFrame.abilityPhaseNameEB:GetText() ~= "" and abilityFrame.boundCB:GetChecked() == false then
 					StaticPopup_Show("INFO", GUIL["Do you have forgotten to check phasebounded?"])
 				end
@@ -209,9 +209,9 @@ function SetScripts()
 	end)
 end
 
---- Erstellt ein Button
+--- Erstellt ein Button.
 --
--- @tparam Frame parent Ist das Elternframe.
+-- @tparam Frame frame Ist das Elternframe.
 -- @tparam string name Name des Buttons
 -- @tparam string text Text welcher im Button dargestellt wird
 -- @tparam int width Buttonbreite
@@ -236,14 +236,18 @@ function CreateButton(frame, name, text, width, height, position, x, y, template
 	return (button)
 end
 
---- Funktion um eine Linie zu erstellen.
--- Wenn die Linie Horizontal dargestellt werden soll: height = 1 oder 2
--- Wenn die Linie Vertikal dargestellt werden soll: width = 1 oder 2
+--- Funktion um eine Linie mithilfe von einer Textur zu erstellen.
+-- Wenn die Linie Horizontal dargestellt werden soll: height = 1 oder 2.
+-- Wenn die Linie Vertikal dargestellt werden soll: width = 1 oder 2.
 --
--- @tparam string region Wo die Linie ausgerichtet werdne soll
--- @tparam Frame frame Zu welchem Frame relativ positioniert werden soll.
--- @tparam int x Bewegung des Buttons in x-Richtung
--- @tparam int y Bewegung des Buttons in y-Richtung
+-- @tparam Frame frame Ist das Elternframe.
+-- @tparam string name Der Name der Texture
+-- @tparam int width Linienbreite
+-- @tparam int height Linienhöhe
+-- @tparam string region Region wo die Linie ausgerichtet werden soll
+-- @tparam string frame Frame an welchen relativ positioniert werden soll
+-- @tparam int x Bewegung der Linie in x-Richtung
+-- @tparam int y Bewegung der Linie in y-Richtung
 function CreateLine(parent, name,width, height, region, frame, x, y)
 	local line = parent:CreateTexture(name)
 	line:SetTexture("Interface\\Tooltips\\UI-Tooltip-Background")
@@ -252,9 +256,9 @@ function CreateLine(parent, name,width, height, region, frame, x, y)
 	line:SetPoint(region, frame, x, y)
 end
 
---- Erstellt einen Text(FontString)
+--- Erstellt einen Text(FontString).
 --
--- @tparam Frame parent Ist das Elternframe.
+-- @tparam Frame frame Ist das Elternframe.
 -- @tparam string name Name des FontStrings
 -- @tparam string text Text welcher über den FontString dargestellt werden soll
 -- @tparam string position Wo der Text positioniert werden soll

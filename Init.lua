@@ -1,5 +1,4 @@
----
--- Beschreibung: Diese Datei dient zur Initialisierung der im Projekt verwendeten Variablen/Tabellen. Bei erstmaligen Start
+--- Beschreibung: Diese Datei dient zur Initialisierung der im Projekt verwendeten Variablen/Tabellen. Bei erstmaligen Start
 --			     werden die Saved Variables auf einen Defaultwert gesetzt. 
 --			     Die Saved Variables werden in "...\World of Warcraft\WTF\<AccountName>\SAVED_VARIABLES\SmartAssign"
 --			     gespeichert. Blizzard bietet die Moeglichkeit komplette Tabellen inklusive Untertabellen zu speichern.

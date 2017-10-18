@@ -1,7 +1,7 @@
 -- Beschreibung: Diese Klasse stellt ein DropDownMenu dar, welche mit den Daten aus einer Tabelle gefüllt wird, welche wiederrum eine Tabelle enthält.
---				Wenn der Spieler auf den DropDownMenuButton klickt, zeigt sich ihm eine Liste mit Einträgen. Diese Einträge beinhalten wieder eine Liste mit Elementen.
---				Zum Beispiel wird beim Klick auf den DropDownMenuButton eine Liste mit Einträge der Klassen angezeigt und dann wenn man eine Klasse auswählt, 
---              wird eine Liste mit Spieler angezeigt, welche der Klasse entsprechen.
+--				 Wenn der Spieler auf den DropDownMenuButton klickt, zeigt sich ihm eine Liste mit Einträgen. Diese Einträge beinhalten wieder eine Liste mit Elementen.
+--				 Zum Beispiel wird beim Klick auf den DropDownMenuButton eine Liste mit Einträge der Klassen angezeigt und dann wenn man eine Klasse auswählt, 
+--               wird eine Liste mit Spieler angezeigt, welche der Klasse entsprechen.
 --
 -- @modul DropDownMenu
 -- @author Bartlomiej Grabelus (10044563)
@@ -22,7 +22,7 @@ local assert, type = assert, type
 
 local BUTTON_HEIGHT = 25
 
---- Lua Funktion, um die größe einer Tabelle zu erfahren.
+--- Eine Lua Funktion, um die Größe einer Tabelle zu erfahren.
 -- 
 -- @tparam table T Die Tabelle von welcher man die größe haben möchte
 function GetArraySize(T)
@@ -59,28 +59,28 @@ function SA_DropDownMenu:SetPoint(framePosition, relativeToFrame,relativePos, x,
 	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
 
---- Getter für den ausgewählten Item
+--- Ein Getter für den ausgewählten Item.
 --
 -- @tparam Frame self The DropDownMenu
 local function GetSelectedItem(self)
 	return DropDownData[UIDROPDOWNMENU_MENU_VALUE["Category"]][self:GetID()]["name"]
 end
 
---- Die OnClickEventHandling-Funktion für den DropDownMenu.
+--- Eine OnClickEventHandling-Funktion für den DropDownMenu.
 -- Setzt den Text des Buttons auf den, welcher vom Spieler ausgewählt wurde.
 --
--- self: on which do eventhandling
+-- @tparam Frame self Das DropDownMenu
 function OnClick(self)
 	--print(">> DropDownMenu OnClick << called "..DropDownData[UIDROPDOWNMENU_MENU_VALUE["Category"]][self:GetID()]["name"])  
 	UIDropDownMenu_SetText(DropDownMenuButton, DropDownData[UIDROPDOWNMENU_MENU_VALUE["Category"]][self:GetID()]["name"]);
 end
 
---- Setterfunktion für data. Welche dann in der DropDownMenu dargestellt werden.
+--- Eine Setterfunktion für data. Welche dann in der DropDownMenu dargestellt werden.
 -- Wenn data leer ist dann wird die Position gelöscht, sowie data und selectedID des Frames werden auf nil gesetzt.
 -- Ansonsten übergebe die Tabelle data an das Frame und setze selectedID auf startValue.
 -- Wenn startValue gesetzt ist, dann setzte das selectedID der DropDownListe mithilfe von UIDropDownMenu_SetSelectedID().
 --
--- @tparam Frame frame Das Frame in welcher die Tabelle und selectedID gesetzt werden soll
+-- @tparam Frame frame Das DropDownMenu
 -- @tparam table data Die Tabelle welche in der DropDownListe dargestellt werden soll
 -- @tparam int startValue Das Item was zum start angezeigt werden soll
 local function SetData(frame, data, startValue)
@@ -101,14 +101,14 @@ end
 --- Erstellt ein DropDownMenu.
 -- Erstellt einen DropDownMenuButton, welcher die DropDownListe darstellt.
 -- Hinzu kommt das DropDownMenu, welches das Menu dargestellt.
--- Es werden dann die Daten für die DropDownListe gesetzt und ein Label erstellt.
+-- Es werden dann die Daten für das DropDownMenu gesetzt und ein Label erstellt.
 --
--- UIDropDownMenu_Initialize(): Damit wird die Initialisierungfunktion gesetz
--- UIDropDownMenu_SetButtonWidth(): Damit wird die Breite des Buttons gesetzt
--- UIDropDownMenu_SetWidth(): Damit wird die Breite für das Label gesetzt(im Button)
--- UIDropDownMenu_JustifyText(): Damit wird das Label justiert
+-- UIDropDownMenu_Initialize(): Damit wird die Initialisierungfunktion gesetz.
+-- UIDropDownMenu_SetButtonWidth(): Damit wird die Breite des Buttons gesetzt.
+-- UIDropDownMenu_SetWidth(): Damit wird die Breite für das Label gesetzt(im Button).
+-- UIDropDownMenu_JustifyText(): Damit wird das Label justiert.
 --
--- @tparam Frame parent Ist das Elternframe.
+-- @tparam Frame frame Ist das Elternframe.
 -- @tparam string name Name der DropDownMenu
 -- @tparam table data Die Daten für das DropDownMenu
 -- @tparam function init Die Initialisierungfunktion
@@ -149,7 +149,7 @@ end
 -- func enthält die Funktion OnClick.
 -- Dann füge alles plus den Level der DropDownListe hinzu.
 --
--- @tparam Frame self Die DropDownList 
+-- @tparam Frame self Das DropDownMenu
 -- @tparam int level Das Level auf welches das Item gesetzt werden soll(2 Level möglich)
 function InitDDM(frame, level) 
 frame.selectedName = SAL["Player"];
@@ -189,11 +189,11 @@ level = level or 1; -- Level 1 daten (Klassen)
    end
 end
 
---- Loader für die DropDownListe
+--- Loader für die DropDownListe.
 --
 -- Assertion: Wenn data keine Tabelle ist
 --
--- @tparam Frame parent Ist das Elternframe.
+-- @tparam Frame frame Ist das Elternframe.
 -- @tparam table data Die Tabelle welche in der DropDownMenu gesetzt werden soll
 function SA_DropDownMenu:LoadDropDownMenu(frame, buttonName, menuName, data)
 	assert(type(data) == "table", SAL["'data' must be a table. See 'Init.lua' at _G.GUI.DropDownMenu.data for infos."])

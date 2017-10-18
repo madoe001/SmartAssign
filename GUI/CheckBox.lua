@@ -26,12 +26,12 @@ function SA_CheckBox:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
 
---- Dient zum erstellen der CheckBox
+--- Dient zum erstellen der CheckBox.
 -- Erst wird das Frame erstellt, dann wird die Position des Frames gelöscht.
 -- Dann wird der Text erstellt.
 --
--- @tparam Frame parent Ist das Elternframe.
--- @tparam string checkboxText Text welcher rechts gesetzt werden soll.
+-- @tparam Frame frame Ist das Elternframe
+-- @tparam string checkboxText Text welcher rechts gesetzt werden soll
 -- @return Die CheckBox
 local function CreateCheckBox(frame, checkboxText, name)
 	local CheckBoxFrame = CreateFrame("CheckButton", name, frame, "UICheckButtonTemplate")
@@ -51,8 +51,9 @@ end
 --
 -- Assertion: Wenn checkboxText kein String ist
 --
--- @tparam Frame parent Ist das Elternframe.
+-- @tparam Frame frame Ist das Elternframe.
 -- @tparam string checkboxText Text welcher rechts von der CheckBox dargestellt werden soll
+-- @return CheckBox
 function SA_CheckBox:LoadCheckBox(frame, checkboxText, name)
 	assert(type(checkboxText) == "string", GUIL["'checkboxText' must be a string."])
 	return CreateCheckBox(frame, checkboxText, name)
