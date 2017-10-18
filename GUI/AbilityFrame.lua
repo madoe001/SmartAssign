@@ -179,24 +179,24 @@ function SetScripts()
 
 	applyAbilityButton:SetScript("OnClick", function (self, button)
 		if button == "LeftButton" then
-			if ValidForCreateAbility() then -- check if all is valid
-				if IsOneDifficultyChecked() then -- check if a dificulty is checked
+			if ValidForCreateAbility() then -- Prüfe ob Eingabe gültig
+				if IsOneDifficultyChecked() then -- Prüfe ob mindestens ein Schwierigkeitsgrad gewählt wurde
 					StaticPopup_Show("REALLY_APPLY", abilityFrame.abilityNameEB:GetText())
 				else
 					StaticPopup_Show("INFO", GUIL["You should tick a difficulty!"])
 				end
 			else
-				if abilityFrame.abilityNameEB:GetText() == "" then -- if empty
+				if abilityFrame.abilityNameEB:GetText() == "" then -- Wenn leer
 					abilityFrame.abilityNameEB.label:SetTextColor(1, 0, 0, 1)
 				end
-				if abilityFrame.cooldownEB:GetText() == "" then -- if empty
+				if abilityFrame.cooldownEB:GetText() == "" then -- Wenn leer
 					abilityFrame.cooldownEB.label:SetTextColor(1, 0, 0, 1)
 				end
-				-- check if have checked phasebound and some input is in editbox
+				-- Prüfe ob Phasengebunden und Eingabe getätigt wurde
 				if abilityFrame.abilityPhaseNameEB:GetText() == "" and abilityFrame.boundCB:GetChecked() == true then 
 					abilityFrame.abilityPhaseNameEB.label:SetTextColor(1, 0, 0, 1)
 				end
-				-- check if have not checked phasebound and no input is in editbox
+				-- Und ob nicht Phasengebunden
 				if abilityFrame.abilityPhaseNameEB:GetText() ~= "" and abilityFrame.boundCB:GetChecked() == false then
 					StaticPopup_Show("INFO", GUIL["Do you have forgotten to check phasebounded?"])
 				end
@@ -209,7 +209,7 @@ function SetScripts()
 	end)
 end
 
---- Erstellt ein Button
+--- Erstellt ein Button.
 --
 -- @tparam Frame frame Ist das Elternframe.
 -- @tparam string name Name des Buttons
@@ -237,10 +237,10 @@ function CreateButton(frame, name, text, width, height, position, x, y, template
 end
 
 --- Funktion um eine Linie mithilfe von einer Textur zu erstellen.
--- Wenn die Linie Horizontal dargestellt werden soll: height = 1 oder 2
--- Wenn die Linie Vertikal dargestellt werden soll: width = 1 oder 2
+-- Wenn die Linie Horizontal dargestellt werden soll: height = 1 oder 2.
+-- Wenn die Linie Vertikal dargestellt werden soll: width = 1 oder 2.
 --
--- @tparam Frame parent Ist das Elternframe.
+-- @tparam Frame frame Ist das Elternframe.
 -- @tparam string name Der Name der Texture
 -- @tparam int width Linienbreite
 -- @tparam int height Linienhöhe
@@ -256,7 +256,7 @@ function CreateLine(parent, name,width, height, region, frame, x, y)
 	line:SetPoint(region, frame, x, y)
 end
 
---- Erstellt einen Text(FontString)
+--- Erstellt einen Text(FontString).
 --
 -- @tparam Frame frame Ist das Elternframe.
 -- @tparam string name Name des FontStrings
