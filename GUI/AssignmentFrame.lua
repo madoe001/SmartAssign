@@ -62,7 +62,6 @@ do
 	-- Positionierung dynamisch zu gestalten
 	-- Druch die Funktione bleiben die Eintraege der Liste zusammenhaengend. 
 	local function updateAssignmentFrame(self, toBeDeleted)
-		local foundElement = false
 		local cacheList = {}
 		local ctr = 1		
 
