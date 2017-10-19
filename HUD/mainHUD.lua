@@ -1,4 +1,4 @@
---- Beschreibung: Diese Klasse stellt eine unsichtbare HUD zur Verfügung. Sie beinhaltet eine Namensplatte für den gerade fokusierten Boss,
+--- Beschreibung: Diese Klasse stellt eine unsichtbare HUD zur Verf&uumlgung. Sie beinhaltet eine Namensplatte f&uumlr den gerade fokusierten Boss,
 -- sowie ein BossSpellIcon, welches die Zauber anzeigt, welche vom Boss gewirkt werden.
 --
 -- @modul mainHUD
@@ -17,19 +17,19 @@ local HUDL = _G.HUD.Locales
 local playerName, playerGUID = UnitName("player"), UnitGUID("player")
 
 -- Variablen 
-local isInstance -- Um prüfen zu können ob es sich um eine Instanz handelt
-local instanceType -- Um prüfen zu können um was für einen Instanztyp es sich handelt(Raid, Party)
-local instanceName -- Um den Instanzennamen zwischen zu speicher zu können
+local isInstance -- Um pr&uumlfen zu k&oumlnnen ob es sich um eine Instanz handelt
+local instanceType -- Um pr&uumlfen zu k&oumlnnen um was f&uumlr einen Instanztyp es sich handelt(Raid, Party)
+local instanceName -- Um den Instanzennamen zwischen zu speicher zu k&oumlnnen
 local unit
 local hudFrame
 
---- Erstellt die mainHUD, welche für den Spieler unsichtbar ist.
+--- Erstellt die mainHUD, welche f&uumlr den Spieler unsichtbar ist.
 -- Sie dient nur zur Positionierung anderer HUD-Komponenten.
 --
 -- Benutzte Events:
--- PLAYER_ENTERING_WORLD: Wird ausgelöst, wenn der Spieler z.B. die Welt oder eine Instanz betritt
--- PLAYER_TARGET_CHANGED: Wird ausgelöst, wenn der fokus des Spielers gewechselt wird
--- PLAYER_REGEN_DISABLED: Wird ausgelöst, wenn die Lebens- und Energieregeneration des Spielers unterbrochen wird
+-- PLAYER_ENTERING_WORLD: Wird ausgel&oumlst, wenn der Spieler z.B. die Welt oder eine Instanz betritt
+-- PLAYER_TARGET_CHANGED: Wird ausgel&oumlst, wenn der fokus des Spielers gewechselt wird
+-- PLAYER_REGEN_DISABLED: Wird ausgel&oumlst, wenn die Lebens- und Energieregeneration des Spielers unterbrochen wird
 function mainHUD:CreateMainHUD()
 	hudFrame = CreateFrame("Frame","hudFrame",UIParent)
 	hudFrame:SetFrameStrata('BACKGROUND')
@@ -51,10 +51,10 @@ function mainHUD:Show()
 	self:Show()
 end
 
---- Diese Funktion wird aufgerufen wenn ein Event ausgelöst wird, siehe Zeile 45.
+--- Diese Funktion wird aufgerufen wenn ein Event ausgel&oumlst wird, siehe Zeile 45.
 -- Hier wird eine Namensplatte und die Spellicons erstellt und angezeigt, wenn ein Boss fokusiert ist.
 --
--- @tparam Event event Das Event welches ausgelöst wurde.
+-- @tparam Event event Das Event welches ausgel&oumlst wurde.
 function mainHUD:OnEnteringEvent_TestInstance(event)
 	local name = UnitName("target") -- Hole den Namen NPC des Spielerfokuses
 	local boss1 = UnitName("boss1")
@@ -64,7 +64,7 @@ function mainHUD:OnEnteringEvent_TestInstance(event)
 	local boss5 = UnitName("boss5")
 	
 	if (event == "PLAYER_ENTERING_WORLD" ) then -- Wenn der Spieler die Welt oder Instance betritt
-		local isInstance, instanceType = IsInInstance() -- Besorge Informationen über die Instanz
+		local isInstance, instanceType = IsInInstance() -- Besorge Informationen &uumlber die Instanz
 		if isInstance then -- Wenn der Spieler in einer Instanz ist
 			isInstance = isInstance
 			if instanceType == "party" or instanceType == "raid" then -- Nur wenn der Instanztyp ein Raid oder Party ist erstelle eine Bossplatte und den Spellicon
@@ -81,13 +81,13 @@ function mainHUD:OnEnteringEvent_TestInstance(event)
 	end
 end
 
---- Gibt zurück ob es eine Instanz ist.
+--- Gibt zur&uumlck ob es eine Instanz ist.
 -- @return isInstance
 function mainHUD:IsInInstance()
 	return isInstance
 end
 
---- Gibt den Instanztyp zurück.
+--- Gibt den Instanztyp zur&uumlck.
 -- @return instanceType
 function mainHUD:InstanceType()
 	return instanceType

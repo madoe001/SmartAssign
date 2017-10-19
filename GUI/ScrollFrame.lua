@@ -1,17 +1,17 @@
---- Beschreibung: Diese Klasse stellt ein ScrollFrame dar, welche eine ScrollBar und ein ContentFrame enthält. Das ContentFrame enthält die Liste mit den Buttons.	
+--- Beschreibung: Diese Klasse stellt ein ScrollFrame dar, welche eine ScrollBar und ein ContentFrame enth&aumllt. Das ContentFrame enth&aumllt die Liste mit den Buttons.	
 --				  Die ScrollBar wird nur angezeigt, wenn die Liste zu lang ist, damit der Spieler unter und hoch scrollen kann.
 --				  Das ContentFrame zeigt zurerst eine Liste der Contents(z.B. Classic) an.
 --                Diese Liste besteht aus ButtonFrames.
 --                Zu Beginn gitb es keinen Header.
 --				  Wenn der Spieler jedoch auf einen Content klickt, dann wird dieser zum neuen Header der Liste und wird gehighlighted. 
---				  Nun kann der Spieler eine Instanz auswählen. Die Instanz, welche der Spieler auswählt wird nun als neuer Header angezeigt.
---				  Zuletzt kann der Spieler einen Boss aus dieser Instanz auswählen. 
+--				  Nun kann der Spieler eine Instanz ausw&aumlhlen. Die Instanz, welche der Spieler ausw&aumlhlt wird nun als neuer Header angezeigt.
+--				  Zuletzt kann der Spieler einen Boss aus dieser Instanz ausw&aumlhlen. 
 --				  Den Boss kann der Spieler jederzeit wechseln.
---				  Rückwärts funktioniert die ScrollFrame genauso, man klickt auf den Header(welcher eine Instanz ist) werden nun wieder alle Instanzen angezeigt.
+--				  R&uumlckw&aumlrts funktioniert die ScrollFrame genauso, man klickt auf den Header(welcher eine Instanz ist) werden nun wieder alle Instanzen angezeigt.
 -- 
---				  Plus und Minus Texturen zeigen an, ob z.B. eine Instanz Bosse enthält(Kinder).
---				  Enthält ein Button keine Kinder so hat er keine Textur. 
---                Enthält er jedoch Kinder erhält dieser eine Plus Textur, wenn dieser dann angeklickt wird, wird er zum neuen Header und kriegt eine Minus Textur.
+--				  Plus und Minus Texturen zeigen an, ob z.B. eine Instanz Bosse enth&aumllt(Kinder).
+--				  Enth&aumllt ein Button keine Kinder so hat er keine Textur. 
+--                Enth&aumllt er jedoch Kinder erh&aumllt dieser eine Plus Textur, wenn dieser dann angeklickt wird, wird er zum neuen Header und kriegt eine Minus Textur.
 --
 --				  Nicht mehr in Benutztung, da durch DropDowns.lua ersetzt!
 --
@@ -31,7 +31,7 @@ local SAL = _G.GUI.Locales
 local BUTTON_HEIGHT = 25
 
 --- Dient zur Erstellung des ScrollFrames.
--- Es wird ein ScrollFrame erstellt und ein Container für die Buttons erzeugt, wo die Daten stehen.
+-- Es wird ein ScrollFrame erstellt und ein Container f&uumlr die Buttons erzeugt, wo die Daten stehen.
 -- Setz den Count of main Buttons zu Beginn auf 0.
 -- Dann wird eine ScrollBar und das ContentFrame erstellt.
 --
@@ -58,10 +58,10 @@ local function CreateScrollFrame(frame, name)
 	return ScrollFrame
 end
 
---- Erstellt die ScrollBar für die ScrollFrame.
--- Es wird ein Attribut gesetzt, um zur Laufzeit das Attribut sicher prüfen zu können, mithilfe
+--- Erstellt die ScrollBar f&uumlr die ScrollFrame.
+-- Es wird ein Attribut gesetzt, um zur Laufzeit das Attribut sicher pr&uumlfen zu k&oumlnnen, mithilfe
 -- des Events OnAttributeChanged. Zu welchen ein EventHandling implementiert wird.
--- Des Weiteren wird ein EventHandler für das Event OnValueChanged gesetzt.
+-- Des Weiteren wird ein EventHandler f&uumlr das Event OnValueChanged gesetzt.
 --
 -- @tparam Frame frame Ist das Elternframe.
 function CreateScrollBar(frame)
@@ -69,12 +69,12 @@ function CreateScrollBar(frame)
 		ScrollBar = CreateFrame("Slider", "ScrollBar", frame, "UIPanelScrollBarTemplate")
 	end
 	
-	-- Setze einen Attribut, welcher über GetAttribute() geholt werden kann
+	-- Setze einen Attribut, welcher &uumlber GetAttribute() geholt werden kann
 	ScrollBar:SetAttribute("buttoncount",0)
 	
 	ScrollBar:SetPoint("TOPLEFT", frame, "TOPRIGHT", -12, -16)
 	ScrollBar:SetPoint("BOTTOMLEFT", frame, "BOTTOMRIGHT", -12, 16)
-	ScrollBar:SetMinMaxValues(1, 100) -- Setze Minimum und Maximum für die ScrollBar, welcher der Scrollbereich ist
+	ScrollBar:SetMinMaxValues(1, 100) -- Setze Minimum und Maximum f&uumlr die ScrollBar, welcher der Scrollbereich ist
 	ScrollBar:SetValueStep(1) -- Setze fest, um wieviel immer gescrollt werden soll, wenn der Spieler scrollt
 	ScrollBar.scrollStep = 1
 	ScrollBar:SetValue(0) -- Setze ein start value der ScrollBar fest
@@ -107,7 +107,7 @@ function CreateScrollBar(frame)
 		end
 	end)
 	
-	local ScrollBG = ScrollBar:CreateTexture("ScrollBar_Tex", "BACKGROUND") -- Textur für die ScrollBar
+	local ScrollBG = ScrollBar:CreateTexture("ScrollBar_Tex", "BACKGROUND") -- Textur f&uumlr die ScrollBar
 	ScrollBG:SetAllPoints(ScrollBar)
 	ScrollBG:SetTexture(0, 0, 0, 0.4)
 	ScrollBar:Hide()
@@ -125,8 +125,8 @@ function CreateScrollBar(frame)
 end
 
 --- Erstellt den Content des ScrollFrames.
--- Es wird ein ContentFrame erstellt und die Größe wird vom parent übernommen.
--- Dann werden leere Buttons erstellt, soviele wie die Tabelle an Daten enthält.
+-- Es wird ein ContentFrame erstellt und die Gr&oumlße wird vom parent &uumlbernommen.
+-- Dann werden leere Buttons erstellt, soviele wie die Tabelle an Daten enth&aumllt.
 -- Daraufhin wird der Text der Buttons gesetzt, welcher aus der Tabelle data genommen wird.
 --
 -- @tparam Frame frame Ist das Elternframe
@@ -145,7 +145,7 @@ function CreateContent(frame, data)
 	
 	Content:SetSize(frame:GetWidth(), frame:GetHeight())
 	
-	SA_ScrollFrame:CreateButtons(data, frame) -- Erstelle alle benötigten Buttons
+	SA_ScrollFrame:CreateButtons(data, frame) -- Erstelle alle ben&oumltigten Buttons
 	local i = 1
 	local lastContent = 1
 	for k, v in pairs(data) do -- Durch laufe komplette Tabelle
@@ -164,7 +164,7 @@ function CreateContent(frame, data)
 						btn1.hasChilds = true
 						SetPlusTexture(btn1) -- Setze ein Plus in btn1
 					
-						btn1:SetScript("OnClick", function(self, button) -- OnClick EventHandling für den Mainbutton
+						btn1:SetScript("OnClick", function(self, button) -- OnClick EventHandling f&uumlr den Mainbutton
 							if button == "LeftButton" then
 								if not self.clicked then -- Wenn btn1 nicht geklickt war
 									ScrollFrame.lvlClicked = 1
@@ -172,11 +172,11 @@ function CreateContent(frame, data)
 									self.clicked = true
 									SetMinusTexture(self) -- Und setzte ein Minus im Button
 								
-									-- Verberge alle Buttons und setze den gewählten als Header
+									-- Verberge alle Buttons und setze den gew&aumlhlten als Header
 									SA_ScrollFrame:HideButtons()
 									ClearAllPoints()
 									NewHeader(self)
-									SetInstanceButtons(self, Content.data[self:GetText()]) -- Setze die Instanzbuttons abhängig zum gewählten Mainbutton 
+									SetInstanceButtons(self, Content.data[self:GetText()]) -- Setze die Instanzbuttons abh&aumlngig zum gew&aumlhlten Mainbutton 
 									
 									ScrollBar:SetMinMaxValues(1,GetArraySize(Content.data[self:GetText()], 1, 0) * GetArraySize(Content.data[self:GetText()], 1, 0)/3) -- Setzte Minimum und Maximum der ScrollBar
 								else                                                       -- wenn der Button vorher angeklickt war
@@ -211,7 +211,7 @@ function CreateContent(frame, data)
 										self.clicked = true
 										SetMinusTexture(self) -- Setze eine Minus Textur
 										
-										-- Verberge alle Buttons und setze den gewählten als Header
+										-- Verberge alle Buttons und setze den gew&aumlhlten als Header
 										SA_ScrollFrame:HideButtons()
 										ClearAllPoints()
 										NewHeader(self) -- Setze einen neuen Header
@@ -234,7 +234,7 @@ function CreateContent(frame, data)
 										SA_ScrollFrame:HideButtons() -- Verberge alle Buttons
 										ClearAllPoints()
 										SetAllPlusTex() -- Setze alle Plus Texturen
-										SetInstanceButtons(self, Content.data[ScrollFrame.mainBTN:GetText()]) -- Setze alle Instanzbuttons abhängig des Mainbuttons
+										SetInstanceButtons(self, Content.data[ScrollFrame.mainBTN:GetText()]) -- Setze alle Instanzbuttons abh&aumlngig des Mainbuttons
 										
 										if ScrollFrame.bossButton then -- Wenn ein Boss angeklickt ist, setze die Textur auf nil und den bossButton auf nil
 											SetNilTex(ScrollFrame.bossButton)
@@ -262,7 +262,7 @@ end
 	frame:SetScrollChild(Content) -- Setze das Scrollkind des ScrollFrames
 end
 
---- Dient um die Position ausserhalb der Klasse zu verändern.
+--- Dient um die Position ausserhalb der Klasse zu ver&aumlndern.
 --
 -- @tparam string framePosition Region des Frames
 -- @tparam string relativeToFrame Relativ zu welchen Frame positioniert werden soll
@@ -273,7 +273,7 @@ function SA_ScrollFrame:SetPoint(framePosition, relativeToFrame,relativePos, x, 
 	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
 
---- Loader für die ScrollFrame.
+--- Loader f&uumlr die ScrollFrame.
 --
 -- @tparam Frame frame Ist das Elternframe
 -- @tparam string name Name des ScrollFrames
@@ -282,8 +282,8 @@ function SA_ScrollFrame:LoadScrollFrame(frame, name)
 	return CreateScrollFrame(frame, name)
 end
 
---- Resetfunktion für die ScrollFrame.
--- Welche für die SlashCommands genutzt wird.
+--- Resetfunktion f&uumlr die ScrollFrame.
+-- Welche f&uumlr die SlashCommands genutzt wird.
 -- Setzt alles zu den Anfangswerten.
 --
 -- @tparam Frame frame Das ScrollFrame
@@ -306,7 +306,7 @@ end
 --- Erstellt alle Buttons, welche zu Beginn leer sind.
 -- Es werden soviele erzeugt, wie die Tabelle groß ist.
 --
--- @tparam tabel data: Wird gebraucht um die Größe zu erfahren
+-- @tparam tabel data: Wird gebraucht um die Gr&oumlße zu erfahren
 -- @tparam Frame frame ScrollFrame 
 function SA_ScrollFrame:CreateButtons(data, frame)
 	for i=1,GetArraySize(data, GetDepth(data), 0) do
@@ -320,10 +320,10 @@ function SA_ScrollFrame:CreateButtons(data, frame)
 	frame.lvlClicked = 0
 end
 
---- Diese Funktion dient dazu die übergegebenen Bossbuttons zu konfigurieren. (drittes Level)
+--- Diese Funktion dient dazu die &uumlbergegebenen Bossbuttons zu konfigurieren. (drittes Level)
 --
 -- @tparam table table Tabelle mit den Bossbuttons
--- @tparam int i Muss mit jedem Button erhöht werden
+-- @tparam int i Muss mit jedem Button erh&oumlht werden
 -- @return i
 function CreateBossButton(table, i)
 	if type(table) == "table" then
@@ -332,7 +332,7 @@ function CreateBossButton(table, i)
 			ConfigBossButtons(ScrollFrame.buttons[i], v)
 			
 			if type(k) == "table" then
-				--CreateBossButton(k, i) -- Wenn noch ein viertes Level da wäre, aber ist normal nicht nötig
+				--CreateBossButton(k, i) -- Wenn noch ein viertes Level da w&aumlre, aber ist normal nicht n&oumltig
 			end
 		end
 	end
@@ -360,8 +360,8 @@ end
 
 --- Eine weitere Funktion zum Konfigurieren eines Mainbuttons.
 -- Es wird ein FontString erstellt und eine Texture mit dem Wert nil, was bewirkt, dass eine existierende
--- Textur überschrieben wird.
--- Ausserdem wird der mainButtonCount sowie das Attribut buttoncount um 1 erhöht.
+-- Textur &uumlberschrieben wird.
+-- Ausserdem wird der mainButtonCount sowie das Attribut buttoncount um 1 erh&oumlht.
 --
 -- @tparam ButtonFrame button Der mainButton
 function ConfigMainButtons(button)
@@ -387,8 +387,8 @@ end
 
 --- Konfiguriert einen instance button(zweites level).
 -- Es wird ein FontString erstellt und eine Textur mit dem Wert nil, was bewirkt, dass eine existierende
--- Textur überschrieben wird.
--- Des Weiteren wird das Attribut buttoncount um 1 erhöht.
+-- Textur &uumlberschrieben wird.
+-- Des Weiteren wird das Attribut buttoncount um 1 erh&oumlht.
 -- Dieser Button wird erst einmal verborgen(mit Hide()).
 -- Button Level = 2.
 --
@@ -425,9 +425,9 @@ end
 
 --- Konfiguriert einen Bossbutton(drittes level).
 -- Es wird ein FontString erstellt und eine Textur mit dem Wert nil, was bewirkt, dass eine existierende
--- Textur überschrieben wird.
--- Des Weiteren wird das Attribut buttoncount um 1 erhöht.
--- Sowie ein EventHandler für das Event OnClick hinzugefügt.
+-- Textur &uumlberschrieben wird.
+-- Des Weiteren wird das Attribut buttoncount um 1 erh&oumlht.
+-- Sowie ein EventHandler f&uumlr das Event OnClick hinzugef&uumlgt.
 -- Dieser Button wird erst einmal verborgen(mit Hide()).
 -- Button Level = 3.
 --
@@ -446,7 +446,7 @@ function ConfigBossButtons(button, key)
 	
 	SetNilTex(button) -- Setze eine nil Textur
 	
-	-- EventHandling für den Bossbutton, wenn der Bossbutton angeklickt wird, wird er gehighlighted.
+	-- EventHandling f&uumlr den Bossbutton, wenn der Bossbutton angeklickt wird, wird er gehighlighted.
 	button:SetScript("OnClick", function(self, button)
 		if button == "LeftButton" then
 			if self.clicked == false then -- Wenn vorher nicht geklickt war
@@ -468,15 +468,15 @@ function ConfigBossButtons(button, key)
 				self.clicked = false
 				ScrollFrame.bossButton = nil
 				
-				-- Überschreibe das Highlighting
+				-- &uumlberschreibe das Highlighting
 				SetNilTex(self)
 			end
 		end
 	end)
 end
 
---- Wird für das Zurücksetzen benötigt.
--- Mit der Funktion werden alle Buttons zurückgesetzt.
+--- Wird f&uumlr das Zur&uumlcksetzen ben&oumltigt.
+-- Mit der Funktion werden alle Buttons zur&uumlckgesetzt.
 function ConfigAllButtons()
 	for i=1, #ScrollFrame.buttons, 1 do
 		if ScrollFrame.buttons[i].level == 1 then
@@ -489,7 +489,7 @@ function ConfigAllButtons()
 	end
 end
 
---- Ein Setter für alle Buttons, ob sie vorher geklickt wurden/waren oder nicht.
+--- Ein Setter f&uumlr alle Buttons, ob sie vorher geklickt wurden/waren oder nicht.
 -- Wird benutzt um alle auf nicht geklickt zu setzen.
 --
 -- @tparam boolean clicked Auf welchen Wert clicked gesetzt wird
@@ -509,9 +509,9 @@ function SetAllClicked(clicked)
 	end
 end
 
---- Ein Setter um für alle Level 1 und 2 Buttons, welche noch ein Kind enthalten
+--- Ein Setter um f&uumlr alle Level 1 und 2 Buttons, welche noch ein Kind enthalten
 -- eine Plus Textur zu setzen.
--- Ausser den MainButton, welcher angeklickt wurde, dieser behält/bekommt seine Minus Textur.
+-- Ausser den MainButton, welcher angeklickt wurde, dieser beh&aumllt/bekommt seine Minus Textur.
 function SetAllPlusTex()
 	for i=1,GetArraySize(Content.data, GetDepth(Content.data), 0) do
 		local button = ScrollFrame.buttons[i]
@@ -524,7 +524,7 @@ function SetAllPlusTex()
 	end
 end
 
---- Setzt die Plus Textur für einen Button.
+--- Setzt die Plus Textur f&uumlr einen Button.
 --
 -- @tparam ButtonFrame button Welcher die Plus Textur gesetzt bekommt
 function SetPlusTexture(button)
@@ -537,7 +537,7 @@ function SetPlusTexture(button)
 	button:GetNormalTexture():SetPoint("RIGHT", button, "RIGHT", 0, 0)
 end
 
---- Setzt die Minus Textur für einen Button.
+--- Setzt die Minus Textur f&uumlr einen Button.
 --
 -- @tparam ButtonFrame button Welcher die Minus Textur gesetzt bekommt
 function SetMinusTexture(button)
@@ -550,9 +550,9 @@ function SetMinusTexture(button)
 	button:GetNormalTexture():SetPoint("RIGHT", button, "RIGHT", 0, 0)
 end
 
----  Setzt für einen Button eine nil Textur.
--- Wird gebraucht um eine bereits existierende Textur zu überschreiben.
--- Da eine Textur nicht gelöscht werden kann.
+---  Setzt f&uumlr einen Button eine nil Textur.
+-- Wird gebraucht um eine bereits existierende Textur zu &uumlberschreiben.
+-- Da eine Textur nicht gel&oumlscht werden kann.
 --
 -- @tparam ButtonFrame button Welcher die nil textur gesetzt bekommt
 function SetNilTex(button)
@@ -565,7 +565,7 @@ function SetNilTex(button)
 	button:GetNormalTexture():SetPoint("LEFT", button, "LEFT", 0, 0)
 end
 
---- Setzt eine Highlight Textur für einen Button.
+--- Setzt eine Highlight Textur f&uumlr einen Button.
 --
 -- @tparam ButtonFrame button Welcher die Highlight Textur gesetzt bekommt
 function SetListHightlightTex(button)
@@ -579,7 +579,7 @@ function SetListHightlightTex(button)
 end
 
 --- Mit dieser Funktion setzt man einen Button als Header.
--- Hier wird der Text größer gemacht und der Button kriegt eine Highlight Textur.
+-- Hier wird der Text gr&oumlßer gemacht und der Button kriegt eine Highlight Textur.
 -- Ein Header wird immer neu gesetzt, wenn ein neues Level in der ScrollFrame erreicht wird.
 -- Wenn der Spieler zum Beispiel auf eine Instanz klickt.
 --
@@ -605,7 +605,7 @@ function NewHeader(button)
 	button:Show()
 end
 
---- Löscht die Positionierung alle Buttons, wenn man alle wieder neu setzen möchte.
+--- L&oumlscht die Positionierung alle Buttons, wenn man alle wieder neu setzen m&oumlchte.
 function ClearAllPoints()
 	for i=1,GetArraySize(Content.data, GetDepth(Content.data), 0) do
 		ScrollFrame.buttons[i]:ClearAllPoints()
@@ -620,9 +620,9 @@ function SA_ScrollFrame:HideButtons()
 end
 
 --- Mit dieser Funktion kann man alle Bossbuttons deaktivieren.
--- Nur der ausgewählte Bossbutton bleibt aktiv.
--- Hierdurch kann der Spieler solange keinen anderen Bossbutton auswählen,
--- bis der ausgewählte abgewählt wird.
+-- Nur der ausgew&aumlhlte Bossbutton bleibt aktiv.
+-- Hierdurch kann der Spieler solange keinen anderen Bossbutton ausw&aumlhlen,
+-- bis der ausgew&aumlhlte abgew&aumlhlt wird.
 --
 -- NICHT IN BENUTZTUNG
 function DisableBossButtons()
@@ -641,10 +641,10 @@ function DisableBossButtons()
 	end
 end
 
---- Gibt abhängig zur übergegebenen Tabelle die Mainbuttons zurück.
+--- Gibt abh&aumlngig zur &uumlbergegebenen Tabelle die Mainbuttons zur&uumlck.
 --
 -- @tparam table data Container mit den Daten
--- @return Gibt die Mainbuttons zurück
+-- @return Gibt die Mainbuttons zur&uumlck
 function GetMainButtons(data)
 	local score = {}
 	for k, v in pairs(data) do
@@ -660,10 +660,10 @@ function GetMainButtons(data)
 end
 
 --- Mit dieser Funktion kann man alle Instanzbuttons holen.
--- Diese sind abhängig von der Tabelle data.
+-- Diese sind abh&aumlngig von der Tabelle data.
 --
 -- @tparam table data Container mit den Daten
--- @return Gibt die  Instanzbuttons zurück
+-- @return Gibt die  Instanzbuttons zur&uumlck
 function GetInstanceButtons(data)
 	local instanceButtons = copyButtons(data)
 	local score = {}
@@ -680,10 +680,10 @@ function GetInstanceButtons(data)
 end
 
 --- Mit dieser Funktion kann man alle Bossbuttons holen.
--- Diese sind abhängig von der Tabelle data, welche vorher mit GetBossData gefiltert wurde.
+-- Diese sind abh&aumlngig von der Tabelle data, welche vorher mit GetBossData gefiltert wurde.
 --
 -- @tparam table data Container mit den Daten
--- @return Gibt die  Bossbuttons zurück
+-- @return Gibt die  Bossbuttons zur&uumlck
 function GetBossButtons(data)
 	local bossButtons = data
 	local score = {}
@@ -700,19 +700,19 @@ end
 
 --- Diese Funktion dient dazu die Bosse aus einer Instanz zu filtern.
 -- Gefiltert wird aus data.
--- Zuerst wird über den Mainbutton die Instanz geholt und dann über die Instanz
--- die Bosse zurückgegeben.
+-- Zuerst wird &uumlber den Mainbutton die Instanz geholt und dann &uumlber die Instanz
+-- die Bosse zur&uumlckgegeben.
 --
--- @tparam ButtonFrame mainBTN Dieser Button enthält den ausgewählten Content
--- @tparam string buttonText enthält den Namen der Instanz
--- @tparam table data enthält alle Daten
+-- @tparam ButtonFrame mainBTN Dieser Button enth&aumllt den ausgew&aumlhlten Content
+-- @tparam string buttonText enth&aumllt den Namen der Instanz
+-- @tparam table data enth&aumllt alle Daten
 -- @return Die Instanzen in einer Tabelle
 function GetBossData(mainBTN, buttonText, data)
 	local nextLvlData = data[mainBTN:GetText()]
 	return nextLvlData[buttonText]
 end
 
---- Diese Funktion gibt alle Bossbuttons aus dem Container zurück.
+--- Diese Funktion gibt alle Bossbuttons aus dem Container zur&uumlck.
 -- @return Alle Bossbuttons
 function SA_ScrollFrame:GetBossButtons()
 	local score = {}
@@ -726,7 +726,7 @@ end
 
 --- Mit dieser Funktion kann man im ScrollFrame alle gerade zu sehenden Buttons
 -- durch Mainbuttons austauschen.
--- Wird gebraucht wenn der Spieler wieder zum Ebene/Level 1 zurückkehrt.
+-- Wird gebraucht wenn der Spieler wieder zum Ebene/Level 1 zur&uumlckkehrt.
 function SetMainButtons()
 	SA_ScrollFrame:HideButtons()
 	ClearAllPoints()
@@ -746,8 +746,8 @@ function SetMainButtons()
 	SetAllPlusTex()
 end
 
---- Mit dieser Funktion werden alle Instanzbuttons gesetzt, in Abhängigkeit zum
--- zurzeit ausgewählten Mainbutton.
+--- Mit dieser Funktion werden alle Instanzbuttons gesetzt, in Abh&aumlngigkeit zum
+-- zurzeit ausgew&aumlhlten Mainbutton.
 --
 -- @tparam ButtonFrame self Der Mainbutton
 -- @tparam table data Container mit allen Daten
@@ -771,14 +771,14 @@ function SetInstanceButtons(self, data)
 end
 
 --- Bei dieser Funktion handelt es sich um eine reine LUA Funktion.
--- Mit welcher man die Größe einer Tabelle ermitteln kann.
+-- Mit welcher man die Gr&oumlße einer Tabelle ermitteln kann.
 -- Der Benutzer kann die Tiefe, wie weit in die Tabelle reingegangen werden soll
--- auswählen.
+-- ausw&aumlhlen.
 --
--- @tparam table table Die Tabelle von welcher man die Größe wissen möchte.
--- @tparam int depth Wie tief die Größe gemessen soll
+-- @tparam table table Die Tabelle von welcher man die Gr&oumlße wissen m&oumlchte.
+-- @tparam int depth Wie tief die Gr&oumlße gemessen soll
 -- @tparam int len Wird benutzt zum Rekursiven durchlaufen der Funktion
--- @return Gibt die Größe der Tabelle zurück
+-- @return Gibt die Gr&oumlße der Tabelle zur&uumlck
 function GetArraySize(table, depth, len)
 	local lengthNum = len
 	for k,v in pairs(table) do -- for every key in the table with a corresponding non-nil value 
@@ -794,9 +794,9 @@ end
 
 --- Bei dieser Funktion handelt es sich um eine reine LUA Funktion.
 -- Mit welcher man die Tiefe einer Tabelle ermitteln kann.
--- Wenn die Tabelle eine Tabelle enthält, wird diese Funktion Rekursiv aufgerufen.
+-- Wenn die Tabelle eine Tabelle enth&aumllt, wird diese Funktion Rekursiv aufgerufen.
 --
--- @return Gibt die tiefe der Tabelle als int zurück
+-- @return Gibt die tiefe der Tabelle als int zur&uumlck
 function GetDepth(table)
 	local depth = 1
 	if next(table) == nil then
@@ -815,8 +815,8 @@ end
 --- Bei dieser Funktion handelt es sich um eine reine LUA Funktion.
 -- Mit welcher man die Buttons(nur keys) kopiert.
 --
--- @tparam table orig Der originale Container gefüllt mit Buttons
--- @return Gibt eine Kopie nur von den Buttons zurück(keys)
+-- @tparam table orig Der originale Container gef&uumlllt mit Buttons
+-- @return Gibt eine Kopie nur von den Buttons zur&uumlck(keys)
 function copyButtons(orig)
     local copy = {}
     for k, v in pairs(orig) do

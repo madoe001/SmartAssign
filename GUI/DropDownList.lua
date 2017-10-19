@@ -1,5 +1,5 @@
---- Beschreibung: Diese Klasse stellt eine DropDownListe dar. Welche mit Daten aus einer Tabelle gefüllt wird.
---				  Diese wird benutzt, um eine Auswahl zwischen Timer und Fähigkeit zu treffen.
+--- Beschreibung: Diese Klasse stellt eine DropDownListe dar. Welche mit Daten aus einer Tabelle gef&uumlllt wird.
+--				  Diese wird benutzt, um eine Auswahl zwischen Timer und F&aumlhigkeit zu treffen.
 --
 -- @modul DropDownList
 -- @author Bartlomiej Grabelus (10044563)
@@ -12,18 +12,18 @@ local SA_DropDownList = _G.GUI.SA_DropDownList
 -- Lokalisierung
 local SAL = _G.GUI.Locales
 
--- Für Fehlerbehandlung
+-- F&uumlr Fehlerbehandlung
 local assert, type = assert, type
 
--- Höhe des DropDownButtons
+-- H&oumlhe des DropDownButtons
 local BUTTON_HEIGHT = 25
 
 --- Mithilfe dieser Funktion kann man dem OnClickEvent einen EventHandler zuordnen.
 --
 -- Assertion: Wenn func keine Funktion ist
 --
--- @tparam Frame frame Für welchen man die EventHandlerFunktion setzen möchte
--- @tparam function func Die Funktion welche für das OnClick Event gesetzt werden soll
+-- @tparam Frame frame F&uumlr welchen man die EventHandlerFunktion setzen m&oumlchte
+-- @tparam function func Die Funktion welche f&uumlr das OnClick Event gesetzt werden soll
 function SA_DropDownList:SetOnClick(frame, func)
     assert(type(func) == "function", SAL["'func' in 'DropDownList SetOnClick' must be a function."])
 	if func then
@@ -33,7 +33,7 @@ function SA_DropDownList:SetOnClick(frame, func)
 	end
 end
 
---- Dient um die Position ausserhalb der Klasse zu verändern.
+--- Dient um die Position ausserhalb der Klasse zu ver&aumlndern.
 --
 -- @tparam string framePosition Region des Frames
 -- @tparam string relativeToFrame Relativ zu welchen Frame positioniert werden soll
@@ -44,8 +44,8 @@ function SA_DropDownList:SetPoint(framePosition, relativeToFrame,relativePos, x,
 	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
 
---- Die OnClickEventHandling-Funktion für DropDownListe.
--- Ändert die SelectedID auf die geklickte ID mithilfe von UIDropDownMenu_SetSelectedID.
+--- Die OnClickEventHandling-Funktion f&uumlr DropDownListe.
+-- &aumlndert die SelectedID auf die geklickte ID mithilfe von UIDropDownMenu_SetSelectedID.
 --
 -- @tparam Frame self Das Item auf welches geklickt wurde
 local function OnClick(self)
@@ -57,9 +57,9 @@ local function OnClick(self)
        -- UIDropDownMenu_SetSelectedID(self, self:GetID())
 end
 
---- Setterfunktion für data. Welche dann in der DropDownListe dargestellt werden.
--- Wenn data leer ist dann wird die Position gelöscht, sowie data und selectedID des Frames werden auf nil gesetzt.
--- Ansonsten übergebe die Tabelle data an das Frame und setze selectedID auf startValue.
+--- Setterfunktion f&uumlr data. Welche dann in der DropDownListe dargestellt werden.
+-- Wenn data leer ist dann wird die Position gel&oumlscht, sowie data und selectedID des Frames werden auf nil gesetzt.
+-- Ansonsten &uumlbergebe die Tabelle data an das Frame und setze selectedID auf startValue.
 -- Wenn startValue gesetzt ist, dann setzte das selectedID der DropDownListe mithilfe von UIDropDownMenu_SetSelectedID().
 --
 -- @tparam Frame frame Das Frame in welcher die Tabelle und selectedID gesetzt werden soll
@@ -81,16 +81,16 @@ end
 
 --- Dient zum erstellen der DropDownListe.
 -- Erstellt einen DropDownListButton, welcher die DropDownListe darstellt.
--- Es werden dann die Daten für die DropDownListe gesetzt und ein Label erstellt.
+-- Es werden dann die Daten f&uumlr die DropDownListe gesetzt und ein Label erstellt.
 --
 -- UIDropDownMenu_Initialize(): Damit wird die Initialisierungfunktion gesetz.
 -- UIDropDownMenu_SetButtonWidth(): Damit wird die Breite des Buttons gesetzt.
--- UIDropDownMenu_SetWidth(): Damit wird die Breite für das Label gesetzt(im Button).
+-- UIDropDownMenu_SetWidth(): Damit wird die Breite f&uumlr das Label gesetzt(im Button).
 -- UIDropDownMenu_JustifyText(): Damit wird das Label justiert.
 --
 -- @tparam Frame frame Ist das Elternframe
 -- @tparam string name Name der DropDownListe
--- @tparam table data Die Daten für die DropDownListe
+-- @tparam table data Die Daten f&uumlr die DropDownListe
 -- @tparam function init Die Initialisierungfunktion
 local function CreateDropDownList(frame, name, data, init)
 	local DropDownListButton = CreateFrame("Button", name, frame,"UIDropDownMenuTemplate")	
@@ -114,13 +114,13 @@ local function CreateDropDownList(frame, name, data, init)
     return DropDownListButton
 end
 
---- Initialisierungfunktion für die DropDownListe.
+--- Initialisierungfunktion f&uumlr die DropDownListe.
 -- Iteriert durch die Tabelle data und setzt die Daten: text, value und func.
--- func enthält die Funktion OnClick.
--- Dann füge alles plus den Level der DropDownListe hinzu.
+-- func enth&aumllt die Funktion OnClick.
+-- Dann f&uumlge alles plus den Level der DropDownListe hinzu.
 --
 -- @tparam Frame self Die DropDownList 
--- @tparam int level Das Level auf welches das Item gesetzt werden soll(1 Level möglich)
+-- @tparam int level Das Level auf welches das Item gesetzt werden soll(1 Level m&oumlglich)
 function InitDDL(self, level)
    local info = UIDropDownMenu_CreateInfo()
    for key,value in pairs(self.data) do
@@ -132,14 +132,14 @@ function InitDDL(self, level)
    end
 end
 
---- Ein Getter für die selectedID
+--- Ein Getter f&uumlr die selectedID
 --
 -- @tparam Frame frame Die DropDownList
 function SA_DropDownList:GetSelectedID(frame)
 	return frame.selectedID
 end
 
---- Ein Setter für die selectedID
+--- Ein Setter f&uumlr die selectedID
 --
 -- @tparam int value Auf welche selectedID gesetzt werden soll
 function SA_DropDownList:SetSelectedID(value)
@@ -147,7 +147,7 @@ function SA_DropDownList:SetSelectedID(value)
 	UIDropDownMenu_SetSelectedID(DropDownListButton, value)
 end
 
---- Loader für die DropDownListe.
+--- Loader f&uumlr die DropDownListe.
 --
 -- Assertion: Wenn data keine Tabelle ist
 --

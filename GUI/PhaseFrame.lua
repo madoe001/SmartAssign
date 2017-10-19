@@ -1,4 +1,4 @@
---- Beschreibung: Diese Klasse stellt ein PhaseFrame dar, in welchen der Spieler eine Phase für einen Boss anlegen oder löschen kann.
+--- Beschreibung: Diese Klasse stellt ein PhaseFrame dar, in welchen der Spieler eine Phase f&uumlr einen Boss anlegen oder l&oumlschen kann.
 --
 -- @modul PhaseFrame
 -- @author Bartlomiej Grabelus (10044563)
@@ -15,7 +15,7 @@ local GUIL = GUI.Locales
 --  Variable
 local boss
 
---- Setze die buttonwidth abhängig zu der Sprach, da sich die Länge eines Wortes unterscheidet
+--- Setze die buttonwidth abh&aumlngig zu der Sprach, da sich die L&aumlnge eines Wortes unterscheidet
 local buttonWidth = 0
 if GetLocale() == "enUS" or GetLocale() == "enGB" then
 	buttonWidth = 60
@@ -25,16 +25,16 @@ else
 	buttonWidth = 100
 end
 
---- Ein Popup, um zu Fragen ob der Spieler wirklich eine Phase anlegen möchte.
+--- Ein Popup, um zu Fragen ob der Spieler wirklich eine Phase anlegen m&oumlchte.
 StaticPopupDialogs["REALLY_APPLY"] = {
   text = GUIL["Do you really want to create this phase: %s ?"],
   button1 = GUIL["Yes"],
   button2 = GUIL["No"],
   OnAccept = function()
-	if phaseFrame.firstPhaseCB:GetChecked() == false then -- Prüfe ob es die erste Phase ist
+	if phaseFrame.firstPhaseCB:GetChecked() == false then -- Pr&uumlfe ob es die erste Phase ist
 		createPhase(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID, phaseFrame.phaseNameEB:GetText(), UIDropDownMenu_GetText(prevPhaseFrameDropDown), phaseFrame.triggerEB:GetText(), phaseFrame.triggerTypeEB:GetText(), phaseFrame.mythicCB:GetChecked(), phaseFrame.heroicCB:GetChecked(), phaseFrame.normalCB:GetChecked())
 	else
-		createPhase(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID, phaseFrame.phaseNameEB:GetText(), nil, phaseFrame.triggerEB:GetText(), phaseFrame.triggerTypeEB:GetText(), phaseFrame.heroicCB:GetChecked(), phaseFrame.normalCB:GetChecked())
+		createPhase(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID, phaseFrame.phaseNameEB:GetText(), nil, phaseFrame.triggerEB:GetText(), phaseFrame.mythicCB:GetChecked(), phaseFrame.heroicCB:GetChecked(), phaseFrame.normalCB:GetChecked())
 	end
   end,
   OnCancel = function (_,reason)
@@ -46,13 +46,13 @@ StaticPopupDialogs["REALLY_APPLY"] = {
   hideOnEscape = true,
 }
 
---- Ein Popup, um zu Fragen ob der Spieler wirklich die Phase löschen möchte
+--- Ein Popup, um zu Fragen ob der Spieler wirklich die Phase l&oumlschen m&oumlchte
 StaticPopupDialogs["REALLY_DELETE"] = {
   text = GUIL["Do you really want to delete this phase: %s ?"],
   button1 = GUIL["Yes"],
   button2 = GUIL["No"],
   OnAccept = function()
-      
+      deletePhase(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID, phaseFrame.phaseNameEB:GetText(), phaseFrame.mythicCB:GetChecked(), phaseFrame.heroicCB:GetChecked(), phaseFrame.normalCB:GetChecked())
   end,
   OnCancel = function (_,reason)
       if reason == "clicked" then
@@ -63,7 +63,7 @@ StaticPopupDialogs["REALLY_DELETE"] = {
   hideOnEscape = true,
 }
 
---- Ein Popup, um Informationen zu zeigen. Beispielsweise, wenn der Spieler keinen Namen für eine Phase eingegeben hat.
+--- Ein Popup, um Informationen zu zeigen. Beispielsweise, wenn der Spieler keinen Namen f&uumlr eine Phase eingegeben hat.
 StaticPopupDialogs["INFO"] = {
   text = "%s",
   button1 = GUIL["Ok"],
@@ -93,7 +93,7 @@ function SA_PhaseFrame:CreateGUI(frame)
 	ConfigComponents(phaseFrame)
 end
 
---- Erstellt das Hauptfenster für die AbilityFrame.
+--- Erstellt das Hauptfenster f&uumlr die AbilityFrame.
 --
 -- @tparam Frame frame Ist das Elternframe.
 function CreateWindow(frame)
@@ -112,12 +112,12 @@ function CreateWindow(frame)
 		--phaseFrame:Hide()
 end
 
---- Erstellt alle benötigten Komponenten, welche im Hauptfenster angezeigt werden.
---	Es werden DropDowns für die Auswahl des Contents, der Instanz, sowie des Bosses, seiner Fähigkeiten und seinen Phasen erstellt.
---	Sowie zwei Linien, welche in dem Frame eine räumliche Trennung bewirken.
+--- Erstellt alle ben&oumltigten Komponenten, welche im Hauptfenster angezeigt werden.
+--	Es werden DropDowns f&uumlr die Auswahl des Contents, der Instanz, sowie des Bosses, seiner F&aumlhigkeiten und seinen Phasen erstellt.
+--	Sowie zwei Linien, welche in dem Frame eine r&aumlumliche Trennung bewirken.
 --	Auf der linken Seite sind die DropDowns positioniert.
 --	Und auf der rechten Seite haben wir ein paar EditBoxen und CheckBoxen.
---  Unten gibt es zwei Buttons, um die Fähigkeit zu löschen oder zu erstellen.
+--  Unten gibt es zwei Buttons, um die F&aumlhigkeit zu l&oumlschen oder zu erstellen.
 --
 -- @tparam Frame parent Ist das Elternframe.
 function CreateComponents(frame)
@@ -151,9 +151,9 @@ function CreateComponents(frame)
 end
 
 --- Mithilfe dieser Funktion werden die Komponenten konfiguriert.
---	Es wird ein EventHandler für die Buttons gesetzt.
---	Wenn der Benutzer auf Anlegen drückt, wird eine Phase angelegt.
---  Wenn der Benutzer auf Löschen drückt, wird die Phase gelöscht.
+--	Es wird ein EventHandler f&uumlr die Buttons gesetzt.
+--	Wenn der Benutzer auf Anlegen dr&uumlckt, wird eine Phase angelegt.
+--  Wenn der Benutzer auf L&oumlschen dr&uumlckt, wird die Phase gel&oumlscht.
 --
 -- @tparam Frame frame Ist das Elternframe.
 function ConfigComponents(frame)
@@ -167,12 +167,12 @@ function ConfigComponents(frame)
 	SetScripts()
 end
 
---- Setzt alle benötigten EventHandlerfunktionen für die Events.
+--- Setzt alle ben&oumltigten EventHandlerfunktionen f&uumlr die Events.
 function SetScripts()
 	applyPhaseButton:SetScript("OnClick", function (self, button)
 		if button == "LeftButton" then
-			if ValidForCreateAbility() then -- Prüfe ob alles Vollständig ist
-				if IsOneDifficultyChecked() then -- Prüfe ob mindestens ein Schwierigkeitsgrad gewählt
+			if ValidForCreateAbility() then -- Pr&uumlfe ob alles Vollst&aumlndig ist
+				if IsOneDifficultyChecked() then -- Pr&uumlfe ob mindestens ein Schwierigkeitsgrad gew&aumlhlt
 					StaticPopup_Show("REALLY_APPLY", phaseFrame.phaseNameEB:GetText())
 				else
 					StaticPopup_Show("INFO", GUIL["You should tick a difficulty!"])
@@ -188,7 +188,7 @@ function SetScripts()
 				if phaseFrame.triggerEB:GetText() == "" then 
 					phaseFrame.triggerEB.label:SetTextColor(1, 0, 0, 1)
 				end
-				-- Prüfe ob es die erste Phase ist und die Eingabe entsprechend richtig ist
+				-- Pr&uumlfe ob es die erste Phase ist und die Eingabe entsprechend richtig ist
 				if UIDropDownMenu_GetSelectedID(prevPhaseFrameDropDown) and phaseFrame.firstPhaseCB:GetChecked() == true then
 					StaticPopup_Show("INFO", GUIL["Is it the first Phase?"])
 				end
@@ -210,7 +210,7 @@ end
 -- @tparam string name Name des Buttons
 -- @tparam string text Text welcher im Button dargestellt wird
 -- @tparam int width Buttonbreite
--- @tparam int height Buttonhöhe
+-- @tparam int height Buttonh&oumlhe
 -- @tparam string position Wo der Button positioniert werden soll
 -- @tparam int x Bewegung des Buttons in x-Richtung
 -- @tparam int y Bewegung des Buttons in y-Richtung
@@ -238,7 +238,7 @@ end
 -- @tparam Frame parent Ist das Elternframe.
 -- @tparam string name Der Name der Texture
 -- @tparam int width Linienbreite
--- @tparam int height Linienhöhe
+-- @tparam int height Linienh&oumlhe
 -- @tparam string region Region wo die Linie ausgerichtet werden soll
 -- @tparam string frame Frame an welchen relativ positioniert werden soll
 -- @tparam int x Bewegung der Linie in x-Richtung
@@ -255,11 +255,11 @@ end
 --
 -- @tparam Frame frame Ist das Elternframe.
 -- @tparam string name Name des FontStrings
--- @tparam string text Text welcher über den FontString dargestellt werden soll
+-- @tparam string text Text welcher &uumlber den FontString dargestellt werden soll
 -- @tparam string position Wo der Text positioniert werden soll
 -- @tparam int x Bewegung des Buttons in x-Richtung
 -- @tparam int y Bewegung des Buttons in y-Richtung
--- @tparam int size Größe der Schrift
+-- @tparam int size Gr&oumlße der Schrift
 function CreateFont(frame, name, text, position, x, y, size)
 	if size == nil then
 		size = 15
@@ -276,19 +276,19 @@ function CreateFont(frame, name, text, position, x, y, size)
 	return (fontString)
 end
 
---- Prüfe ob der Spieler einen Namen, phaseText und trigger eingegeben hat.
+--- Pr&uumlfe ob der Spieler einen Namen, phaseText und trigger eingegeben hat.
 function ValidForCreateAbility()
 	return(phaseFrame.phaseNameEB:GetText() ~= "" and phaseFrame.triggerTypeEB:GetText() ~= "" and phaseFrame.triggerEB:GetText() ~= "") 
 end
 
---- Prüft ob der Spieler nur einen Schwierigkeitsgrad ausgewählt hat.
+--- Pr&uumlft ob der Spieler nur einen Schwierigkeitsgrad ausgew&aumlhlt hat.
 function IsOnlyOneDifficultyChecked()
 	return((not phaseFrame.heroicCB:GetChecked() and not phaseFrame.mythicCB:GetChecked() and phaseFrame.normalCB:GetChecked())
 		or (phaseFrame.heroicCB:GetChecked() and not phaseFrame.mythicCB:GetChecked() and not phaseFrame.normalCB:GetChecked())
 		or (not phaseFrame.heroicCB:GetChecked() and phaseFrame.mythicCB:GetChecked() and not phaseFrame.normalCB:GetChecked()))
 end
 
---- Prüft ob der Spieler mindestens einen Schwierigkeitsgrad ausgewählt hat.
+--- Pr&uumlft ob der Spieler mindestens einen Schwierigkeitsgrad ausgew&aumlhlt hat.
 function IsOneDifficultyChecked()
 	return (phaseFrame.heroicCB:GetChecked() or phaseFrame.mythicCB:GetChecked() or phaseFrame.normalCB:GetChecked())
 end
