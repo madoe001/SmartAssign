@@ -1,4 +1,4 @@
---- Beschreibung: In dieser Datei werden alle Funktionen für die Bearbeitung der SavedVariables geschrieben.
+--- Beschreibung: In dieser Datei werden alle Funktionen fuer die Bearbeitung der SavedVariables geschrieben.
 -- @author Grabelus, Bartlomiej (10044563)	&	Veith, Marvin Justin (10043555)
 
 local _G = _G
@@ -242,7 +242,7 @@ end
 --- removeExpansion
 -- @author  Veith, Marvin Justin (10043555)
 -- @param expansionName Der Name der Expansion.
--- @usage Der Wert des übergebenen Schlüssels ("expansionName"), wird gelöscht.
+-- @usage Der Wert des uebergebenen Schluessels ("expansionName"), wird geloescht.
 function removeExpansion(expansionName)
 	SA_BossList[expansionName] = nil;
 end
@@ -263,7 +263,7 @@ end
 -- @author  Veith, Marvin Justin (10043555)
 -- @param expansionName Der Name der Expansion.
 -- @param raidName Der Name des Raids.
--- @usage Die Tabelle des übergebenen Schlüssels [expansionName]("raidName"), wird gelöscht.
+-- @usage Die Tabelle des uebergebenen Schluessels [expansionName]("raidName"), wird geloescht.
 function removeRaid(expansionName, raidName)
 	if ( SA_BossList[expansionName] ) then
 		SA_BossList[expansionName][raidName] = nil;
@@ -292,7 +292,7 @@ end
 -- @param expansionName Der Name der Expansion.
 -- @param raidName Der Name des Raids.
 -- @param bossName Der Name des Bosses.
--- @usage Entfernt Boss und den dazugehörigen Schlüssel.	
+-- @usage Entfernt Boss und den dazugehoerigen Schluessel.	
 function removeBoss(expansionName, raidName, bossName)
 	if ( SA_BossList[expansionName] ) then
 		if ( SA_BossList[expansionName][raidName] ) then

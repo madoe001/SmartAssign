@@ -11,10 +11,10 @@ local SA_EditBox = _G.GUI.SA_EditBox
 -- Lokalisierung
 local GUIL = _G.GUI.Locales
 
--- Für Fehlerbehandlung
+-- F&uumlr Fehlerbehandlung
 local assert, type = assert, type
 
---- Dient um die Position ausserhalb der Klasse zu verändern.
+--- Dient um die Position ausserhalb der Klasse zu ver&aumlndern.
 --
 -- @tparam string framePosition Region des Frames
 -- @tparam string relativeToFrame Relativ zu welchen Frame positioniert werden soll
@@ -25,12 +25,12 @@ function SA_EditBox:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
 
---. Erstellt einen FontString für die EditBox und setzt Text, sowie Fontfarbe.
+--. Erstellt einen FontString f&uumlr die EditBox und setzt Text, sowie Fontfarbe.
 --
 -- @tparam Frame self Die EditBox
--- @tparam string text Welcher den Text für den FontString enthält
+-- @tparam string text Welcher den Text f&uumlr den FontString enth&aumllt
 -- @tparam float r Rotanteil
--- @tparam float g Grünanteil
+-- @tparam float g Gr&uumlnanteil
 -- @tparam float b Blauanteil
 -- @tparam float a Alphaanteil
 local function ConfigLabel(self, text, r, g, b, a)
@@ -42,7 +42,7 @@ local function ConfigLabel(self, text, r, g, b, a)
 end
 
 
---- Konfiguriert die EditBox, indem die Position gelöscht wird und dann
+--- Konfiguriert die EditBox, indem die Position gel&oumlscht wird und dann
 -- keine mehreren Zeilen erlaubt werden und kein automatischer Fokus gesetzt wird.
 --
 -- @tparam Frame self Die EditBox
@@ -77,12 +77,12 @@ end
 
 --- Die Funktion um eine EditBox zu erstellen.
 -- Je nachdem was im inputType und usedFor steht, wird der FontString konfiguriert.
--- Des Weiteren wird für den OnTextChanged Event ein EventHandler erstellt.
+-- Des Weiteren wird f&uumlr den OnTextChanged Event ein EventHandler erstellt.
 --
 -- @tparam Frame frame Ist das Elternframe.
 -- @tparam string name Ist der Name der EditBox
 -- @tparam string inputType Ist der Inputtyp(number or string)
--- @tparam string usedFor Gibt an wofür die EditBox benutzt wird(timer, cooldown, spell, name, phasename, phaseText, trigger)
+-- @tparam string usedFor Gibt an wof&uumlr die EditBox benutzt wird(timer, cooldown, spell, name, phasename, phaseText, trigger)
 -- @return Die EditBox
 local function CreateEditBox(frame, name, inputType, usedFor)
 	local EditBox = CreateFrame("EditBox", name, frame, "InputBoxTemplate")
@@ -91,8 +91,12 @@ local function CreateEditBox(frame, name, inputType, usedFor)
 	EditBox.usedFor = usedFor
 
 	ConfigEditBox(EditBox)
-	-- Prüfe den inputType und wofür die EditBox benutzt wird
+	-- Pr&uumlfe den inputType und wof&uumlr die EditBox benutzt wird
 	if inputType == "number" and EditBox.usedFor == "timer" then
+		EditBox:SetWidth(frame:GetWidth() * 0.05)
+		EditBox:SetNumeric(true) -- set only numeric input
+		ConfigLabel(EditBox, "Time in sec", 0.5, 0.5, 0.5, 0.8) -- Konfiguriere den FontString
+	elseif inputType == "number" and EditBox.usedFor == "offset" then
 		EditBox:SetWidth(frame:GetWidth() * 0.05)
 		EditBox:SetNumeric(true) -- set only numeric input
 		ConfigLabel(EditBox, "Time in sec", 0.5, 0.5, 0.5, 0.8) -- Konfiguriere den FontString
@@ -117,19 +121,23 @@ local function CreateEditBox(frame, name, inputType, usedFor)
 		ConfigLabel(EditBox, "trigger", 0.5, 0.5, 0.5, 0.8) -- Konfiguriere den FontString
 	end
 	
-	-- Wenn der Text geändert wird, dann führe folgendes aus
+	-- Wenn der Text ge&aumlndert wird, dann f&uumlhre folgendes aus
 	EditBox:SetScript("OnTextChanged", function(self, userInput)
-		if userInput then -- Prüfe ob eine Eingabe geschehen ist
+		if userInput then -- Pr&uumlfe ob eine Eingabe geschehen ist
 			if self.inputType == "number" then
-				if self:GetText() ~= "" then -- Wenn leer
-					if tonumber(self:GetText()) <= 0 then -- Wenn die Zahl kleiner gleich 0 ist, dann setzte auf ""
+				if self:GetText() ~= "" then -- Wenn nicht leer
+					if self.usedFor == "offset" then
+						if tonumber(self:GetText()) < -9 or tonumber(self:GetText()) > 9 then
+							self:SetText("")
+						end
+					else if tonumber(self:GetText()) <= 0 then -- Wenn die Zahl kleiner gleich 0 ist, dann setzte auf ""
 						self:SetText("")
 					else
 						self:SetText(self:GetText())
 					end
-				elseif self.inputType == "string" then -- Wenn es ein String ist, setze diesen zu dem
-					self:SetText(self:GetText())       -- qas der Spieler eingegeben hat
 				end
+			elseif self.inputType == "string" then -- Wenn es ein String ist, setze diesen zu dem
+				self:SetText(self:GetText())       -- qas der Spieler eingegeben hat
 			end
 			self.label:SetText("")
 			if string.len(self:GetText()) == 0 then -- Wenn die EditBox leer ist, konfiguriere den FontString erneut
@@ -147,6 +155,8 @@ local function CreateEditBox(frame, name, inputType, usedFor)
 					ConfigLabel(self, "Time in sec", 0.5, 0.5, 0.5, 0.8)
 				elseif self.inputType == "number" and self.usedFor == "cooldown" then
 					ConfigLabel(self, "cooldown(s) in sec", 0.5, 0.5, 0.5, 0.8)
+				elseif inputType == "number" and EditBox.usedFor == "offset" then
+					ConfigLabel(EditBox, "Time in sec", 0.5, 0.5, 0.5, 0.8) -- Konfiguriere den FontString
 				end
 			end
 		end
@@ -167,13 +177,13 @@ function SA_EditBox:SetMaxLetters(self, max)
 	self:SetMaxLetters(max)
 end
 
---- Loader für die EditBox.
+--- Loader f&uumlr die EditBox.
 --
 -- Assertion: Wenn der inputType nicht gleich string oder number ist
 --
 -- @tparam Frame frame Ist das Elternframe.
 -- @tparam string inputType Ist der Inputtyp(number or string)
--- @tparam string usedFor Gibt an wofür die EditBox benutzt wird(timer, cooldown, spell, name, phasename, phaseText, trigger)
+-- @tparam string usedFor Gibt an wof&uumlr die EditBox benutzt wird(timer, cooldown, spell, name, phasename, phaseText, trigger)
 -- @return EditBox
 function SA_EditBox:LoadEditBox(frame, name, inputType, usedFor)
 	assert((inputType == "string" or inputType == "number"), GUIL["'inputType' must be string or number."])

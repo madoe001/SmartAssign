@@ -12,10 +12,10 @@ local GUIL = _G.GUI.Locales
 
 local SA_CheckBox = _G.GUI.SA_CheckBox
 
--- Für Fehlerbehandlung
+-- F&uumlr Fehlerbehandlung
 local assert, type = assert, type
 
---- Dient um die Position ausserhalb der Klasse zu verändern.
+--- Dient um die Position ausserhalb der Klasse zu ver&aumlndern.
 --
 -- @tparam string framePosition Region des Frames
 -- @tparam string relativeToFrame Relativ zu welchen Frame positioniert werden soll
@@ -27,7 +27,7 @@ function SA_CheckBox:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
 
 --- Dient zum erstellen der CheckBox.
--- Erst wird das Frame erstellt, dann wird die Position des Frames gelöscht.
+-- Erst wird das Frame erstellt, dann wird die Position des Frames gel&oumlscht.
 -- Dann wird der Text erstellt.
 --
 -- @tparam Frame frame Ist das Elternframe
@@ -47,7 +47,7 @@ local function CreateCheckBox(frame, checkboxText, name)
 	return CheckBoxFrame
 end
 
---- Führt CreateCheckBox aus.
+--- F&uumlhrt CreateCheckBox aus.
 --
 -- Assertion: Wenn checkboxText kein String ist
 --
@@ -63,7 +63,7 @@ function SA_CheckBox:SetChecked(value)
 	self:SetChecked(value)
 end
 
---- Gibt zurück, ob die CheckBox angekreuzt ist.
+--- Gibt zur&uumlck, ob die CheckBox angekreuzt ist.
 -- @treturn boolean Ob die CheckBox angekreuzt ist
 function SA_CheckBox:GetChecked()
 	return self:GetChecked()

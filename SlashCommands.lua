@@ -1,6 +1,6 @@
-﻿--- Beschreibung: Diese Klasse ist nötig, um Slash Kommandos für SmartAssign zu initialisieren.
---				  Sie wird über _G global gemacht und besitzt 3 Container.
---				  Einen Container für die Kommandos, einen für Hilfe informationen und einen für Reset Funktionen.
+﻿--- Beschreibung: Diese Klasse ist n&oumltig, um Slash Kommandos f&uumlr SmartAssign zu initialisieren.
+--				  Sie wird &uumlber _G global gemacht und besitzt 3 Container.
+--				  Einen Container f&uumlr die Kommandos, einen f&uumlr Hilfe informationen und einen f&uumlr Reset Funktionen.
 --
 -- @author Bartlomiej Grabelus (10044563)
 
@@ -12,7 +12,7 @@ local SlashCommands = _G.SmartAssign.SlashCommands
 -- Lokalisierung
 local SAL = _G.GUI.Locales
 
--- Für Fehlerbehandlung
+-- F&uumlr Fehlerbehandlung
 local assert, type = assert, type
 
 -- String Funktionen
@@ -21,7 +21,7 @@ local str_lower, str_format, str_split = string.lower, string.format, string.spl
 -- Tabellen Funktionen
 local tbl_remove, unpack, pairs = table.remove, unpack, pairs
 
---- Container für die Kommandos.
+--- Container f&uumlr die Kommandos.
 -- @table CommandList
 local CommandList = {
 	[""] = function()
@@ -42,7 +42,7 @@ local HelpList = {
 	["slash"] = SAL["/smart slash - Prints a list of all slash commands."],
 }
 
---- Container für die Reset Funktionen
+--- Container f&uumlr die Reset Funktionen
 -- @table resetFunctions
 local resetFunctions = {} 
 
@@ -50,34 +50,34 @@ local resetFunctions = {}
 function SlashCommands:Init()
 	SLASH_SMARTASSIGN1 = "/smartassign"
 	SLASH_SMARTASSIGN2 = "/smart"
-	SlashCmdList["SMARTASSIGN"] = function(msg) -- füge function zur globalen slashcommandlist hinzu
+	SlashCmdList["SMARTASSIGN"] = function(msg) -- f&uumlge function zur globalen slashcommandlist hinzu
 		msg = str_lower(msg) -- konvertiere in kleine Buchstaben
-		msg = { str_split(" ", msg) or msg } -- splitte msg, wenn möglich
+		msg = { str_split(" ", msg) or msg } -- splitte msg, wenn m&oumlglich
 		if #msg >= 1 then -- Es muss mindestens ein Eintrag in der Tabelle msg sein
 			local exec = tbl_remove(msg, 1) -- hole den ersten Eintrag
-			SlashCommands:Run(exec, unpack(msg)) -- führe exec aus und packe msg aus(gibt den Inhalt zurück)
+			SlashCommands:Run(exec, unpack(msg)) -- f&uumlhre exec aus und packe msg aus(gibt den Inhalt zur&uumlck)
 		end
 	end
 end
 
---- Zum ausführen eines Slash Kommandos.
--- Wird aufgerufen, wenn der Spieler in WoW einen Slash Kommando im Chat eintippt und ausführt.
+--- Zum ausf&uumlhren eines Slash Kommandos.
+-- Wird aufgerufen, wenn der Spieler in WoW einen Slash Kommando im Chat eintippt und ausf&uumlhrt.
 --
 -- @param exec ist das Slash Kommando 
 -- @param ... alle weiteren informationen --> z.B. /smart slash --> slash ist dann in ... enthalten und smart ist exec
 function SlashCommands:Run(exec, ...)
 	if exec and type(exec) == "string" then -- exec ist nicht nil und ein String
 		if CommandList[exec] and type(CommandList[exec]) == "function" then -- Wenn exec in CommandList existiert und eine Funktion ist (Ist eine Funktion)
-			CommandList[exec](...) -- führe aus
+			CommandList[exec](...) -- f&uumlhre aus
 		elseif SlashCommands[exec] then -- wenn es in SlashCommands enthalten ist(Ist ein Slash Kommando)
-			SlashCommands[exec](...) -- führe aus
+			SlashCommands[exec](...) -- f&uumlhre aus
 		else -- wenn nicht vorhanden informiere den Spieler
 			print(str_format(SAL["Command %s not found. Use '/smart slash' for a full list of commands."], exec))
 		end
 	end
 end
 
---- Gibt dem Spieler im Chat alle möglichen Slash Kommandos aus.
+--- Gibt dem Spieler im Chat alle m&oumlglichen Slash Kommandos aus.
 -- @usage Der Spieler gibt im Chat "/smart slash" ein.
 function SlashCommands:PrintSlash()
 	print(SAL["Slash commands:"])
@@ -99,22 +99,22 @@ function SlashCommands:PrintSlash()
 	end	
 end
 
---- Führt die Reset Funktion eines Frames aus.
--- Wenn der Spieler diese über einen Slash Kommando aufruft.
+--- F&uumlhrt die Reset Funktion eines Frames aus.
+-- Wenn der Spieler diese &uumlber einen Slash Kommando aufruft.
 --
 -- @param name Der Name des Frames
 function SlashCommands:Reset(name)
-	for tabName,funcTab in pairs(resetFunctions) do -- Hole den namen und die Funktione aus dem Container und prüfe, ob name im container enthalten ist.
+	for tabName,funcTab in pairs(resetFunctions) do -- Hole den namen und die Funktione aus dem Container und pr&uumlfe, ob name im container enthalten ist.
 		if not name or name == "all" or name == tabName then
 			for func in pairs(funcTab) do
-				func() -- führe die Funktion aus
+				func() -- f&uumlhre die Funktion aus
 			end
 		end
 	end
 end
 
---- Diese Funktion dient dazu eine Reset Funktion eines Frames hinzuzufügen.
--- Wenn man ein Frame über einen Slash Kommando zurücksetzen möchte.
+--- Diese Funktion dient dazu eine Reset Funktion eines Frames hinzuzuf&uumlgen.
+-- Wenn man ein Frame &uumlber einen Slash Kommando zur&uumlcksetzen m&oumlchte.
 --
 -- Assertion: 'Wenn func keine Function ist.'
 --
@@ -130,15 +130,15 @@ function SlashCommands:AddResetFunction(func, ...)
 	end
 end
 
---- Füge einen neuen Slash Kommando hinzu.
+--- F&uumlge einen neuen Slash Kommando hinzu.
 --
 -- Assertion: 'Wenn exec kein String ist'
 -- Assertion: 'Wenn func keine Funktion ist'
 -- Assertion: 'Wenn helfText kein string ist'
 --
--- @param exec Der Name unter welchen ausgeführt werden soll
+-- @param exec Der Name unter welchen ausgef&uumlhrt werden soll
 -- @param func Die Funktion
--- @param helpText Hilfe Text für den helpText Container
+-- @param helpText Hilfe Text f&uumlr den helpText Container
 function SlashCommands:Add(exec, func, helpText)
 	assert(type(exec) == "string", SAL["'exec' must be a string."])
 	assert(type(func) == "function", SAL["'func' must be a function."])

@@ -1,4 +1,4 @@
---- Beschreibung: Diese Klasse stellt ein SpellIcon zur Verfügung.
+--- Beschreibung: Diese Klasse stellt ein SpellIcon zur Verf&uumlgung.
 --                Welche ein Icon des Zaubers und die verbleibende Zeit beinhaltet
 --
 -- @modul bossSpellIcon
@@ -15,11 +15,11 @@ local bossSpellIcon = _G.HUD.BossSpellIcon
 -- Variablen
 local TimeSinceLastUpdate = 0.0 -- Zeit die welche vergangen ist, seit dem letzten OnUpdate Event
 local name
-local channeling = false -- Zum Prüfen, ob der Boss einen Zauber kanalisiert
+local channeling = false -- Zum Pr&uumlfen, ob der Boss einen Zauber kanalisiert
 local iconFrame
 
 --- Funktion zum erstellen des SpellIcons.
--- Es wird ein FonstString und ein Icon für den SpellIcon erstellt.
+-- Es wird ein FonstString und ein Icon f&uumlr den SpellIcon erstellt.
 --
 -- @tparam Frame frame Ist das Elternframe
 -- @tparam string unit Ist immer target
@@ -32,15 +32,15 @@ function bossSpellIcon:CreatebossSpellIcon(frame, unit)
 	iconFrame.unit = unit
 end
 
---- EventHandlingfunktion für den bossSpellIcon.
--- Es wird geprüft, ob der Boss einen Zauber aufruft oder kanalisiert.
+--- EventHandlingfunktion f&uumlr den bossSpellIcon.
+-- Es wird gepr&uumlft, ob der Boss einen Zauber aufruft oder kanalisiert.
 -- Sowie ob er den beenedet hat.
--- Vorbedingungen werden immer mit PreCheck geprüft, bevor was zu dem
+-- Vorbedingungen werden immer mit PreCheck gepr&uumlft, bevor was zu dem
 -- entsprechenden Event passiert.
 --
--- Geprüfte Events:
+-- Gepr&uumlfte Events:
 -- UNIT_SPELLCAST_START: Wenn jemand einen Zauber startet.
--- UNIT_SPELLCAST_CHANNEL_START: Wenn jemand einen Zauber anfängt zu kanalisieren.
+-- UNIT_SPELLCAST_CHANNEL_START: Wenn jemand einen Zauber anf&aumlngt zu kanalisieren.
 -- UNIT_SPELLCAST_STOP: Wenn jemand seinen Zauber stopt.
 -- UNIT_SPELLCAST_CHANNEL_STOP: Wenn jemand die Kanalisierung seines Zaubers stopt.
 -- UNIT_SPELLCAST_SUCCEEDED: Verursachte einen Fehler, weswegen nicht mehr in Benutztung.
@@ -104,12 +104,12 @@ function UnRegisterAllEvents()
 	--iconFrame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED", unit)
 end
 
---- Eine Funktion um alle Vorbedingungen zu prüfen.
+--- Eine Funktion um alle Vorbedingungen zu pr&uumlfen.
 -- Ob der fokusierte Boss existiert, sowie nicht Tod oder ein Geist ist.
--- Des Weiteren darf er kein Spieler sein und muss den Spieler angreifen können.
+-- Des Weiteren darf er kein Spieler sein und muss den Spieler angreifen k&oumlnnen.
 --
 -- @tparam boolean canAttack Eine Variable die vorher durch eine Funktion ermittelt wird. Ob der fokusierte Boss den Spieler angreifen kann.
--- @return Ob die Bedingungen erfüllt wurden
+-- @return Ob die Bedingungen erf&uumlllt wurden
 function bossSpellIcon:PreCheck(canAttack)
 	local check = false
 	if  UnitExists(iconFrame.unit) then
@@ -139,7 +139,7 @@ function bossSpellIcon:BossCastingInfo(unit)
 end
 
 --- Diese Funktion wird in BossCastingTime benutzt.
--- Es wird zu einem Zauber spellname, spellStart und spellEnd geholt, welche dann in der oben genannten Funktion von nöten sind.
+-- Es wird zu einem Zauber spellname, spellStart und spellEnd geholt, welche dann in der oben genannten Funktion von n&oumlten sind.
 --
 -- @tparam string spell der Zauberspruch
 -- @tparam string unit Ist immer target
@@ -175,7 +175,7 @@ end
 -- @tparam string spell Der Zaubername
 -- @tparam string unit Ist immer target
 -- @tparam boolean remaining Wenn die verbleibende Zeit bis wann gewirkt wird berechnet werden soll, ansosten False wann zu ende ist
--- @return Gibt eine Zeit in Sekunden zurück
+-- @return Gibt eine Zeit in Sekunden zur&uumlck
 function bossSpellIcon:BossCastingTime(spell, unit, remaining)
 	local _, startTime, endTime = bossSpellIcon:BossIsCasting(spell, unit)
 	if startTime and endTime then
@@ -200,7 +200,7 @@ function bossSpellIcon:BossChannelingInfo(unit)
 end
 
 --- Diese Funktion wird in BossChannelingTime benutzt.
--- Es wird zu einem Zauber spellname, spellStart und spellEnd geholt, welche dann in der oben genannten Funktion von nöten sind.
+-- Es wird zu einem Zauber spellname, spellStart und spellEnd geholt, welche dann in der oben genannten Funktion von n&oumlten sind.
 --
 -- @tparam string spell der Zauberspruch welcher kanalisiert wird
 -- @tparam string unit Ist immer target
@@ -231,8 +231,8 @@ end
 --
 -- @tparam string spell Der Zaubername
 -- @tparam string unit Ist immer target
--- @tparam boolean remaining Wenn die verbleibende Zeit bis wann kanalisiert wird berechnet werden soll, ansosten False wann die Restzeit der Kanalisierung benötigt wird.
--- @return Gibt eine Zeit in Sekunden zurück
+-- @tparam boolean remaining Wenn die verbleibende Zeit bis wann kanalisiert wird berechnet werden soll, ansosten False wann die Restzeit der Kanalisierung ben&oumltigt wird.
+-- @return Gibt eine Zeit in Sekunden zur&uumlck
 function bossSpellIcon:BossChannelingTime(spell, unit, remaining)
 local _, startTime, endTime = bossSpellIcon:BossIsChanneling(spell, unit)
 	if startTime and endTime then
@@ -244,7 +244,7 @@ local _, startTime, endTime = bossSpellIcon:BossIsChanneling(spell, unit)
 	end
 end
 
---- Mit dieser Funktion erstellt man alle nötigen Komponenten für den SpellIcon.
+--- Mit dieser Funktion erstellt man alle n&oumltigen Komponenten f&uumlr den SpellIcon.
 -- Einen Icon und Label(als Textur).
 function bossSpellIcon:CreateSpellIcon()
 	iconFrame:SetSize(80, 80)
@@ -260,7 +260,7 @@ function bossSpellIcon:CreateSpellIcon()
 	iconFrame.label:ClearAllPoints()
 	iconFrame.label:SetPoint("TOP", iconFrame, "BOTTOM", 0, -10)
 	iconFrame.label:SetTextHeight(16)
-	if channeling then -- Prüfe ob Zauber kanalisiert wird
+	if channeling then -- Pr&uumlfe ob Zauber kanalisiert wird
 		iconFrame.label:SetText(iconFrame.spell..HL[" is channeling now!"].."\n".."|cFFFF0000"..iconFrame.channelingTime..HL[" sec remaining"].."|r")
 	elseif iconFrame.SpellStartsIn then
 		iconFrame.label:SetText(HL["Starts in "]..iconFrame.SpellStartsIn..HL[" sec"])
@@ -271,17 +271,17 @@ function bossSpellIcon:CreateSpellIcon()
 end
 
 --- Die OnUpdate EventHandlingfunktion.
--- In welcher geprüft wird ob seit dem letzten OnUpdateEvent zeit vergangen ist.
+-- In welcher gepr&uumlft wird ob seit dem letzten OnUpdateEvent zeit vergangen ist.
 -- Wenn nil dann return.
 -- Ansonsten ob ein Zauber gestartet oder kanalisiert wird und ob genug Zeit vergangen ist, seit dem letzen OnUpdate.
 -- Dementsprechend aktualisiere die Zeit im Label.
 --
 -- @tparam float elapsed Die Zeit, die seit dem letzten OnUpdateEvent vergangen ist)
 function bossSpellIcon:IconTextUpdate(elapsed)
-	if elapsed == nil then -- Prüfe ob elapsed nicht nil ist, wenn ja initialisiere
+	if elapsed == nil then -- Pr&uumlfe ob elapsed nicht nil ist, wenn ja initialisiere
 		elapsed = 0.0
 	end
-	if iconFrame.SpellStartsIn then -- Prüfe ob ein Wert gespeichert ist
+	if iconFrame.SpellStartsIn then -- Pr&uumlfe ob ein Wert gespeichert ist
 		TimeSinceLastUpdate = TimeSinceLastUpdate + elapsed;
 		while TimeSinceLastUpdate > iconFrame.updateIntervall do
 			if iconFrame.SpellStartsIn then
@@ -291,7 +291,7 @@ function bossSpellIcon:IconTextUpdate(elapsed)
 				else
 					iconFrame.label:SetText(HL["Starts in "]..iconFrame.SpellStartsIn..HL[" sec"])
 				end
-			elseif iconFrame.channelingTime then -- Prüfe ob ein Zauber kanalisiert wird
+			elseif iconFrame.channelingTime then -- Pr&uumlfe ob ein Zauber kanalisiert wird
 				iconFrame.channelingTime = iconFrame.channelingTime - iconFrame.updateIntervall
 				if iconFrame.channelingTime <= 0.0 then -- Wenn der Zauber zu ende kanalisiert wurde
 					TimeSinceLastUpdate = 0.0

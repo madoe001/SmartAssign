@@ -1,8 +1,8 @@
 --- Beschreibung: Diese Datei dient zur Initialisierung der im Projekt verwendeten Variablen/Tabellen. Bei erstmaligen Start
 --			     werden die Saved Variables auf einen Defaultwert gesetzt. 
 --			     Die Saved Variables werden in "...\World of Warcraft\WTF\<AccountName>\SAVED_VARIABLES\SmartAssign"
---			     gespeichert. Blizzard bietet die Möglichkeit komplette Tabellen inklusive Untertabellen zu speichern.
---			     Allerdings können keine Funktionen gespeichert werden. Der Speichervorgang erfolgt beim Ausloggen, 
+--			     gespeichert. Blizzard bietet die Moeglichkeit komplette Tabellen inklusive Untertabellen zu speichern.
+--			     Allerdings koennen keine Funktionen gespeichert werden. Der Speichervorgang erfolgt beim Ausloggen, 
 --			     Aufruf des "/reload" Befehls oder einem Verlust der Internetverbindung. Bei einem Absturz der 
 --			     WorldOfWarcraft.exe gehen die nicht gespeicherten Daten der Saved Variables verloren.
 --
