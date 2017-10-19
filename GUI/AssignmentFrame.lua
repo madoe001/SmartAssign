@@ -1,4 +1,4 @@
-﻿--- @author Maik Doemmecke
+﻿--- @author Maik D&ouml;mmecke
 -- Mit Hilfe dieser Klasse wird ein Fenster erzeugt, das zum Erstellen von Assignments dient.
 -- Die Assignments werden in einer Liste dargestellt.
 -- In der Liste besteht die Möglichkeit zu Scrollen
