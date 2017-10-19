@@ -6,12 +6,25 @@ SA_WA = {}
 -- @param timer Bei timerbasierten Assignments wird ein fester Zeitpunkt in Sekunden uebergeben. Der Zeitpunktstatisch und meistens eher ungenau.
 -- @param assignmentName Gibt dem Assignment einen eindeutigen Namen. Ein vorhandenes Assignment mit dem selben Namenwird ueberschrieben.
 -- @param encounterid Bei der EncounterID handelt es sich um einen eindeutigen Wert um den zu bekaempfenden Boss zuidentifizieren. Somit werden im Bosskampf nur die Assignments geladen, die fuer den jeweiligenBoss erstellt wurden.
+-- @param abilityname Bei abilitybasierten Assignments wird der Name zum identifizieren der Ability verwendet.
+-- @param abilitycounter Bei abilitybasierten Assignments wird der Counter zusaetzlich zum abilitynamen uebergeben.
+-- @param offset Verschiebt den Zeitpunkt zum ausloesen des Events um ein paar Sekunden. (Sowohl in posivite als auch in negative Richtung)
 -- @usage Diese Funktion  erstellt ein Assignment. Das Assignment wird in eine Saved Variable gespeichert, somit bleibt 
 			 -- es auch nach Neustart gespeichert. Jedes Assignment wird eindeutig ueber die Kombination aus EncounterID und
 			 -- assignmentName gespeichert. Die EncounterID bestimmt hierbei den zu bekaempfenden Boss. Es koennen also mehrere
 			 -- Assignments erstellt werden und spaeter zu den Bossen geladen.
-function SA_WA:addAssign(encounterid, assignmentName, spellid, timer, abilityname)  -- TODO Ability basierte Assignments hinzufuegen
+function SA_WA:addAssign(encounterid, assignmentName, spellid, timer, abilityname, abilitycounter, offset)
 	encounterid = encounterid .. ""
+	local abilityCheck = false
+	if ( abilityname and abilitycounter ) then -- Es muss abilityname UND abilitycounter vorhanden sein
+		abilityCheck = true
+	end
+	if ( not timer and not abilityCheck ) then -- Weder ability noch timer uebergeben
+		return false
+	end
+	if (timer and abilityCheck ) then -- Es darf nur ability ODER timer vorhanden sein
+		return false
+	end
 	if (not SA_WEAKAURA[encounterid]) then
 		SA_WEAKAURA[encounterid] = {}
 	end
@@ -19,11 +32,20 @@ function SA_WA:addAssign(encounterid, assignmentName, spellid, timer, abilitynam
 		SA_WEAKAURA[encounterid][assignmentName] = {}
 	end
 	SA_WEAKAURA[encounterid][assignmentName].spellid = spellid
-	SA_WEAKAURA[encounterid][assignmentName].timer = timer
+	if (timer) then
+		SA_WEAKAURA[encounterid][assignmentName].timer = timer
+	end
+	if (abilityCheck) then
+		SA_WEAKAURA[encounterid][assignmentName].abilityname = abilityname
+		SA_WEAKAURA[encounterid][assignmentName].abilitycounter = abilitycounter
+	end
+	if	(offset) then
+		SA_WEAKAURA[encounterid][assignmentName].offset = offset
+	end
 end
 
 
---- SA_WA:addAssign
+--- SA_WA:getClosestTimer
 -- @author  Veith, Marvin Justin (10043555)
 -- @param spellid Die SpellID ist ein von Blizzard eindeutiger Wert, der verwendet wird um verschiedene Zauber zu identifizieren. Die SpellID wird spaeter verwendet um dem Spieler den zu verwendenen Zauber darzustellen.
 -- @return Zeitpunkt des zunaechst verwendenen Zaubers.
@@ -193,28 +215,32 @@ framus:RegisterEvent("CHAT_MSG_ADDON");
 RegisterAddonMessagePrefix(SA_AddonChat_prefix);
 
 
---- sendAssignInformations
+--- sendAddonInformations
 -- @author  Veith, Marvin Justin (10043555)
 -- @param functionname Gibt an welche Funktion aufgerufen werden soll.
--- @param playerName Gibt den Spieler an, der angesprochen werden soll.
--- @param assignmentName Gibt den Assignmentname an. Dieser wird spaeter zum anlegen eines Assignments alsKey verwendet.
--- @param spellID Gibt die SpellID an. Anhand der SpellID wird dem Spieler der zugeteilte Zauber angezeigt. Die SpellID identifiziert jeden Zauber eindeutig.
--- @param timer Falls es sich um ein timerbasiertes Assignment handelt, wird die Zeit in Sekundenangegeben, in das Assignment ausgeloest wird.
--- @param encounterID Gibt den Boss anhand seiner eindeutigen Nummer an. Die EncounterID dient als Schluessel fuer den Phasehandler, den Abilityhandler und dem Assignmenthanddler.
+-- @param playername Spielername an dem die nachricht adressiert ist.
+-- @param encounterid Eindeutiger Wert um den Boss zu identifizieren.
+-- @see createPhase
+-- @see createAbility
+-- @see SA_WA:addAssign
+-- @param parameters Hierbei handelt es sich um eine Table, welche eine beliebige Anzahl an Parameter uebergibt. Diese wird auseinander genommen und in ein passendes Format umgewandelt.
 -- @usage Diese Funktion sendet ueber den Addonchatchannel eine Nachricht an alle Gruppen- / Raidmitglieder.
 			 -- Es koennen alle Parameter und die auf zu rufenden Funktionen angegeben werden.
 			 -- Mit dieser Funktionalitaet kann der Raidleiter nach dem erstellen der Assignments, diese an alle Spieler senden.
 			 -- Jedes Addon muss sein Prefix registrieren. Dadurch koennen alle Nachrichten gefiltert werden.
 			 -- Es koennen sogar Phasen und Abilities ueber diese Funktion gesendet werden. Dadurch erhalten die Raidmitglieder
 			 -- alle passenden Informationen.
-function sendAssignInformations(functionname, playerName, assignmentName, spellID, timer, encounterID)  -- TODO Name aendern und weiter ausbauen
+function sendAddonInformations(functionname, playername, encounterid, parameters)
 	local msg = "";
 	msg = msg .. "FUNCTIONNAME~" .. functionname .. "§"
-	msg = msg .. "PLAYERNAME~" .. playerName .. "§"
-	msg = msg .. "ASSIGNMENTNAME~" .. assignmentName .. "§"
-	msg = msg .. "SPELLID~" .. spellID .. "§"
-	msg = msg .. "TIMER~" .. timer .. "§"
-	msg = msg .. "ENCOUNTERID~" .. encounterID
+	msg = msg .. "PLAYERNAME~" .. playername .. "§"
+	msg = msg .. "ENCOUNTERID~" .. encounterid .. "§"
+	for k,v in pairs(parameters) do
+		k = string.upper(k) .. "~"
+		msg = msg .. k .. v .. "§"
+	end	
+	msg = msg:sub(1, -2) -- Trennt letztes § für korrekte Anzahl an substrings
+	print (msg)
 	if ( IsInRaid() ) then
 		SendAddonMessage(SA_AddonChat_prefix,msg,"RAID");
 	elseif ( IsInGroup() ) then
@@ -229,6 +255,9 @@ end
 -- @param msg Zusammenkonkanketinierter String, der alle Parameter enthaelt. Der Text wird wieder aufgesplittet.
 -- @param channel Gibt den Channel an. Kann ignoriert werden.
 -- @param sender Gibt den Nachrichtensender an. Wird nicht verwendet.
+-- @see createPhase
+-- @see createAbility
+-- @see SA_WA:addAssign
 -- @usage Der Chathandler liest alle Nachrichten mit, die im Addonchatchannel gesendet werden.
 			 -- Es werden zuerst alle Nachrichten von diesem Projekt gefiltert. Im naechsten Schritt
 			 -- wird geprueft fuer welchen Spieler die Nachricht adressiert wurde.
@@ -246,12 +275,98 @@ function addonChatHandler(...)
 		end	
 		local ownName = GetUnitName("PLAYER")
 		local ownRealm = GetRealmName()
-		print(arguments.PLAYERNAME)
 		ownRealm = ownRealm:gsub("%s+", "") -- Um aus "Tarren Mill" => "TarrenMill" zu machen
 		if ( arguments.PLAYERNAME == ownName or arguments.PLAYERNAME == (ownName .. "-" .. ownRealm)) then
-			local spellID = tonumber(arguments.SPELLID)
-			local timer = tonumber(arguments.TIMER)
-			SA_WA:addAssign(spellID, timer , arguments.ASSIGNMENTNAME, arguments.ENCOUNTERID)
+			-- addAssign & createAbility & createPhase (encounterID)
+			local functionName = arguments.FUNCTIONNAME
+			local encounterID = arguments.ENCOUNTERID
+			
+			--addAssign & createAbility (abilityName)
+			if(string.upper(functionName) == "ADDASSIGN" or string.upper(functionName) == "CREATEABILITY") then
+				local abilityName = arguments.ABILITYNAME
+			end
+			
+			--createPhase & createAbility (mythicFlag, heroicFlag, normalFlag)
+			if(string.upper(functionName) == "CREATEPHASE" or string.upper(functionName) == "CREATEABILITY") then
+				local mythicFlag = nil
+				local heroicFlag = nil
+				local normalFlag = nil
+				if ( arguments.MYTHICFLAG ) then
+					mythicFlag = true
+				end
+				if ( arguments.HEROICFLAG ) then
+					heroicFlag = true
+				end
+				if ( arguments.NORMALFLAG ) then
+					normalFlag = true
+				end				
+			end
+			
+			--createPhase(phaseName, previousPhase, trigger, triggerTyp)
+			if(string.upper(functionName) == "CREATEPHASE") then
+				local phaseName = arguments.PHASENAME
+				local previousPhase = nil
+				local trigger = nil
+				local triggerTyp = nil
+				if ( arguments.PREVIOUSPHASE ) then
+					previousPhase = arguments.PREVIOUSPHASE
+				end
+				if ( arguments.TRIGGER ) then
+					trigger = arguments.TRIGGER
+				end
+				if ( arguments.TRIGGERTYP ) then
+					triggerTyp = arguments.TRIGGERTYP
+				end				
+			end
+			
+			--createAbility(cooldown,boundedPhases, loopingListFlag, resetTimerOnPhaseStartFlag)
+			if(string.upper(functionName) == "CREATEABILITY") then
+				local cooldown = arguments.COOLDOWN
+				local boundedPhases = nil
+				local loopingListFlag = nil
+				local resetTimerOnPhaseStartFlag = nil	
+				if ( arguments.BOUNDEDPHASES ) then
+					boundedPhases = arguments.BOUNDEDPHASES
+				end
+				if ( arguments.LOOPINGLISTFLAG ) then
+					loopingListFlag = arguments.LOOPINGLISTFLAG
+				end
+				if ( arguments.RESETTIMERONPHASESTARTFLAG ) then
+					resetTimerOnPhaseStartFlag = arguments.RESETTIMERONPHASESTARTFLAG
+				end	
+				
+			end
+			
+			--addAssign(assignmentName, spellid, timer, abilitycounter, offset)
+			if(string.upper(functionName) == "ADDASSIGN") then
+				local spellID = tonumber(arguments.SPELLID)
+				local timer = nil
+				local assignmentName = nil				
+				local abilityCounter = nil
+				local offset = nil
+				if ( arguments.TIMER ) then
+					timer = tonumber(arguments.TIMER)
+				end	
+				if ( arguments.ASSIGNMENTNAME ) then
+					assignmentName = arguments.ASSIGNMENTNAME
+				end	
+				if ( arguments.ABILITYCOUNTER ) then
+					abilityCounter = tonumber(arguments.ABILITYCOUNTER)
+				end	
+				if ( arguments.OFFSET ) then
+					offset = tonumber(arguments.OFFSET)
+				end	
+			end
+			
+			if(string.upper(functionName) == "ADDASSIGN") then
+				SA_WA:addAssign(encounterID,  assignmentName, spellID, timer, abilityName, abilityCounter, offset)
+			end
+			if(string.upper(functionName) == "CREATEABILITY") then
+				createAbility(encounterID, abilityName, cooldown,boundedPhases, mythicFlag, heroicFlag, normalFlag, loopingListFlag, resetTimerOnPhaseStartFlag)
+			end
+			if(string.upper(functionName) == "CREATEPHASE") then
+				createPhase(encounterID, phaseName, previousPhase, trigger, triggerTyp, mythicFlag, heroicFlag, normalFlag)
+			end
 		end
 	end		
 end
@@ -600,8 +715,6 @@ function abilityHandler()
 		end
 	end	
 end
-
-
 
 --- phaseHandler
 -- @author  Veith, Marvin Justin (10043555)
