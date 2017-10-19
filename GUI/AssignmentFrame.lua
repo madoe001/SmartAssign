@@ -277,7 +277,13 @@ do
 							spellid = cv["SpellID"]
 						end
 					end
-					caricWrite("", UIDropDownMenu_GetText(plv.dropDownPlayer), "assignment"..v.index, spellid, assign["Timer"], encounterID)
+					local sendingTable = {}
+					sendingTable.assignmentname = "assignment"..v.index
+					sendingTable.spellID = spellid
+					sendingTable.timer = assign["Timer"] -- TODO MAIK
+					sendingTable.abilityName = nil -- TODO MAIK
+					sendingTable.abilityCounter = nil -- TODO MAIK
+					sendAddonInformations("addAssignment", UIDropDownMenu_GetText(plv.dropDownPlayer), encounterID, sendingTable)
 				end
 			end
 
