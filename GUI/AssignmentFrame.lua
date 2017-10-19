@@ -244,7 +244,7 @@ do
 				SA_Assignments[encounterID][name] = assign
 				
 				for plk, plv in pairs(v.playerAssigns) do
-					local class = UnitClass(UIDropDownMenu_GetText(plv.dropDownPlayer))
+					local _,class = UnitClass(UIDropDownMenu_GetText(plv.dropDownPlayer))
 					local classCooldowns = SA_Cooldowns[class]
 					local spellid = 0
 					for ck, cv in pairs(classCooldowns) do
@@ -269,7 +269,7 @@ do
 				local name = "assignment"..v.index
 
 				for plk, plv in pairs(v.playerAssigns) do
-					local class = UnitClass(UIDropDownMenu_GetText(plv.dropDownPlayer))
+					local _,class = UnitClass(UIDropDownMenu_GetText(plv.dropDownPlayer))
 					local classCooldowns = SA_Cooldowns[class]
 					local spellid = 0
 					for ck, cv in pairs(classCooldowns) do
