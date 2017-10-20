@@ -323,4 +323,9 @@ do
 
 	return obj
 	end	
+	
+	--- Diese Funktion gibt den send Button zur&oumlck.
+	function AssignmentFrame:GetSendButton()
+		return self.send
+	end
 end

@@ -52,6 +52,7 @@ function SA_GUI_LOCAL:Init(event, addon)
 		SlashCommands:Init() -- init slashcommands
 		SlashCommands:AddResetFunction(SA_GUI_LOCAL.ResetFrames, "frames")
 		MiniMapButton:Init() -- init minimapbutton
+		print("|cff104e8bSmartAssign:|r |cffff8c00"..GUIL["SmartAssign loaded. For more informartion about Slashcommands type in '/smart slash'."].."|r")
 	end
 end
 	
@@ -87,8 +88,12 @@ function SA_GUI_LOCAL:CreateGUI(frame)
 	
 	boss.bossDD.assignmentFrame = assign
 	frame.assign = assign
-	local testFrame = CreateFrame("Frame", "amk", UIParent)
-	PhaseFrame:CreateGUI(testFrame)
+	
+	frame.pFrame = PhaseFrame:CreateGUI(frame)
+	frame.abilityFrame = CreateAbilityFrame:CreateGUI(frame)
+	
+	frame.phaseOpenButton = SA_GUI_LOCAL:PhaseOpenButton(frame, assign:GetSendButton())
+	SA_GUI_LOCAL:AbilityOpenButton(frame, frame.phaseOpenButton)
 
 	-- make main frame movable
 	SA_GUI_LOCAL:MakeMovable(frame)
@@ -114,11 +119,44 @@ function SA_GUI_LOCAL:CreateWindow(frame)
 	insets = {left = 2, right = 2, top = 2, bottom = 2}
 	})
 	
-	frame:SetToplevel(false) -- set to top level
+	frame:SetToplevel(true) -- set to top level
 	
 	frame:Hide() -- hide at beginning, show by slashcommand or clicking on minimapbutton
 	
 	return (frame)
+end
+
+
+--- Diese Funktion erstellt den Button, mit welchen man den Phaseframe &oumlffnet.
+--
+-- @tparam Frame frame Elternframe
+-- @tparam Frame relativeTo Wird relativ zu dem Frame positioniert
+function SA_GUI_LOCAL:PhaseOpenButton(frame, relativeTo)
+	local phButton = SA_GUI_LOCAL:CreateButton(frame, "PhaseOpenButton", "Phase", 80, 25, "LEFT", 0, 0, nil)
+	phButton:ClearAllPoints()
+	phButton:SetPoint("LEFT", relativeTo, "RIGHT", 100, 0)
+	phButton:SetScript("OnClick", function(self, button)
+		if button == "LeftButton" then
+			frame.pFrame:Show()
+		end
+	end)
+	
+	return (phButton)
+end
+
+--- Diese Funktion erstellt den Button, mit welchen man den Abilityframe &oumlffnet.
+--
+-- @tparam Frame frame Elternframe
+-- @tparam Frame relativeTo Wird relativ zu dem Frame positioniert
+function SA_GUI_LOCAL:AbilityOpenButton(frame, relativeTo)
+	local abButton = SA_GUI_LOCAL:CreateButton(frame, "AbilityOpenButton", GUIL["Ability"], 80, 25, "LEFT", 0, 0, nil)
+	abButton:ClearAllPoints()
+	abButton:SetPoint("LEFT", relativeTo, "RIGHT", 10, 0)
+	abButton:SetScript("OnClick", function(self, button)
+		if button == "LeftButton" then
+			frame.abilityFrame:Show()
+		end
+	end)
 end
 
 
@@ -153,9 +191,10 @@ function SA_GUI_LOCAL:CreateButton(frame, name, text, width, height, position, x
 	if position == nil then
 		position = "TOPLEFT"
 	end
+	local button
 	-- create CloseButton
 	if template == "UIPanelCloseButton" then -- close button
-		local button = CreateFrame("Button", name, frame, template)
+		button = CreateFrame("Button", name, frame, template)
 		button:SetPoint(position, frame, position, x, y)
 		-- when click on Button Hide frame
 		button:SetScript("OnClick", function (self, button)
@@ -164,7 +203,7 @@ function SA_GUI_LOCAL:CreateButton(frame, name, text, width, height, position, x
 			end
 		end)
 	else -- create another button
-		local button = CreateFrame("Button", name, frame, template)
+		button = CreateFrame("Button", name, frame, template)
 		button:SetPoint(position, x, y)
 		button:SetWidth(width)
 		button:SetHeight(height)

@@ -165,7 +165,7 @@ do
 			
 			-- Erstellen einer EditBox in der nur Zahlen eintragbar sind
 			-- Genaue Doku siehe EditBox.lua
-			offset = EditBox:LoadEditBox(frame, "offs"..lastElement, "number", "timer"),	
+			offset = EditBox:LoadEditBox(frame, "offs"..lastElement, "number", "offset"),	
 
 			-- Erstellen eines Textfelds in dem ein anzuzeigender Text eingetragen werden kann 
 			extraText = CreateFrame("EditBox", "extraText"..lastElement, frame,"InputBoxTemplate"), 

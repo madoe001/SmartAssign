@@ -191,6 +191,8 @@ L["Is it the first Phase?"] = "Ist es die erste Phase?"
 
 L["You should check first phase?"] = "Du solltest erste Phase ankreuzen"
 
+L["There is nothing to delete"] = "Es gibt nichts zu löschen"
+
 -- ASSERTS
 L["'func' in 'DropDownMenu SetOnClick' must be a function."] = "'func' in 'DropDownMenu SetOnClick' muss eine Funktion sein."
 

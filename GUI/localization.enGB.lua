@@ -188,6 +188,8 @@ L["Is it the first Phase?"] = "Is it the first Phase?"
 
 L["You should check first phase?"] = "You should check first phase?"
 
+L["There is nothing to delete"] = "There is nothing to delete"
+
 -- ASSERTS
 L["'func' in 'DropDownMenu SetOnClick' must be a function."] = "'func' in 'DropDownMenu SetOnClick' must be a function."
 

@@ -25,7 +25,15 @@ function SA_EditBox:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 	self:SetPoint(framePosition, relativeToFrame,relativePos, x, y)
 end
 
---. Erstellt einen FontString f&uumlr die EditBox und setzt Text, sowie Fontfarbe.
+--- Setzt den Text des Labels neu
+--
+-- @tparam FontString self Die EditBox
+-- @tparam string text Der Text welcher im FontString gesetzt werden soll
+local function SetLabelText(self, text)
+	self.label:SetText(GUIL[text])
+end
+
+--- Erstellt einen FontString f&uumlr die EditBox und setzt Text, sowie Fontfarbe.
 --
 -- @tparam Frame self Die EditBox
 -- @tparam string text Welcher den Text f&uumlr den FontString enth&aumllt
@@ -33,14 +41,13 @@ end
 -- @tparam float g Gr&uumlnanteil
 -- @tparam float b Blauanteil
 -- @tparam float a Alphaanteil
-local function ConfigLabel(self, text, r, g, b, a)
-	self.label = self:CreateFontString("EditBox-label", "ARTWORK", "GameFontNormalSmall")
+local function CreateLabel(self, name, text, r, g, b, a)
+	self.label = self:CreateFontString(name.."EditBox-label", "ARTWORK", "GameFontNormalSmall")
+	self.label:SetPoint("LEFT", self, "LEFT", 0, 0)
 	self.label:SetHeight(25)
 	self.label:SetTextColor(r, g, b, a)
 	self.label:SetText(GUIL[text])
-	self.label:SetPoint("LEFT", self, "LEFT", 0, 0)
 end
-
 
 --- Konfiguriert die EditBox, indem die Position gel&oumlscht wird und dann
 -- keine mehreren Zeilen erlaubt werden und kein automatischer Fokus gesetzt wird.
@@ -95,30 +102,30 @@ local function CreateEditBox(frame, name, inputType, usedFor)
 	if inputType == "number" and EditBox.usedFor == "timer" then
 		EditBox:SetWidth(frame:GetWidth() * 0.05)
 		EditBox:SetNumeric(true) -- set only numeric input
-		ConfigLabel(EditBox, "Time in sec", 0.5, 0.5, 0.5, 0.8) -- Konfiguriere den FontString
+		CreateLabel(EditBox, name, "Time in sec", 0.5, 0.5, 0.5, 0.8) -- Konfiguriere den FontString
 	elseif inputType == "number" and EditBox.usedFor == "offset" then
 		EditBox:SetWidth(frame:GetWidth() * 0.05)
-		EditBox:SetNumeric(true) -- set only numeric input
-		ConfigLabel(EditBox, "Time in sec", 0.5, 0.5, 0.5, 0.8) -- Konfiguriere den FontString
+		--EditBox:SetNumeric(true) -- set only numeric input
+		CreateLabel(EditBox, name, "Time in sec", 0.5, 0.5, 0.5, 0.8) -- Konfiguriere den FontString
 	elseif inputType == "number" and EditBox.usedFor == "cooldown" then
 		EditBox:SetWidth(frame:GetWidth() * 0.3)
 		EditBox:SetNumeric(true) -- set only numeric input
-		ConfigLabel(EditBox, "cooldown(s) in sec", 0.5, 0.5, 0.5, 0.8)
+		CreateLabel(EditBox, name, "cooldown(s) in sec", 0.5, 0.5, 0.5, 0.8)
 	elseif inputType == "string" and EditBox.usedFor == "spell" then
 		EditBox:SetWidth(frame:GetWidth() * 0.2)
-		ConfigLabel(EditBox, "[SpellID] text", 0.5, 0.5, 0.5, 0.8) -- Konfiguriere den FontString
+		CreateLabel(EditBox, name, "[SpellID] text", 0.5, 0.5, 0.5, 0.8) -- Konfiguriere den FontString
 	elseif inputType == "string" and EditBox.usedFor == "name" then
 		EditBox:SetWidth(frame:GetWidth() * 0.3)
-		ConfigLabel(EditBox, "name", 0.5, 0.5, 0.5, 0.8) -- Konfiguriere den FontString
+		CreateLabel(EditBox, name, "name", 0.5, 0.5, 0.5, 0.8) -- Konfiguriere den FontString
 	elseif inputType == "string" and EditBox.usedFor == "phasename" then
 		EditBox:SetWidth(frame:GetWidth() * 0.3)
-		ConfigLabel(EditBox, "phasename(s)", 0.5, 0.5, 0.5, 0.8) -- Konfiguriere den FontString
+		CreateLabel(EditBox, name, "phasename(s)", 0.5, 0.5, 0.5, 0.8) -- Konfiguriere den FontString
 	elseif inputType == "string" and EditBox.usedFor == "phaseText" then
 		EditBox:SetWidth(frame:GetWidth() * 0.3)
-		ConfigLabel(EditBox, "Text/HP/Energy/Time", 0.5, 0.5, 0.5, 0.8) -- Konfiguriere den FontString
+		CreateLabel(EditBox, name, "Text/HP/Energy/Time", 0.5, 0.5, 0.5, 0.8) -- Konfiguriere den FontString
 	elseif inputType == "string" and EditBox.usedFor == "trigger" then
 		EditBox:SetWidth(frame:GetWidth() * 0.2)
-		ConfigLabel(EditBox, "trigger", 0.5, 0.5, 0.5, 0.8) -- Konfiguriere den FontString
+		CreateLabel(EditBox, name, "trigger", 0.5, 0.5, 0.5, 0.8) -- Konfiguriere den FontString
 	end
 	
 	-- Wenn der Text ge&aumlndert wird, dann f&uumlhre folgendes aus
@@ -127,36 +134,48 @@ local function CreateEditBox(frame, name, inputType, usedFor)
 			if self.inputType == "number" then
 				if self:GetText() ~= "" then -- Wenn nicht leer
 					if self.usedFor == "offset" then
-						if tonumber(self:GetText()) < -9 or tonumber(self:GetText()) > 9 then
+						if tonumber(self:GetText()) then
+							if tonumber(self:GetText()) >= -9 and tonumber(self:GetText()) <= 9 then
+								self.last = self:GetText()
+							else
+								if self.last then
+									self:SetText(self.last)
+								else
+									self:SetText("")
+								end
+							end
+						elseif self:GetText() == "-" then
+							self:SetText("-")
+						else
 							self:SetText("")
 						end
-					else if tonumber(self:GetText()) <= 0 then -- Wenn die Zahl kleiner gleich 0 ist, dann setzte auf ""
+					elseif tonumber(self:GetText()) <= 0 then -- Wenn die Zahl kleiner gleich 0 ist, dann setzte auf ""
 						self:SetText("")
 					else
 						self:SetText(self:GetText())
 					end
 				end
-			elseif self.inputType == "string" then -- Wenn es ein String ist, setze diesen zu dem
+			elseif EditBox.inputType == "string" then -- Wenn es ein String ist, setze diesen zu dem
 				self:SetText(self:GetText())       -- qas der Spieler eingegeben hat
 			end
 			self.label:SetText("")
 			if string.len(self:GetText()) == 0 then -- Wenn die EditBox leer ist, konfiguriere den FontString erneut
 				if self.inputType == "string" and self.usedFor == "spell" then
-					ConfigLabel(self, "[SpellID] text", 0.5, 0.5, 0.5, 0.8)
+					SetLabelText(self, "[SpellID] text")
 				elseif inputType == "string" and self.usedFor == "name" then
-					ConfigLabel(self, "name", 0.5, 0.5, 0.5, 0.8)
+					SetLabelText(self, "name")
 				elseif inputType == "string" and self.usedFor == "phasename" then
-					ConfigLabel(self, "phasename(s)", 0.5, 0.5, 0.5, 0.8) 
+					SetLabelText(self, "phasename(s)") 
 				elseif inputType == "string" and self.usedFor == "phaseText" then
-					ConfigLabel(self, "Text/HP/Energy/Time", 0.5, 0.5, 0.5, 0.8)
+					SetLabelText(self, "Text/HP/Energy/Time")
 				elseif inputType == "string" and self.usedFor == "trigger" then
-					ConfigLabel(self, "trigger", 0.5, 0.5, 0.5, 0.8)
+					SetLabelText(self, "trigger")
 				elseif self.inputType == "number" and self.usedFor == "timer" then
-					ConfigLabel(self, "Time in sec", 0.5, 0.5, 0.5, 0.8)
+					SetLabelText(self, "Time in sec")
 				elseif self.inputType == "number" and self.usedFor == "cooldown" then
-					ConfigLabel(self, "cooldown(s) in sec", 0.5, 0.5, 0.5, 0.8)
-				elseif inputType == "number" and EditBox.usedFor == "offset" then
-					ConfigLabel(EditBox, "Time in sec", 0.5, 0.5, 0.5, 0.8) -- Konfiguriere den FontString
+					SetLabelText(self, "cooldown(s) in sec")
+				elseif inputType == "number" and self.usedFor == "offset" then
+					SetLabelText(self, "Time in sec") -- Konfiguriere den FontString
 				end
 			end
 		end
