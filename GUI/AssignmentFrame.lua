@@ -1,4 +1,4 @@
-﻿--- @author Maik Doemmecke
+﻿--- @author Maik D&ouml;mmecke
 -- Mit Hilfe dieser Klasse wird ein Fenster erzeugt, das zum Erstellen von Assignments dient.
 -- Die Assignments werden in einer Liste dargestellt.
 -- In der Liste besteht die Möglichkeit zu Scrollen
@@ -62,7 +62,6 @@ do
 	-- Positionierung dynamisch zu gestalten
 	-- Druch die Funktione bleiben die Eintraege der Liste zusammenhaengend. 
 	local function updateAssignmentFrame(self, toBeDeleted)
-		local foundElement = false
 		local cacheList = {}
 		local ctr = 1		
 
@@ -244,7 +243,7 @@ do
 				SA_Assignments[encounterID][name] = assign
 				
 				for plk, plv in pairs(v.playerAssigns) do
-					local class = UnitClass(UIDropDownMenu_GetText(plv.dropDownPlayer))
+					local _,class = UnitClass(UIDropDownMenu_GetText(plv.dropDownPlayer))
 					local classCooldowns = SA_Cooldowns[class]
 					local spellid = 0
 					for ck, cv in pairs(classCooldowns) do
@@ -269,7 +268,7 @@ do
 				local name = "assignment"..v.index
 
 				for plk, plv in pairs(v.playerAssigns) do
-					local class = UnitClass(UIDropDownMenu_GetText(plv.dropDownPlayer))
+					local _,class = UnitClass(UIDropDownMenu_GetText(plv.dropDownPlayer))
 					local classCooldowns = SA_Cooldowns[class]
 					local spellid = 0
 					for ck, cv in pairs(classCooldowns) do
@@ -277,7 +276,13 @@ do
 							spellid = cv["SpellID"]
 						end
 					end
-					caricWrite("", UIDropDownMenu_GetText(plv.dropDownPlayer), "assignment"..v.index, spellid, assign["Timer"], encounterID)
+					local sendingTable = {}
+					sendingTable.assignmentname = "assignment"..v.index
+					sendingTable.spellID = spellid
+					sendingTable.timer = assign["Timer"] -- TODO MAIK
+					sendingTable.abilityName = nil -- TODO MAIK
+					sendingTable.abilityCounter = nil -- TODO MAIK
+					sendAddonInformations("addAssignment", UIDropDownMenu_GetText(plv.dropDownPlayer), encounterID, sendingTable)
 				end
 			end
 
