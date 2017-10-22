@@ -46,6 +46,48 @@ function SA_WA:addAssign(encounterid, assignmentName, spellid, timer, abilitynam
 	end
 end
 
+function SA_WA:WeakauraTrigger(spellID)
+	if ( not SA_WEAKAURA.encounterID ) then
+		SA_WEAKAURA.encounterID = ""
+	end
+    local eID = SA_WEAKAURA.encounterID .. ""
+    if (not SA_WEAKAURA[eID]) then
+        return false
+     end
+    
+    local nextTimer = SA_WA:getClosestTimer(spellID)
+    if (nextTimer == nil) then
+        return false
+    end
+    
+	if SA_WEAKAURA[eID][nextTimer].timer then
+	end
+    local timer = SA_WEAKAURA[eID][nextTimer].timer
+    if (SA_WEAKAURA.duration >= (timer - SA_WEAKAURA.offset) and 
+    SA_WEAKAURA.duration < timer) then
+        return true
+    end    
+end
+
+function SA_WA:WeakauraDurationInfo(spellID)
+       
+    -- Don't touch this code   
+    local eID = SA_WEAKAURA.encounterID .. ""
+    
+    if (not SA_WEAKAURA[eID]) then
+        return false
+    end
+	
+    local next = SA_WA:getClosestTimer(spellID)
+    if (not next) then
+        return false
+    end    
+    local timer = SA_WEAKAURA[eID][next].timer
+    local duration = SA_WEAKAURA[eID][next].timer - SA_WEAKAURA.duration
+    local expirationTime = SA_WEAKAURA[eID][next].timer + SA_WEAKAURA.start
+    
+    return duration, expirationTime    
+end
 
 --- SA_WA:getClosestTimer
 -- @author  Veith, Marvin Justin (10043555)
@@ -220,8 +262,9 @@ RegisterAddonMessagePrefix(SA_AddonChat_prefix);
 --- sendAddonInformations
 -- @author  Veith, Marvin Justin (10043555)
 -- @param functionname Gibt an welche Funktion aufgerufen werden soll.
--- @param playername Spielername an dem die nachricht adressiert ist.
+-- @param playername Spielername an dem die Nachricht adressiert ist.
 -- @param encounterid Eindeutiger Wert um den Boss zu identifizieren.
+-- @param Parameters Hierbei handelt es sich eine Tabelle mit beliebig vielen Key-Value-Paaren.
 -- @see createPhase
 -- @see createAbility
 -- @see SA_WA:addAssign
