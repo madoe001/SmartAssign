@@ -17,6 +17,14 @@ SA_WA = {}
 			 -- Assignments erstellt werden und spaeter zu den Bossen geladen.
 function SA_WA:addAssign(encounterid, assignmentName, spellid, timer, abilityname, abilitycounter, offset)
 	encounterid = encounterid .. ""
+	print ("SA_WA:addAssign called")
+	print ("encounterid ", encounterid) 
+	print ("assignmentName ", assignmentName) 
+	print ("spellid ", spellid) 
+	print ("timer ", timer) 
+	print ("abilityname ", abilityname) 
+	print ("abilitycounter ", abilitycounter) 
+	print ("offset ", offset) 
 	local abilityCheck = false
 	if ( abilityname and abilitycounter ) then -- Es muss abilityname UND abilitycounter vorhanden sein
 		abilityCheck = true
@@ -27,6 +35,7 @@ function SA_WA:addAssign(encounterid, assignmentName, spellid, timer, abilitynam
 	if (timer and abilityCheck ) then -- Es darf nur ability ODER timer vorhanden sein
 		return false
 	end
+	print ("1")
 	if (not SA_WEAKAURA[encounterid]) then
 		SA_WEAKAURA[encounterid] = {}
 	end
@@ -328,16 +337,16 @@ function addonChatHandler(...)
 			local encounterID = arguments.ENCOUNTERID
 			
 			--addAssign & createAbility (abilityName)
+			local abilityName = nil
 			if(string.upper(functionName) == "ADDASSIGN" or string.upper(functionName) == "CREATEABILITY") then
-				print("test")
-				local abilityName = arguments.ABILITYNAME
+				abilityName = arguments.ABILITYNAME
 			end
 			
 			--createPhase & createAbility (mythicFlag, heroicFlag, normalFlag)
+			local mythicFlag = nil
+			local heroicFlag = nil
+			local normalFlag = nil
 			if(string.upper(functionName) == "CREATEPHASE" or string.upper(functionName) == "CREATEABILITY") then
-				local mythicFlag = nil
-				local heroicFlag = nil
-				local normalFlag = nil
 				if ( arguments.MYTHICFLAG ) then
 					mythicFlag = true
 				end
@@ -350,11 +359,12 @@ function addonChatHandler(...)
 			end
 			
 			--createPhase(phaseName, previousPhase, trigger, triggerTyp)
+			local phaseName = nil
+			local previousPhase = nil
+			local trigger = nil
+			local triggerTyp = nil
 			if(string.upper(functionName) == "CREATEPHASE") then
-				local phaseName = arguments.PHASENAME
-				local previousPhase = nil
-				local trigger = nil
-				local triggerTyp = nil
+				phaseName = arguments.PHASENAME
 				if ( arguments.PREVIOUSPHASE ) then
 					previousPhase = arguments.PREVIOUSPHASE
 				end
@@ -367,11 +377,12 @@ function addonChatHandler(...)
 			end
 			
 			--createAbility(cooldown,boundedPhases, loopingListFlag, resetTimerOnPhaseStartFlag)
+			local cooldown = nil
+			local boundedPhases = nil
+			local loopingListFlag = nil
+			local resetTimerOnPhaseStartFlag = nil	
 			if(string.upper(functionName) == "CREATEABILITY") then
-				local cooldown = arguments.COOLDOWN
-				local boundedPhases = nil
-				local loopingListFlag = nil
-				local resetTimerOnPhaseStartFlag = nil	
+				cooldown = arguments.COOLDOWN
 				if ( arguments.BOUNDEDPHASES ) then
 					boundedPhases = arguments.BOUNDEDPHASES
 				end
@@ -384,13 +395,14 @@ function addonChatHandler(...)
 				
 			end
 			
+			local spellID = nil
+			local timer = nil
+			local assignmentName = nil				
+			local abilityCounter = nil
+			local offset = nil
 			--addAssign(assignmentName, spellid, timer, abilitycounter, offset)
 			if(string.upper(functionName) == "ADDASSIGN") then
 				local spellID = tonumber(arguments.SPELLID)
-				local timer = nil
-				local assignmentName = nil				
-				local abilityCounter = nil
-				local offset = nil
 				if ( arguments.TIMER ) then
 					timer = tonumber(arguments.TIMER)
 				end	
