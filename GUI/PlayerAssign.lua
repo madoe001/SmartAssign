@@ -27,7 +27,10 @@ do
 		self.abilityCB:Hide()
 		self.textCB:Hide()
 		self.dropDownPlayer:Hide()
-		self.dropDownCooldown:Hide()
+		self.dropDownCooldown:Hide()	
+		self.playerString:Hide()
+		self.offsetString:Hide()
+		self.actionString:Hide()
 		if self.textCB:GetChecked() then
 			self.extraText:Hide()
 		else
@@ -218,7 +221,7 @@ do
 		--Erzeugen von Texten auf der GUI
 		obj.playerString = createFont(obj.mainFrame, "player"..obj.index, Player_String, obj.dropDownPlayer, "Fonts\\MORPHEUS.ttf", 15)
 		obj.actionString = createFont(obj.mainFrame, "action"..obj.index, Action_String, obj.dropDownCooldown, "Fonts\\MORPHEUS.ttf", 15)
-		obj.playerString = createFont(obj.mainFrame, "offset"..obj.index, Offset_String , obj.offset, "Fonts\\MORPHEUS.ttf", 15)
+		obj.offsetString = createFont(obj.mainFrame, "offset"..obj.index, Offset_String , obj.offset, "Fonts\\MORPHEUS.ttf", 15)
 	
 		--weitere Konfigurationen und Positionierungen
 		obj.abilityCB:SetPoint("LEFT", obj.dropDownPlayer, "RIGHT", obj.x, 0)
