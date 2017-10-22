@@ -263,6 +263,7 @@ do
 			--Bevor gesendet wird soll gespeichert werden
 			obj.save:GetScript("OnClick")()
 			local encounterID = SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID 			
+			local i = 0
 			for k, v in pairs(obj.assignments) do
 				
 				local assign = v:GetAssign()
@@ -280,13 +281,15 @@ do
 						end
 					end
 					local sendingTable = {}
-					sendingTable.assignmentname = "assignment"..v.index
+					sendingTable.assignmentname = name .. plv.index
 					sendingTable.spellID = spellid
 					sendingTable.timer = assign["Timer"] -- TODO MAIK
 					sendingTable.offset = offset
 					sendingTable.abilityName = nil -- TODO MAIK
 					sendingTable.abilityCounter = nil -- TODO MAIK
 					sendAddonInformations("ADDASSIGN", UIDropDownMenu_GetText(plv.dropDownPlayer), encounterID, sendingTable)
+					i = i + 1
+					print(i)
 				end
 				end
 			end
