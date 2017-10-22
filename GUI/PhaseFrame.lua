@@ -177,6 +177,12 @@ function SA_PhaseFrame:SetScripts()
 			if SA_PhaseFrame:ValidForCreateAbility() then -- Pr&uumlfe ob alles Vollst&aumlndig ist
 				if SA_PhaseFrame:IsOneDifficultyChecked() then -- Pr&uumlfe ob mindestens ein Schwierigkeitsgrad gew&aumlhlt
 					StaticPopup_Show("REALLY_APPLY", phaseFrame.phaseNameEB:GetText())
+					local encounterID = SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID 			
+					if phaseFrame.firstPhaseCB:GetChecked() then
+						createPhase(encounterID, phaseFrame.phaseNameEB:GetText(), nil, phaseFrame.triggerEB:GetText(), phaseFrame.triggerTypeEB:GetText() , phaseFrame.mythicCB:GetChecked(), phaseFrame.heroicCB:GetChecked(), phaseFrame.normalCB:GetChecked())
+					else
+						createPhase(encounterID, phaseFrame.phaseNameEB:GetText(), prevPhaseFrameDropDown:GetText(), phaseFrame.triggerEB:GetText(), phaseFrame.triggerTypeEB:GetText() , phaseFrame.mythicCB:GetChecked(), phaseFrame.heroicCB:GetChecked(), phaseFrame.normalCB:GetChecked())
+					end
 				else
 					StaticPopup_Show("INFO", GUIL["You should tick a difficulty!"])
 				end
