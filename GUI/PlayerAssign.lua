@@ -1,4 +1,5 @@
 ﻿--- @author Maik Dömmecke
+--
 -- Klasse, zum einteilen eines Spielers. 
 -- Mit Hilfe dieser Klasse soll es Möglich sein eine Liste von Spielern in einem Dropdownmenu angezeigt zu bekommen
 -- im Anschluss soll ausgewählt werden können was der Spieler bei einer Bossfähigkeit oder bei einem bestimmtetn Timer machen soll

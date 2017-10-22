@@ -1,4 +1,4 @@
---- Beschreibung: Diese Klasse stellt ein PhaseFrame dar, in welchen der Spieler eine Phase f&uumlr einen Boss anlegen oder l&oumlschen kann.
+﻿--- Beschreibung: Diese Klasse stellt ein PhaseFrame dar, in welchen der Spieler eine Phase f&uumlr einen Boss anlegen oder l&oumlschen kann.
 --
 -- @modul PhaseFrame
 -- @author Bartlomiej Grabelus (10044563)
@@ -267,7 +267,7 @@ end
 -- @tparam string position Wo der Text positioniert werden soll
 -- @tparam int x Bewegung des Buttons in x-Richtung
 -- @tparam int y Bewegung des Buttons in y-Richtung
--- @tparam int size Gr&oumlße der Schrift
+-- @tparam int size Gr&ouml&szlig;e der Schrift
 function SA_PhaseFrame:CreateFont(frame, name, text, position, x, y, size)
 	if size == nil then
 		size = 15

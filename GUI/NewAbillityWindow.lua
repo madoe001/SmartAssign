@@ -1,6 +1,6 @@
-NewAbillityWindow = {}
+﻿NewAbillityWindow = {}
 
--- MUSS GETESTET WERDEN!!!!!!!!!! DO NOT TOUCH, SONST KOPF AB !!!!
+
 
 
 function NewAbillityWindow:show()

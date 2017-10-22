@@ -83,7 +83,7 @@ StaticPopupDialogs["INFO"] = {
 
 --- Erstellt das Frame und dessen Komponenten, welche dann am Ende Konfiguriert werden.
 --
--- @tparam Frame frame Ist das Elternframe.
+-- @param Frame frame Ist das Elternframe.
 function SA_CreateAbilityFrame:CreateGUI(frame)
 	if not abilityFrame then
 		abilityFrame = SA_CreateAbilityFrame:CreateWindow(frame)
@@ -100,7 +100,7 @@ end
 
 --- Erstellt das Hauptfenster f&uumlr die AbilityFrame.
 --
--- @tparam Frame frame Ist das Elternframe.
+-- @param Frame frame Ist das Elternframe.
 function SA_CreateAbilityFrame:CreateWindow(frame)
 		abilityFrame = CreateFrame("Frame", "abilityFrame", frame)
 		abilityFrame:SetWidth(600)
@@ -124,7 +124,7 @@ end
 --	Und auf der rechten Seite haben wir ein paar EditBoxen und CheckBoxen.
 --  Unten gibt es zwei Buttons, um die F&aumlhigkeit zu l&oumlschen oder zu erstellen.
 --
--- @tparam Frame frame Ist das Elternframe.
+-- @param Frame frame Ist das Elternframe.
 function SA_CreateAbilityFrame:CreateComponents(frame)
 	boss = BossSelectFrame:new_BossSelectFrame(frame, "Ability", 200, abilityFrame:GetHeight() - 45, "TOPLEFT", 10, 0)
 	boss.frame:SetBackdrop({
@@ -164,7 +164,7 @@ end
 --	Wenn der Benutzer auf Anlegen dr&uumlckt, wird eine F&aumlhigkeit angelegt.
 --  Wenn der Benutzer auf L&oumlschen dr&uumlckt, wird die F&aumlhigkeit gel&oumlscht.
 --
--- @tparam Frame frame Ist das Elternframe.
+-- @param Frame frame Ist das Elternframe.
 function SA_CreateAbilityFrame:ConfigComponents(frame)
 	frame.descText:SetJustifyH("LEFT")
 	frame.abilityNameEB:SetPoint("TOPLEFT", delimiterAbilityLine, "TOPRIGHT", 20, -36)
@@ -221,15 +221,15 @@ end
 
 --- Erstellt ein Button.
 --
--- @tparam Frame frame Ist das Elternframe.
--- @tparam string name Name des Buttons
--- @tparam string text Text welcher im Button dargestellt wird
--- @tparam int width Buttonbreite
--- @tparam int height Buttonh&oumlhe
--- @tparam string position Wo der Button positioniert werden soll
--- @tparam int x Bewegung des Buttons in x-Richtung
--- @tparam int y Bewegung des Buttons in y-Richtung
--- @tparam string template Name des Templates
+-- @param Frame frame Ist das Elternframe.
+-- @param string name Name des Buttons
+-- @param string text Text welcher im Button dargestellt wird
+-- @param int width Buttonbreite
+-- @param int height Buttonh&oumlhe
+-- @param string position Wo der Button positioniert werden soll
+-- @param int x Bewegung des Buttons in x-Richtung
+-- @param int y Bewegung des Buttons in y-Richtung
+-- @param string template Name des Templates
 function SA_CreateAbilityFrame:CreateButton(frame, name, text, width, height, position, x, y, template)
 	if template == nil then
 		template = "OptionsButtonTemplate"
@@ -250,14 +250,14 @@ end
 -- Wenn die Linie Horizontal dargestellt werden soll: height = 1 oder 2.
 -- Wenn die Linie Vertikal dargestellt werden soll: width = 1 oder 2.
 --
--- @tparam Frame frame Ist das Elternframe.
--- @tparam string name Der Name der Texture
--- @tparam int width Linienbreite
--- @tparam int height Linienh&oumlhe
--- @tparam string region Region wo die Linie ausgerichtet werden soll
--- @tparam string frame Frame an welchen relativ positioniert werden soll
--- @tparam int x Bewegung der Linie in x-Richtung
--- @tparam int y Bewegung der Linie in y-Richtung
+-- @param Frame frame Ist das Elternframe.
+-- @param string name Der Name der Texture
+-- @param int width Linienbreite
+-- @param int height Linienh&oumlhe
+-- @param string region Region wo die Linie ausgerichtet werden soll
+-- @param string frame Frame an welchen relativ positioniert werden soll
+-- @param int x Bewegung der Linie in x-Richtung
+-- @param int y Bewegung der Linie in y-Richtung
 function SA_CreateAbilityFrame:CreateLine(parent, name,width, height, region, frame, x, y)
 	local line = parent:CreateTexture(name)
 	line:SetTexture("Interface\\Tooltips\\UI-Tooltip-Background")
@@ -268,13 +268,13 @@ end
 
 --- Erstellt einen Text(FontString).
 --
--- @tparam Frame frame Ist das Elternframe.
--- @tparam string name Name des FontStrings
--- @tparam string text Text welcher &uumlber den FontString dargestellt werden soll
--- @tparam string position Wo der Text positioniert werden soll
--- @tparam int x Bewegung des Buttons in x-Richtung
--- @tparam int y Bewegung des Buttons in y-Richtung
--- @tparam int size Gr&oumlße der Schrift
+-- @param Frame frame Ist das Elternframe.
+-- @param string name Name des FontStrings
+-- @param string text Text welcher &uumlber den FontString dargestellt werden soll
+-- @param string position Wo der Text positioniert werden soll
+-- @param int x Bewegung des Buttons in x-Richtung
+-- @param int y Bewegung des Buttons in y-Richtung
+-- @param int size Gr&oumlße der Schrift
 function SA_CreateAbilityFrame:CreateFont(frame, name, text, position, x, y, size)
 	if size == nil then
 		size = 15

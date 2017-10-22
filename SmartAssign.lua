@@ -73,6 +73,7 @@ function SmartAssign:getAllMembers()
    
 end
 
+--- Hilfsfunktion zum Ausgeben einer Tabelle
 function SmartAssign:printNumericTable(table)
    if(table) then
       if(#table > 0) then
@@ -83,6 +84,9 @@ function SmartAssign:printNumericTable(table)
    end
 end
 
+--- Tabelle an Klassen wird ausgegeben
+--
+--
 function SmartAssign:printClass(table)
    if(table)then      
       for key, class in pairs(table) do

@@ -179,7 +179,6 @@ local function CreateEditBox(frame, name, inputType, usedFor)
 				end
 			end
 		end
-	end
 	end)
 	return EditBox
 end

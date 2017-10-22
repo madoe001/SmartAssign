@@ -1,4 +1,5 @@
 ﻿--- @author Maik D&ouml;mmecke
+--
 -- Mit Hilfe dieser Klasse wird ein Fenster erzeugt, das zum Erstellen von Assignments dient.
 -- Die Assignments werden in einer Liste dargestellt.
 -- In der Liste besteht die Möglichkeit zu Scrollen
@@ -270,7 +271,9 @@ do
 				for plk, plv in pairs(v.playerAssigns) do
 					local _,class = UnitClass(UIDropDownMenu_GetText(plv.dropDownPlayer))
 					local classCooldowns = SA_Cooldowns[class]
+					print(class)
 					local spellid = 0
+					if classCooldowns then
 					for ck, cv in pairs(classCooldowns) do
 						if cv["Name"] == UIDropDownMenu_GetText(plv.dropDownCooldown) then
 							spellid = cv["SpellID"]
@@ -282,7 +285,8 @@ do
 					sendingTable.timer = assign["Timer"] -- TODO MAIK
 					sendingTable.abilityName = nil -- TODO MAIK
 					sendingTable.abilityCounter = nil -- TODO MAIK
-					sendAddonInformations("addAssignment", UIDropDownMenu_GetText(plv.dropDownPlayer), encounterID, sendingTable)
+					sendAddonInformations("ADDASSIGN", UIDropDownMenu_GetText(plv.dropDownPlayer), encounterID, sendingTable)
+				end
 				end
 			end
 
