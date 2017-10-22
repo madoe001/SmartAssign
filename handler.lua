@@ -402,7 +402,7 @@ function addonChatHandler(...)
 			local offset = nil
 			--addAssign(assignmentName, spellid, timer, abilitycounter, offset)
 			if(string.upper(functionName) == "ADDASSIGN") then
-				local spellID = tonumber(arguments.SPELLID)
+				spellID = tonumber(arguments.SPELLID)
 				if ( arguments.TIMER ) then
 					timer = tonumber(arguments.TIMER)
 				end	
