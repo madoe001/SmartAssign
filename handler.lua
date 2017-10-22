@@ -464,8 +464,6 @@ function createPhase(encounterID, phaseName, previousPhase, trigger, triggerTyp,
 	end
 	if (not SA_PhaseList[encounterID]) then
 		SA_PhaseList[encounterID] = {}
-		SA_PhaseList[encounterID].SA_firstPhase = phaseName
-		SA_PhaseList[encounterID].SA_currentPhase = phaseName
 	end
 	local difficulties = {}
 	if ( mythicFlag ) then

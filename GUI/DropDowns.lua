@@ -282,27 +282,33 @@ function createPhaseDropDown (parentFrame, x, y, width, name)
 		local info = UIDropDownMenu_CreateInfo()
 		local i = 0 -- laufvariable
 		local j = 0 -- Saved Value vom letzten eintrag
+		local eID = "Spasti"
 		if(SA_BossList[SA_LastSelected.expansion] ~= nil) then
 			if(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid] ~= nil) then
 				if(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss] ~= nil) then
-					local eID = SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID .. ""
+					eID = SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID .. ""
 				end
 			end
 		end
 		local list = {}
-		if (eID) then
-			if ( SA_PhaseList[eID] ) then
-				for dif, num in pairs( SA_PhaseList[eID] ) do
-					for name, v in pairs ( SA_PhaseList[eID][dif] ) do
-						local checkNewElement = true
-						for checkNum, checkName in ipairs ( list ) do
-							if( name == checkName ) then
-								checkNewElement = false
-							end
-						end
-						if (checkNewElement == true ) then
-							table.insert(list, name )
-						end
+		
+		if ( SA_PhaseList[eID] ) then
+			for dif, num in pairs( SA_PhaseList[eID] ) do
+				for name, v in pairs ( SA_PhaseList[eID][dif] ) do
+					local checkNewElement = true
+					if( name == "SA_firstPhase" ) then
+						checkNewElement = false
+					end
+					if( name == "SA_currentPhase" ) then
+						checkNewElement = false
+					end	
+					for checkNum, checkName in ipairs ( list ) do
+						if( name == checkName ) then
+							checkNewElement = false
+						end				
+					end
+					if (checkNewElement == true ) then
+						table.insert(list, name )
 					end
 				end
 			end
@@ -310,7 +316,7 @@ function createPhaseDropDown (parentFrame, x, y, width, name)
 		
 		for k,v in ipairs(list) do
 			info = UIDropDownMenu_CreateInfo()
-			info.text = k
+			info.text = v
 			info.value = v
 			info.func = function (self)
 							UIDropDownMenu_SetSelectedID(framus, self:GetID())
