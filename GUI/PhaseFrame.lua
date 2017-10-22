@@ -31,11 +31,20 @@ StaticPopupDialogs["REALLY_APPLY"] = {
   button1 = GUIL["Yes"],
   button2 = GUIL["No"],
   OnAccept = function()
-	if phaseFrame.firstPhaseCB:GetChecked() == false then -- Pr&uumlfe ob es die erste Phase ist
-		createPhase(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID, phaseFrame.phaseNameEB:GetText(), UIDropDownMenu_GetText(prevPhaseFrameDropDown), phaseFrame.triggerEB:GetText(), phaseFrame.triggerTypeEB:GetText(), phaseFrame.mythicCB:GetChecked(), phaseFrame.heroicCB:GetChecked(), phaseFrame.normalCB:GetChecked())
-	else
-		createPhase(SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID, phaseFrame.phaseNameEB:GetText(), nil, phaseFrame.triggerEB:GetText(), phaseFrame.mythicCB:GetChecked(), phaseFrame.heroicCB:GetChecked(), phaseFrame.normalCB:GetChecked())
-	end
+  local eID = SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID
+  local phaseName = phaseFrame.phaseNameEB:GetText()
+  local prevPhase = nil
+  if phaseFrame.firstPhaseCB:GetChecked() == false then
+	prevPhase = UIDropDownMenu_GetText(prevPhaseFrameDropDown)
+  end
+  local trigger = phaseFrame.triggerEB:GetText()
+  local triggerTyp = phaseFrame.triggerTypeEB:GetText()
+  local mFlag = phaseFrame.mythicCB:GetChecked()
+  local hFlag = phaseFrame.heroicCB:GetChecked()
+  local nFlag = phaseFrame.normalCB:GetChecked()
+  -- (encounterID, phaseName, previousPhase, trigger, triggerTyp, mythicFlag, heroicFlag, normalFlag)
+  createPhase(eID, phaseName, prevPhase, trigger, triggerTyp, mythicFlag, heroicFlag, normalFlag)
+	
   end,
   OnCancel = function (_,reason)
       if reason == "clicked" then

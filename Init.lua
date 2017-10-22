@@ -864,6 +864,9 @@ SA_BossList = {
 			[BI_AnaMouz] = { 
  				 ["encounterID"] = 159,
 			},
+			["Oak Heart"] = {
+				["encounterID"] = 1837,
+			},
 			[BI_Apocron] = { 
  				 ["encounterID"] = 160,
 			},
