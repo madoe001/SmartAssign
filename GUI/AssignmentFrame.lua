@@ -283,6 +283,8 @@ do
 					sendingTable.assignmentname = "assignment"..v.index
 					sendingTable.spellID = spellid
 					sendingTable.timer = assign["Timer"] -- TODO MAIK
+					sendingTable.spellid = spellid
+					sendingTable.offset = offset
 					sendingTable.abilityName = nil -- TODO MAIK
 					sendingTable.abilityCounter = nil -- TODO MAIK
 					sendAddonInformations("ADDASSIGN", UIDropDownMenu_GetText(plv.dropDownPlayer), encounterID, sendingTable)
