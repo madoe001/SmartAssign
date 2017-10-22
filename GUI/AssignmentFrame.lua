@@ -1,4 +1,5 @@
 ﻿--- @author Maik D&ouml;mmecke
+--
 -- Mit Hilfe dieser Klasse wird ein Fenster erzeugt, das zum Erstellen von Assignments dient.
 -- Die Assignments werden in einer Liste dargestellt.
 -- In der Liste besteht die Möglichkeit zu Scrollen
@@ -62,7 +63,6 @@ do
 	-- Positionierung dynamisch zu gestalten
 	-- Druch die Funktione bleiben die Eintraege der Liste zusammenhaengend. 
 	local function updateAssignmentFrame(self, toBeDeleted)
-		local foundElement = false
 		local cacheList = {}
 		local ctr = 1		
 
@@ -271,7 +271,9 @@ do
 				for plk, plv in pairs(v.playerAssigns) do
 					local _,class = UnitClass(UIDropDownMenu_GetText(plv.dropDownPlayer))
 					local classCooldowns = SA_Cooldowns[class]
+					print(class)
 					local spellid = 0
+					if classCooldowns then
 					for ck, cv in pairs(classCooldowns) do
 						if cv["Name"] == UIDropDownMenu_GetText(plv.dropDownCooldown) then
 							spellid = cv["SpellID"]
@@ -283,7 +285,8 @@ do
 					sendingTable.timer = assign["Timer"] -- TODO MAIK
 					sendingTable.abilityName = nil -- TODO MAIK
 					sendingTable.abilityCounter = nil -- TODO MAIK
-					sendAddonInformations("addAssignment", UIDropDownMenu_GetText(plv.dropDownPlayer), encounterID, sendingTable)
+					sendAddonInformations("ADDASSIGN", UIDropDownMenu_GetText(plv.dropDownPlayer), encounterID, sendingTable)
+				end
 				end
 			end
 
@@ -329,4 +332,9 @@ do
 
 	return obj
 	end	
+	
+	--- Diese Funktion gibt den send Button zur&oumlck.
+	function AssignmentFrame:GetSendButton()
+		return self.send
+	end
 end

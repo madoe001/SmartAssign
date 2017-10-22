@@ -1,4 +1,4 @@
---- @author Bartlomiej Grabelus (10044563)
+﻿-- @author Bartlomiej Grabelus (10044563)
 
 local _G = _G
 
@@ -190,6 +190,8 @@ L["You should tick only one difficulty!"] = "Bitte w\195\164hle nur einen Schwie
 L["Is it the first Phase?"] = "Ist es die erste Phase?"
 
 L["You should check first phase?"] = "Du solltest erste Phase ankreuzen"
+
+L["There is nothing to delete"] = "Es gibt nichts zu löschen"
 
 -- ASSERTS
 L["'func' in 'DropDownMenu SetOnClick' must be a function."] = "'func' in 'DropDownMenu SetOnClick' muss eine Funktion sein."

@@ -1,3 +1,5 @@
+--- Handler Datei verschiedene Backendfunktionalität wurde implementiert
+
 SA_WA = {}
 
 --- SA_WA:addAssign
@@ -321,11 +323,13 @@ function addonChatHandler(...)
 		ownRealm = ownRealm:gsub("%s+", "") -- Um aus "Tarren Mill" => "TarrenMill" zu machen
 		if ( arguments.PLAYERNAME == ownName or arguments.PLAYERNAME == (ownName .. "-" .. ownRealm)) then
 			-- addAssign & createAbility & createPhase (encounterID)
+
 			local functionName = arguments.FUNCTIONNAME
 			local encounterID = arguments.ENCOUNTERID
 			
 			--addAssign & createAbility (abilityName)
 			if(string.upper(functionName) == "ADDASSIGN" or string.upper(functionName) == "CREATEABILITY") then
+				print("test")
 				local abilityName = arguments.ABILITYNAME
 			end
 			

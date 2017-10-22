@@ -304,9 +304,9 @@ function SA_ScrollFrame:Reset(frame)
 end
 
 --- Erstellt alle Buttons, welche zu Beginn leer sind.
--- Es werden soviele erzeugt, wie die Tabelle groﬂ ist.
+-- Es werden soviele erzeugt, wie die Tabelle gro&szlig; ist.
 --
--- @tparam tabel data: Wird gebraucht um die Gr&oumlﬂe zu erfahren
+-- @tparam tabel data: Wird gebraucht um die Gr&ouml&szlig;e zu erfahren
 -- @tparam Frame frame ScrollFrame 
 function SA_ScrollFrame:CreateButtons(data, frame)
 	for i=1,GetArraySize(data, GetDepth(data), 0) do
@@ -579,7 +579,7 @@ function SetListHightlightTex(button)
 end
 
 --- Mit dieser Funktion setzt man einen Button als Header.
--- Hier wird der Text gr&oumlﬂer gemacht und der Button kriegt eine Highlight Textur.
+-- Hier wird der Text gr&ouml&szlig;er gemacht und der Button kriegt eine Highlight Textur.
 -- Ein Header wird immer neu gesetzt, wenn ein neues Level in der ScrollFrame erreicht wird.
 -- Wenn der Spieler zum Beispiel auf eine Instanz klickt.
 --
@@ -771,14 +771,14 @@ function SetInstanceButtons(self, data)
 end
 
 --- Bei dieser Funktion handelt es sich um eine reine LUA Funktion.
--- Mit welcher man die Gr&oumlﬂe einer Tabelle ermitteln kann.
+-- Mit welcher man die Gr&ouml&szlig;e einer Tabelle ermitteln kann.
 -- Der Benutzer kann die Tiefe, wie weit in die Tabelle reingegangen werden soll
 -- ausw&aumlhlen.
 --
--- @tparam table table Die Tabelle von welcher man die Gr&oumlﬂe wissen m&oumlchte.
--- @tparam int depth Wie tief die Gr&oumlﬂe gemessen soll
+-- @tparam table table Die Tabelle von welcher man die Gr&ouml&szlig;e wissen m&oumlchte.
+-- @tparam int depth Wie tief die Gr&ouml&szlig;e gemessen soll
 -- @tparam int len Wird benutzt zum Rekursiven durchlaufen der Funktion
--- @return Gibt die Gr&oumlﬂe der Tabelle zur&uumlck
+-- @return Gibt die Gr&ouml&szlig;e der Tabelle zur&uumlck
 function GetArraySize(table, depth, len)
 	local lengthNum = len
 	for k,v in pairs(table) do -- for every key in the table with a corresponding non-nil value 

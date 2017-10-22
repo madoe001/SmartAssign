@@ -1,4 +1,4 @@
--- Beschreibung: Diese Klasse stellt eine CheckBox dar.
+--- Beschreibung: Diese Klasse stellt eine CheckBox dar.
 --				 Welche einen Text besitzt, welcher rechts von der CheckBox positioniert ist.
 --
 -- @modul CheckBox

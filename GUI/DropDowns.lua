@@ -1,6 +1,7 @@
 --- DropDowns.lua
 -- @author  Veith, Marvin Justin (10043555)
--- @usage In dieser Datei werden die GUI Elemente "Dropdown" erstellt. Hierbei handelt es sich um ein Element, welches eine Liste
+--
+-- In dieser Datei werden die GUI Elemente "Dropdown" erstellt. Hierbei handelt es sich um ein Element, welches eine Liste
 			 -- an Werten uebergeben bekommt. Hierbei wird als Text der aktuelle Wert angezeigt. Mit einem Linksklick, wird die komplette Liste 
 			 -- geladen. Es kann aus der Liste ein Wert ausgewaehlt werden. 
 			 

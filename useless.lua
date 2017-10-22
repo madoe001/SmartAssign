@@ -1,4 +1,4 @@
---- Datei zum zwischenlagern von Strings um diese mit vim anzupassen und dann zu nutzen
+-- Datei zum zwischenlagern von Strings um diese mit vim anzupassen und dann zu nutzen
 ["Classic"] = { 
 		[MoltenCore_string] = { 
 			[MC_Lucifron] = { 

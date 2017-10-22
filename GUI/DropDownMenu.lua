@@ -1,4 +1,4 @@
--- Beschreibung: Diese Klasse stellt ein DropDownMenu dar, welche mit den Daten aus einer Tabelle gef&uumlllt wird, welche wiederrum eine Tabelle enth&aumllt.
+--- Beschreibung: Diese Klasse stellt ein DropDownMenu dar, welche mit den Daten aus einer Tabelle gef&uumlllt wird, welche wiederrum eine Tabelle enth&aumllt.
 --				 Wenn der Spieler auf den DropDownMenuButton klickt, zeigt sich ihm eine Liste mit Eintr&aumlgen. Diese Eintr&aumlge beinhalten wieder eine Liste mit Elementen.
 --				 Zum Beispiel wird beim Klick auf den DropDownMenuButton eine Liste mit Eintr&aumlge der Klassen angezeigt und dann wenn man eine Klasse ausw&aumlhlt, 
 --               wird eine Liste mit Spieler angezeigt, welche der Klasse entsprechen.
@@ -22,9 +22,9 @@ local assert, type = assert, type
 
 local BUTTON_HEIGHT = 25
 
---- Eine Lua Funktion, um die Gr&oumlﬂe einer Tabelle zu erfahren.
+--- Eine Lua Funktion, um die Gr&ouml;&szlig;e einer Tabelle zu erfahren.
 -- 
--- @tparam table T Die Tabelle von welcher man die gr&oumlﬂe haben m&oumlchte
+-- @tparam table T Die Tabelle von welcher man die gr&ouml&szlige haben m&oumlchte
 function GetArraySize(T)
 	local lengthNum = 0
 	for k,v in pairs(T) do -- f&uumlr jeden key, welcher nicht nil ist  lengthNum++

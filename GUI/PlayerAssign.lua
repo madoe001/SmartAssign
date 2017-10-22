@@ -1,4 +1,5 @@
 ﻿--- @author Maik Dömmecke
+--
 -- Klasse, zum einteilen eines Spielers. 
 -- Mit Hilfe dieser Klasse soll es Möglich sein eine Liste von Spielern in einem Dropdownmenu angezeigt zu bekommen
 -- im Anschluss soll ausgewählt werden können was der Spieler bei einer Bossfähigkeit oder bei einem bestimmtetn Timer machen soll
@@ -165,7 +166,7 @@ do
 			
 			-- Erstellen einer EditBox in der nur Zahlen eintragbar sind
 			-- Genaue Doku siehe EditBox.lua
-			offset = EditBox:LoadEditBox(frame, "offs"..lastElement, "number", "timer"),	
+			offset = EditBox:LoadEditBox(frame, "offs"..lastElement, "number", "offset"),	
 
 			-- Erstellen eines Textfelds in dem ein anzuzeigender Text eingetragen werden kann 
 			extraText = CreateFrame("EditBox", "extraText"..lastElement, frame,"InputBoxTemplate"), 
