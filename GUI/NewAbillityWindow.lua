@@ -12,7 +12,7 @@ function NewAbillityWindow:show()
 	NewAbillityWindow.frame:SetBackdrop({
 		bgFile="Interface/DialogFrame/UI-DialogBox-Background",
 		edgeFile = "Interface/DialogFrame/UI-DialogBox-Border", tile = false, tileSize = 4, edgeSize = 32,
-		insets = { left = 4, right = 4, top = 4, bottom = 4 }
+		insets = { left = 2, right = 2, top = 2, bottom = 2 }
 		});
 	NewAbillityWindow.frame:SetBackdropColor(0.0,0.0,0.0,1.0)
 	
@@ -95,7 +95,8 @@ function NewAbillityWindow:show()
 	caric:CreateButton(NewAbillityWindow.frame, "AbillityAddButton", "add", -15, -330, 50,30)
 	--TODO Schnittstelle anpassen, weil abgeändert
 	AbillityAddButton:SetScript("OnClick", function() if (NewAbillityWindow:checkAbillityInputs()) then
-											addAbillity(SA_LastSelected.expansion, SA_LastSelected.raid, SA_LastSelected.boss, AbillityEditBox:GetText(), 
+		print("LOL")
+		addAbillity(SA_LastSelected.expansion, SA_LastSelected.raid, SA_LastSelected.boss, AbillityEditBox:GetText(), 
 														SpellIDEditBox:GetText(),CoolDownEditBox:GetText(), StartHPEditBox:GetText(), EndHPEditBox:GetText())
 											AbillityEditBox:SetText("")											
 											CoolDownEditBox:SetText("")

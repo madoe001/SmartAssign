@@ -109,7 +109,7 @@ function SA_CreateAbilityFrame:CreateWindow(frame)
 		abilityFrame:SetBackdrop({
 			bgFile="Interface/DialogFrame/UI-DialogBox-Background",
 			edgeFile = "Interface/DialogFrame/UI-DialogBox-Border", tile = false, tileSize = 4, edgeSize = 32,
-			insets = { left = 4, right = 4, top = 4, bottom = 4 }
+			insets = { left = 2, right = 2, top =2, bottom = 2 }
 			});
 		abilityFrame:SetBackdropColor(0.0,0.0,0.0,1.0)
 		abilityFrame:SetFrameLevel(255) -- set to top level
@@ -187,6 +187,8 @@ function SA_CreateAbilityFrame:SetScripts()
 			if SA_CreateAbilityFrame:ValidForCreateAbility() then -- Pr&uumlfe ob Eingabe g&uumlltig
 				if SA_CreateAbilityFrame:IsOneDifficultyChecked() then -- Pr&uumlfe ob mindestens ein Schwierigkeitsgrad gew&aumlhlt wurde
 					StaticPopup_Show("REALLY_APPLY", abilityFrame.abilityNameEB:GetText())
+					local encounterID = SA_BossList[SA_LastSelected.expansion][SA_LastSelected.raid][SA_LastSelected.boss].encounterID 			
+					createAbility(encounterID, abilityFrame.abilityNameEB:GetText(), abilityFrame.cooldownEB:GetText(), abilityFrame.abilityPhaseNameEB:GetText(), abilityFrame.mythicCB:GetChecked(), abilityFrame.heroicCB:GetChecked(), abilityFrame.normalCB:GetChecked(), abilityFrame.loopCB:GetChecked(), abilityFrame.resetCB:GetChecked())
 				else
 					StaticPopup_Show("INFO", GUIL["You should tick a difficulty!"])
 				end
